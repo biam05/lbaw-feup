@@ -1,78 +1,26 @@
-
-
-var stor = 0;
-var maxstor;
-var divs;
-
-function setup()
-{
-  divs = document.getElementsByClassName("wrapper");
+wrapper=document.querySelector(".wrapper");
+cards = document.getElementsByClassName("card");
   
-  maxstor=divs.length-1;
-  for (var i=0; i < divs.length; i++ ) {
-    var div = divs[i];
-    
-	if(i ==0 )
-    div.hidden=false;
-    else div.hidden=true;
-  }
-}
+console.log(window.innerWidth);
 
-
-
-function rotateDiv(stor){
-  
-  
-  for (var i=0; i < divs.length; i++ ) {
-    var div = divs[i];
+for (var i=0; i < cards.length; i++ ) {
+    var div = cards[i];
     
-	if(i != stor){
-        	div.hidden = true;
-	}
-	else{
-		div.hidden = false;
-	}
-    
-  }
+	if(i <3)
+    div.style.display="inline-block";
+    else div.style.display="none";
 }
 
 function showNext(){
-	if(stor < maxstor)
-		stor++;
-	else
-		stor=0;
 
-	rotateDiv(stor);
+	cards[0].style.display="none";
+	wrapper.appendChild(cards[0]);
+	cards[2].style.display="inline-block";	
 }
 
-function showNext(){
-	if(stor < maxstor)
-		stor++;
-	else
-		stor=0;
-
-	rotateDiv(stor);
-}
-
-function stoprot() {
-	clearTimeout(timeout);
-}
-
-
-function showNext(){
-	if(stor < maxstor)
-		stor++;
-	else
-		stor=0;
-
-	rotateDiv(stor);
-}
 
 function showPrev(){
-	if(stor > 0)
-		stor--;
-	else
-		stor=maxstor;
-
-	rotateDiv(stor);
+	cards[2].style.display="none";
+	wrapper.insertBefore(cards[cards.length-1],cards[0]);
+	cards[0].style.display="inline-block";	
 }
