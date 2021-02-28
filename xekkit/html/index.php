@@ -1,5 +1,5 @@
 <?php
 
-include 'front-page.php';
+header('Location: pages/register.php');
 
 ?>
