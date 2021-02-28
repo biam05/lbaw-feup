@@ -3,7 +3,11 @@
     include_once('../templates/common.php');
 
     draw_header();
-    echo 'Hello';
+    ?>
+    <div class="container">
+        Hello
+    </div>
+    <?php
     draw_footer();
 
 ?>
