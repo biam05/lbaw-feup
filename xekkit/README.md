@@ -1,62 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# LBAW's PIU
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
 
-## About Laravel
+This README describes how to set up the development environment for the Prototype of User Interfaces (PIU).
+It was prepared to run on Linux, but it should be reasonably easy to follow and adapt to other operating systems.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* [Installing Docker](#installing-docker)
+* [Publishing the image](#publishing-your-image)
+* [Developing with Docker](#developing-with-docker)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+A `Dockerfile` is provided to generate the Docker image. The image provides an HTTP server with PHP enabled, served from the `/var/www/html/` folder. At this stage, you can only use PHP to include other files and prevent repeating HTML code.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+__Later we will have more on Docker containers...__
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installing Docker
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Before starting, you'll need to have __Docker__ installed on your PC.
 
-## Laravel Sponsors
+Docker is a tool that allows you to run containers (similar to virtual machines, but much lighter).
+The official instructions are in [Install Docker](https://docs.docker.com/install/).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    # install docker-ce
+    sudo apt-get update
+    sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce # docker-ce-cli containerd.io
+    docker run hello-world # make sure that the installation worked
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+## Publishing your image
 
-## Contributing
+You should keep your git's master branch always functional and frequently build and deploy your code.
+To do so, you will create a _docker_ image for your project and publish it at [docker hub](https://hub.docker.com/).
+LBAW's production machine will frequently pull all these images and make them available at http://lbaw21gg-piu.lbaw-prod.fe.up.pt/.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+This demo repository is available at [http://piu21.lbaw-prod.fe.up.pt/](http://piu21.lbaw-prod.fe.up.pt/).
+Please make sure you are inside FEUP's network or VPN to access it.
 
-## Code of Conduct
+The first thing you need to do is create a [docker hub](https://hub.docker.com/) account and get your username from it.
+Once you have a username, let your docker know who you are by executing:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    docker login
 
-## Security Vulnerabilities
+Once your docker can communicate with the docker hub using your credentials, configure the `upload_image.sh` script with your username and group's identification as well.
+Example configuration:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    DOCKER_USERNAME=johndoe   # Replace by your docker hub username
+    IMAGE_NAME=lbaw21gg-piu   # Replace by your lbaw group name
 
-## License
+Afterward, you can build and upload the docker image by executing that script from the project root:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ./upload_image.sh
+
+If you are running under Windows, then manually execute the instruction inside the script. Note that your HTML source code should be inside the `html` folder, or you need to adjust the `Dockerfile`.
+You can test the locally by running:
+
+    docker run -it -p 8000:80 <DOCKER_USERNAME>/<IMAGE NAME>
+
+The above command exposes your HTML on http://localhost:8000.
+
+There should be only one image per group. One team member should create and push the image to the public repository at Docker Hub (lbaw21gg). The group can share the login credentials so that any team member can push the image.
+You should provide your teacher with the details for accessing your docker image, namely, docker username and repository (lbaw21gg/lbaw21gg-piu).
+
+
+## Developing with Docker
+
+To use a Docker container to serve HTML files from your __html/__ folder, run your image and mount the folder (specify the local full path or $PWD) as a volume:
+
+
+    docker run -it -p 8000:80 -v $PWD/html:/var/www/html <DOCKER_USERNAME>/<IMAGE NAME>
+
+
+The above command exposes your HTML on http://localhost:8000 for you to test changes. You need to provide the full path for the `html` folder for it to be mounted in the container.
+Any changes made inside the local folder can be seen immediately.
+
+
+## Clean up all your docker images and containers
+
+    docker kill $(docker ps -q)     # kill all running containers
+    docker rm $(docker ps -a -q)    # delete all stopped containers
+    docker rmi $(docker images -q)  # delete all images
