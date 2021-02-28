@@ -1,42 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xekkit</title>
-    <script defer src="https://kit.fontawesome.com/0f8556fd7f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./style/nav_bar/nav_bar.css">
-    <link rel="stylesheet" href="./style/trending_cards/trending_cards.css">
-    <link rel="stylesheet" href="./style/front_page/front_page.css">
-  <script type="text/javascript" src="scripts/swipe.js" defer></script>  
-  </head>
-<body>
-    
-  <nav id="navbar">
-    <div id="navbar-logo">
-      <a href="#">
-        <img src="img/logo.png" alt="profile-picture">
-        <span>Xekkit</span>
-      </a>
-    </div>
-    <div id="navbar-search">
-      <form method="GET" action="#">
-        <input type="search" name="search" aria-label="Search through site content" placeholder="Search here">
-      </form>
-    </div>
-    <div id="navbar-buttons">
-      <a href="#" class="clickable">
-        Login 
-      </a>
 
-      <a href="#" class="clickable">
-        Sign up 
-      </a>
-    </div>
-  </nav>
-
-   <button onclick=showPrev() class="prev">&lt;</button>
+<button onclick=showPrev() class="prev">&lt;</button>
   <button onclick=showNext() class="next">&gt;</button>
    
    <div id="trending">
@@ -119,11 +82,5 @@
         
       </div> <!-- end card -->
     </div> <!-- end wrapper -->
-
-
-
-  </div>
-
-<script src="scripts/navbar.js"></script>
-</body>
-</html>
+   </div>
+    <script type="text/javascript" src="scripts/swipe.js" defer></script>  
