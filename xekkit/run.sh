@@ -15,5 +15,5 @@ docker run $FLAGS --name lbaw2114 -it -p 8000:80 -v $PWD/html:/var/www/html lbaw
 
 echo "\n"
 echo ">> RUNNING LBAW2114 on http://localhost:8000"
-echo ">> TO STOP: docker stop lbaw2114\n"
-echo "\n"
+echo ">> TO STOP: docker stop lbaw2114"
+echo "\n\n"
