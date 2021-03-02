@@ -1,0 +1,26 @@
+#posts {
+  margin: auto;
+  width: 900px;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.post {
+  border-radius: 5px;
+  background-color: #1A1A1B;
+  width: 900px;
+  display: inline-block;
+  margin-top: 5em;
+  margin-right: 40px;
+  position: relative;
+  text-align: center;
+}
+
+.post-image img {
+  width: 600px;
+  height: 200px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+/*# sourceMappingURL=post.css.map */

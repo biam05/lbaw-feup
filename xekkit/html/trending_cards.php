@@ -5,7 +5,7 @@
    <div id="trending">
 
     <div class="wrapper">
-      <div class="card">
+      <div class="trending_card">
         <div class="card_image">
           <img src="img/gamestop.jpeg" alt="a" draggable="false">
         </div>
@@ -25,7 +25,7 @@
       </div> <!-- end card -->
 
 
-      <div class="card">
+      <div class="trending_card">
         <div class="card_image">
           <img src="img/gamestop.jpeg" alt="a" draggable="false">
         </div>
@@ -44,7 +44,7 @@
       </div> <!-- end card -->
 
 
-      <div class="card">
+      <div class="trending_card">
         <div class="card_image">
           <img src="img/gamestop.jpeg" alt="a" draggable="false">
         </div>
@@ -63,7 +63,7 @@
       </div> <!-- end card -->
 
 
-      <div class="card">
+      <div class="trending_card">
         <div class="card_image">
           <img src="img/gamestop.jpeg" alt="a" draggable="false">
         </div>

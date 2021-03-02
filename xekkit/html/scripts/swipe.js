@@ -1,5 +1,5 @@
 wrapper=document.querySelector(".wrapper");
-cards = document.getElementsByClassName("card");
+cards = document.getElementsByClassName("trending_card");
   
 console.log(window.innerWidth);
 
