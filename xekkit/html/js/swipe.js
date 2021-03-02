@@ -6,6 +6,35 @@ window.onresize=function(){
         else n_cards=2;
     }
     else n_cards=3;
+
+    if(window.outerWidth<700)
+{
+    if(window.outerWidth<600)
+    {
+        for (var i=0; i < cards.length; i++ ) {
+            cards[i].style.zoom="85%"
+        }
+    }
+    else{
+
+        for (var i=0; i < cards.length; i++ ) {
+            cards[i].style.zoom="90%"
+        }
+    }
+
+}
+
+
+
+
+for (var i=0; i < cards.length; i++ ) {
+    var div = cards[i];
+    
+	if(i <n_cards)
+    div.style.display="inline-block";
+    else div.style.display="none";
+}
+
 };
 
 wrapper=document.querySelector(".wrapper");
