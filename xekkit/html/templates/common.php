@@ -24,12 +24,12 @@ function draw_header()
         <link rel="stylesheet" href="../css/info.css">  
         <link rel="stylesheet" href="../css/light.css">  
         <link rel="stylesheet" href="../css/dark.css">  
+        <link rel="stylesheet" href="../css/style.css">  
     </head>
 
     <body>
 
 <?php }
-
 
 
 /**
