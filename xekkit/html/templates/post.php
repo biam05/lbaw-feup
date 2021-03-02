@@ -1,34 +1,48 @@
-<!-- <div id="posts">
-    <div class="post">
-        <span class="post-title">Daft Punk Break Up Announcement Video</span>
-        <a href="#" class="post-author">u/johndoe</a>
-        <span class="post-date">Jan 23, 2021</span>
-        
-        <div class="post-image">
-            <img src="../img/daft_punk.jpeg">
-        </div>
-
-        <span class=""></span>
-    </div>
-</div> -->
-
-<div class="card mb-3" style="width: 80%; margin:auto;">
-  <img src="../img/daft_punk.jpeg" class="card-img-top" alt="...">
+<div class="card mb-3 text-white bg-light-dark" style="width: 80%; margin:auto;">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h5 class="card-title">Daft Punk</h5>
+     <img src="../img/daft_punk.jpeg" class="card-img-top" alt="..."> 
+    <p class="card-text">Daft Punk Break Up Annoucement image </p>
   </div>
   <div class="card-footer text-muted" style="display:flex;">
     <div class="votes">
-      <button>
-        <i class="fas fa-angle-up"></i>
+      <button class="clickable-big">
+        <i class="fas fa-angle-up text-white"></i>
       </button>
-      <button>
-        <i class="fas fa-angle-down"></i>
+      <button class="clickable-big">
+        <i class="fas fa-angle-down text-white "></i>
       </button>
     </div>
-    <span style="margin-top:1em;">7873</span>
-    <a href="#" class="comments fas fa-comment" style="margin-top:1em; text-decoration:none;">420</a>
+    <footer>
+      <span>7873</span>
+      <a href="#" class="comments fas fa-comment clickable"> 420</a>
+    </footer>
   </div>
 </div>
+
+<!-- <div class="card mb-3 text-white bg-light-dark" style="width: 80%; margin:auto;">
+  <div class="card-body">
+    <h5 class="card-title">Daft Punk</h5>
+    <div>
+      <video controls>
+        <source src="../img/video.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="card-text">Daft Punk Break Up Annoucement video </p>
+  </div>
+  <div class="card-footer text-muted" style="display:flex;">
+    <div class="votes">
+      <button class="clickable-big">
+        <i class="fas fa-angle-up text-white"></i>
+      </button>
+      <button class="clickable-big">
+        <i class="fas fa-angle-down text-white "></i>
+      </button>
+    </div>
+    <footer>
+      <span>7873</span>
+      <a href="#" class="comments fas fa-comment clickable">420</a>
+    </footer>
+  </div> 
+</div>-->
+

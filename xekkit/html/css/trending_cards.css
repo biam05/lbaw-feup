@@ -1,8 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
 #trending {
+  width: 100%;
   margin: auto;
-  width: 960px;
   text-align: center;
+   display: flex;
+  justify-content: center; 
 }
 
 .wrapper {
@@ -25,7 +27,7 @@
 }
 
 .card_image {
-  position: absolute;
+  position: absolute; 
   -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(black), to(rgba(0, 0, 0, 0)));
   -webkit-mask-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
           mask-image: -webkit-gradient(linear, left top, left bottom, from(black), to(rgba(0, 0, 0, 0)));
@@ -45,8 +47,13 @@
 }
 
 .card_text {
+  position: relative;
   text-decoration: none;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  color: white;
+}
+.card_text:hover {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;  
   color: white;
 }
 
@@ -74,36 +81,25 @@
   content: "#";
 }
 
+
 button.prev,
 button.next {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  position: relative;
+  margin-top:auto;
+  margin-bottom: auto;
   font-size: 32px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   color: #FFF;
-  background-color: #333;
-  border-radius: 50%;
   width: 44px;
   height: 44px;
 }
 
 button.prev {
+ /* // margin-right: 40px; */
   cursor: pointer;
-  position: absolute;
-  left: 100px;
-  top: 200px;
 }
 
 button.next {
   cursor: pointer;
-  position: absolute;
-  right: 100px;
-  top: 200px;
+  margin-left: -40px;
 }
 /*# sourceMappingURL=trending_cards.css.map */

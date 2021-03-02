@@ -24,7 +24,11 @@ function draw_header()
         <link rel="stylesheet" href="../css/info.css">  
         <link rel="stylesheet" href="../css/light.css">  
         <link rel="stylesheet" href="../css/dark.css">  
-        <link rel="stylesheet" href="../css/style.css">  
+        <link rel="stylesheet" href="../css/light-dark.css">
+        <link rel="stylesheet" href="../css/trending_cards.css"> 
+        <link rel="stylesheet" href="../css/post.css">
+        <link rel="stylesheet" href="../css/nav_bar.css"> 
+        <link rel="stylesheet" href="../css/common.css">
     </head>
 
     <body>

@@ -1,8 +1,8 @@
 <nav id="navbar">
     <div id="navbar-logo">
-      <a href="#">
-        <img src="img/logo.png" alt="profile-picture">
-        <span>Xekkit</span>
+      <a href="#" style="text-decoration:none;">
+        <img src="../img/logo.png" alt="profile-picture">
+        <span>XEKKIT</span>
       </a>
     </div>
     <div id="navbar-search">
