@@ -3,7 +3,6 @@
     include_once('../templates/common.php');
 
     draw_header();
-    draw_nav_bar();
 ?>
 
 
@@ -14,9 +13,8 @@
     <div class="row align-items-center vh-100">
         <div class="col-lg-7">
             <p class="fs-1 fw-bold text-white">Welcome to XEKKIT</p>
-            <a href="../pages/front_page.php" class="btn btn-outline-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
+            <a href="../pages/front_page.php" class="btn btn-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
         </div>
-        
         
         <form class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate>
             <p class="text-center fs-1">Register</p>
@@ -58,8 +56,6 @@
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
-
-        <a class="btn btn-primary" href="#" role="button">Login</a>
         
     </div>
 </div>

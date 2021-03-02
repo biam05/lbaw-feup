@@ -12,7 +12,7 @@ function draw_header()
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Xekkit</title>
+        <title>XEKKIT</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
         <script defer src="https://kit.fontawesome.com/0f8556fd7f.js" crossorigin="anonymous"></script>
@@ -37,23 +37,49 @@ function draw_header()
 
 
 /**
+ * Draws the navigation bar for all pages.
+ */
+function draw_nav_bar()
+{ ?>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
+            XEKKIT
+        </a>
+       
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <div class="d-grid gap-2 d-md-block">
+            <a class="btn btn-primary" href="../pages/login.php" role="button">Login</a>
+            <a class="btn btn-primary" href="../pages/register.php" role="button">Register</a>
+        </div>
+       
+    </div>
+</nav>
+<?php } 
+
+
+/**
  * Draws the footer for all pages.
  */
 function draw_footer()
 { ?>
-        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-dark">
             <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../pages/about_us.php">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../pages/faq.php">FAQ</a>
-                        </li>
-                    </ul>
-                    <a class="nav-link disabled" href="#"> &copy; XEKKIT 2021 </a>
-                </div>
+                
+                <ul class="navbar-nav me-auto mb-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pages/about_us.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pages/faq.php">FAQ</a>
+                    </li>
+                </ul>
+                <span class="navbar-text"> &copy; XEKKIT 2021 </span>
+                
             </div>
         </nav>
     </body>
