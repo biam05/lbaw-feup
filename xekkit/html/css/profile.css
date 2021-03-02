@@ -1,0 +1,25 @@
+.page.profile .card{
+    background-color: transparent;
+    color: white;
+}
+
+.page.profile .card p,
+.page.profile .card h2{
+    margin: 0;
+}
+
+.page.profile .card h2{
+    font-size: 1.5em;
+}
+
+.page.profile .card .row.align-items-start .col:nth-of-type(2) a{
+    margin-left: 1.8em;
+}
+
+.page.profile .card .row.align-items-center .col:nth-of-type(2) {
+    padding-top: 7em;
+}
+
+.page.profile .nav-pills .nav-link.active{
+    background-color: rgb(43, 43, 43);
+}
