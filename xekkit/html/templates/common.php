@@ -40,15 +40,15 @@ function draw_footer()
         <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-dark">
             <div class="container-fluid">
                 
-                    <ul class="navbar-nav me-auto mb-0 ">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../pages/about_us.php">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../pages/faq.php">FAQ</a>
-                        </li>
-                    </ul>
-                    <span class="navbar-text"> &copy; XEKKIT 2021 </span>
+                <ul class="navbar-nav me-auto mb-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pages/about_us.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pages/faq.php">FAQ</a>
+                    </li>
+                </ul>
+                <span class="navbar-text"> &copy; XEKKIT 2021 </span>
                 
             </div>
         </nav>

@@ -15,7 +15,7 @@
         Login 
       </a>
 
-      <a href="#" class="clickable">
+      <a href="../pages/register.php" class="clickable">
         Sign up 
       </a>
     </div>

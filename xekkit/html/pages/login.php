@@ -16,7 +16,6 @@
             <a href="../pages/front_page.php" class="btn btn-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
         </div>
         
-        
         <form class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate>
             <p class="text-center fs-1">Register</p>
             <div class="form-floating mb-3">
@@ -57,8 +56,6 @@
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
-
-        <a class="btn btn-primary" href="#" role="button">Login</a>
         
     </div>
 </div>
