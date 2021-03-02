@@ -37,8 +37,21 @@ function draw_header()
  */
 function draw_footer()
 { ?>
-
-    <!-- footer class="footer">&copy; 2021 LBAW</footer -->
+        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/about_us.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/faq.php">FAQ</a>
+                        </li>
+                    </ul>
+                    <a class="nav-link disabled" href="#"> &copy; XEKKIT 2021 </a>
+                </div>
+            </div>
+        </nav>
     </body>
 
     </html>
