@@ -7,7 +7,7 @@
     <div class="wrapper">
       <div class="trending_card">
         <div class="card_image">
-          <img src="img/gamestop.jpeg" alt="a" draggable="false">
+          <img src="../img/gamestop.jpeg" alt="a" draggable="false">
         </div>
         <a class="card_text card_author" href="#">
           <i class="fas fa-user-circle"></i> 
@@ -27,7 +27,7 @@
 
       <div class="trending_card">
         <div class="card_image">
-          <img src="img/gamestop.jpeg" alt="a" draggable="false">
+          <img src="../img/gamestop.jpeg" alt="a" draggable="false">
         </div>
         <span class="card_text card_title">2</span>
         <div class="card_tags">
@@ -46,7 +46,7 @@
 
       <div class="trending_card">
         <div class="card_image">
-          <img src="img/gamestop.jpeg" alt="a" draggable="false">
+          <img src="../img/gamestop.jpeg" alt="a" draggable="false">
         </div>
         <span class="card_text card_title">3</span>
         <div class="card_tags">
@@ -65,7 +65,7 @@
 
       <div class="trending_card">
         <div class="card_image">
-          <img src="img/gamestop.jpeg" alt="a" draggable="false">
+          <img src="../img/gamestop.jpeg" alt="a" draggable="false">
         </div>
 
         <span class="card_text card_title">4</span>
@@ -83,4 +83,4 @@
       </div> <!-- end card -->
     </div> <!-- end wrapper -->
    </div>
-    <script type="text/javascript" src="scripts/swipe.js" defer></script>  
+    <script type="text/javascript" src="../js/swipe.js" defer></script>  
