@@ -39,7 +39,7 @@ function draw_footer()
 { ?>
         <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="../pages/about_us.php">About Us</a>
@@ -48,8 +48,8 @@ function draw_footer()
                             <a class="nav-link" href="../pages/faq.php">FAQ</a>
                         </li>
                     </ul>
-                    <a class="nav-link disabled" href="#"> &copy; XEKKIT 2021 </a>
-                </div>
+                    <span class="navbar-text"> &copy; XEKKIT 2021 </span>
+                
             </div>
         </nav>
     </body>
