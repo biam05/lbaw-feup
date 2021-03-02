@@ -23,8 +23,17 @@ else n_cards=3;
 
 if(window.outerWidth<700)
 {
-    for (var i=0; i < cards.length; i++ ) {
-        cards[i].style.zoom="90%"
+    if(window.outerWidth<600)
+    {
+        for (var i=0; i < cards.length; i++ ) {
+            cards[i].style.zoom="85%"
+        }
+    }
+    else{
+
+        for (var i=0; i < cards.length; i++ ) {
+            cards[i].style.zoom="90%"
+        }
     }
 
 }
