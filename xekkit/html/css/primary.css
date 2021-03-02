@@ -103,6 +103,13 @@ button.bg-primary:focus {
     box-shadow: 0 0 0 0.2rem rgba(136, 212, 152, 0.5);
 }
 
+.btn-check:focus + .btn-primary, .btn-primary:focus {
+    color: #212529;
+    background-color: #88d498;
+    border-color: #88d498;
+    box-shadow: 0 0 0 .25rem rgba(136, 212, 152, 0.5);
+}
+
 .list-group-item-primary {
     color: #3ba552;
     background-color: #10e10410c;
@@ -140,4 +147,13 @@ button.bg-primary:focus {
 
 a.text-primary:hover, a.text-primary:focus {
     color: #62c677 !important;
+}
+
+
+.form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #88d498;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(136, 212, 152, 0.25);
 }

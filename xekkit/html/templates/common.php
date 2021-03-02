@@ -33,6 +33,30 @@ function draw_header()
 
 
 /**
+ * Draws the navigation bar for all pages.
+ */
+function draw_nav_bar()
+{ ?>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
+            XEKKIT
+        </a>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-primary" type="button">Login</button>
+            <button class="btn btn-primary" type="button">Register</button>
+        </div>
+    </div>
+</nav>
+<?php } 
+
+
+/**
  * Draws the footer for all pages.
  */
 function draw_footer()

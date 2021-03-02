@@ -3,6 +3,7 @@
     include_once('../templates/common.php');
 
     draw_header();
+    draw_nav_bar();
 ?>
 
 
