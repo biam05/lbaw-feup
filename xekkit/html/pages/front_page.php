@@ -1,10 +1,13 @@
 <?php
 
 include_once('../templates/common.php');
+include_once('../templates/carousel.php');
 
 draw_header();
+draw_nav_bar();
+draw_carousel();
 
-include '../templates/nav_bar.php';
-include '../templates/carousel.php';
 include '../templates/post.php';
+
+draw_footer();
 ?>

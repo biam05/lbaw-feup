@@ -1,7 +1,7 @@
 <?php
     include_once('../templates/common.php');
     draw_header();
-    include '../templates/nav_bar.php';
+    draw_nav_bar();
 ?>
 
 <section class="page profile">

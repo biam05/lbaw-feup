@@ -30,6 +30,7 @@ function draw_header()
         <link rel="stylesheet" href="../css/post.css">
         <link rel="stylesheet" href="../css/nav_bar.css">         
         <link rel="stylesheet" href="../css/common.css">
+        <link rel="stylesheet" href="../css/carousel.css">
     </head>
 
     <body>
@@ -44,7 +45,7 @@ function draw_nav_bar()
 { ?>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="../index.php">
             <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
             XEKKIT
         </a>
