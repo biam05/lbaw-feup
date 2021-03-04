@@ -11,8 +11,6 @@ body {
 }
 
 
-
-
 button,
 input {
     border: 0;
@@ -20,47 +18,3 @@ input {
     background: none;
     text-decoration: none;
 }
-
-/*
-
-ul {
-    list-style: none;
-}
-
-a {
-    color: black;
-}
-
-
-.custom_navbar{
-    box-shadow: 0 0 10px 0 #000;
-}
-
-
-
-.clickable {
-    -webkit-transition: 0.2s;
-    transition: 0.2s;
-}
-
-.clickable:hover {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-}
-
-
-
-::-webkit-scrollbar {
-    width: 6px;
-    background-color: #39393A;
-}
-
-.page {
-    padding: 5em 3em;
-}
-
-
-
-
-
-/*# sourceMappingURL=common.css.map */
