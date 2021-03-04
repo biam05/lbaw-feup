@@ -25,9 +25,9 @@
                     Username not found.
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
-                <div onclick="toggleEye(this)" class="password_eye">
+            <div class="form-floating mb-3 position-relative">
+                <input type="password" class="form-control pe-5" id="inputPassword" placeholder="Password" required>
+                <div onclick="toggleEye(this)" class="position-absolute top-50 end-0 translate-middle-y me-3">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
     

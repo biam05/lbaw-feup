@@ -31,7 +31,6 @@ function draw_header()
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
-    <link rel="stylesheet" href="../css/form.css">
 </head>
 
     <body style="margin-bottom: 60px;">
