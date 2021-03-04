@@ -33,7 +33,7 @@ function draw_header()
         <link rel="stylesheet" href="../css/carousel.css">
     </head>
 
-    <body>
+    <body style="margin-bottom: 60px;">
 
 <?php }
 
@@ -43,7 +43,7 @@ function draw_header()
  */
 function draw_nav_bar()
 { ?>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar sticky-top navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="../index.php">
             <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
@@ -69,9 +69,9 @@ function draw_nav_bar()
  */
 function draw_footer()
 { ?>
+        
         <nav class="navbar fixed-bottom navbar-expand navbar-dark bg-dark">
             <div class="container-fluid">
-                
                 <ul class="navbar-nav me-auto mb-0 ">
                     <li class="nav-item">
                         <a class="nav-link" href="../pages/about_us.php">About Us</a>
