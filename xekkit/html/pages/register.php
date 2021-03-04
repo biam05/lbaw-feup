@@ -35,7 +35,7 @@
             </div>
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
-                <div onclick="toggleEye(this)" class="password-eye">
+                <div onclick="toggleEye(this)" class="password_eye">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
                 <label for="inputPassword" class="form-label">Password</label>
