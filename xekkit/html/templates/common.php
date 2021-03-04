@@ -18,19 +18,17 @@ function draw_header()
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script defer src="https://kit.fontawesome.com/0f8556fd7f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../css/primary.css">
-    <link rel="stylesheet" href="../css/secondary.css">
-    <link rel="stylesheet" href="../css/success.css">
-    <link rel="stylesheet" href="../css/danger.css">
-    <link rel="stylesheet" href="../css/warning.css">
-    <link rel="stylesheet" href="../css/info.css">
-    <link rel="stylesheet" href="../css/light.css">
-    <link rel="stylesheet" href="../css/dark.css">
-    <link rel="stylesheet" href="../css/light-dark.css">
+    <link rel="stylesheet" href="../css/colors/primary.css">
+    <link rel="stylesheet" href="../css/colors/secondary.css">
+    <link rel="stylesheet" href="../css/colors/success.css">
+    <link rel="stylesheet" href="../css/colors/danger.css">
+    <link rel="stylesheet" href="../css/colors/warning.css">
+    <link rel="stylesheet" href="../css/colors/info.css">
+    <link rel="stylesheet" href="../css/colors/light.css">
+    <link rel="stylesheet" href="../css/colors/dark.css">
+    <link rel="stylesheet" href="../css/colors/light-dark.css">
     <link rel="stylesheet" href="../css/profile.css">
-    <link rel="stylesheet" href="../css/trending_cards.css">
     <link rel="stylesheet" href="../css/post.css">
-    <link rel="stylesheet" href="../css/nav_bar.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
     <link rel="stylesheet" href="../css/login_registration.css">
@@ -74,13 +72,13 @@ function draw_footer()
 { ?>
         
         <footer class="footer fixed-bottom mt-auto py-3 bg-dark">
-            <div class="container">
+            <div class="container-xl">
                 <div class="row">
-                    <div class="col-md-2 col-5 col-sm-5 d-flex justify-content-between">
+                    <div class="col-md-2 col-sm-3 col-4 d-flex justify-content-between">
                         <a href="../pages/about_us.php" class="text-light text-decoration-none fs-6">About</a>
                         <a href="../pages/faq.php" class="text-light text-decoration-none fs-6">FAQ</a>
                     </div>
-                    <div class="col-md-10 col-7 col-sm-7 text-end">
+                    <div class="col-md-10 col-sm-9 col-8 text-end">
                         <span class="text-light fs-6"> &copy; XEKKIT <?= date('Y') ?> </span>
                     </div>
                 </div>

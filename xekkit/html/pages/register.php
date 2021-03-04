@@ -6,7 +6,7 @@
 ?>
 
 
-<script src="../js/register_form.js" defer></script>
+<script src="../js/validate_form.js" defer></script>
 
 
 <div class="container">
@@ -45,7 +45,7 @@
             </div>
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" required>
-                <div onclick="toggleEye(this)" class="password-eye">
+                <div onclick="toggleEye(this)" class="password_eye">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
                 <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
