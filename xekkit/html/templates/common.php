@@ -56,7 +56,7 @@ function draw_nav_bar()
                 <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
             </form>
             <div class="d-grid gap-2 d-md-block">
-                <a class="btn btn-primary" href="../pages/login.php" role="button">Login</a>
+                <a class="btn btn-outline-primary" href="../pages/login.php" role="button">Login</a>
                 <a class="btn btn-primary" href="../pages/register.php" role="button">Register</a>
             </div>
             
