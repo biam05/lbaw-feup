@@ -5,7 +5,7 @@
 function draw_card($img_src, $title, $tags, $date, $user)
 { ?>
 
-<div class="card text-white bg-dark position-relative" style="width: 18em;">
+<div class="card text-white bg-dark position-relative custom_card">
     <img class="card-img" src="<?=$img_src ?>" alt="Card image cap">
     <div class="card-img-overlay d-flex flex-column justify-content-end carousel_card_overlay">
         <h5 class="card-title"><?=$title ?></h5>
@@ -30,7 +30,8 @@ function draw_card($img_src, $title, $tags, $date, $user)
 function draw_carousel()
 { ?>
 
-<div class="container-xl">
+<div class="container-xl m-5">
+    <h2 class="text-center text-light">Trending News</h2>
     <div class="card-deck row flex-row flex-nowrap overflow-auto g-0 gap-3">
         <?php
         draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Card 1', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
