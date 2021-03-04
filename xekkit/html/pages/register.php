@@ -11,8 +11,8 @@
 
 <div class="container">
     <div class="row align-items-center vh-100">
-        <div class="col-lg-7">
-            <p class="fs-1 fw-bold text-white">Welcome to XEKKIT</p>
+        <div class="col-lg-7 d-grid">
+            <p class="fs-1 fw-bold text-center text-white">Welcome to XEKKIT</p>
             <a href="../pages/main.php" class="btn btn-outline-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
         </div>
         
@@ -33,24 +33,29 @@
                     Email already in use or invalid format.
                 </div>
             </div>
-            <div class="form-floating mb-3 position-relative">
-                <input type="password" class="form-control pe-5" id="inputPassword" placeholder="Password" required>
-                <div onclick="toggleEye(this)" class="position-absolute top-50 end-0 translate-middle-y me-3">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+            <div class="row g-2">
+                <div class="col form-floating mb-3">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <div class="invalid-feedback">
+                        Your password must be at least 8 characters long, contain letters and numbers.
+                    </div>
+                    
                 </div>
-                <label for="inputPassword" class="form-label">Password</label>
-                <div class="invalid-feedback">
-                    Your password must be at least 8 characters long, contain letters and numbers.
+                <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
             </div>
-            <div class="form-floating mb-3 position-relative">
-                <input type="password" class="form-control pe-5" id="inputConfirmPassword" placeholder="Confirm Password" required>
-                <div onclick="toggleEye(this)" class="position-absolute top-50 end-0 translate-middle-y me-3">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+            <div class="row g-2">
+                <div class="col form-floating mb-3">
+                    <input type="password" class="form-control pe-5" id="inputConfirmPassword" placeholder="Confirm Password" required>
+                    <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
+                    <div class="invalid-feedback">
+                        Your passwords don't match.
+                    </div>
                 </div>
-                <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
-                <div class="invalid-feedback">
-                    Your passwords don't match.
+                <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
             </div>
             

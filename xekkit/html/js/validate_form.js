@@ -20,10 +20,11 @@
 })()
 
 function toggleEye(x){
+    console.log(x.previousElementSibling);
     x.children[0].classList.toggle("fa-eye-slash");
-    if (x.previousElementSibling.type === "password") {
-        x.previousElementSibling.type = "text";
+    if (x.previousElementSibling.children[0].type === "password") {
+        x.previousElementSibling.children[0].type = "text";
     } else {
-        x.previousElementSibling.type = "password";
+        x.previousElementSibling.children[0].type = "password";
     }
 }
