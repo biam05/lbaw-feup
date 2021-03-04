@@ -9,21 +9,20 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
       <button class="card-report clickable-big text-white"><i class="fas fa-exclamation-triangle"></i></button>
       <span class="card-date"><?=$date?></span>
       <img src=<?=$image?> class="card-img-top" alt="..." draggable="false"> 
-      <p class="card-text"><?=$description?></p>
+      <p class="card-text">
+          <?php 
+        echo substr($description,0,150);
+        if(strlen($description)>150)
+        {
+          echo '...';
+        }
+        ?>
+      </p>
     </div>
     <div class="card-footer text-muted" style="display:flex;">
-      <div class="votes">
-        <button class="clickable-big">
-          <i class="fas fa-angle-up text-white"></i>
-        </button>
-        <button class="clickable-big">
-          <i class="fas fa-angle-down text-white "></i>
-        </button>
-      </div>
+      
       <footer>
-          <span><?=$votes?></span>
-          <button  class="comments clickable" ><i class="fas fa-comment"></i> <?=$comments?></button>
-          <div class="card-tags">
+      <div class="card-tags">
             <?php
             foreach($tags as $tag)
             {
@@ -33,6 +32,17 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
             }
             ?>
           </div>
+      <div class="votes">
+        <button class="clickable-big">
+          <i class="fas fa-angle-up text-white"></i>
+        </button>
+        <button class="clickable-big">
+          <i class="fas fa-angle-down text-white "></i>
+        </button>
+      </div>
+          <span><?=$votes?></span>
+          <button  class="comments clickable" ><i class="fas fa-comment"></i> <?=$comments?></button>
+          
       </footer>
     </div>
 </div>
@@ -47,6 +57,7 @@ function draw_posts()
 <div class="container-xl">
   <?php
     draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873" );
+    draw_post("Daft Punk", "This is a test to see the size of a description needed to trigger the reticências. So far this has 100 characteres. Is it good enough? Short maybe? Long maybe? One could never know writing text on the text editor, so I continue to write until I can consider this a big Post. Maybe I should just paste some Lorem Ipsum shit, but I don't really want to, this is more genuine", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873" );
   ?>
 </div>
 

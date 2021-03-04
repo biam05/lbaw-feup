@@ -1,21 +1,23 @@
 .votes {
+    margin-right: 0.4em;
+    float: left;
     font-size: larger;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
 }
 
 
 .comments {
     margin-left: 1em;
-    text-decoration:none;
-    color:inherit;
-    margin-top:1em;
-    font-weight: 400; 
+    text-decoration: none;
+    color: inherit;
+    margin-top: 1em;
+    font-weight: 400;
 }
 
 /* a.comments:hover{
@@ -25,52 +27,41 @@
 } */
 
 
-.card-footer footer{
-    margin-top:0.25em;
-    margin-left: 0.3em;
-}
 
-.card img{
+.card img {
     max-height: 500px;
     object-fit: scale-down;
 }
 
-.card video{
+.card video {
     max-height: 500px;
     object-fit: scale-down;
 }
 
-.card-text
-{
+.card-text {
     margin-top: 1em;
 }
 
-.card-author
-{
+.card-author {
     margin-left: 1em;
     font-size: smaller;
 }
 
-.card-report
-{
+.card-report {
     position: absolute;
     right: 0;
-    margin:1em;
-    margin-top:0;
+    margin: 1em;
+    margin-top: 0;
 }
 
-.card-footer>footer{
-    margin-top: -0.03em; 
-    margin-left: 0.5em;
-}
 
-.card-date
-{
+
+.card-date {
     display: block;
     font-size: smaller;
 }
 
-.card-tags
-{
-    margin-top: 1em;
+.card-tags {
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
