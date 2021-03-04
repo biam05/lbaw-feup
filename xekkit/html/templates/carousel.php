@@ -30,7 +30,7 @@ function draw_card($img_src, $title, $tags, $date, $user)
 function draw_carousel()
 { ?>
 
-<div class="container-xl m-5">
+<div class="container-xl my-5">
     <h2 class="text-center text-light">Trending News</h2>
     <div class="card-deck row flex-row flex-nowrap overflow-auto g-0 gap-3">
         <?php
