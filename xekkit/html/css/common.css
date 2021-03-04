@@ -1,49 +1,54 @@
 * {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 body {
-  background-color: #0A100D;
+    background-color: #0A100D;
 }
 
 *,
 button,
 input {
-  border: 0;
-  outline: none;
-  background: none;
-  text-decoration: none;
+    border: 0;
+    outline: none;
+    background: none;
+    text-decoration: none;
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 a {
-  color: black;
+    color: black;
 }
 
 .clickable {
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
 }
 
 .clickable:hover {
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  background-color: #39393A;
+    width: 6px;
+    background-color: #39393A;
 }
 
-.page{
-  padding: 5em 3em;
+.page {
+    padding: 5em 3em;
+}
+
+.nav-search-form {
+    width: 30%;
+    min-width: 350px;
 }
 
 /*# sourceMappingURL=common.css.map */

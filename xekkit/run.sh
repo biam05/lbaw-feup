@@ -19,11 +19,8 @@ if [ ! "$(docker ps -q -f name=$DOCKER_CONTAINER)" ]; then
     # run your container
     docker run $FLAGS --name $DOCKER_CONTAINER -it -p 8000:80 -v $PWD/html:/var/www/html lbaw2114/lbaw2114-piu
     fi
+    echo "\n"
+    echo ">> RUNNING LBAW2114 on http://localhost:8000"
+    echo ">> TO STOP: docker stop lbaw2114"
+    echo "\n\n"
 fi
-
-
-
-echo "\n"
-echo ">> RUNNING LBAW2114 on http://localhost:8000"
-echo ">> TO STOP: docker stop lbaw2114"
-echo "\n\n"
