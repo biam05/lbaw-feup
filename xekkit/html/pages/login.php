@@ -17,46 +17,59 @@
         </div>
         
         <form class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate>
-            <p class="text-center fs-1">Register</p>
+            <p class="text-center fs-1">Login</p>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="inputUsername" placeholder="Username" required>
-                <label for="inputUsername">Username</label>
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username/Email" required>
+                <label for="inputUsername">Username/Email</label>
                 <div class="invalid-feedback">
                     Username already in use.
                 </div>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
-                <label for="inputEmail" class="form-label">Email</label>
-                <div class="invalid-feedback">
-                    Email already in use or invalid format.
-                </div>
-            </div>
-            <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                <div onclick="toggleEye(this)" class="password-eye">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </div>
+    
                 <label for="inputPassword" class="form-label">Password</label>
                 <div class="invalid-feedback">
-                    Your password must be at least 8 characters long, contain letters and numbers.
+                    Invalid Password
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" required>
-                <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
-                <div class="invalid-feedback">
-                    Your passwords don't match.
-                </div>
+    
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
-            
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="inputBirthDate" placeholder="Birth Date" required>
-                <label for="inputBirthDate" class="form-label">Birth Date</label>
-            </div>
-            
+            <a href="../pages/register.php">Don't you have an account?</a>
+            <br>
+            <a href="#" >Lost my password</a>
             <div class="col-autom text-center">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-lg btn-primary">Login</button>
             </div>
         </form>
         
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 

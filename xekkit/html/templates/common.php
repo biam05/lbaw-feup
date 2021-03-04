@@ -33,6 +33,7 @@ function draw_header()
     <link rel="stylesheet" href="../css/nav_bar.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
+    <link rel="stylesheet" href="../css/login_registration.css">
 </head>
 
     <body style="margin-bottom: 60px;">

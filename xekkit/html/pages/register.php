@@ -35,6 +35,9 @@
             </div>
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                <div onclick="toggleEye(this)" class="password-eye">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </div>
                 <label for="inputPassword" class="form-label">Password</label>
                 <div class="invalid-feedback">
                     Your password must be at least 8 characters long, contain letters and numbers.
@@ -42,6 +45,9 @@
             </div>
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" required>
+                <div onclick="toggleEye(this)" class="password-eye">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </div>
                 <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
                 <div class="invalid-feedback">
                     Your passwords don't match.
@@ -49,16 +55,14 @@
             </div>
             
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="inputBirthDate" placeholder="Birth Date" required>
+                <input type="date" class="form-control" id="inputBirthDate" placeholder="Birth Date" required>
                 <label for="inputBirthDate" class="form-label">Birth Date</label>
             </div>
-            
+            <a href="../pages/login.php">Already have an account?</a>
             <div class="col-autom text-center">
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
-
-        <a class="btn btn-primary" href="#" role="button">Login</a>
         
     </div>
 </div>
