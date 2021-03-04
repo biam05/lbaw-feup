@@ -13,7 +13,7 @@
     <div class="row align-items-center vh-100">
         <div class="col-lg-7">
             <p class="fs-1 fw-bold text-white">Welcome to XEKKIT</p>
-            <a href="../pages/main.php" class="btn btn-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
+            <a href="../pages/main.php" class="btn btn-outline-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
         </div>
         
         <form class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate>
@@ -25,9 +25,9 @@
                     Username not found.
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
-                <div onclick="toggleEye(this)" class="password_eye">
+            <div class="form-floating mb-3 position-relative">
+                <input type="password" class="form-control pe-5" id="inputPassword" placeholder="Password" required>
+                <div onclick="toggleEye(this)" class="position-absolute top-50 end-0 translate-middle-y me-3">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
     

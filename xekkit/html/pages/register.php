@@ -33,9 +33,9 @@
                     Email already in use or invalid format.
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
-                <div onclick="toggleEye(this)" class="password-eye">
+            <div class="form-floating mb-3 position-relative">
+                <input type="password" class="form-control pe-5" id="inputPassword" placeholder="Password" required>
+                <div onclick="toggleEye(this)" class="position-absolute top-50 end-0 translate-middle-y me-3">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
                 <label for="inputPassword" class="form-label">Password</label>
@@ -43,9 +43,9 @@
                     Your password must be at least 8 characters long, contain letters and numbers.
                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" required>
-                <div onclick="toggleEye(this)" class="password_eye">
+            <div class="form-floating mb-3 position-relative">
+                <input type="password" class="form-control pe-5" id="inputConfirmPassword" placeholder="Confirm Password" required>
+                <div onclick="toggleEye(this)" class="position-absolute top-50 end-0 translate-middle-y me-3">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
                 <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
