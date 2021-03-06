@@ -48,6 +48,11 @@ aside{
     margin-top: 3px;
 }
 
+.clear-all{
+    float: right;
+    display: block;
+}
+
 @media (min-width: 1000px){
     .search {
         display: grid;

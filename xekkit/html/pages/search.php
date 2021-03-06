@@ -34,6 +34,7 @@ draw_nav_bar();
                         <li><a href="javascript:void(0)">Item <?= ++$i ?><input type="checkbox" name="filter-category" value="Item <?= ++$i ?>"></a></li>
                         <?php } ?>
                     </ul>
+                    <a class="text-white clear-all mt-2" href="javascript:void(0)" onclick="clearAll()">Clear All</a>
                 </li>            
             </ul>
         </nav>

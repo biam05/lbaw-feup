@@ -1,5 +1,5 @@
 function filterInList() {
-    var input, filter, ul, li, a, i, txtValue;
+    let input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("filterInput");
     filter = input.value.toUpperCase();
     ul = document.getElementById("listOption");
@@ -12,5 +12,16 @@ function filterInList() {
         } else {
             li[i].style.display = "none";
         }
+    }
+}
+
+function clearAll() {
+    let list = document.getElementById("listOption");
+    let listItem = list.getElementsByTagName("li");
+    let a, checkbox;
+    for (let i = 0; i < listItem.length; i++) {
+        a = listItem[i].getElementsByTagName("a")[0];
+        checkbox = a.getElementsByTagName("input")[0];
+        checkbox.checked = false;
     }
 }
