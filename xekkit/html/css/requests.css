@@ -1,0 +1,13 @@
+.partner-request>.card-body p.card-text{
+    background-color: #000;
+    margin-top: 0;
+    padding: 1em;
+    padding-top: 0.3em;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 1em;
+}
+
+.request{
+    margin-bottom: 1em;
+}

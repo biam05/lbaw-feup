@@ -33,10 +33,7 @@
     object-fit: scale-down;
 }
 
-.card video {
-    max-height: 500px;
-    object-fit: scale-down;
-}
+
 
 .card-text {
     margin-top: 1em;
