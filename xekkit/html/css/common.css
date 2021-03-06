@@ -33,3 +33,7 @@ input {
     -webkit-transform: scale(1.3);
             transform: scale(1.3);
 }
+
+.nav-pills .nav-link.active{
+    background-color: rgb(43, 43, 43);
+}
