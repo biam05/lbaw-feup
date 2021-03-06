@@ -7,7 +7,7 @@ draw_nav_bar();
 
 <div class="search container">
     <aside class="bd-aside text-muted text-white align-self-start mb-3 mb-xl-5 px-2">
-        <h2 class="text-white  h3 pt-4 pb-3 mb-4 border-bottom">Results for: music</h2>
+        <h2 class="text-white h3 pt-4 pb-3 mb-4 border-bottom">Results for: music</h2>
         <nav class="small" id="toc">
             <ul class="list-unstyled">
                 <li class="my-2">
@@ -27,8 +27,13 @@ draw_nav_bar();
                     </div>
                 </li>
                 <li class="my-2">
-
- 
+                    <p class="text-white h5 pt-4 pb-3">Filter by categories:</p>
+                    <input autocomplete="off" type="text" id="filterInput" onkeyup="filterInList()" placeholder="Search for categories.." title="Type in a name">
+                    <ul id="listOption">
+                        <?php for($i=0;$i<10;){ ?>
+                        <li><a href="javascript:void(0)">Item <?= ++$i ?><input type="checkbox" name="filter-category" value="Item <?= ++$i ?>"></a></li>
+                        <?php } ?>
+                    </ul>
                 </li>            
             </ul>
         </nav>
@@ -101,13 +106,4 @@ draw_nav_bar();
 draw_footer();
 ?>
 
-<script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myList li").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
+<script defer src="../js/search.js"></script>
