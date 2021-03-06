@@ -11,17 +11,12 @@ draw_nav_bar();
         <nav class="small" id="toc">
             <ul class="list-unstyled">
                 <li class="my-2">
-                    <div class="dropdown">
-                        <h6 class="text-white">Sort by:
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Top
-                            </button>
-                        </h6>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Recent</a>
-                            <a class="dropdown-item" href="#">Trending</a>
-                        </div>
-                    </div>
+                <h6 class="text-white">Sort by: </h6>
+                <select class="form-select border-0 text-white" aria-label="Sorting Options">
+                    <option selected>Top</option>
+                    <option value="1">New</option>
+                    <option value="2">Trending</option>
+                </select>
                 </li>
                 <li class="my-2">
                     <div class="form-check">
@@ -31,7 +26,10 @@ draw_nav_bar();
                         </label>
                     </div>
                 </li>
-            
+                <li class="my-2">
+
+ 
+                </li>            
             </ul>
         </nav>
     </aside>
@@ -102,3 +100,14 @@ draw_nav_bar();
 <?php
 draw_footer();
 ?>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myList li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
