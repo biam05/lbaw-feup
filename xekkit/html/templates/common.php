@@ -33,6 +33,7 @@ function draw_header()
     <link rel="stylesheet" href="../css/carousel.css">
     <link rel="stylesheet" href="../css/faq.css">
     <link rel="stylesheet" href="../css/requests.css">
+    <link rel="stylesheet" href="../css/news-modal.css">
 </head>
 
     <body style="margin-bottom: 60px;">
