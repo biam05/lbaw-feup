@@ -34,6 +34,7 @@ function draw_header()
     <link rel="stylesheet" href="../css/faq.css">
     <link rel="stylesheet" href="../css/requests.css">
     <link rel="stylesheet" href="../css/news-modal.css">
+    <link rel="stylesheet" href="../css/search.css">
 </head>
 
     <body style="margin-bottom: 60px;">
@@ -53,7 +54,7 @@ function draw_nav_bar()
                 XEKKIT
             </a>
             
-            <form class="d-flex nav-search-form">
+            <form class="d-flex nav-search-form"  action="../pages/search.php">
                 <input class="form-control me-2 border-0" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
             </form>

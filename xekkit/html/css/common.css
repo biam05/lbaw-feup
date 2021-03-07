@@ -37,3 +37,6 @@ input {
 textarea{
     resize:none;
 }
+.nav-pills .nav-link.active{
+    background-color: rgb(43, 43, 43);
+}
