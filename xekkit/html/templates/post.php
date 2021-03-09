@@ -1,14 +1,14 @@
 <?php
 function draw_post($title, $description, $author, $date, $tags, $image, $comments, $votes )
 {?>
-´
-<a class="text-decoration-none" href="../pages/thispost.php">
-  <div class="card mb-3 text-white bg-light-dark clickable-small">
+
+  <div class="card mb-3 text-white bg-light-dark">
       <div class="card-body">
         <h5 class="card-title" style="display:inline-block"><?=$title?></h5>
         <button class="card-author clickable text-white" onclick="document.location='../pages/profile.php'"><?=$author?></button>
         <button class="card-report clickable-big text-white"><i class="fas fa-exclamation-triangle"></i></button>
-        <span class="card-date"><?=$date?></span>
+        <br>
+        <button class="card-date clickable text-decoration-none text-white" onclick="document.location='../pages/thispost.php'"><?=$date?></button>
         <img src=<?=$image?> class="card-img-top" alt="..." draggable="false"> 
         <p class="card-text">
             <?php 
@@ -47,7 +47,6 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
         </footer>
       </div>
   </div>
-</a>
 
 
 
