@@ -4,5 +4,18 @@
         gap: 1rem;
         grid-template-columns: 4fr 2fr;
         grid-template-rows: auto;
+    }    
+}
+
+@media (max-width: 1000px){
+    .bd-aside .card .card-img-top{
+        display: none;
+    }
+    .mainpost {
+        display: flex;
+        flex-direction: column;
+    }
+    .mainpost .content {
+        order: 2;
     }
 }
