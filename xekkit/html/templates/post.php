@@ -1,51 +1,54 @@
 <?php
 function draw_post($title, $description, $author, $date, $tags, $image, $comments, $votes )
 {?>
-
-<div class="card mb-3 text-white bg-light-dark">
-    <div class="card-body">
-      <h5 class="card-title" style="display:inline-block"><?=$title?></h5>
-      <button class="card-author clickable text-white" onclick="document.location='../pages/profile.php'"><?=$author?></button>
-      <button class="card-report clickable-big text-white"><i class="fas fa-exclamation-triangle"></i></button>
-      <span class="card-date"><?=$date?></span>
-      <img src=<?=$image?> class="card-img-top" alt="..." draggable="false"> 
-      <p class="card-text">
-          <?php 
-        echo substr($description,0,150);
-        if(strlen($description)>150)
-        {
-          echo '...';
-        }
-        ?>
-      </p>
-    </div>
-    <div class="card-footer text-muted" style="display:flex;">
-      
-      <footer>
-      <div class="card-tags">
-            <?php
-            foreach($tags as $tag)
-            {
-              ?>
-                <button class="clickable text-white">#<?=$tag?></button>
-              <?php
-            }
-            ?>
-          </div>
-      <div class="votes">
-        <button class="clickable-big">
-          <i class="fas fa-angle-up text-white"></i>
-        </button>
-        <button class="clickable-big">
-          <i class="fas fa-angle-down text-white "></i>
-        </button>
+´
+<a class="text-decoration-none" href="../pages/thispost.php">
+  <div class="card mb-3 text-white bg-light-dark clickable-small">
+      <div class="card-body">
+        <h5 class="card-title" style="display:inline-block"><?=$title?></h5>
+        <button class="card-author clickable text-white" onclick="document.location='../pages/profile.php'"><?=$author?></button>
+        <button class="card-report clickable-big text-white"><i class="fas fa-exclamation-triangle"></i></button>
+        <span class="card-date"><?=$date?></span>
+        <img src=<?=$image?> class="card-img-top" alt="..." draggable="false"> 
+        <p class="card-text">
+            <?php 
+          echo substr($description,0,150);
+          if(strlen($description)>150)
+          {
+            echo '...';
+          }
+          ?>
+        </p>
       </div>
-          <span><?=$votes?></span>
-          <button  class="comments clickable" ><i class="fas fa-comment"></i> <?=$comments?></button>
-          
-      </footer>
-    </div>
-</div>
+      <div class="card-footer text-muted" style="display:flex;">
+        
+        <footer>
+        <div class="card-tags">
+              <?php
+              foreach($tags as $tag)
+              {
+                ?>
+                  <button class="clickable text-white">#<?=$tag?></button>
+                <?php
+              }
+              ?>
+            </div>
+        <div class="votes">
+          <button class="clickable-big">
+            <i class="fas fa-angle-up text-white"></i>
+          </button>
+          <button class="clickable-big">
+            <i class="fas fa-angle-down text-white "></i>
+          </button>
+        </div>
+            <span><?=$votes?></span>
+            <button  class="comments clickable" ><i class="fas fa-comment"></i> <?=$comments?></button>
+            
+        </footer>
+      </div>
+  </div>
+</a>
+
 
 
 <?php

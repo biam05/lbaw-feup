@@ -36,6 +36,7 @@ function draw_header()
     <link rel="stylesheet" href="../css/news-modal.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/about_us.css">
+    <link rel="stylesheet" href="../css/thispost.css">
 </head>
 
     <body style="margin-bottom: 60px;">
