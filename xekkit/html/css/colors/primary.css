@@ -160,3 +160,10 @@ a.text-primary:hover, a.text-primary:focus {
     outline: 0;
     box-shadow: 0 0 0 .25rem rgba(105, 201, 126, 0.5);
 }
+
+.accordion-button:focus {
+    border-color: #308643;
+        border-right-color: rgb(134, 183, 254);
+        border-left-color: rgb(134, 183, 254);
+    box-shadow: 0 0 0 .25rem rgba(105, 201, 126, 0.5);
+}

@@ -33,23 +33,29 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
               ?>
                 <button class="clickable text-white">#<?=$tag?></button>
               <?php
-            }
-            ?>
-          </div>
-      <div class="votes">
-        <button class="clickable-big">
-          <i class="fas fa-angle-up text-white"></i>
-        </button>
-        <button class="clickable-big">
-          <i class="fas fa-angle-down text-white "></i>
-        </button>
+              foreach($tags as $tag)
+              {
+                ?>
+                  <button class="clickable text-white">#<?=$tag?></button>
+                <?php
+              }
+              ?>
+            </div>
+        <div class="votes">
+          <button class="clickable-big">
+            <i class="fas fa-angle-up text-white"></i>
+          </button>
+          <button class="clickable-big">
+            <i class="fas fa-angle-down text-white "></i>
+          </button>
+        </div>
+            <span><?=$votes?></span>
+            <button  class="comments clickable" ><i class="fas fa-comment"></i> <?=$comments?></button>
+            
+        </footer>
       </div>
-          <span><?=$votes?></span>
-          <button  class="comments clickable" ><i class="fas fa-comment"></i> <?=$comments?></button>
-          
-      </footer>
-    </div>
-</div>
+  </div>
+
 
 
 <?php

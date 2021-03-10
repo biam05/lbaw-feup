@@ -31,11 +31,11 @@ function draw_header()
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
-    <link rel="stylesheet" href="../css/faq.css">
     <link rel="stylesheet" href="../css/requests.css">
-    <link rel="stylesheet" href="../css/news-modal.css">
+    <link rel="stylesheet" href="../css/news_modal.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/about_us.css">
+    <link rel="stylesheet" href="../css/this_post.css">
 </head>
 
     <body style="margin-bottom: 60px;">
@@ -48,24 +48,33 @@ function draw_header()
  */
 function draw_nav_bar()
 { ?>
+    <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
-        <div class="container-fluid">
+        <div class="container-fluid p-1">
             <a class="navbar-brand" href="../index.php">
                 <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
                 XEKKIT
             </a>
-            
-            <form class="d-flex nav-search-form"  action="../pages/search.php">
-                <input class="form-control me-2 border-0" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-            </form>
-            <div class="d-grid gap-2 d-md-block">
-                <a class="btn btn-outline-primary" href="../pages/login.php" role="button">Login</a>
-                <a class="btn btn-primary" href="../pages/register.php" role="button">Register</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse ms-auto gap-4" id="navbarSupportedContent">
+                <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php" >
+                    <input class="form-control" style="max-width:300px;" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
+                    <li class="nav-item">
+                    <a class="nav-link btn btn-outline-primary" href="../pages/login.php">Login</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link btn btn-primary" href="../pages/register.php">Register</a>
+                    </li>
+                </ul>
             </div>
-            
         </div>
     </nav>
+    
 <?php }
 
 
