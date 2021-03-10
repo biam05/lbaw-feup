@@ -20,13 +20,13 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Title</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="News-modal-title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="News-modal-title">
             </div>
 
             <div class="mb-3">
-              <label for="modal-description" class="form-label">Description</label>
-              <span id="modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
+              <label for="News-modal-description" class="form-label">Description</label>
+              <span id="News-modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
               </span>
             </div>
             <div class="mb-3">

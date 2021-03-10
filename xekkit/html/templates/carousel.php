@@ -10,7 +10,7 @@ function draw_card($img_src, $title, $tags, $date, $user)
     <div class="card-img-overlay d-flex flex-column justify-content-end carousel_card_overlay">
         <h5 class="card-title"><?=$title ?></h5>
         <div class="d-flex">
-            <? foreach($tags as $tag){ ?>
+            <?php foreach($tags as $tag){ ?>
                 <a href="#" class="card-link link-light text-decoration-none">#<?=$tag ?></a>
             <?}?>
         </div>                  
@@ -49,4 +49,7 @@ function draw_carousel()
     </div>  
 </div>
 
-<?php } ?>
+<?php 
+} 
+
+

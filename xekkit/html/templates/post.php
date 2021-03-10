@@ -6,7 +6,11 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
     <div class="card-body">
       <h5 class="card-title" style="display:inline-block"><?=$title?></h5>
       <button class="card-author clickable text-white" onclick="document.location='../pages/profile.php'"><?=$author?></button>
-      <button class="card-report clickable-big text-white"><i class="fas fa-exclamation-triangle"></i></button>
+      <button type="button" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
+      <i class="fas fa-exclamation-triangle"></i>
+      </button>
+         <?php draw_report_modal()?>      
+      <button class="card-report clickable-big text-white"></button>
       <span class="card-date"><?=$date?></span>
       <img src=<?=$image?> class="card-img-top" alt="..." draggable="false"> 
       <p class="card-text">
@@ -61,6 +65,35 @@ function draw_posts()
   ?>
 </div>
 
+
+<?php
+}
+?>
+
+<?php function draw_report_modal()
+{?>
+<div class="modal fade text-white" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-white">
+      <div class="modal-content bg-light-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title text-white" id="Report-modal-label">Report form</h5>
+          <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+              <label for="Report-modal-description" class="form-label">Reason to Report</label>
+              <span id="Report-modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
+              </span>
+            </div>
+
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 <?php
 }
