@@ -31,12 +31,11 @@ function draw_header()
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
-    <link rel="stylesheet" href="../css/faq.css">
     <link rel="stylesheet" href="../css/requests.css">
-    <link rel="stylesheet" href="../css/news-modal.css">
+    <link rel="stylesheet" href="../css/news_modal.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/about_us.css">
-    <link rel="stylesheet" href="../css/thispost.css">
+    <link rel="stylesheet" href="../css/this_post.css">
 </head>
 
     <body style="margin-bottom: 60px;">
