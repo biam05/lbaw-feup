@@ -39,10 +39,10 @@ function draw_faq_element($id, $question, $answer){
         draw_faq_element(4,
             "How can I get reputation points?",
             "In order to get reputation points you must interact with other people on XEKKIT:
-            
-            + 1 point for every vote you make (until a maximum of 5 points per day);
-            +/- 1 points for every upvote/downvote you get on your comments.
-            +/- 5 points for every upvote/downvote you get from regular users on your published news.
+            <br><br>
+            + 1 point for every vote you make (until a maximum of 5 points per day);<br>
+            +/- 1 points for every upvote/downvote you get on your comments.<br>
+            +/- 5 points for every upvote/downvote you get from regular users on your published news.<br>
             +/- 10 points for every upvote/downvote you get from partner users on your published news.");
         ?>
         
