@@ -59,17 +59,17 @@ function draw_nav_bar()
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse ms-auto gap-4" id="navbarSupportedContent">
                 <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php" >
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width:300px">
-                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                    <input class="form-control" style="max-width:300px;" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
                 </form>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
                     <li class="nav-item">
-                    <a class="nav-link" href="../pages/login.php">Login</a>
+                    <a class="nav-link btn btn-outline-primary" href="../pages/login.php">Login</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="../pages/register.php">Register</a>
+                    <a class="nav-link btn btn-primary" href="../pages/register.php">Register</a>
                     </li>
                 </ul>
             </div>
