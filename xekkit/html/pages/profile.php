@@ -1,6 +1,6 @@
 <?php
     include_once('../templates/common.php');    
-    include_once('../templates/post.php');   
+    include_once('../templates/post.php'); 
     draw_header();
     draw_nav_bar();
 ?>
@@ -15,6 +15,13 @@
                     </div>
                     <div class="col">                
                         <a href="#" class="btn btn-primary">Follow</a>
+                    </div>
+                    <div class="col">                
+                    <button type="button" class="profile-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        </button>
+                            <?php draw_report_modal()?>      
+
                     </div>
                 </div>  
                 <div class="row align-items-center">
