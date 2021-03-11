@@ -19,7 +19,7 @@ function draw_header()
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script defer src="https://kit.fontawesome.com/0f8556fd7f.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/colors/primary.css">
-    <link rel="stylesheet" href="../css/colors/secondary.css"> 
+    <link rel="stylesheet" href="../css/colors/secondary.css">
     <link rel="stylesheet" href="../css/colors/success.css">
     <link rel="stylesheet" href="../css/colors/danger.css">
     <link rel="stylesheet" href="../css/colors/warning.css">
@@ -38,7 +38,7 @@ function draw_header()
     <link rel="stylesheet" href="../css/this_post.css">
 </head>
 
-    <body style="margin-bottom: 60px;">
+<body style="margin-bottom: 60px;">
 
 <?php }
 
@@ -46,7 +46,7 @@ function draw_header()
 /**
  * Draws the navigation bar for all pages.
  */
-function draw_nav_bar()
+function draw_nav_bar($logged = false)
 { ?>
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
@@ -55,26 +55,53 @@ function draw_nav_bar()
                 <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
                 XEKKIT
             </a>
+            <div class="mobile icons-nav">
+                <a href="#"><i class="search-mobile fas fa-search"></i></a>
+                <a href="#"><i class="bell-notification fas fa-bell"></i></a>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse ms-auto gap-4" id="navbarSupportedContent">
-                <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php" >
+                <form class="desktop d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
                     <input class="form-control" style="max-width:300px;" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
                 </form>
-                <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
-                    <li class="nav-item">
-                    <a class="nav-link btn btn-outline-primary" href="../pages/login.php">Login</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link btn btn-primary" href="../pages/register.php">Register</a>
-                    </li>
-                </ul>
+                <?php if ($logged) { ?>
+                    <ul class="desktop navbar-nav ms-auto my-2 my-lg-0 gap-2">
+                        <li class="nav-item">
+                            <a href="#"><i class="bell-notification fas fa-bell"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="dropbtn">Hello, johndoe! <i class="fas fa-chevron-down"></i></a>
+                                <div class="dropdown-content">
+                                    <a href="#">Link 1</a>
+                                    <a href="#">Link 2</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2">
+                        <li class="nav-item">
+                            <a href="#">Link 1</a>
+                        </li>
+                    </ul>
+                <?php } else { ?>
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="../pages/login.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="../pages/register.php">Register</a>
+                        </li>
+                    </ul>
+                <?php } ?>
             </div>
         </div>
     </nav>
-    
+
 <?php }
 
 
@@ -83,23 +110,23 @@ function draw_nav_bar()
  */
 function draw_footer()
 { ?>
-        
-        <footer class="footer fixed-bottom mt-auto py-3 bg-dark">
-            <div class="container-xl">
-                <div class="row">
-                    <div class="col-md-2 col-sm-3 col-4 d-flex justify-content-between">
-                        <a href="../pages/about_us.php" class="text-light text-decoration-none fs-6">About</a>
-                        <a href="../pages/faq.php" class="text-light text-decoration-none fs-6">FAQ</a>
-                    </div>
-                    <div class="col-md-10 col-sm-9 col-8 text-end">
-                        <span class="text-light fs-6"> &copy; XEKKIT <?= date('Y') ?> </span>
-                    </div>
-                </div>
-                
-                
+
+<footer class="footer fixed-bottom mt-auto py-3 bg-dark">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-md-2 col-sm-3 col-4 d-flex justify-content-between">
+                <a href="../pages/about_us.php" class="text-light text-decoration-none fs-6">About</a>
+                <a href="../pages/faq.php" class="text-light text-decoration-none fs-6">FAQ</a>
             </div>
-        </footer>
-    </body>
+            <div class="col-md-10 col-sm-9 col-8 text-end">
+                <span class="text-light fs-6"> &copy; XEKKIT <?= date('Y') ?> </span>
+            </div>
+        </div>
+    
+    
+    </div>
+</footer>
+</body>
 
 </html>
 <?php } ?>
