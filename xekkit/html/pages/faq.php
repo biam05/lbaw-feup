@@ -22,7 +22,7 @@ function draw_faq_element($id, $question, $answer){
 
 
 ?>
-<div class="container text-white">
+<div class="container-xl text-white">
     <h1><i class="fas fa-book"></i>     FAQ</h1>    
     <br>
     <div class="accordion accordion-flush" id="faq">

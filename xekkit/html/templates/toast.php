@@ -16,7 +16,7 @@ function draw_toast()
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body text-white">
-        <a class="text-decoration-none text-white clickable" href="../pages/thispost.php">
+        <a class="text-decoration-none text-white clickable" href="../pages/news.php">
             Someone tried to report your post
         </a>
     </div>

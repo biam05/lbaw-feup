@@ -22,7 +22,7 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
       </button>
          <?php draw_report_modal()?>      
 
-      <button class="card-date clickable text-decoration-none text-white" onclick="document.location='../pages/thispost.php'"><?=$date?></button>
+      <button class="card-date clickable text-decoration-none text-white" onclick="document.location='../pages/news.php'"><?=$date?></button>
       <img src=<?=$image?> class="card-img-top" alt="..." draggable="false"> 
       <p class="card-text">
           <?php 
@@ -69,13 +69,13 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
 <?php
 }
 
-function draw_posts()
+function draw_posts(/* $posts */)
 {?>
 
 <div class="container-xl">
   
   <?php
-    draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873" );
+    draw_post("Daft Punk very very long", "Daft Punk Break Up Announcement image", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873" );
     draw_post("Daft Punk", "This is a test to see the size of a description needed to trigger the reticências. So far this has 100 characteres. Is it good enough? Short maybe? Long maybe? One could never know writing text on the text editor, so I continue to write until I can consider this a big Post. Maybe I should just paste some Lorem Ipsum shit, but I don't really want to, this is more genuine", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873" );
   ?>
 </div>

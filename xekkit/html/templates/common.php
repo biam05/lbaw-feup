@@ -57,7 +57,7 @@ function draw_nav_bar($logged = true)
 { ?>
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
-        <div class="container-fluid p-1">
+        <div class="container-xl p-1">
             <a class="navbar-brand" href="../index.php">
                 <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
                 XEKKIT
