@@ -47,7 +47,7 @@
             <a href="../pages/register.php">Don't you have an account?</a>
             <br>
             <a href="#" >Lost my password</a>
-            <div class="col-autom text-center">
+            <div class="col-auto text-center">
                 <button type="submit" class="btn btn-lg btn-primary">Login</button>
             </div>
         </form>
