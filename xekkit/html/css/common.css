@@ -168,6 +168,12 @@ ul.mobile.navbar-nav a{
     text-decoration: none;
 }
 
+.navbar .search-form-mobile{
+    display: none;
+    width: 100%;
+    padding: 10px 15px;
+}
+
 @media (max-width: 575px) {
     .desktop{
         display: none !important;

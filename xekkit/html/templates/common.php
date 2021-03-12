@@ -36,6 +36,8 @@ function draw_header()
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/about_us.css">
     <link rel="stylesheet" href="../css/this_post.css">
+    
+    <script defer src="../js/main.js"></script>
 </head>
 
 <body style="margin-bottom: 60px;">
@@ -56,7 +58,7 @@ function draw_nav_bar($logged = true)
                 XEKKIT
             </a>
             <div class="mobile icons-nav">
-                <a href="#"><i class="search-mobile fas fa-search"></i></a>
+                <a href="#"><i onclick="openSearchBar()" class="search-mobile fas fa-search"></i></a>
                 <?php if ($logged) { ?>
                 <a href="#"><i class="bell-notification fas fa-bell"></i></a>
                 <?php } ?>
@@ -111,8 +113,13 @@ function draw_nav_bar($logged = true)
                 <?php } ?>
             </div>
         </div>
+        <div id="search-bar-mobile" class="mobile search-form-mobile">
+            <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
     </nav>
-
 <?php }
 
 
