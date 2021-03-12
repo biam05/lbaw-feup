@@ -38,6 +38,8 @@ function draw_header()
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/about_us.css">
     <link rel="stylesheet" href="../css/this_post.css">
+    
+    <script defer src="../js/main.js"></script>
 </head>
 
 <body style="margin-bottom: 60px;">
@@ -51,7 +53,7 @@ draw_toast();
 /**
  * Draws the navigation bar for all pages.
  */
-function draw_nav_bar($logged = false)
+function draw_nav_bar($logged = true)
 { ?>
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
@@ -61,8 +63,10 @@ function draw_nav_bar($logged = false)
                 XEKKIT
             </a>
             <div class="mobile icons-nav">
-                <a href="#"><i class="search-mobile fas fa-search"></i></a>
+                <a href="javascript:void(0)"><i onclick="openSearchBar()" class="search-mobile fas fa-search"></i></a>
+                <?php if ($logged) { ?>
                 <a href="#"><i class="bell-notification fas fa-bell"></i></a>
+                <?php } ?>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -81,16 +85,25 @@ function draw_nav_bar($logged = false)
                             <div class="dropdown">
                                 <a class="dropbtn">Hello, johndoe! <i class="fas fa-chevron-down"></i></a>
                                 <div class="dropdown-content">
-                                    <a href="#">Link 1</a>
-                                    <a href="#">Link 2</a>
-                                    <a href="#">Link 3</a>
+                                    <a href="#">My Profile</a>
+                                    <a href="#">My Posts</a>
+                                    <a href="#">Logout</a>
                                 </div>
                             </div>
                         </li>
                     </ul>
                     <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2">
                         <li class="nav-item">
-                            <a href="#">Link 1</a>
+                            <span>Hello, johndoe!</span>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">My Posts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Logout</a>
                         </li>
                     </ul>
                 <?php } else { ?>
@@ -105,8 +118,13 @@ function draw_nav_bar($logged = false)
                 <?php } ?>
             </div>
         </div>
+        <div id="search-bar-mobile" class="mobile search-form-mobile">
+            <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
     </nav>
-
 <?php }
 
 
