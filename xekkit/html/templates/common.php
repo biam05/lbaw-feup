@@ -77,33 +77,29 @@ function draw_nav_bar($logged = true)
                     <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 <?php if ($logged) { ?>
-                    <ul class="desktop navbar-nav ms-auto my-2 my-lg-0 gap-2">
+                    <ul class="desktop navbar-nav ms-auto gap-2">
                         <li class="nav-item">
                             <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
                         </li>
-                        <li class="nav-item">
-                            <div class="dropdown">
-                                <a class="dropbtn">Hello, johndoe! <i class="fas fa-chevron-down"></i></a>
-                                <div class="dropdown-content">
-                                    <a href="../pages/profile.php">My Profile</a>
-                                    <a href="#">My Posts</a>
-                                    <a href="../pages/login.php">Logout</a>
-                                </div>
-                            </div>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, johndoe!
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
+                                <li><a class="dropdown-item" href="../pages/login.php">Logout</a></li>
+                            </ul>
+                            
                         </li>
                     </ul>
-                    <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2">
-                        <li class="nav-item">
-                            <span>Hello, johndoe!</span>
+                    <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2 p-2 text-end bg-light-dark">
+                        <li class="nav-item p-1">
+                            <h3 class="text-white">Hello, johndoe!</h3>
                         </li>
-                        <li class="nav-item">
-                            <a href="../pages/profile.php">My Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">My Posts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../pages/login.php">Logout</a>
+                        <li class="nav-item p-1">
+                            <a href="../pages/profile.php" class="nav-link">My Profile</a>
+                        <li class="nav-item p-1">
+                            <a href="../pages/login.php" class="nav-link">Logout</a>
                         </li>
                     </ul>
                 <?php } else { ?>

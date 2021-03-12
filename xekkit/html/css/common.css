@@ -40,53 +40,12 @@ input {
 
 }
 
-textarea {
-    resize: none;
-}
-
 .nav-pills .nav-link.active {
     background-color: rgb(43, 43, 43);
 }
 
-.dropdown {
-    float: right;
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown .dropbtn {
-    color: white;
-    text-decoration: none;
-}
-
-.dropdown-content {
-    display: none;
-    right: 10px;
-    top: 25px;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
 .bell-notification {
-    margin-right: 10px;
+    margin-top: 12px;
     color: #f5c658;
     transition: 0.4s;
 }
@@ -137,35 +96,6 @@ textarea {
     color: #ddd;
     font-size: 19px;
     margin-right: 10px;
-}
-
-ul.mobile.navbar-nav{
-    text-align: right;
-    padding: 10px;
-    font-size: 17px;
-    background-color: rgb(43, 43, 43);
-    border-radius: 5px;
-}
-
-ul.mobile.navbar-nav li{
-    border-top: 1px solid #fff;
-    padding: 5px;
-}
-
-ul.mobile.navbar-nav li:first-child{
-    border: none;
-}
-
-ul.mobile.navbar-nav span{
-    color: white;
-    font-weight: 900;
-    font-size: 20px;
-    text-decoration: none;
-}
-
-ul.mobile.navbar-nav a{
-    color: white;
-    text-decoration: none;
 }
 
 .navbar .search-form-mobile{
