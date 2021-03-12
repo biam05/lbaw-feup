@@ -23,8 +23,10 @@ function draw_faq_element($id, $question, $answer){
 
 ?>
 <div class="container-xl text-white">
-    <h1><i class="fas fa-book"></i>     FAQ</h1>    
-    <br>
+    <div class="row mb-3">
+        <h1 class="col-auto"><i class="fas fa-book"></i>     FAQ</h1>  
+        <a class="col-auto btn btn-secondary" href="../pages/edit_faq.php" role="button">See as moderator</a>  
+    </div>
     <div class="accordion accordion-flush" id="faq">
         <?php
         draw_faq_element(1,
