@@ -1,5 +1,6 @@
 .votes {
     margin-right: 0.4em;
+
     float: left;
     font-size: larger;
     display: -webkit-box;
@@ -16,7 +17,7 @@
     margin-left: 1em;
     text-decoration: none;
     color: inherit;
-     margin-top: 0.5em; 
+    margin-top: 1em;
     font-weight: 400;
 }
 

@@ -12,7 +12,7 @@
 function draw_post($title, $description, $author, $date, $tags, $image, $comments, $votes, $is_mine = false)
 {
     ?>
-    
+   
     <div class="card mb-3 text-white bg-light-dark">
         <div class="card-body">
             <h5 class="card-title" style="display:inline-block"><?= $title ?></h5>
@@ -30,7 +30,9 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
                 <?php draw_report_modal() ?>
             <?php } ?>
             
-            <button class="card-date clickable text-decoration-none text-white" onclick="document.location='../pages/thispost.php'"><?= $date ?></button>
+            <span class="card-date text-decoration-none text-white"><?= $date ?></span>
+            <a href="../pages/news.php" style="text-decoration:none; color:inherit;">
+            
             <img src=<?= $image ?> class="card-img-top" alt="..." draggable="false">
             <p class="card-text">
                 <?php
@@ -41,6 +43,7 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
                 ?>
             </p>
         </div>
+        </a>
         <div class="card-footer text-muted" style="display:flex;">
             
             <footer>
@@ -69,8 +72,7 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
             </footer>
         </div>
     </div>
-    
-    
+
     <?php
 }
 
