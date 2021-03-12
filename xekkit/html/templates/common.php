@@ -1,12 +1,14 @@
 <?php
 
+include_once('toast.php');
+
 /**
  * Draws the header for all pages.
  */
 function draw_header()
 { ?>
     
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -42,7 +44,10 @@ function draw_header()
 
 <body style="margin-bottom: 60px;">
 
-<?php }
+<?php 
+
+draw_toast();
+}
 
 
 /**
