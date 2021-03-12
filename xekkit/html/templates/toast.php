@@ -5,7 +5,7 @@
 function draw_toast()
 { ?>
 
-<!--script defer src="../js/toast.js"></script-->
+<script defer src="../js/toast.js"></script>
 
 <div class="position-fixed bottom-0 end-0 p-3 mb-5" style="z-index: 5">
   <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
