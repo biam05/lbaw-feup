@@ -39,7 +39,6 @@ function draw_header()
     <link rel="stylesheet" href="../css/about_us.css">
     <link rel="stylesheet" href="../css/this_post.css">
     
-    <script defer src="../js/main.js"></script>
 </head>
 
 <body style="margin-bottom: 60px;">
@@ -55,6 +54,7 @@ draw_toast();
  */
 function draw_nav_bar($logged = true)
 { ?>
+    <script defer src="../js/nav_bar_search.js"></script>
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
         <div class="container-xl p-1">
