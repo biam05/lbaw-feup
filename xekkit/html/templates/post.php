@@ -1,7 +1,10 @@
 <?php
-include_once('toast.php');
+//include_once('toast.php');
 
-draw_toast();
+//draw_toast(); don't ever do this!! this puts the toast code on top of every other code related to the page
+             // even before the header of the page!
+             // call draw_toast() on the page you want the toast to be drawn or inside a function
+             // moved this code to common.php
 ?>
 
 
@@ -110,4 +113,3 @@ function draw_posts()
 <?php
 }
 ?>
-

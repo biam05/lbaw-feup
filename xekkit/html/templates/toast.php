@@ -5,7 +5,9 @@
 function draw_toast()
 { ?>
 
-<div class="position-fixed bottom-0 end-0 p-3 mb-5" style="z-index: 5">
+<script defer src="../js/toast.js"></script>
+
+<div class="position-fixed bottom-0 end-0 p-3 mb-5">
   <div id="liveToast" class="toast hide bg-light-dark" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header btn-primary">
       <img src="../img/warning.png" class="rounded me-2" width="20">
@@ -20,7 +22,5 @@ function draw_toast()
     </div>
   </div>
 </div>
-
-<script defer src="../js/toast.js"></script>
 
 <?php } ?>
