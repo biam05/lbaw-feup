@@ -65,7 +65,7 @@ function draw_nav_bar($logged = true)
             <div class="mobile icons-nav">
                 <a href="javascript:void(0)"><i onclick="openSearchBar()" class="search-mobile fas fa-search"></i></a>
                 <?php if ($logged) { ?>
-                <a href="#"><i class="bell-notification fas fa-bell"></i></a>
+                <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
                 <?php } ?>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,15 +79,15 @@ function draw_nav_bar($logged = true)
                 <?php if ($logged) { ?>
                     <ul class="desktop navbar-nav ms-auto my-2 my-lg-0 gap-2">
                         <li class="nav-item">
-                            <a href="#"><i class="bell-notification fas fa-bell"></i></a>
+                            <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
                                 <a class="dropbtn">Hello, johndoe! <i class="fas fa-chevron-down"></i></a>
                                 <div class="dropdown-content">
-                                    <a href="#">My Profile</a>
+                                    <a href="../pages/profile.php">My Profile</a>
                                     <a href="#">My Posts</a>
-                                    <a href="#">Logout</a>
+                                    <a href="../pages/login.php">Logout</a>
                                 </div>
                             </div>
                         </li>
@@ -97,13 +97,13 @@ function draw_nav_bar($logged = true)
                             <span>Hello, johndoe!</span>
                         </li>
                         <li class="nav-item">
-                            <a href="#">My Profile</a>
+                            <a href="../pages/profile.php">My Profile</a>
                         </li>
                         <li class="nav-item">
                             <a href="#">My Posts</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Logout</a>
+                            <a href="../pages/login.php">Logout</a>
                         </li>
                     </ul>
                 <?php } else { ?>
