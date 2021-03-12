@@ -58,7 +58,7 @@ function draw_nav_bar($logged = true)
                 XEKKIT
             </a>
             <div class="mobile icons-nav">
-                <a href="#"><i onclick="openSearchBar()" class="search-mobile fas fa-search"></i></a>
+                <a href="javascript:void(0)"><i onclick="openSearchBar()" class="search-mobile fas fa-search"></i></a>
                 <?php if ($logged) { ?>
                 <a href="#"><i class="bell-notification fas fa-bell"></i></a>
                 <?php } ?>
