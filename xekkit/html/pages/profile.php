@@ -130,6 +130,7 @@ $is_logged = true;
                 </div>
             </div>
         </div>
+    </nav>
 </section>
 
 <?php
