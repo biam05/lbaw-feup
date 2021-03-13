@@ -97,12 +97,18 @@ $is_logged = true;
             <label for="inputBirthDate" class="form-label">Birth Date</label>
         </div>
 
-        <label class="form-label text-white">Gender</label>
-        <select class="form-select mb-3 bg-white" aria-label="Gender">
-            <option selected>Male</option>
-            <option value="1">Female</option>
-            <option value="2">Rather Not Say</option>
-        </select>
+        <div class="form-floating mb-3">
+                <select class="form-select" id="gender" aria-label="Gender" required>
+                    <option></option>
+                    <option value="0" selected>Male</option>
+                    <option value="1">Female</option>
+                    <option value="2">Rather Not Say</option>
+                </select>
+                <label for="gender">Gender*</label>
+                <div class="invalid-feedback">
+                        Please select you gender.
+                </div>
+        </div>
     
         <div class="form-floating mb-3">
             <textarea placeholder="Description (Optional)" style="width: 100%; padding: 10px" rows="5"></textarea>

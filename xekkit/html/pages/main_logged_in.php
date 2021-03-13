@@ -8,7 +8,7 @@ include_once('../templates/new_post.php');
 draw_header();
 draw_nav_bar();
 draw_trending();
-draw_new_post(false);  
+draw_new_post_modal();
 draw_posts();
 draw_footer();
 ?>
