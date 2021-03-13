@@ -33,7 +33,6 @@ function draw_header()
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
-    <link rel="stylesheet" href="../css/requests.css">
     <link rel="stylesheet" href="../css/news_modal.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/about_us.css">
@@ -144,6 +143,8 @@ function draw_footer()
     
     </div>
 </footer>
+
+<script src="../js/main.js"></script>
 </body>
 
 </html>
