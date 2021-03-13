@@ -1,14 +1,5 @@
 <?php
-//include_once('toast.php');
 
-//draw_toast(); don't ever do this!! this puts the toast code on top of every other code related to the page
-             // even before the header of the page!
-             // call draw_toast() on the page you want the toast to be drawn or inside a function
-             // moved this code to common.php
-?>
-
-
-<?php
 function draw_post($title, $description, $author, $date, $tags, $image, $comments, $votes, $is_mine = false)
 {
     ?>
@@ -34,13 +25,8 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
             <a href="../pages/news.php" style="text-decoration:none; color:inherit;">
             
             <img src=<?= $image ?> class="card-img-top" alt="..." draggable="false">
-            <p class="card-text">
-                <?php
-                echo substr($description, 0, 150);
-                if (strlen($description) > 150) {
-                    echo '...';
-                }
-                ?>
+            <p class="card-text text-truncate">
+                <?= $description?>
             </p>
         </div>
         </a>
