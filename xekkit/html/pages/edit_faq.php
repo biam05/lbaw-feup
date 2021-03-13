@@ -34,7 +34,7 @@ function draw_edit_faq_element($id, $question, $answer){
 <div class="container-xl text-white">
     <div class="row mb-3">
         <h1 class="col-auto"><i class="fas fa-book"></i>     FAQ</h1>  
-        <a class="col-auto btn btn-secondary" href="../pages/faq.php" role="button">See as user</a>  
+        <a class="col-auto btn btn-secondary" href="../pages/faq_moderator.php" role="button">See as user</a>  
     </div>
     <div class="accordion accordion-flush" id="faq">
         <?php

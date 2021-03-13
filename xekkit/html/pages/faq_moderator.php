@@ -5,7 +5,7 @@ draw_header();
 
 draw_nav_bar();
 
-$moderator = false;
+$moderator = true;
 
 
 function draw_faq_element($id, $question, $answer){ 

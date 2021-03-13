@@ -9,7 +9,7 @@ $logged = true;
 
 draw_nav_bar($logged);
 
-$partner = true;
+$partner = false;
 
 ?>
 
