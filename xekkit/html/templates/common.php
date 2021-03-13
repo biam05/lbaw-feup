@@ -58,7 +58,7 @@ function draw_nav_bar($logged = true)
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
         <div class="container-xl p-1">
             <a class="navbar-brand" href="../index.php">
-                <img src="../img/logo.png" alt="" width="24" height="24" class="d-inline-block align-top">
+                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
                 XEKKIT
             </a>
             <div class="mobile icons-nav" <?php if (!$logged) { ?>style="top: 20px" <?php } ?>>
