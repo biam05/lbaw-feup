@@ -119,3 +119,9 @@ input {
         display: none !important;
     }
 }
+
+@media (max-width: 1024px) {
+    .d-none-not-desktop{
+        display: none;
+    }
+}
