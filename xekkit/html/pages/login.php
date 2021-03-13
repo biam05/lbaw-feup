@@ -16,7 +16,7 @@
             <a href="../pages/main.php" class="btn btn-outline-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Visit the website without an account.</a>
         </div>
         
-        <form class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate>
+        <form action="../pages/main_logged_in.php" class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate >
             <p class="text-center fs-1">Login</p>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="inputUsername" placeholder="Username/Email" required>

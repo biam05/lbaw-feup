@@ -1,4 +1,18 @@
-<?php function draw_new_post_modal()
+<?php 
+
+
+function draw_new_post($logged_in){
+  if($logged_in){
+    draw_new_post_modal();
+  }
+  else{
+    draw_login_to_post();
+  }
+}
+
+
+
+function draw_new_post_modal()
 {
 ?>
   <script defer src="../js/image_preview.js"></script>
@@ -53,6 +67,22 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+<?php
+}
+
+function draw_login_to_post()
+{
+?>
+  <script defer src="../js/image_preview.js"></script>
+  <div class="container-xl">
+    <div class="row justify-content-center p-3">
+      <div class="col-md-7 col-9">
+        <h2 class="text-white text-center">Something New? Share with us!</h2>
+      </div>
+      <a class="btn btn-primary col-md-2 col-7" href="../pages/login.php">Login</a>
     </div>
   </div>
 
