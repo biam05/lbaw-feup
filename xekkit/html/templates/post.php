@@ -77,7 +77,6 @@ function draw_posts(/* $posts */)
         ?>
     </div>
     
-    
     <?php
 }
 
