@@ -11,7 +11,7 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
             <a class="card-author clickable text-white text-decoration-none" href="../pages/profile.php"><?= $author ?></a>
             <a href="../pages/news.php" class="text-white text-decoration-none">
                 <?php if ($is_mine) { ?>
-                    <button type="button" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                    <button type="button" class="card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#deletePostModal">
                         <i class="fas fa-times"></i>
                     </button>
                 <?php } else { ?>
@@ -99,6 +99,7 @@ function draw_posts(/* $posts */)
                     <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <form>
                     <div class="mb-3">
                         <label for="Report-modal-description" class="form-label">Reason to Report</label>
                         <span id="Report-modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">

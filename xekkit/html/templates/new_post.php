@@ -42,6 +42,11 @@ function draw_new_post_modal()
               <label for="News-modal-title" class="form-label">Title</label>
               <input type="text" class="form-control" id="News-modal-title">
             </div>
+    
+              <div class="mb-3" id="parentTags">
+                  <label for="News-modal-tags" class="form-label">Tags</label>
+                  <input type="text" class="form-control" id="News-modal-tags">
+              </div>
 
             <div class="mb-3">
               <label for="News-modal-description" class="form-label">Description</label>
