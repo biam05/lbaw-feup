@@ -1,79 +1,70 @@
 <?php
-//include_once('toast.php');
 
-//draw_toast(); don't ever do this!! this puts the toast code on top of every other code related to the page
-// even before the header of the page!
-// call draw_toast() on the page you want the toast to be drawn or inside a function
-// moved this code to common.php
-?>
-
-
-<?php
 function draw_post($title, $description, $author, $date, $tags, $image, $comments, $votes, $is_mine = false)
 {
     ?>
     
     <div class="card mb-3 text-white bg-light-dark">
-       
-            <div class="card-body">
-                <a href="../pages/news.php" class="text-white text-decoration-none"><h5 class="card-title" style="display:inline-block"><?= $title ?></h5></a>
-                <a class="card-author clickable text-white text-decoration-none" href="../pages/profile.php"><?= $author ?></a>
-                <a href="../pages/news.php" class="text-white text-decoration-none">
+        <div class="card-body">
+            <a href="../pages/news.php" class="text-white text-decoration-none">
+                <h5 class="card-title" style="display:inline-block"><?= $title ?></h5></a>
+            <a class="card-author clickable text-white text-decoration-none" href="../pages/profile.php"><?= $author ?></a>
+            <a href="../pages/news.php" class="text-white text-decoration-none">
                 <?php if ($is_mine) { ?>
                     <button type="button" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#deletePostModal">
                         <i class="fas fa-times"></i>
                     </button>
-                    <?php draw_delete_post(); ?>
                 <?php } else { ?>
                     <button type="button" id="toastbtn" class="card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportModal">
                         <i class="fas fa-exclamation-triangle"></i>
                     </button>
-                    <?php draw_report_modal() ?>
                 <?php } ?>
                 
                 <span class="card-date text-white"><?= $date ?></span>
+                
+                <img src="<?= $image ?>" class="card-img-top" alt="..." draggable="false">
+                <p class="card-text">
+                    <?php
+                    echo substr($description, 0, 150);
+                    if (strlen($description) > 150) {
+                        echo '...';
+                    }
+                    ?>
+                </p>
+            </a>
+        </div>
+        <div class="card-footer text-muted" style="display:flex;">
+            
+            <footer>
+                <div class="card-tags">
                     
-                    <img src=<?= $image ?> class="card-img-top" alt="..." draggable="false">
-                    <p class="card-text">
-                        <?php
-                        echo substr($description, 0, 150);
-                        if (strlen($description) > 150) {
-                            echo '...';
-                        }
+                    
+                    <?php
+                    foreach ($tags as $tag) {
                         ?>
-                    </p>
-                </a>
-            </div>
-            <div class="card-footer text-muted" style="display:flex;">
-                
-                <footer>
-                    <div class="card-tags">
-                        
-                        
+                        <button class="clickable text-white">#<?= $tag ?></button>
                         <?php
-                        foreach ($tags as $tag) {
-                            ?>
-                            <button class="clickable text-white">#<?= $tag ?></button>
-                            <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="votes">
-                        <button class="clickable-big">
-                            <i class="fas fa-angle-up text-white"></i>
-                        </button>
-                        <button class="clickable-big">
-                            <i class="fas fa-angle-down text-white "></i>
-                        </button>
-                    </div>
-                    <span><?= $votes ?></span>
-                    <button class="comments clickable"><i class="fas fa-comment"></i> <?= $comments ?></button>
-                
-                </footer>
-            </div>
+                    }
+                    ?>
+                </div>
+                <div class="votes">
+                    <button class="clickable-big">
+                        <i class="fas fa-angle-up text-white"></i>
+                    </button>
+                    <button class="clickable-big">
+                        <i class="fas fa-angle-down text-white "></i>
+                    </button>
+                </div>
+                <span><?= $votes ?></span>
+                <button class="comments clickable"><i class="fas fa-comment"></i> <?= $comments ?></button>
+            
+            </footer>
+        </div>
     </div>
     
     <?php
+    draw_report_modal();
+    draw_delete_post();
 }
 
 function draw_posts(/* $posts */)
