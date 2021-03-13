@@ -96,9 +96,16 @@ $is_logged = true;
             <input type="date" class="form-control" id="inputBirthDate" placeholder="Birth Date" required>
             <label for="inputBirthDate" class="form-label">Birth Date</label>
         </div>
+
+        <label class="form-label text-white">Gender</label>
+        <select class="form-select mb-3 bg-white" aria-label="Gender">
+            <option selected>Male</option>
+            <option value="1">Female</option>
+            <option value="2">Rather Not Say</option>
+        </select>
     
         <div class="form-floating mb-3">
-            <textarea placeholder="Description" style="width: 100%; padding: 10px" rows="5"></textarea>
+            <textarea placeholder="Description (Optional)" style="width: 100%; padding: 10px" rows="5"></textarea>
         </div>
         <div class="form-floating mb-3">
             <button type="submit" class="btn btn-primary w-100">Update</button>

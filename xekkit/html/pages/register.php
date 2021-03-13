@@ -63,6 +63,14 @@
                 <input type="date" class="form-control" id="inputBirthDate" placeholder="Birth Date" required>
                 <label for="inputBirthDate" class="form-label">Birth Date</label>
             </div>
+
+            <label class="form-label">Gender</label>
+            <select class="form-select mb-3 bg-white" aria-label="Gender" required>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+                <option value="2">Rather Not Say</option>
+            </select>
+
             <a href="../pages/login.php">Already have an account?</a>
             <div class="col-autom text-center">
                 <button type="submit" class="btn btn-primary">Register</button>
