@@ -11,7 +11,7 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
             <a class="card-author clickable text-white text-decoration-none" href="../pages/profile.php"><?= $author ?></a>
             <a href="../pages/news.php" class="text-white text-decoration-none">
                 <?php if ($is_mine) { ?>
-                    <button type="button" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                    <button type="button" class="card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#deletePostModal">
                         <i class="fas fa-times"></i>
                     </button>
                 <?php } else { ?>

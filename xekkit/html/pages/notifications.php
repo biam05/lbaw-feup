@@ -1,7 +1,7 @@
 <?php
 include_once('../templates/common.php');
 include_once('../templates/user_notification.php');
-include_once('../templates/request_notification.php');
+include_once('../templates/moderator.php');
 include_once('../templates/post.php');
 
 draw_header();
