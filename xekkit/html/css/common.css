@@ -133,3 +133,9 @@ input {
         display: none;
     }
 }
+
+@media (min-width: 993px) {
+    .hidden-lg-up{
+        display: none;
+    }
+}

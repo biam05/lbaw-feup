@@ -1,8 +1,6 @@
 <?php
-
-    include_once('../templates/common.php');
-
-    draw_header();
+include_once('../templates/common.php');
+draw_header();
 ?>
 
 

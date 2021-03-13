@@ -9,7 +9,7 @@ $logged = true;
 
 draw_nav_bar($logged);
 
-$is_myprofile = true;
+$is_myprofile = false;
 
 ?>
 
@@ -17,7 +17,7 @@ $is_myprofile = true;
     <section>
         
         <div class="row justify-content-start">
-            <h5 class="col-auto text-white"><i class="fas fa-check"></i> x/johndoe</h5>
+            <h5 class="col-auto text-white"><i class="fas fa-check"></i> x/otheruser</h5>
             <?php if (!$is_myprofile) { ?>
                 <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -38,7 +38,7 @@ $is_myprofile = true;
                     <?php if ($is_myprofile) { ?>
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
                     <?php } else { ?>
-                        <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
+                        <a href="profile_other_unfollow.php" class="col-auto align-self-end btn btn-primary">Follow</a>
                     <?php }
                 }?>
                 
@@ -46,7 +46,7 @@ $is_myprofile = true;
                 
             </div>
         </div>
-        <p class="lead text-white mb-3">My name is John and I'm a partner example user for this framewhire. My posts are really about any trending topic.</p>
+        <p class="lead text-white mb-3">My name is not John and I'm other example user for this framewhire. My posts are really about any trending topic.</p>
         
     </section>
     

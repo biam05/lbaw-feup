@@ -53,6 +53,9 @@ button.bg-secondary:focus {
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
+    color: #212529;
+    background-color: #ac7402;
+    border-color: #9d6902;
     box-shadow: 0 0 0 0.2rem rgba(223, 150, 3, 0.5);
 }
 

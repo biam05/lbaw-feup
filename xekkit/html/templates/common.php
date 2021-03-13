@@ -46,6 +46,7 @@ function draw_header()
 <?php 
 
 draw_toast();
+
 }
 
 

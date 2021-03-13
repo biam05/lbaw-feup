@@ -1,5 +1,3 @@
-<!--script src="../js/carousel.js" defer></script-->
-
 <?php
 
 function draw_card($img_src, $title, $tags, $date, $user)
@@ -50,5 +48,3 @@ function draw_trending()
 
 <?php 
 } 
-
-

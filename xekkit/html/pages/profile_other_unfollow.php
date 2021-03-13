@@ -9,7 +9,7 @@ $logged = true;
 
 draw_nav_bar($logged);
 
-$is_myprofile = true;
+$is_myprofile = false;
 
 ?>
 
@@ -38,7 +38,7 @@ $is_myprofile = true;
                     <?php if ($is_myprofile) { ?>
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
                     <?php } else { ?>
-                        <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
+                        <a href="profile_other_follow.php" class="col-auto align-self-end btn btn-outline-primary">Unfollow</a>
                     <?php }
                 }?>
                 

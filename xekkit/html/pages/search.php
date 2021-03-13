@@ -1,13 +1,14 @@
 <?php
 include_once('../templates/common.php');
+draw_header();
+
 include_once('../templates/post.php');
 include_once('../templates/search.php');
 include_once('../templates/users.php');
 
+$logged = true;
 
-
-draw_header();
-draw_nav_bar();
+draw_nav_bar($logged);
 
 ?>
 
@@ -40,7 +41,7 @@ draw_nav_bar();
         <!-- News tab -->
         <div class="tab-pane fade show active" id="search-news" role="tabpanel" aria-labelledby="search-news-tab">
             <?php
-            draw_posts();
+            draw_posts($logged);
             ?>
         </div>
 

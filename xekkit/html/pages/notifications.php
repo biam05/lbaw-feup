@@ -1,10 +1,11 @@
 <?php
 include_once('../templates/common.php');
+draw_header();
+
 include_once('../templates/user_notification.php');
 include_once('../templates/moderator.php');
 include_once('../templates/post.php');
 
-draw_header();
 draw_nav_bar();
 ?>
 <div class="container-xl">

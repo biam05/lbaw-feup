@@ -1,130 +1,114 @@
 <?php
 include_once('../templates/common.php');
-include_once('../templates/post.php');
 draw_header();
-draw_nav_bar();
 
-$is_myprofile = true;
-$is_logged = true;
+
+include_once('../templates/post.php');
+
+$logged = true;
+
+draw_nav_bar($logged);
+
+$partner = true;
+
 ?>
 
-<section class="container page profile">
-    <section class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item clickable"><a class="text-decoration-none text-muted" href="profile.php">Profile</a></li>
-                <li class="breadcrumb-item active text-white" aria-current="page">Edit Profile</li>
-            </ol>
-        </nav>
-    </section>
-    <section class="usercard">
-        <div class="card" style="width: 20em;">
-            <div class="container">
-                <div class="row align-items-start">
-                    <div class="col">
-                        <h5 class="card-title"><i class="fas fa-check"></i> x/johndoe</h5>
-                    </div>
-                    <?php if (!$is_myprofile) { ?>
-                        <?php if ($is_logged) { ?>
-                            <div class="col">
-                                <a href="#" class="btn btn-primary">Follow</a>
-                            </div>
-                        <?php } ?>
-                        <div class="col">
-                            <button type="button" class="profile-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </button>
-                            <?php draw_report_modal() ?>
-                        </div>
-                    <?php } else { ?>
-                        <?php if ($is_logged) { ?>
-                            <div class="col-12">
-                                <a href="editprofile.php" class="btn btn-primary">Upload New Image</a>
-                            </div>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <img src="../img/user.png" class="card-img-top" alt="user image" style="width: 10rem;">
-                    </div>
-                    <div class="col">
-                        <div class="card-text">
-                            <p>Reputation</p>
-                            <h2>254,789</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 30em;">
-                <div class="card-body">
-                    <h5 class="card-title">Description</h5>
-                    <p class="card-text">My name is John and I'm a partner example user for this framewhire. My posts are really about any trending topic.</p>
-                </div>
-            </div>
-    </section>
-    <form class="col-lg-8 p-3 g-3 needs-validation bg-light-dark" novalidate>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputUsername" placeholder="Username" required>
-            <label for="inputUsername">Username</label>
-            <div class="invalid-feedback">
-                Username already in use.
-            </div>
+<script src="../js/validate_form.js" defer></script>
+
+<section class="container-xl">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item clickable"><a class="text-decoration-none text-muted" href="profile.php">Profile</a></li>
+            <li class="breadcrumb-item active text-white" aria-current="page">Edit Profile</li>
+        </ol>
+    </nav>
+    <section class="p-3">
+        <div class="row justify-content-start">
+            <h5 class="col-auto text-white"><i class="fas fa-check"></i> x/johndoe</h5>
         </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
-            <label for="inputEmail" class="form-label">Email</label>
-            <div class="invalid-feedback">
-                Email already in use or invalid format.
+
+        <div class="row justify-content-start text-white align-items-end mb-3">
+            <div class="col-auto">
+                <img src="../img/user.png" class="card-img-top" alt="user image" width="200" height="200">
             </div>
-        </div>
-        <div class="row g-2">
-            <div class="col-8 form-floating mb-3">
-                <input type="password" value="***********" disabled class="form-control" id="inputPassword" placeholder="Password" required>
-                <label for="inputPassword" class="form-label">Password</label>
-                <div class="invalid-feedback">
-                    Your password must be at least 8 characters long, contain letters and numbers.
-                </div>
-            
-            </div>
-            <div class="col-4 form-floating mb-3">
-                <button type="button" class="btn btn-primary w-100 h-100" data-bs-toggle="modal" data-bs-target="#updatePassword">Change</button>
+            <div class="col-auto">
+                <h6 class="text-muted">Reputation</h6>
+                <h2>254,789</h2>
+
+                <a href="edit_profile.php" class="col align-self-end btn btn-primary">Change Photo</a>
             </div>
         </div>
         
-        <div class="form-floating mb-3">
-            <input type="date" class="form-control" id="inputBirthDate" placeholder="Birth Date" required>
-            <label for="inputBirthDate" class="form-label">Birth Date</label>
-        </div>
-
-        <div class="form-floating mb-3">
-                <select class="form-select bg-white" id="gender" aria-label="Gender" required>
-                    <option></option>
-                    <option value="0">Male</option>
-                    <option value="1">Female</option>
-                    <option value="2">Rather Not Say</option>
-                </select>
-                <label for="gender">Gender<label>
+    </section>
+    <section class="col-lg-8 col-md-9 col-sm-11">
+        <form class="p-3 g-3 needs-validation" novalidate>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username" value="johndoe" required>
+                <label for="inputUsername">Username</label>
                 <div class="invalid-feedback">
-                        Please select you gender.
+                    Username already in use.
                 </div>
-        </div>
-    
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="john.doe@mail.com" required>
+                <label for="inputEmail" class="form-label">Email</label>
+                <div class="invalid-feedback">
+                    Email already in use or invalid format.
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-7 form-floating mb-3">
+                    <input type="password" value="***********" disabled class="form-control" id="inputPassword" placeholder="Password" disabled>
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <div class="invalid-feedback">
+                        Your password must be at least 8 characters long, contain letters and numbers.
+                    </div>
+                
+                </div>
+                <div class="col-5 form-floating mb-3">
+                    <button type="button" class="btn btn-primary w-100 h-100" data-bs-toggle="modal" data-bs-target="#updatePassword">Change password</button>
+                </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="inputBirthDate" placeholder="Birth Date" value="1994-06-01" required>
+                <label for="inputBirthDate" class="form-label">Birth Date</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                    <select class="form-select bg-white" id="gender" aria-label="Gender" required>
+                        <option></option>
+                        <option selected value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Rather Not Say</option>
+                    </select>
+                    <label for="gender">Gender<label>
+                    <div class="invalid-feedback">
+                            Please select you gender.
+                    </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="description" style="height: 100px">My name is John and I'm a partner example user for this framewhire. My posts are really about any trending topic.</textarea>
+                <label for="description">Description (optional)</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+            </div>
+        </form>
+        <form class="p-3 pt-3 g-3 needs-validation">
         <div class="form-floating mb-3">
-            <textarea placeholder="Description (Optional)" style="width: 100%; padding: 10px" rows="5"></textarea>
-        </div>
-        <div class="form-floating mb-3">
-            <button type="submit" class="btn btn-primary w-100">Update</button>
-        </div>
-    </form>
-    <form class="col-lg-8 p-3 pt-3 g-3 needs-validation bg-light-dark">
-        <div class="form-floating mb-3">
-            <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner</button>
-        </div>
-        <div class="form-floating mb-3">
-            <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteAccount">Delete Account</button>
-        </div>
-    </form>
+                <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner <i class="fas fa-check"></i></button>
+            </div>
+            <div class="form-floating mb-3">
+                <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#cancelPartnership">Cancel Partnership</button>
+            </div>
+            <div class="form-floating mb-3">
+                <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteAccount">Delete Account</button>
+            </div>
+        </form>
+    </section>
     
 </section>
 

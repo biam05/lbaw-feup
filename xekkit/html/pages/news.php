@@ -1,9 +1,13 @@
 <?php
 include_once('../templates/common.php');
+draw_header();
+
+
 include_once('../templates/post.php');
 include_once('../templates/comments.php');
+include_once('../templates/users.php');
 
-draw_header();
+
 draw_nav_bar();
 ?>
 
@@ -11,23 +15,13 @@ draw_nav_bar();
     <div class="row">
         <div class="col">
         <?php
-            draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873" );
+            draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", true, "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873", true);
             draw_comments();
         ?>
         </div>
     
         <div class="hidden-md-down col-lg-auto">
-            <div class="card align-items-center text-center text-white bg-light-dark" style="width: 18rem;">
-                <img src="../img/user.png" class="card-img-top" alt="user image" style="width: 10rem;">
-                <div class="card-body"> 
-                    <button class="card-title clickable text-white">x/johndoe</button>              
-                    <div class="card-text">
-                        <p>Reputation</p>
-                        <h2>254,789</h2>
-                    </div>                   
-                </div>
-            </div>  
-            
+            <?php draw_user_card("x/johndoe", "254,789", true); ?>
         </div>
     </div>
     
