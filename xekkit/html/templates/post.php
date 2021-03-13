@@ -2,9 +2,9 @@
 //include_once('toast.php');
 
 //draw_toast(); don't ever do this!! this puts the toast code on top of every other code related to the page
-             // even before the header of the page!
-             // call draw_toast() on the page you want the toast to be drawn or inside a function
-             // moved this code to common.php
+// even before the header of the page!
+// call draw_toast() on the page you want the toast to be drawn or inside a function
+// moved this code to common.php
 ?>
 
 
@@ -12,83 +12,87 @@
 function draw_post($title, $description, $author, $date, $tags, $image, $comments, $votes, $is_mine = false)
 {
     ?>
-   
+    
     <div class="card mb-3 text-white bg-light-dark">
-        <div class="card-body">
-            <h5 class="card-title" style="display:inline-block"><?= $title ?></h5>
-            <button class="card-author clickable text-white" onclick="document.location='../pages/profile.php'"><?= $author ?></button>
-            
-            <?php if ($is_mine) { ?>
-                <button type="button" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#deletePostModal">
-                    <i class="fas fa-times"></i>
-                </button>
-                <?php draw_delete_post(); ?>
-            <?php } else { ?>
-                <button type="button" id="toastbtn" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </button>
-                <?php draw_report_modal() ?>
-            <?php } ?>
-            
-            <span class="card-date text-decoration-none text-white"><?= $date ?></span>
-            <a href="../pages/news.php" style="text-decoration:none; color:inherit;">
-            
-            <img src=<?= $image ?> class="card-img-top" alt="..." draggable="false">
-            <p class="card-text">
-                <?php
-                echo substr($description, 0, 150);
-                if (strlen($description) > 150) {
-                    echo '...';
-                }
-                ?>
-            </p>
-        </div>
-        </a>
-        <div class="card-footer text-muted" style="display:flex;">
-            
-            <footer>
-                <div class="card-tags">
+       
+            <div class="card-body">
+                <a href="../pages/news.php" class="text-white text-decoration-none"><h5 class="card-title" style="display:inline-block"><?= $title ?></h5></a>
+                <a class="card-author clickable text-white text-decoration-none" href="../pages/profile.php"><?= $author ?></a>
+                <a href="../pages/news.php" class="text-white text-decoration-none">
+                <?php if ($is_mine) { ?>
+                    <button type="button" class="card-report clickable-big text-white" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <?php draw_delete_post(); ?>
+                <?php } else { ?>
+                    <button type="button" id="toastbtn" class="card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportModal">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </button>
+                    <?php draw_report_modal() ?>
+                <?php } ?>
+                
+                <span class="card-date text-white"><?= $date ?></span>
                     
-                    
-                    <?php
-                    foreach ($tags as $tag) {
-                        ?>
-                        <button class="clickable text-white">#<?= $tag ?></button>
+                    <img src=<?= $image ?> class="card-img-top" alt="..." draggable="false">
+                    <p class="card-text">
                         <?php
-                    }
-                    ?>
-                </div>
-                <div class="votes">
-                    <button class="clickable-big">
-                        <i class="fas fa-angle-up text-white"></i>
-                    </button>
-                    <button class="clickable-big">
-                        <i class="fas fa-angle-down text-white "></i>
-                    </button>
-                </div>
-                <span><?= $votes ?></span>
-                <button class="comments clickable"><i class="fas fa-comment"></i> <?= $comments ?></button>
-            
-            </footer>
-        </div>
+                        echo substr($description, 0, 150);
+                        if (strlen($description) > 150) {
+                            echo '...';
+                        }
+                        ?>
+                    </p>
+                </a>
+            </div>
+            <div class="card-footer text-muted" style="display:flex;">
+                
+                <footer>
+                    <div class="card-tags">
+                        
+                        
+                        <?php
+                        foreach ($tags as $tag) {
+                            ?>
+                            <button class="clickable text-white">#<?= $tag ?></button>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="votes">
+                        <button class="clickable-big">
+                            <i class="fas fa-angle-up text-white"></i>
+                        </button>
+                        <button class="clickable-big">
+                            <i class="fas fa-angle-down text-white "></i>
+                        </button>
+                    </div>
+                    <span><?= $votes ?></span>
+                    <button class="comments clickable"><i class="fas fa-comment"></i> <?= $comments ?></button>
+                
+                </footer>
+            </div>
     </div>
-
+    
     <?php
 }
 
 function draw_posts(/* $posts */)
-{?>
-
-<div class="container-xl">
-  
-  <?php
-    draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873", false);
-    draw_post("Daft Punk", "This is a test to see the size of a description needed to trigger the reticências. So far this has 100 characteres. Is it good enough? Short maybe? Long maybe? One could never know writing text on the text editor, so I continue to write until I can consider this a big Post. Maybe I should just paste some Lorem Ipsum shit, but I don't really want to, this is more genuine", "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873", false);
-  ?>
-</div>
-
-
-<?php
+{
+    ?>
+    
+    <div class="container-xl">
+        
+        <?php
+        draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", "Jan 23, 2021",
+            ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873", false);
+        draw_post("Daft Punk",
+            "This is a test to see the size of a description needed to trigger the reticências. So far this has 100 characteres. Is it good enough? Short maybe? Long maybe? One could never know writing text on the text editor, so I continue to write until I can consider this a big Post. Maybe I should just paste some Lorem Ipsum shit, but I don't really want to, this is more genuine",
+            "x/johndoe", "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873", false);
+        ?>
+    </div>
+    
+    
+    <?php
 }
 
 ?>
