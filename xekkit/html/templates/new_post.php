@@ -6,8 +6,10 @@ function draw_new_post($logged_in){
     draw_new_post_modal();
   }
   else{
+
     draw_login_to_post();
   }
+  
 }
 
 
@@ -47,7 +49,7 @@ function draw_new_post_modal()
                   <label for="News-modal-tags" class="form-label">Tags</label>
                   <input type="text" class="form-control" id="News-modal-tags">
                   <p id="parentTags"></p>
-              </>
+              </div>
 
             <div class="mb-3">
               <label for="News-modal-description" class="form-label">Description</label>
@@ -55,18 +57,19 @@ function draw_new_post_modal()
               </span>
             </div>
             <div class="mb-3">
+              <div class="container" id="file-display-area">
+
+              </div>
+            </div>
+            <div class="mb-3">
               <label class="custom-file-upload form-control" id="modal-image">
                 <input type="file" name="photo" id="fileToUpload" accept="image/*">
                 <i class="fa fa-upload"></i> Image/video to upload
               </label>
             </div>
-            <div class="mb-3">
-            <div class="container" id="file-display-area">
-
+            
+            <div id=error-display-area>
             </div>
-            </div>
-              <div id=error-display-area>
-              </div>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
