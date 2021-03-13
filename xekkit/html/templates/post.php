@@ -25,7 +25,7 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
             <a href="../pages/news.php" style="text-decoration:none; color:inherit;">
             
             <img src=<?= $image ?> class="card-img-top" alt="..." draggable="false">
-            <p class="card-text text-truncate">
+            <p class="card-text text-truncate mt-3">
                 <?= $description?>
             </p>
         </div>
