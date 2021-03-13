@@ -23,13 +23,8 @@ function draw_post($title, $description, $author, $date, $tags, $image, $comment
                 <span class="card-date text-white"><?= $date ?></span>
                 
                 <img src="<?= $image ?>" class="card-img-top" alt="..." draggable="false">
-                <p class="card-text">
-                    <?php
-                    echo substr($description, 0, 150);
-                    if (strlen($description) > 150) {
-                        echo '...';
-                    }
-                    ?>
+                <p class="card-text text-truncate mt-2">
+                    <?= $description ?>
                 </p>
             </a>
         </div>
