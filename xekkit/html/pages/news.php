@@ -96,14 +96,14 @@ draw_nav_bar();
             
         </div>   
     </div>
-    <aside class="bd-aside">
+    <aside class="bd-aside d-none-not-desktop">
         <div class="card align-items-center text-center text-white bg-light-dark" style="width: 18rem;">
             <img src="../img/user.png" class="card-img-top" alt="user image" style="width: 10rem;">
             <div class="card-body"> 
                 <button class="card-title clickable text-white">x/johndoe</button>              
                 <div class="card-text">
                     <p>Reputation</p>
-                    <h2>254,789</h4>
+                    <h2>254,789</h2>
                 </div>                   
             </div>
         </div>  
