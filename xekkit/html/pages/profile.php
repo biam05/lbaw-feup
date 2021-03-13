@@ -10,6 +10,13 @@ $is_logged = true;
 ?>
 
 <section class="container page profile">
+    <section class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active text-white" aria-current="page">Profile</li>
+            </ol>
+        </nav>
+    </section>
     <section class="usercard">
         <div class="card" style="width: 20em;">
             <div class="container">

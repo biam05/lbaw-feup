@@ -9,6 +9,14 @@ $is_logged = true;
 ?>
 
 <section class="container page profile">
+    <section class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item clickable"><a class="text-decoration-none text-muted" href="profile.php">Profile</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">Edit Profile</li>
+            </ol>
+        </nav>
+    </section>
     <section class="usercard">
         <div class="card" style="width: 20em;">
             <div class="container">
@@ -80,7 +88,7 @@ $is_logged = true;
             
             </div>
             <div class="col-4 form-floating mb-3">
-                <p data-bs-toggle="modal" data-bs-target="#updatePassword" style="width: 100%; height: 100%; padding-top: 10px" class="btn btn-primary">Change</p>
+                <button type="button" class="btn btn-primary w-100 h-100" data-bs-toggle="modal" data-bs-target="#updatePassword">Change</button>
             </div>
         </div>
         
@@ -92,8 +100,16 @@ $is_logged = true;
         <div class="form-floating mb-3">
             <textarea placeholder="Description" style="width: 100%; padding: 10px" rows="5"></textarea>
         </div>
-        <div class="col-auto text-center">
-            <button type="submit" class="btn btn-primary">Update</button>
+        <div class="form-floating mb-3">
+            <button type="submit" class="btn btn-primary w-100">Update</button>
+        </div>
+    </form>
+    <form class="col-lg-8 p-3 pt-3 g-3 needs-validation bg-light-dark">
+        <div class="form-floating mb-3">
+            <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner</button>
+        </div>
+        <div class="form-floating mb-3">
+            <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteAccount">Delete Account</button>
         </div>
     </form>
     
@@ -120,6 +136,53 @@ $is_logged = true;
                 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-white" id="askForPartner" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-white">
+        <div class="modal-content bg-light-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="Report-modal-label">Ask for Partner</h5>
+                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <p>Please tell us why you should become a partner:</p>
+                </div>
+                <div class="mb-3">
+                    <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I should become a partner because..."></textarea>
+                </div>
+                </div>
+                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-white" id="deleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-white">
+        <div class="modal-content bg-light-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="Report-modal-label">Delete Account</h5>
+                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <p>Do you wish to delete your account?</p>
+                    <p class="small">Your profile will be deleted, but your posts will stay in our website.</p>
+                </div>
+                
+                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete Account</button>
                 </form>
             </div>
         
