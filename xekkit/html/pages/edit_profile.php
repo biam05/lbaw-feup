@@ -55,7 +55,7 @@ $is_logged = true;
                 </div>
             </div>
     </section>
-    <form class="col-lg-5 p-3 g-3 needs-validation bg-light-dark" novalidate>
+    <form class="col-lg-8 p-3 g-3 needs-validation bg-light-dark" novalidate>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="inputUsername" placeholder="Username" required>
             <label for="inputUsername">Username</label>
