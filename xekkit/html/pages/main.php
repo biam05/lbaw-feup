@@ -25,7 +25,7 @@ draw_new_post(false);
             </section>
         </div>
     </div>
-    <nav class="hidden-md-up">
+    <nav class="container-xl hidden-md-up">
         <ul class="nav nav-pills mb-3 text-white bg-light-dark" id="pills-tab" role="tablist">
             <li class="nav-item " role="presentation">
                 <button class="nav-link active text-white" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="true">Home</button>
