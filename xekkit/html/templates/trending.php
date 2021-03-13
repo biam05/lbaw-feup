@@ -5,18 +5,17 @@
 function draw_card($img_src, $title, $tags, $date, $user)
 { ?>
 
-<div class="card text-white bg-dark position-relative custom_card">
+<div style="cursor: pointer" onclick="location.href='../pages/news.php'" class="card text-white bg-dark position-relative custom_card">
     <img class="card-img" src="<?=$img_src ?>" alt="Card image cap">
     <div class="card-img-overlay d-flex flex-column justify-content-end carousel_card_overlay">
         <h5 class="card-title"><?=$title ?></h5>
         <div class="d-flex">
             <?php foreach($tags as $tag){ ?>
-                <a href="#" class="card-link link-light text-decoration-none">#<?=$tag ?></a>
+                <a href="" class="card-link link-light text-decoration-none">#<?=$tag ?></a>
             <?}?>
         </div>                  
         <span class="card-text card_date"><?=$date ?></span>
-        <a href="#" class="card-link link-light text-decoration-none card_author"><?=$user ?></a>
-            
+        <a href="../pages/profile.php" class="card-link link-light text-decoration-none card_author"><?=$user ?></a>
     </div>
 </div>
 
