@@ -98,13 +98,13 @@ $is_logged = true;
         </div>
 
         <div class="form-floating mb-3">
-                <select class="form-select" id="gender" aria-label="Gender" required>
+                <select class="form-select bg-white" id="gender" aria-label="Gender" required>
                     <option></option>
-                    <option value="0" selected>Male</option>
+                    <option value="0">Male</option>
                     <option value="1">Female</option>
                     <option value="2">Rather Not Say</option>
                 </select>
-                <label for="gender">Gender*</label>
+                <label for="gender">Gender<label>
                 <div class="invalid-feedback">
                         Please select you gender.
                 </div>
@@ -195,7 +195,7 @@ $is_logged = true;
                     <p class="small">Your profile will be deleted, but your posts will stay in our website.</p>
                 </div>
                 
-                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete Account</button>
+                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal"  onclick="location.href='main.php'">Delete Account</button>
                 </form>
             </div>
         

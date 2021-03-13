@@ -46,7 +46,7 @@
             </div>
             <a href="../pages/register.php">Don't you have an account?</a>
             <br>
-            <a href="#" >Lost my password</a>
+            <a href="" data-bs-toggle="modal" data-bs-target="#forgotPassword" >Lost my password</a>
             <div class="col-auto text-center">
                 <button type="submit" class="btn btn-lg btn-primary">Login</button>
             </div>
@@ -55,23 +55,29 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+<div class="modal fade text-white" id="forgotPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog text-white">
+        <div class="modal-content bg-light-dark text-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title text-white" id="Forgot-modal-label">Forgot Password</h5>
+                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <div class="mb-3">
+                    <p>Tell us your username/email and we will send you an email with the instructions you must follow to reset your password.</p>
+                </div>
+                <div class="mb-3">
+                <div class="form mb-3">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Username/Email" required>
+                    <div class="invalid-feedback">
+                        Username/Email doesn't exist.
+                    </div>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+        
         </div>
     </div>
 </div>
