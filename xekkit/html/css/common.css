@@ -105,6 +105,14 @@ input {
     padding: 10px 15px;
 }
 
+#parentTags{
+  margin-top: 4px;
+}
+
+#parentTags span{
+    margin-right: 4px;
+}
+
 @media (max-width: 575px) {
     .desktop{
         display: none !important;

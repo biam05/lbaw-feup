@@ -29,10 +29,11 @@
               <input type="text" class="form-control" id="News-modal-title">
             </div>
     
-              <div class="mb-3" id="parentTags">
+              <div class="mb-3">
                   <label for="News-modal-tags" class="form-label">Tags</label>
                   <input type="text" class="form-control" id="News-modal-tags">
-              </div>
+                  <p id="parentTags"></p>
+              </>
 
             <div class="mb-3">
               <label for="News-modal-description" class="form-label">Description</label>
