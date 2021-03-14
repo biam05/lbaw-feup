@@ -4,23 +4,23 @@ draw_header();
 draw_nav_bar();
 ?>
 
-<div id="carouselExampleIndicators" class="container-xl carousel slide" data-bs-ride="carousel">
+<div id="feupCarousel" class="container-xl carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="containerfeupimg carousel-item active">
+        <div class="containerfeupimg carousel-item active" data-bs-interval="4000">
             <img src="../img/feup.jpg" class="feupimg d-block w-100" alt="...">
         </div>
-        <div class="containerfeupimg carousel-item">
+        <div class="containerfeupimg carousel-item" data-bs-interval="4000">
             <img src="../img/lbaw.jpg" class="feupimg d-block w-100" alt="...">
         </div>
-        <div class="containerfeupimg carousel-item">
+        <div class="containerfeupimg carousel-item" data-bs-interval="4000">
             <img src="../img/covid.jpg" class="feupimg d-block w-100" alt="...">
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#feupCarousel"  data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#feupCarousel"  data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
@@ -34,27 +34,27 @@ draw_nav_bar();
             <div class="col-lg-3 col-sm-6 text-center">
                 <img class="rounded-circle" src="../img/user.png" width="140" height="140">
                 <h2>Beatriz Mendes</h2>
-                <p>up201806551</p>
+                <p class="text-muted">up201806551</p>
             </div>
             <div class="col-lg-3 col-sm-6 text-center">
                 <img class="rounded-circle" src="../img/user.png" width="140" height="140">
                 <h2>Guilherme Calassi</h2>
-                <p>up201800157</p>
+                <p class="text-muted">up201800157</p>
             </div>
             <div class="col-lg-3 col-sm-6 text-center">
                 <img class="rounded-circle" src="../img/user.png" width="140" height="140">
-                <h2>André Assunção</h2>
-                <p>up201806140</p>
+                <h2>L. André Assunção</h2>
+                <p class="text-muted">up201806140</p>
             </div>
             <div class="col-lg-3 col-sm-6 text-center">
                 <img class="rounded-circle" src="../img/user.png" width="140" height="140">
                 <h2>Ricardo Cardoso</h2>
-                <p>up201604686</p>
+                <p class="text-muted">up201604686</p>
             </div>
         </div>
      
-    <hr class="featurette-divider text-white mt-5 mb-5">  
-    <div class="row featurette">
+    <hr class="text-white mt-5 mb-5">  
+    <div class="row">
         <div class="col-md-9 order-md-2">
             <h2 class="featurette-heading text-white pt-5">Our Main Inspiration</h2>
             <p class="lead text-white">The majority of our website structure and concept (including the name, obviously)

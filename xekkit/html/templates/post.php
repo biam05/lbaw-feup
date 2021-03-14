@@ -53,21 +53,18 @@ function draw_post($title, $description, $author, $partner, $date, $tags, $image
         
         
     </div>
-    <div class="card-footer text-muted" style="display:flex;">
-        
-        <footer>
-            <div class="card-tags">
-                
-                
-                <?php
-                foreach ($tags as $tag) {
-                    ?>
-                    <button class="clickable text-white">#<?= $tag ?></button>
-                    <?php
-                }
+    <footer class="card-footer text-muted">
+        <div class="row">
+            <?php
+            foreach ($tags as $tag) {
                 ?>
-            </div>
-            <div class="votes">
+                <button class="col-auto clickable text-white px-1">#<?= $tag ?></button>
+                <?php
+            }
+            ?>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-auto d-flex flex-column pe-1">
                 <button class="clickable-big">
                     <i class="fas fa-angle-up text-white"></i>
                 </button>
@@ -75,11 +72,10 @@ function draw_post($title, $description, $author, $partner, $date, $tags, $image
                     <i class="fas fa-angle-down text-white "></i>
                 </button>
             </div>
-            <span><?= $votes ?></span>
-            <button class="comments clickable"><i class="fas fa-comment"></i> <?= $comments ?></button>
-        
-        </footer>
-    </div>
+            <span class="col-auto ps-0"><?= $votes ?></span>
+            <button class="col-auto clickable text-muted"><i class="fas fa-comment text-white"></i> <?= $comments ?></button>
+        </div>
+    </footer>
 </div>
     
 <?php

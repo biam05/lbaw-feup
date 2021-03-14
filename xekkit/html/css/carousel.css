@@ -5,23 +5,6 @@
             mask-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
 }
 
-.card_date {
-    position: absolute;
-    font-size: smaller;
-    bottom: 0.85em;
-    left: 1rem;
-}
-  
-.card_author {
-    position: absolute;
-    bottom: 0.7em;
-    right: 0.2em;
-}
-
-.carousel_card_overlay {
-    padding-bottom: 2.2rem;
-}
-
 .custom_card{
     width: 18rem;
 }

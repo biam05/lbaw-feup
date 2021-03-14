@@ -32,14 +32,11 @@ function draw_header()
     <link rel="stylesheet" href="../css/colors/light.css">
     <link rel="stylesheet" href="../css/colors/dark.css">
     <link rel="stylesheet" href="../css/colors/light-dark.css">
-    <link rel="stylesheet" href="../css/profile.css">
-    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/about_us.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/carousel.css">
     <link rel="stylesheet" href="../css/news_modal.css">
     <link rel="stylesheet" href="../css/search.css">
-    <link rel="stylesheet" href="../css/about_us.css">
-    <link rel="stylesheet" href="../css/this_post.css">
     
 </head>
 <body style="margin-bottom: 60px;">
@@ -61,40 +58,52 @@ function draw_nav_bar($logged = true)
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
         <div class="container-xl p-1">
+            <!-- Logo -->
             <a class="navbar-brand" href="../index.php">
                 <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
                 XEKKIT
             </a>
-            <div class="mobile icons-nav" <?php if (!$logged) { ?>style="top: 20px" <?php } ?>>
-                <a href="javascript:void(0)"><i onclick="openSearchBar()" class="search-mobile fas fa-search"></i></a>
+
+            <!-- Mobile search and notifications -->
+            <div class="mobile ms-auto">
+                <a href="javascript:void(0)"><i onclick="openSearchBar()" class="text-white clickable fas fa-search me-3"></i></a>
                 <?php if ($logged) { ?>
                 <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
                 <?php } ?>
             </div>
+
+            <!-- responsive right toggler-->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse ms-auto gap-4" id="navbarSupportedContent">
+
+            <div class="collapse navbar-collapse gap-4" id="navbarSupportedContent">
+                <!-- Desktop search bar -->
                 <form class="desktop d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
                     <input class="form-control" style="max-width:300px;" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
                 </form>
+                
                 <?php if ($logged) { ?>
-                    <ul class="desktop navbar-nav ms-auto gap-2">
-                        <li class="nav-item">
-                            <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, johndoe!
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
-                                <li><a class="dropdown-item" href="../pages/login.php">Logout</a></li>
-                            </ul>
-                            
-                        </li>
-                    </ul>
+                    <!-- Desktop right side of nav bar -->
+                    <div class="desktop ms-auto gap-2">
+                        <div class="row">
+                            <a href="../pages/notifications.php" class="col-auto align-self-center"><i class="bell-notification fas fa-bell"></i></a>
+                                
+                            <div class="col-auto nav-item navbar-nav dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hello, johndoe!
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
+                                    <li><a class="dropdown-item" href="../pages/login.php">Logout</a></li>
+                                </ul>
+                                    
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile right side of nav bar -->
                     <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2 p-2 text-end bg-light-dark">
                         <li class="nav-item p-1">
                             <h3 class="text-white">Hello, johndoe!</h3>
@@ -106,18 +115,19 @@ function draw_nav_bar($logged = true)
                         </li>
                     </ul>
                 <?php } else { ?>
+                    <!-- Desktop and Mobile right side of nav bar -->
                     <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
                         <li class="nav-item">
-                            <a class="nav-link btn btn-outline-primary" href="../pages/login.php">Login</a>
+                            <a class="btn btn-outline-primary" href="../pages/login.php">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary" href="../pages/register.php">Register</a>
+                            <a class="btn btn-primary" href="../pages/register.php">Register</a>
                         </li>
                     </ul>
                 <?php } ?>
             </div>
         </div>
-        <div id="search-bar-mobile" class="mobile search-form-mobile">
+        <div id="search-bar-mobile" class="mobile search-form-mobile w-100 p-2">
             <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
@@ -149,7 +159,7 @@ function draw_footer()
     </div>
 </footer>
 
-<script src="../js/main.js"></script>
+<script defer src="../js/main.js"></script>
 </body>
 
 </html>

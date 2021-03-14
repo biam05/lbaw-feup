@@ -19,6 +19,12 @@ input {
     text-decoration: none;
 }
 
+.card img {
+    max-height: 500px;
+    object-fit: scale-down;
+}
+
+
 .clickable, .clickable-big, .clickable-small {
     -webkit-transition: 0.2s;
     transition: 0.2s;
@@ -45,7 +51,6 @@ input {
 }
 
 .bell-notification {
-    margin-top: 12px;
     color: #f5c658;
     transition: 0.4s;
 }
@@ -87,22 +92,8 @@ input {
     }
 }
 
-.mobile.icons-nav{
-    position: absolute;
-    right: 70px;
-    top: 10px
-}
-
-.search-mobile{
-    color: #ddd;
-    font-size: 19px;
-    margin-right: 10px;
-}
-
 .navbar .search-form-mobile{
     display: none;
-    width: 100%;
-    padding: 10px 15px;
 }
 
 #parentTags{
@@ -116,9 +107,6 @@ input {
 @media (max-width: 575px) {
     .desktop{
         display: none !important;
-    }
-    .bell-notification {
-        font-size: 19px;
     }
 }
 
