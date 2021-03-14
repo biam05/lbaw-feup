@@ -40,6 +40,8 @@ function draw_header()
     
 </head>
 
+<body style="margin-bottom: 60px;">
+
 <?php 
 
 draw_toast();
@@ -52,9 +54,6 @@ draw_toast();
  */
 function draw_nav_bar($logged = true)
 { ?>
-    
-    <body style="margin-bottom: 60px;">
-
     <script defer src="../js/nav_bar_search.js"></script>
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
