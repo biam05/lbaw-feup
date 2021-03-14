@@ -1,5 +1,4 @@
 <?php
-
 function draw_comment($level, $author, $partner, $date, $comment, $votes, $replies){?>
 <div class="row mb-3">
     <?php for($i=0; $i<$level; $i++) {?>
