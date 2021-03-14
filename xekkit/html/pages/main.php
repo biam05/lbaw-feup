@@ -20,11 +20,13 @@ draw_new_post($logged);
             <?php draw_posts($logged);?>
         </div>
         <div class="col-lg-3">
-            <section class="container bg-light-dark text-white p-3">
-                <h2 class="mb-4">Explore</h2>
-                <h6 class="mb-2 clickable-small"><a href="search.php" class="text-decoration-none text-white">#music <span class="badge bg-secondary">1</span></a></h6>                
-                <h6 class="mb-2 clickable-small">#celebrities <span class="badge bg-secondary">3</span></h6>
-                <h6 class="mb-2 clickable-small">#world</h6>
+            <section class="container bg-light-dark text-white p-3 text-center">
+                    <h2 class="mb-4">Explore</h2>
+                    <h4 class="mb-2 clickable-small"><a href="search.php" class="text-decoration-none text-white">#music <span class="badge bg-secondary">1</span></a></h3>                
+                    <hr class="text-muted">  
+                    <h4 class="mb-2 clickable-small">#celebrities <span class="badge bg-secondary">3</span></h3>
+                    <hr class="text-muted">  
+                    <h4 class="mb-2 clickable-small">#world</h3>
             </section>
         </div>
     </div>
@@ -44,10 +46,13 @@ draw_new_post($logged);
                 ?>
             </div>
             <div class="tab-pane fade" id="pills-explore" role="tabpanel" aria-labelledby="pills-explore-tab">
-                <section class="container-xl bg-light-dark text-white p-3">
-                    <h6 class="mb-2 clickable-small">#music <span class="badge bg-secondary">1</span></h6>                
-                    <h6 class="mb-2 clickable-small">#celebrities <span class="badge bg-secondary">3</span></h6>
-                    <h6 class="mb-2 clickable-small">#world</h6>
+                <section class="container-xl bg-light-dark text-white p-3 text-center">
+                    <h2 class="mb-4">Explore</h2>
+                    <h3 class="mb-2 clickable-small"><a href="search.php" class="text-decoration-none text-white">#music <span class="badge bg-secondary">1</span></a></h3>                
+                    <hr class="text-muted">  
+                    <h3 class="mb-2 clickable-small">#celebrities <span class="badge bg-secondary">3</span></h3>
+                    <hr class="text-muted">  
+                    <h3 class="mb-2 clickable-small">#world</h3>
                 </section>
             </div>
         </div>

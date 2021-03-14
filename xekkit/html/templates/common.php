@@ -126,7 +126,7 @@ function draw_nav_bar($logged = true)
                     <!-- Desktop and Mobile right side of nav bar -->
                     <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary" href="../pages/login.php">Login</a>
+                            <a class="btn btn-primary" href="../pages/login.php">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-primary" href="../pages/register.php">Register</a>

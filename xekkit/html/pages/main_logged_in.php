@@ -21,15 +21,17 @@ draw_new_post($logged);  // only if user logged in
             <?php draw_posts($logged);?>
         </div>
         <div class="col-lg-3">
-            <section class="container bg-light-dark text-white p-3">
-                <h2 class="mb-4">Explore</h2>
-                <h6 class="mb-2 clickable-small"><a href="search.php" class="text-decoration-none text-white">#music <span class="badge bg-secondary">1</span></a></h6>                
-                <h6 class="mb-2">#celebrities <span class="badge bg-secondary">3</span></h6>
-                <h6 class="mb-2">#world</h6>
+            <section class="container bg-light-dark text-white p-3 text-center">
+                    <h2 class="mb-4">Explore</h2>
+                    <h4 class="mb-2 clickable-small"><a href="search.php" class="text-decoration-none text-white">#music <span class="badge bg-secondary">1</span></a></h3>                
+                    <hr class="text-muted">  
+                    <h4 class="mb-2 clickable-small">#celebrities <span class="badge bg-secondary">3</span></h3>
+                    <hr class="text-muted">  
+                    <h4 class="mb-2 clickable-small">#world</h3>
             </section>
         </div>
     </div>
-    <nav class="container-xl hidden-md-up">
+    <nav class="container-xl hidden-lg-up">
         <ul class="nav nav-pills mb-3 text-white bg-light-dark" id="pills-tab" role="tablist">
             <li class="nav-item " role="presentation">
                 <button class="nav-link active text-white" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="true">Home</button>
@@ -45,11 +47,13 @@ draw_new_post($logged);  // only if user logged in
                 ?>
             </div>
             <div class="tab-pane fade" id="pills-explore" role="tabpanel" aria-labelledby="pills-explore-tab">
-                <section class="container bg-light-dark text-white p-3">
+                <section class="container bg-light-dark text-white p-3 text-center">
                     <h2 class="mb-4">Explore</h2>
-                    <h6 class="mb-2">#music <span class="badge bg-secondary">1</span></h6>                
-                    <h6 class="mb-2">#celebrities <span class="badge bg-secondary">3</span></h6>
-                    <h6 class="mb-2">#world</h6>
+                    <h4 class="mb-2 clickable-small"><a href="search.php" class="text-decoration-none text-white">#music <span class="badge bg-secondary">1</span></a></h3>                
+                    <hr class="text-muted">  
+                    <h4 class="mb-2 clickable-small">#celebrities <span class="badge bg-secondary">3</span></h3>
+                    <hr class="text-muted">  
+                    <h4 class="mb-2 clickable-small">#world</h3>
                 </section>
             </div>
         </div>

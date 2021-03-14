@@ -91,7 +91,9 @@ function draw_login_to_post()
       <div class="col-md-7 col-9">
         <h2 class="text-white text-center">Something New? Share with us!</h2>
       </div>
-      <a class="btn btn-primary col-md-2 col-7" href="../pages/login.php">Login</a>
+      <button type="button" class="col-md-2 col-7 btn btn-primary" onclick="window.location.href='../pages/login.php'">
+        Login
+      </button>
     </div>
   </div>
 
