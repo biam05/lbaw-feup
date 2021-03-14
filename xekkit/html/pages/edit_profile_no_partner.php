@@ -29,7 +29,7 @@ $partner = false;
 
         <div class="row justify-content-start text-white align-items-end mb-3">
             <div class="col-auto">
-                <img src="../img/user.png" class="card-img-top" alt="user image" width="200" height="200">
+                <img src="../img/user.png" alt="user image" width="200" height="200">
             </div>
             <div class="col-auto">
                 <h6 class="text-muted">Reputation</h6>
