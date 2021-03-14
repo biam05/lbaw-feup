@@ -40,7 +40,7 @@ function draw_header()
     
 </head>
 
-<body style="margin-bottom: 60px;">
+<body class="position-relative" style="margin-bottom: 60px;">
 
 <?php 
 
