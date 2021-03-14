@@ -39,7 +39,6 @@ function draw_header()
     <link rel="stylesheet" href="../css/search.css">
     
 </head>
-<body style="margin-bottom: 60px;">
 
 <?php 
 
@@ -54,15 +53,25 @@ draw_toast();
 function draw_nav_bar($logged = true)
 { ?>
     
+    <body style="margin-bottom: 60px;">
+
     <script defer src="../js/nav_bar_search.js"></script>
     <!-- navbar-expand-lg-->
     <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
         <div class="container-xl p-1">
             <!-- Logo -->
-            <a class="navbar-brand" href="../index.php">
+            <?php if ($logged) { ?>
+                <a class="navbar-brand" href="../pages/main_logged_in.php">
                 <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
                 XEKKIT
-            </a>
+                </a>
+            <?php } else { ?>
+                <a class="navbar-brand" href="../pages/main.php">
+                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
+                XEKKIT
+                </a>
+             <?php } ?>
+            
 
             <!-- Mobile search and notifications -->
             <div class="mobile ms-auto">
