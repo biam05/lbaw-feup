@@ -65,8 +65,8 @@ function draw_nav_bar($logged = true)
                 XEKKIT
                 </a>
             <?php } else { ?>
-                <a class="navbar-brand" href="../pages/main.php">
-                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
+                <a class="navbar-brand clickable" href="../pages/main.php">
+                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
                 XEKKIT
                 </a>
              <?php } ?>
