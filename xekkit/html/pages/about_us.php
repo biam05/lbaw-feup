@@ -37,7 +37,7 @@ draw_nav_bar();
                 <p class="text-muted">up201806551</p>
             </div>
             <div class="col-lg-3 col-sm-6 text-center">
-                <img class="rounded-circle" src="../img/user.png" width="140" height="140">
+                <img class="rounded-circle" src="../img/201800157.jpg" width="140" height="140">
                 <h2>Guilherme Calassi</h2>
                 <p class="text-muted">up201800157</p>
             </div>
