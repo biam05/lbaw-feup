@@ -96,6 +96,11 @@ input {
     display: none;
 }
 
+.dropdown-menu-end[data-bs-popper] {
+    right: 0.4em;
+    left: auto;
+}
+
 #parentTags{
   margin-top: 4px;
 }

@@ -40,7 +40,7 @@ function draw_header()
     
 </head>
 
-<body class="position-relative" style="margin-bottom: 60px;">
+<body class="w-100" style="margin-bottom: 60px;">
 
 <?php 
 
@@ -94,21 +94,21 @@ function draw_nav_bar($logged = true)
                 
                 <?php if ($logged) { ?>
                     <!-- Desktop right side of nav bar -->
-                    <div class="desktop ms-auto gap-2">
-                        <div class="row">
-                            <a href="../pages/notifications.php" class="col-auto align-self-center"><i class="bell-notification fas fa-bell"></i></a>
+                    <div class="desktop ms-auto d-inline-flex">
+                        
+                            <a href="../pages/notifications.php" class="align-self-center"><i class="bell-notification fas fa-bell"></i></a>
                                 
-                            <div class="col-1 nav-item navbar-nav dropdown">
+                            <div class="nav-item navbar-nav dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Hello, johndoe!
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
                                     <li><a class="dropdown-item" href="../pages/login.php">Logout</a></li>
                                 </ul>
                                     
                             </div>
-                        </div>
+                        
                     </div>
 
                     <!-- Mobile right side of nav bar -->
