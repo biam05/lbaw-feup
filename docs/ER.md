@@ -260,7 +260,7 @@ Figure 3: [Wireflows](https://projects.invisionapp.com/freehand/document/yc9IALt
 | [UI15: Notifications](#ui15:-notifications) |
 | [UI16: Moderator Options](#ui16:-moderator-options) |
 | [UI17: Banned User](#ui17:-banned-user) |
-| [UI18: Page Not Found](#ui16:-page-not-found) |
+| [UI18: Page Not Found](#ui18:-page-not-found) |
 
 ----
 #### UI01: Main
