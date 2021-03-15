@@ -32,7 +32,7 @@ draw_nav_bar();
     
         <div class="row text-white pt-4">
             <div class="col-lg-3 col-sm-6 text-center">
-                <img class="rounded-circle" src="../img/user.png" width="140" height="140">
+                <img class="rounded-circle" src="../img/201806551.png" width="140" height="140">
                 <h2>Beatriz Mendes</h2>
                 <p class="text-muted">up201806551</p>
             </div>
@@ -42,12 +42,12 @@ draw_nav_bar();
                 <p class="text-muted">up201800157</p>
             </div>
             <div class="col-lg-3 col-sm-6 text-center">
-                <img class="rounded-circle" src="../img/user.png" width="140" height="140">
+                <img class="rounded-circle" src="../img/201806140.jpg" width="140" height="140">
                 <h2>L. André Assunção</h2>
                 <p class="text-muted">up201806140</p>
             </div>
             <div class="col-lg-3 col-sm-6 text-center">
-                <img class="rounded-circle" src="../img/user.png" width="140" height="140">
+                <img class="rounded-circle" src="../img/201604686.jpg" width="140" height="140">
                 <h2>Ricardo Cardoso</h2>
                 <p class="text-muted">up201604686</p>
             </div>

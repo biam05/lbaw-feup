@@ -6,7 +6,7 @@ function draw_filter_search_options(){ ?>
     <ul class="list-unstyled">
         <li class="my-2">
         <h6 class="text-white">Sort by: </h6>
-        <select class="form-select border-0 text-white" aria-label="Sorting Options">
+        <select class="form-select border-0" aria-label="Sorting Options">
             <option selected>Top</option>
             <option value="1">New</option>
             <option value="2">Trending</option>

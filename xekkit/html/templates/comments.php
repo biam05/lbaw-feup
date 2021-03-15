@@ -23,12 +23,12 @@ function draw_comment($level, $author, $partner, $date, $comment, $votes, $repli
                     <button class="clickable-big me-1">
                         <i class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                     </button>
-                    <span class="col-auto ps-0"><?= $votes?></span>
+                    <span class="col-auto ps-0 text-white"><?= $votes?></span>
                     <button class="clickable-big ms-1">
                         <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                     </button>
                 </div>
-                <button type="button" class="col-auto clickable text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="col-auto clickable text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fas fa-reply text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply"></i> <?= $replies?>
                 </button>
             </div>  
@@ -55,12 +55,12 @@ function draw_comments(/* $comments */){ ?>
 <div class="container-xl p-3 bg-light-dark">
 
     <?php
-        draw_comment(0, "x/uCanadaba3", false, "10 hours ago", "Sad moment in the music industry", 15, 1);
-        draw_comment(1, "x/johndoe", true, "10 hours ago", "Agreed :(", 2, 0);    
+        draw_comment(0, "x/uCanadaba3", false, "10 hours ago", "I love her so much!!!", 15, 1);
+        draw_comment(1, "x/johndoe", true, "10 hours ago", "Yeah, she's an amazing artist :)", 2, 0);    
     ?>
     <hr class="text-muted">  
     <?php
-        draw_comment(0, "x/randomdude", false, "2 days ago", "Never really liked them tbh", 1, 0);
+        draw_comment(0, "x/randomdude", false, "2 days ago", "Never really liked her tbh", 1, 0);
     ?>
     
 </div>   
