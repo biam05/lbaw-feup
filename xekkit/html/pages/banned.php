@@ -1,13 +1,14 @@
 <?php
 include_once('../templates/common.php');
 draw_header();
+draw_nav_bar();
 ?>
 
 <div class="text-center text-white p-5">
     <img class="mb-3" src="../img/banned.png">
     <span class="display-1 d-block mb-3">Oh no :/</span>
     <div class="mb-4 lead">Looks like you got banned...</div>
-    <button type="button" class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#unbanAppeal">
+    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#unbanAppeal">
         Unban Appeal
     </button>    
     <div class="mb-4 mt-4 lead">Or</div>
@@ -53,3 +54,6 @@ draw_header();
       </div>
     </div>
   </div>
+
+  <?php
+  draw_footer();
