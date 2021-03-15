@@ -13,7 +13,7 @@ function draw_comment($level, $author, $partner, $date, $comment, $votes, $repli
                         <i class="fas fa-check"></i>
                     <?}?>
                     <?= $author?></a><?= $date?></small>
-                <button class="clickable-big text-muted ps-2"><i class="fas fa-exclamation-triangle"></i></button>
+                <button class="clickable-big text-muted ps-2"><i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i></button>
             </p> 
         </div> 
         <div class="row ms-4">
@@ -21,14 +21,16 @@ function draw_comment($level, $author, $partner, $date, $comment, $votes, $repli
             <div class="row align-items-center text-muted">
                 <div class="col-auto d-flex flex-row pe-1 align-items-center">
                     <button class="clickable-big me-1">
-                        <i class="fas fa-angle-up text-white"></i>
+                        <i class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                     </button>
                     <span class="col-auto ps-0"><?= $votes?></span>
                     <button class="clickable-big ms-1">
-                        <i class="fas fa-angle-down text-white"></i>
+                        <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                     </button>
                 </div>
-                <button class="col-auto clickable text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-reply text-white"></i> <?= $replies?></button>
+                <button type="button" class="col-auto clickable text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fas fa-reply text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply"></i> <?= $replies?>
+                </button>
             </div>  
         </div>                          
     </div>

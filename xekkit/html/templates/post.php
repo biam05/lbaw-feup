@@ -16,14 +16,19 @@ function draw_post($title, $description, $author, $partner, $date, $tags, $image
             </a>
             
             <?php if ($is_mine) { ?>
-                <button type="button" class="col-auto card-report clickable-big text-danger preventer" data-bs-toggle="modal" data-bs-target="#deletePostModal">
-                    <i class="fas fa-trash"></i>
-                </button>
+                <div class="col-auto">
+                    <button type="button" class="card-report clickable-big text-primary pe-2 preventer" data-bs-toggle="modal" data-bs-target="#todo">
+                    <i class="fa fa-pencil" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
+                    </button>
+                    <button type="button" class="col-auto card-report clickable-big text-danger preventer" data-bs-toggle="modal" data-bs-target="#deletePostModal">
+                        <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
+                    </button>
+                </div>
             <?php 
             
             } else { ?>
                 <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportModal">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
                 </button>
             <?php 
             
@@ -66,14 +71,16 @@ function draw_post($title, $description, $author, $partner, $date, $tags, $image
         <div class="row align-items-center">
             <div class="col-auto d-flex flex-column pe-1">
                 <button class="clickable-big">
-                    <i class="fas fa-angle-up text-white"></i>
+                    <i class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                 </button>
                 <button class="clickable-big">
-                    <i class="fas fa-angle-down text-white "></i>
+                    <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                 </button>
             </div>
             <span class="col-auto ps-0"><?= $votes ?></span>
-            <button class="col-auto clickable text-muted"><i class="fas fa-comment text-white"></i> <?= $comments ?></button>
+            <button class="col-auto clickable text-muted">
+                <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i> <?= $comments ?>
+            </button>
         </div>
     </footer>
 </div>
