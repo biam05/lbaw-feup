@@ -204,7 +204,7 @@ This user interface prototype has the main goals of helping to identify and anal
 This artifact includes an overview of the interface and common features, a sitemap and the identification and description of the main user interactions (UI) with the system.
 
 ----
-### 3.1 Interface and commmon features
+### 3.1 Interface and common features
 **Xekkit** is a web application based on HTML5, JavaScript and CSS. The user interface was implemented using the Bootstrap framework.
 
 ![front page](../img/common_features.png)
@@ -215,12 +215,11 @@ Figure 1: Interface's guidelines.
  3. Content 
  4. Footer 
 
-
 In this figure some characteristics common to all the pages are highlighted:
 
 The web design implemented has a fully responsive flow which allows the web page layout to suit any screen size and resolution greater than or equal to a 4'' smartphone.
 The common links to the various pages maintain their position to make the user experience consistent.
-Different sections have clearly distinct styles in order to highlight distinct hierarchies of information, and assist with the visual flow.
+Different sections have clearly distinct styles in order to highlight distinct hierarchies of information and assist with the visual flow.
 
 ----
 ### 3.2 Sitemap
@@ -263,7 +262,6 @@ Figure 3: [Wireflows](https://projects.invisionapp.com/freehand/document/yc9IALt
 | [UI17: Banned User](#ui17:-banned-user) |
 | [UI18: Page Not Found](#ui16:-page-not-found) |
 
-
 ----
 #### UI01: Main
 
@@ -278,7 +276,7 @@ Figure 4: [Main Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main.php).
 ----
 #### UI02: Main logged in
 
-Main website page again with the difference that because of beeing logged in you can now create a new post. On collumn Mobile2 you can also see the search bar that appears when you press the search icon on the navigantion bar.
+Main website page again with the difference that because of being logged in you can now create a new post. On collumn Mobile2 you can also see the search bar that appears when you press the search icon on the navigation bar.
 
 | Desktop | Mobile1 | Mobile2 |
 |---------|---------|---------|
@@ -311,7 +309,7 @@ In this page you can see our team and where we got our inspiration to build this
 ----
 #### UI05: FAQ
 
-Here is were you can se some of the most frequently asked questions about our website.
+Here is where you can se some of the most frequently asked questions about our website.
 
 | Desktop | Mobile |
 |---------|--------|
@@ -322,7 +320,7 @@ Figure 7: [FAQ Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/faq.php).
 ----
 #### UI06: Edit FAQ as Moderator
 
-Here is were the motherator can edit and add questions to the FAQ page.
+Here is where the motherator can edit and add questions to the FAQ page.
 
 | Desktop | Mobile |
 |---------|--------|
@@ -344,7 +342,7 @@ Figure 10: [Log in](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/login.php).
 ----
 #### UI08: Sign Up
 
-In this page yopu can create a new account.
+In this page you can create a new account.
 
 | Desktop | Mobile |
 |---------|--------|
@@ -355,7 +353,7 @@ Figure 11: [Sign Up](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/register.php).
 ----
 #### UI09: Post
 
-This is the page were single news are presented, with the respective comments below. On desktop version you can see a card with some publisher info, while on mobile you can only see his name (with a link to his profile) on the top of the post card.  
+This is the page where single news are presented, with the respective comments below. On desktop version you can see a card with some publisher info, while on mobile you can only see his name (with a link to his profile) on the top of the post card.  
 If you are the owner of the post you are seeing, you have the option to edit or delete the post, but if you are not the owner a report button will appear instead.
 
 | Desktop | Mobile |
@@ -379,7 +377,7 @@ Figure 13 and 14: [Search](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/search.p
 ----
 #### UI11: Third-Party Profile
 
-This is how you can see other people's profiles. On the desktop version is an example of someone you don't follow, while on mobile version is an example of someone you follow. In this page you can not only see this user's posted news but also who he follows.
+This is how you can see other people's profiles. On the desktop version is an example of someone you do not follow, while on mobile version is an example of someone you follow. In this page you can not only see this user's posted news but also who he follows.
 
 | Desktop | Mobile |
 |---------|--------|
@@ -391,7 +389,7 @@ Figure 15 and 16: [Third-Party Profile (unfollow button)](http://lbaw2114-piu.lb
 ----
 #### UI12: My Profile
 
-This is how you can see your own profile. The difference between this page and the previous one is that you can't report/follow yourself but you can edit yourprofile.
+This is how you can see your own profile. The difference between this page and the previous one is that you can't report/follow yourself, but you can edit your profile.
 
 | Desktop | Mobile |
 |---------|--------|
@@ -435,7 +433,7 @@ Figure 20: [Notifications](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/notifica
 ----
 #### UI16: Moderator Options
 
-If you are a moderator of our website you will also have access to a tab inside the notifications page where you can manage moderator related events, sush as manage Partner/report requests.
+If you are a moderator of our website, you will also have access to a tab inside the notifications page where you can manage moderator related events, sush as manage Partner/report requests.
 
 | Desktop | Mobile |
 |---------|--------|
@@ -446,7 +444,7 @@ Figure 21: [Moderator Options](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/noti
 ----
 #### UI17: Banned User
 
-If you were banned you will see this page.
+If you were banned, you will see this page.
 
 | Desktop | Mobile |
 |---------|--------|
