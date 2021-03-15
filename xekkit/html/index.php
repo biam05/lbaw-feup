@@ -1,5 +1,3 @@
 <?php
-
-header('Location: pages/register.php');
-
+header('Location: pages/main.php');
 ?>
