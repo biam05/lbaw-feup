@@ -73,7 +73,7 @@ function draw_nav_bar($logged = true)
             
 
             <!-- Mobile search and notifications -->
-            <div class="mobile ms-auto">
+            <div class="mobile ms-auto pe-2">
                 <a href="javascript:void(0)"><i onclick="openSearchBar()" class="text-white clickable fas fa-search me-3"></i></a>
                 <?php if ($logged) { ?>
                 <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
@@ -98,7 +98,7 @@ function draw_nav_bar($logged = true)
                         <div class="row">
                             <a href="../pages/notifications.php" class="col-auto align-self-center"><i class="bell-notification fas fa-bell"></i></a>
                                 
-                            <div class="col-auto nav-item navbar-nav dropdown">
+                            <div class="col-1 nav-item navbar-nav dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Hello, johndoe!
                                 </a>
