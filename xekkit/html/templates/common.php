@@ -40,7 +40,7 @@ function draw_header()
     
 </head>
 
-<body class="position-relative" style="margin-bottom: 60px;">
+<body class="w-100" style="margin-bottom: 60px;">
 
 <?php 
 
@@ -73,7 +73,7 @@ function draw_nav_bar($logged = true)
             
 
             <!-- Mobile search and notifications -->
-            <div class="mobile ms-auto">
+            <div class="mobile ms-auto pe-2">
                 <a href="javascript:void(0)"><i onclick="openSearchBar()" class="text-white clickable fas fa-search me-3"></i></a>
                 <?php if ($logged) { ?>
                 <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
@@ -94,21 +94,21 @@ function draw_nav_bar($logged = true)
                 
                 <?php if ($logged) { ?>
                     <!-- Desktop right side of nav bar -->
-                    <div class="desktop ms-auto gap-2">
-                        <div class="row">
-                            <a href="../pages/notifications.php" class="col-auto align-self-center"><i class="bell-notification fas fa-bell"></i></a>
+                    <div class="desktop ms-auto d-inline-flex">
+                        
+                            <a href="../pages/notifications.php" class="align-self-center"><i class="bell-notification fas fa-bell"></i></a>
                                 
-                            <div class="col-auto nav-item navbar-nav dropdown">
+                            <div class="nav-item navbar-nav dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Hello, johndoe!
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
                                     <li><a class="dropdown-item" href="../pages/login.php">Logout</a></li>
                                 </ul>
                                     
                             </div>
-                        </div>
+                        
                     </div>
 
                     <!-- Mobile right side of nav bar -->
@@ -155,8 +155,8 @@ function draw_footer()
     <div class="container-xl">
         <div class="row">
             <div class="col-md-2 col-sm-3 col-4 d-flex justify-content-between">
-                <a href="../pages/about_us.php" class="text-light text-decoration-none fs-6">About</a>
-                <a href="../pages/faq.php" class="text-light text-decoration-none fs-6">FAQ</a>
+                <a href="../pages/about_us.php" class="text-light text-decoration-none fs-6 clickable">About</a>
+                <a href="../pages/faq.php" class="text-light text-decoration-none fs-6 clickable">FAQ</a>
             </div>
             <div class="col-md-10 col-sm-9 col-8 text-end">
                 <span class="text-light fs-6"> &copy; XEKKIT <?= date('Y') ?> </span>

@@ -24,7 +24,7 @@ $partner = false;
     </nav>
     <section class="p-3">
         <div class="row justify-content-start">
-            <h5 class="col-auto text-white"><i class="fas fa-check"></i> x/johndoe</h5>
+            <h5 class="col-auto text-white"><?php if($partner){ ?><i class="fas fa-check"></i><? } ?> x/johndoe</h5>
         </div>
 
         <div class="row justify-content-start text-white align-items-end mb-3">

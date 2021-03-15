@@ -10,6 +10,7 @@ $logged = true;
 draw_nav_bar($logged);
 
 $is_myprofile = true;
+$partner = true;
 
 ?>
 
@@ -17,7 +18,7 @@ $is_myprofile = true;
     <section>
         
         <div class="row justify-content-start">
-            <h5 class="col-auto text-white"><i class="fas fa-check"></i> x/johndoe</h5>
+            <h5 class="col-auto text-white"><?php if($partner){ ?><i class="fas fa-check"></i><? } ?> x/johndoe</h5>
             <?php if (!$is_myprofile) { ?>
                 <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
                     <i class="fas fa-exclamation-triangle"></i>
