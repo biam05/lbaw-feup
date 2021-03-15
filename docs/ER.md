@@ -26,7 +26,7 @@ Users will be distributed in three groups with different permissions: moderators
 
 For the Collaborative News system, the actors are represented in Figure 1 and described in Table 1.
 
-![Actors](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/actors.png)  
+![Actors](../img/actors.png)  
 Figure 1: Actors
 
 |Identifier|Description|Examples|
@@ -46,6 +46,7 @@ Table 1: Actor's Description
 
 For the Collaborative News system, consider the user stories that are presented in the following sections.
 
+----
 #### 2.2.1 User
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -63,6 +64,7 @@ For the Collaborative News system, consider the user stories that are presented 
 
 Table 2: User's User Stories
  
+----
 #### 2.2.2 Guest
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -73,6 +75,7 @@ Table 2: User's User Stories
 
 Table 3: Guest's User Stories
 
+----
 #### 2.2.3 Authenticated User
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -90,6 +93,7 @@ Table 3: Guest's User Stories
 
 Table 4: Authenticated User's User Stories
 
+----
 #### 2.2.4 Author
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -100,6 +104,7 @@ Table 4: Authenticated User's User Stories
 
 Table 5: Author's User Stories
 
+----
 #### 2.2.5 Moderator
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -117,6 +122,7 @@ Table 5: Author's User Stories
 
 Table 6: Moderator's User Stories
 
+----
 #### 2.2.6 Partner
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -124,6 +130,7 @@ Table 6: Moderator's User Stories
 
 Table 7: Partner's User Stories
 
+----
 #### 2.2.7 Banned User
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -135,6 +142,7 @@ Table 8: Banned User's User Stories
 ### 2.3 Supplementary Requirements
 This annex contains business rules, technical requirements and other non-functional requirements on the project.
 
+----
 #### 2.3.1 Business Rules
 Identifier|Name|Description
 |-------|------|------|
@@ -160,6 +168,7 @@ BR19 | Valorization of Recent News | Having two news, a recent one and an old on
 
 Table 9: Business Rules
 
+---
 #### 2.3.2 Technical Requirements
 
 Identifier|Name|Description
@@ -180,10 +189,278 @@ We belive the most critical requirements are that our system should be easy to u
 
 Table 10: Technical Requirements
 
-
+----
 #### 2.3.3 Restrictions
 Identifier|Name|Description
 |-------|------|------|
 C01|Deadline|End of semester.
 
 Table 11: Restrictions
+
+
+## A3 - User Interface Prototype
+
+This user interface prototype has the main goals of helping to identify and analyse the user requirements and preview the user interface of the website to be developed.  
+This artifact includes an overview of the interface and common features, a sitemap and the identification and description of the main user interactions (UI) with the system.
+
+----
+### 3.1 Interface and commmon features
+**Xekkit** is a web application based on HTML5, JavaScript and CSS. The user interface was implemented using the Bootstrap framework.
+
+![front page](../img/common_features.png)
+ 
+Figure 1: Interface's guidelines.
+ 1. Logo 
+ 2. Navbar  
+ 3. Content 
+ 4. Footer 
+
+
+In this figure some characteristics common to all the pages are highlighted:
+
+The web design implemented has a fully responsive flow which allows the web page layout to suit any screen size and resolution greater than or equal to a 4'' smartphone.
+The common links to the various pages maintain their position to make the user experience consistent.
+Different sections have clearly distinct styles in order to highlight distinct hierarchies of information, and assist with the visual flow.
+
+----
+### 3.2 Sitemap
+
+The site map gives the team an idea of the website structure and pages hierarchy.
+
+![sitemap](../img/sitemap.png) 
+
+Figure 2: [Sitemap](https://projects.invisionapp.com/freehand/document/yc9IALtkz).
+
+----
+### 3.3 Wireflows
+
+Wireflows are presented to represent some of the main user interactions with the website.
+
+![wireflows](../img/wireflows.png) 
+
+Figure 3: [Wireflows](https://projects.invisionapp.com/freehand/document/yc9IALtkz). 
+
+----
+### 3.4 Interfaces
+|Interfaces|
+|----------| 
+| [UI01: Main](#ui01:-main) | 
+| [UI02: Main logged in](#ui02:-main-logged-in) | 
+| [UI03: New Post](#ui03:-new-post) |
+| [UI04: About](#ui04:-about) | 
+| [UI05: FAQ](#ui05:-faq) | 
+| [UI06: FAQ as Moderator](#ui06:-edit-faq-as-moderator) |
+| [UI07: Log in](#ui07:-log-in) |
+| [UI08: Sign Up](#ui08:-sign-Up) |
+| [UI09: Post](#ui09:-post) |
+| [UI10: Search](#ui10-search) |
+| [UI11: Third-Party Profile](#ui11:-third-party-profile) |
+| [UI12: My Profile](#ui12:-my-profile) |
+| [UI13: Edit Profile](#ui13:-profile-partner) |
+| [UI14: Ask For Partner](#ui14:-ask-for-partner) |
+| [UI15: Notifications](#ui15:-notifications) |
+| [UI16: Moderator Options](#ui16:-moderator-options) |
+| [UI17: Banned User](#ui17:-banned-user) |
+| [UI18: Page Not Found](#ui16:-page-not-found) |
+
+
+----
+#### UI01: Main
+
+Main website page where you can consult trending news on top, last news on center and explore some tags on the right side.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Main Page](../img/main.png) | ![Main Page Mobile](../img/main_mobile.png) |
+
+Figure 4: [Main Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main.php). 
+
+----
+#### UI02: Main logged in
+
+Main website page again with the difference that because of beeing logged in you can now create a new post. On collumn Mobile2 you can also see the search bar that appears when you press the search icon on the navigantion bar.
+
+| Desktop | Mobile1 | Mobile2 |
+|---------|---------|---------|
+| ![Main Page Logged in](../img/main_logged_in.png) | ![Main Page Logged in Mobile](../img/main_logged_in_mobile.png) | ![Main Page Logged in Mobile](../img/main_logged_in_explore_mobile.png)
+
+Figure 5: [Main Page Logged in](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main_logged_in.php). 
+
+----
+#### UI03: New Post
+
+Modal box where you can create a new post when logged in.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![New Post](../img/new_post.png) | ![New Post Mobile](../img/new_post_mobile.png) | 
+
+Figure 6: [New Post](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main_logged_in.php) and then click on green button "Make new post".
+
+----
+#### UI04: About
+
+In this page you can see our team and where we got our inspiration to build this website.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![About](../img/about.png) | ![About Mobile](../img/about_mobile.png) |
+ 
+ Figure 6: [About Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/about_us.php).
+
+----
+#### UI05: FAQ
+
+Here is were you can se some of the most frequently asked questions about our website.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![FAQ](../img/faq.png) | ![FAQ Mobile](../img/faq_mobile.png) |
+
+Figure 7: [FAQ Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/faq.php).
+
+----
+#### UI06: Edit FAQ as Moderator
+
+Here is were the motherator can edit and add questions to the FAQ page.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![FAQ Moderator](../img/faq_moderator.png) | ![FAQ Moderator Mobile](../img/faq_moderator_mobile.png) |
+ 
+Figure 8: [FAQ Moderator](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/faq_moderator.php).
+
+----
+#### UI07: Log in
+
+In this page you can authenticate yourself in our website (if you already have an account).
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Log in](../img/login.png) | ![Log in Mobile](../img/login_mobile.png) |
+
+Figure 10: [Log in](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/login.php).
+
+----
+#### UI08: Sign Up
+
+In this page yopu can create a new account.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Sign Up](../img/register.png) | ![Sign Up Mobile](../img/register_mobile.png) |
+
+Figure 11: [Sign Up](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/register.php).
+
+----
+#### UI09: Post
+
+This is the page were single news are presented, with the respective comments below. On desktop version you can see a card with some publisher info, while on mobile you can only see his name (with a link to his profile) on the top of the post card.  
+If you are the owner of the post you are seeing, you have the option to edit or delete the post, but if you are not the owner a report button will appear instead.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Post](../img/news.png)| ![Post](../img/news_mobile.png)|
+
+Figure 12: [Post](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/news.php).
+
+----
+#### UI10: Search
+
+When you perform a search query (by typing on the serach bar) this is tha page were you land. In here you can filter your search and choose if you want to search for news or for users.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Search](../img/search.png)| ![Search Mobile](../img/search_mobile.png)|
+| ![Search Users](../img/search_users.png)| ![Search Users Mobile](../img/search_users_mobile.png)|
+ 
+Figure 13 and 14: [Search](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/search.php).
+
+----
+#### UI11: Third-Party Profile
+
+This is how you can see other people's profiles. On the desktop version is an example of someone you don't follow, while on mobile version is an example of someone you follow. In this page you can not only see this user's posted news but also who he follows.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Third-Party Profile](../img/profile_other_follow.png)| ![Third-Party Profile Mobile](../img/profile_other_unfollow_mobile.png)|
+| ![Third-Party Profile Following](../img/profile_other_follow_following_tab.png)| ![Third-Party Profile Mobile](../img/profile_other_unfollow_following_tab_mobile.png)|
+
+Figure 15 and 16: [Third-Party Profile (unfollow button)](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/profile_other_unfollow.php) and [Third-Party Profile (follow button)](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/profile_other_follow.php).
+
+----
+#### UI12: My Profile
+
+This is how you can see your own profile. The difference between this page and the previous one is that you can't report/follow yourself but you can edit yourprofile.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Profile](../img/profile.png) | ![Profile Mobile](../img/profile_mobile.png)|
+
+Figure 17: [My Profile](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/profile.php).
+
+----
+#### UI13: Edit Profile
+
+This is an example of how you can edit your profile. On the desktop version is an example of someone who is not Partner while on the mobile version is an example of someone that is partner.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Edit Profile](../img/edit_profile_no_partner.png)| ![Edit Profile Mobile](../img/edit_profile_partner_mobile.png)|
+
+Figure 18: [Edit Profile Partner](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/edit_profile.php) and [Edit Profile non Partner](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/edit_profile_no_partner.php).
+
+----
+#### UI14: Ask for Partner
+
+When you click the button "Ask for Partner" a modal box will appear where you must describe why we should accept you as Partner.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Ask Partner](../img/ask_partner.png) | ![Ask Partner Mobile](../img/ask_partner_mobile.png) |
+
+Figure 19: [Edit Profile](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/edit_profile.php) and then click on yellow button "Ask for Partner".
+
+----
+#### UI15: Notifications
+
+When you click the yellow bell on the navigantion bar you end up in this page where you can see who voted/commented on your posted news.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Notifications](../img/notifications.png) | ![Notifications Mobile](../img/notifications_mobile.png) |
+
+Figure 20: [Notifications](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/notifications.php).
+
+----
+#### UI16: Moderator Options
+
+If you are a moderator of our website you will also have access to a tab inside the notifications page where you can manage moderator related events, sush as manage Partner/report requests.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Moderator](../img/moderator.png) | ![Moderator Mobile](../img/moderator_mobile.png) |
+
+Figure 21: [Moderator Options](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/notifications.php) and then click on "Moderator" tab.
+
+----
+#### UI17: Banned User
+
+If you were banned you will see this page.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![Banned](../img/banned.png) | ![Banned Mobile](../img/banned_mobile.png) |
+
+Figure 21: [Banned User](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/notifications.php) and then click on "Moderator" tab.
+
+----
+#### UI18: Page Not Found
+
+If you try to access some page you don't have permissions to access or that doesn't exist you will end up in this page.
+
+| Desktop | Mobile |
+|---------|--------|
+| ![404](../img/404.png) | ![404 Mobile](../img/404_mobile.png) |
+
+Figure 21: [Page Not Found](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/404.php) and then click on "Moderator" tab.
