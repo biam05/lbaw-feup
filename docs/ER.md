@@ -464,3 +464,17 @@ If you try to access some page you don't have permissions to access or that does
 | ![404](../img/404.png) | ![404 Mobile](../img/404_mobile.png) |
 
 Figure 21: [Page Not Found](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/404.php) and then click on "Moderator" tab.
+
+
+# Revision history
+
+Changes made since the first submission (15/03/2021):
+
+
+----
+GROUP2114, 15/03/2021
+ 
+ - Beatriz Mendes, up201806551@fe.up.pt (A3 Review)
+ - Guilherme Calassi, up201800157@fe.up.pt
+ - Luís André Assunção, up201806140@fe.up.pt
+ - Ricardo Cardoso, up201604686@fe.up.pt (A1, A2 Review)
