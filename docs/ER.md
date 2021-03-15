@@ -97,8 +97,8 @@ Table 4: Authenticated User's User Stories
 #### 2.2.4 Author
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
-|US31|Edit New|High| As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated.|
-|US32|Remove New|High| As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available.|
+|US31|Edit News|High| As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated.|
+|US32|Remove News|High| As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available.|
 |US33|Remove comment|High| As a *Author*, I want to remove a comment I previously posted, so that it is no longer publicly available.|
 |US34|Edit comment|Medium| As a *Author*, I want to edit a comment I previously posted, so that I can keep the comment updated.|
 
@@ -110,7 +110,7 @@ Table 5: Author's User Stories
 |-------|------|------|------|
 |US41|Remove Post from other User|High|As a *Moderator*, I want to remove a post from another user, so that I can improve the reliability of the news published in the website.
 |US42|Remove Comment from another User|High|As a *Moderator*, I want to remove a comment from another user, so that I can improve the reliability of the news published in the website.
-|US43|Ban User|Medium|As a *Moderator*, I want to be able to ban a user from the website, so the user won't be able to post again
+|US43|Ban User|Medium|As a *Moderator*, I want to be able to ban a user from the website, so the user won't be able to see anything on our website while logged in.
 |US44|Verify Partner|Medium|As a *Moderator*, I want to be able to verify a user, so that the user reaches a bigger audience by becoming a Partner.
 |US45|View Reports|Medium|As a *Moderator*, I want to be able so see all reports made by other users, so that I can decide how I'm gonna act on the report.
 |US46|Act on Reports|Medium|As a *Moderator*, I want to be able act on a report, so that I can delete news/comments or ban users.
@@ -185,7 +185,7 @@ TR08|Security|The system shall protect information from unauthorised access thro
 TR10|Scalability|The system must be prepared to deal with the growth in the number of users and their actions.
 **TR11**|**Ethics**|**The system must respect the ethical principles in software development (for example, the password must be stored encrypted to ensure that only the owner knows it).**
 
-We belive the most critical requirements are that our system should be easy to use, so that users don't get bored and leave when looking for something, should also be robust so that intentional (or even unintentional) invalid inputs don't crash the entire system and finally it should respect the ethical principles in software development so that in case someone manages to hack us sensible data remains encrypted.
+We belive the most critical requirements are that our system should be easy to use, so that users don't get bored and leave when looking for something, should also be robust so that intentional (or even unintentional) invalid inputs don't crash the entire system and finally it should respect the ethical principles in software development so that, in case someone manages to hack us, sensible data remains encrypted.
 
 Table 10: Technical Requirements
 
