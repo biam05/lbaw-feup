@@ -13,9 +13,11 @@ draw_nav_bar();
 
 <div class="container-xl">
     <div class="row">
-        <div class="col">
+        <div class="col-lg-8">
         <?php
-            draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", true, "Jan 23, 2021", ["music", "celebreties"], "../img/daft_punk.jpeg", "58", "7873", true);
+            draw_post("Billie Eilish won the coveted Record of the Year at Sunday's Grammy Awards", 
+            "The 19-year-old singer felt \"embarrassed\" to accept the night's biggest honour for 'Everything I Wanted' because she was thought Megan Thee Stallion \"deserved\" it more for 'Savage', her collaboration with Beyonce.", "x/johndoe", true, "1 hour ago",
+                ["pop", "music"], "../img/billieeilish.jpg", "2", "7873", true);
             draw_comments();
         ?>
         </div>
