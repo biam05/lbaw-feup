@@ -40,16 +40,16 @@ function draw_comment($level, $author, $partner, $date, $comment, $votes, $repli
 function draw_comments(/* $comments */){ ?>
 
 
-
-<div class="container-xl mb-3 p-3 bg-light-dark">
-    <div class="form-floating">
-        <h5 class="text-white">Leave a Comment here</h5>
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 60px" width="100%"></textarea>
-        <div class="col text-end mt-3">
-            <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-        </div>
+<form action="" class="container-xl mb-3 p-3 bg-light-dark"> 
+    <div class="mb-3">
+        <label for="postComment" class="form-label text-white fs-5">Leave a comment here:</label>
+        <textarea class="form-control" id="postComment" rows="3"></textarea>
+        
     </div>
-</div>
+    <div class="row pe-3">
+        <button type="submit" class="col-auto btn btn-primary ms-auto">Send</button>
+    </div>
+</form>
 <div class="container-xl p-3 bg-light-dark">
 
     <?php
