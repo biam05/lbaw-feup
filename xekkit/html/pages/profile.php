@@ -10,6 +10,7 @@ $logged = true;
 draw_nav_bar($logged);
 
 $is_myprofile = true;
+$partner = true;
 
 ?>
 
