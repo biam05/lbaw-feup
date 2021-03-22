@@ -77,8 +77,8 @@ function draw_post($title, $description, $author, $partner, $date, $tags, $image
                     <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                 </button>
             </div>
-            <span class="col-auto ps-0"><?= $votes ?></span>
-            <button class="col-auto clickable text-muted">
+            <span class="col-auto ps-1 text-white"><?= $votes ?></span>
+            <button class="col-auto clickable text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i> <?= $comments ?>
             </button>
         </div>
@@ -95,10 +95,11 @@ function draw_posts($logged)
 <div class="container-xl">
     
     <?php
-    draw_post("Daft Punk", "Daft Punk Break Up Announcement image", "x/johndoe", true, "Jan 23, 2021",
-        ["music", "celebrities"], "../img/daft_punk.jpeg", "58", "7873", $logged);
+    draw_post("Billie Eilish won the coveted Record of the Year at Sunday's Grammy Awards", 
+    "The 19-year-old singer felt \"embarrassed\" to accept the night's biggest honour for 'Everything I Wanted' because she was thought Megan Thee Stallion \"deserved\" it more for 'Savage', her collaboration with Beyonce.", "x/johndoe", true, "1 hour ago",
+        ["pop", "music"], "../img/billieeilish.jpg", "2", "7873", $logged);
     draw_post("Daft Punk",
-        "This is a test to see the size of a description needed to trigger the reticências. So far this has 100 characteres. Is it good enough? Short maybe? Long maybe? One could never know writing text on the text editor, so I continue to write until I can consider this a big Post. Maybe I should just paste some Lorem Ipsum shit, but I don't really want to, this is more genuine",
+        "Daft Punk Break Up Announcement image",
         "x/johndoe", true, "Jan 23, 2021", ["music", "celebrities"], "../img/daft_punk.jpeg", "58", "7873", $logged);
     ?>
 </div>

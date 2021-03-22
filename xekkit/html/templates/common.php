@@ -56,17 +56,17 @@ function draw_nav_bar($logged = true)
 { ?>
     <script defer src="../js/nav_bar_search.js"></script>
     <!-- navbar-expand-lg-->
-    <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark custom_navbar">
+    <nav class="navbar sticky-top navbar-expand-sm navbar-dark custom_navbar">
         <div class="container-xl p-1">
             <!-- Logo -->
             <?php if ($logged) { ?>
-                <a class="navbar-brand" href="../pages/main_logged_in.php">
-                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
+                <a class="navbar-brand clickable" href="../pages/main_logged_in.php">
+                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
                 XEKKIT
                 </a>
             <?php } else { ?>
-                <a class="navbar-brand" href="../pages/main.php">
-                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top">
+                <a class="navbar-brand clickable" href="../pages/main.php">
+                <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
                 XEKKIT
                 </a>
              <?php } ?>
@@ -125,10 +125,10 @@ function draw_nav_bar($logged = true)
                 <?php } else { ?>
                     <!-- Desktop and Mobile right side of nav bar -->
                     <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
-                        <li class="nav-item">
+                        <li class="nav-item ms-auto">
                             <a class="btn btn-primary" href="../pages/login.php">Login</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ms-auto">
                             <a class="btn btn-primary" href="../pages/register.php">Register</a>
                         </li>
                     </ul>

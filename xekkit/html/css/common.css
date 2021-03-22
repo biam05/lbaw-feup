@@ -19,6 +19,11 @@ input {
     text-decoration: none;
 }
 
+.custom_navbar{
+    background-image: linear-gradient(rgb(37, 37, 37), rgb(0, 0, 0));
+    border-bottom: solid .1px rgb(39, 39, 39);
+}
+
 .card img {
     max-height: 400px;
     object-fit: scale-down;
@@ -60,6 +65,23 @@ input {
     animation: bellshake .5s cubic-bezier(.36, .07, .19, .97) both;
     backface-visibility: hidden;
     transform-origin: top right;
+}
+
+.spin {    
+    -webkit-transition-duration: 1.5s;
+    -moz-transition-duration: 1.5s;
+    -o-transition-duration: 1.5s;
+    transition-duration: 1.5s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+}
+
+.spin:hover{
+    -webkit-transform:rotate(720deg);
+    -moz-transform:rotate(720deg);
+    -o-transform:rotate(720deg);
 }
 
 @keyframes bellshake {

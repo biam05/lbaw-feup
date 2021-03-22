@@ -47,7 +47,7 @@ $partner = true;
                 
             </div>
         </div>
-        <p class="lead text-white mb-3">My name is not John and I'm other example user for this framewhire. My posts are really about any trending topic.</p>
+        <p class="lead text-white mb-3">My name is John and I'm a partner example user for this framewhire. My posts are really about any trending topic.</p>
         
     </section>
     

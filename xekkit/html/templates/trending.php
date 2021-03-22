@@ -37,19 +37,13 @@ function draw_trending()
 
 <div class="container-xl my-2">
     <h2 class="text-center text-light">Trending News</h2>
-    <div class="card-deck row flex-row flex-nowrap overflow-auto g-0 gap-3">
+    <div class="card-deck row flex-row flex-nowrap overflow-auto g-0 gap-3 w-30">
         <?php
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Initialising neural network', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'One for all and all for one', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Fighting against evil and tyranny', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Justice to all', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Down the road', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Can’t stay for long', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'I’ll just keep moving on', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'This is my boss, Jonathan Hart', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'There’s a voice that keeps on calling me', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Hong Kong Phooey, number one super guy.', ['sports','voleyball'], 'Jan 21, 2021', 'x/deepfuckingvalue');
-
+        draw_card('../img/billieeilish.jpg', 'Billie Eilish won the coveted Record of the Year at Sunday\'s Grammy Awards', ["pop", "music"], '1h ago', 'x/johndoe');
+        draw_card('../img/neuralnetwork.png', 'Initialising neural network', ['neuralnetwork'], 'Jan 21, 2021', 'x/deepvalue');        
+        draw_card('../img/war.jpg_200', 'Fighting against evil and tyranny', ['war', 'world'], 'Jan 21, 2021', 'x/deepvalue');
+        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg', 'Justice to all', ["music", "celebrities"], 'Jan 23, 2021', 'x/johndoe');
+        draw_card('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(20).jpg', 'Landscape', ["wow"], 'Jan 10, 2021', 'x/johndoe');
         ?>       
     </div>  
 </div>
