@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS faq CASCADE;
+DROP TABLE IF EXISTS comment_notification CASCADE;
+DROP TABLE IF EXISTS vote_notification CASCADE;
+DROP TABLE IF EXISTS follow_notification CASCADE;
 DROP TABLE IF EXISTS vote CASCADE;
-
 DROP TABLE IF EXISTS unban_appeal CASCADE;
 DROP TABLE IF EXISTS partner_request CASCADE;
 DROP TABLE IF EXISTS report_content CASCADE;
@@ -23,13 +25,14 @@ CREATE TYPE STATUS_TYPE AS ENUM('aproved', 'rejected');
 
 CREATE TABLE users(
     id INTEGER GENERATED ALWAYS AS IDENTITY,
+    username VARCHAR(20) NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     description TEXT,
     photo TEXT,
-    birthdate DATE NOT NULL,
+    birthdate DATE NOT NULL, /* add trigger to check age > 13 */
     gender GENDER_TYPE NOT NULL,
-    reputation INTEGER NOT NULL DEFAULT 0 CHECK (reputation >=0) ,
+    reputation INTEGER NOT NULL DEFAULT 0 CHECK (reputation >=0),
     is_moderator BOOLEAN NOT NULL DEFAULT false,
     is_partner BOOLEAN NOT NULL DEFAULT false,
     is_banned BOOLEAN NOT NULL DEFAULT false,
@@ -38,10 +41,9 @@ CREATE TABLE users(
 );
 
 CREATE TABLE follow(
-    id INTEGER GENERATED ALWAYS AS IDENTITY,
     follower_id INTEGER NOT NULL,
     users_id INTEGER NOT NULL,
-    PRIMARY KEY(id),
+    PRIMARY KEY(follower_id, users_id),
     CONSTRAINT fk_follower_id
         FOREIGN KEY(follower_id) 
             REFERENCES users (id)
@@ -54,11 +56,11 @@ CREATE TABLE follow(
 
 CREATE TABLE ban(
     id INTEGER GENERATED ALWAYS AS IDENTITY,
-    start_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    end_date TIMESTAMP DEFAULT NULL,
-    reason TEXT,
-    moderator_id INTEGER NOT NULL, /*CHECK users.is_moderator == true with triggers*/
     users_id INTEGER NOT NULL,
+    moderator_id INTEGER NOT NULL, /*CHECK users.is_moderator == true with triggers*/
+    start_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    end_date TIMESTAMP WITH TIME ZONE  DEFAULT NULL CHECK (end_date > start_date),
+    reason TEXT NOT NULL,
     PRIMARY KEY(id),
     CONSTRAINT fk_moderator_id
         FOREIGN KEY(moderator_id) 
@@ -85,16 +87,16 @@ CREATE TABLE content (
 
 CREATE TABLE tag (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
-    name TEXT NOT NULL UNIQUE,
+    name VARCHAR(20) NOT NULL UNIQUE,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE news (
-    id INTEGER GENERATED ALWAYS AS IDENTITY,
     content_id INTEGER NOT NULL,
     title TEXT NOT NULL,
-    trending_score INTEGER CHECK (trending_score >= 0),
-    PRIMARY KEY(id),
+    image TEXT UNIQUE,
+    trending_score INTEGER NOT NULL CHECK (trending_score >= 0),
+    PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
         FOREIGN KEY(content_id) 
 	        REFERENCES content (id)
@@ -108,7 +110,7 @@ CREATE TABLE news_tag (
     PRIMARY KEY(news_id, tag_id),
     CONSTRAINT fk_news_id
         FOREIGN KEY(news_id) 
-	        REFERENCES  news (id)
+	        REFERENCES  news (content_id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_tag_id
         FOREIGN KEY(tag_id) 
@@ -117,22 +119,21 @@ CREATE TABLE news_tag (
 );
 
 CREATE TABLE comment (
-    id INTEGER GENERATED ALWAYS AS IDENTITY,
     content_id INTEGER NOT NULL,
     news_id INTEGER NOT NULL,
     reply_to_id INTEGER,
-    PRIMARY KEY(id),
+    PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
         FOREIGN KEY(content_id) 
 	        REFERENCES content (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_news_id
         FOREIGN KEY(news_id) 
-	        REFERENCES news (id)
+	        REFERENCES news (content_id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_reply_to_id
         FOREIGN KEY(reply_to_id) 
-	        REFERENCES comment (id)
+	        REFERENCES comment (content_id)
 	        ON DELETE CASCADE
 );
 
@@ -143,7 +144,7 @@ CREATE TABLE request (
    reason TEXT NOT NULL,
    creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
    status STATUS_TYPE,
-   revision_date TIMESTAMP WITH TIME ZONE,
+   revision_date TIMESTAMP WITH TIME ZONE CHECK (revision_date > creation_date),
    PRIMARY KEY(id),
    CONSTRAINT fk_from_id
         FOREIGN KEY(from_id) 
@@ -221,8 +222,58 @@ CREATE TABLE vote (
 	        ON DELETE CASCADE
 );
 
+CREATE TABLE follow_notifications (
+    follower_id INTEGER,
+    users_id INTEGER,
+    in_new BOOLEAN NOT NULL DEFAULT true,
+    creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    PRIMARY KEY(follower_id, users_id),
+    CONSTRAINT fk_follower_id
+        FOREIGN KEY(follower_id) 
+	        REFERENCES users (id)
+	        ON DELETE CASCADE,
+    CONSTRAINT fk_users_id
+        FOREIGN KEY(users_id) 
+	        REFERENCES users (id)
+	        ON DELETE CASCADE
+);
 
+CREATE TABLE vote_notification (
+    voter_id INTEGER,
+    content_id INTEGER,
+    author_id INTEGER,
+    in_new BOOLEAN NOT NULL DEFAULT true,
+    creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    PRIMARY KEY(voter_id, content_id, author_id),
+    CONSTRAINT fk_voter_id
+        FOREIGN KEY(voter_id) 
+	        REFERENCES users (id)
+	        ON DELETE CASCADE,
+    CONSTRAINT fk_content_id
+        FOREIGN KEY(content_id) 
+	        REFERENCES content (id)
+	        ON DELETE CASCADE,
+    CONSTRAINT fk_author_id
+        FOREIGN KEY(author_id) 
+	        REFERENCES users (id)
+	        ON DELETE CASCADE
+);
 
+CREATE TABLE comment_notification (
+    users_id INTEGER,
+    comment_id INTEGER,
+    in_new BOOLEAN NOT NULL DEFAULT true,
+    creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    PRIMARY KEY(users_id, comment_id),
+    CONSTRAINT fk_users_id
+        FOREIGN KEY(users_id) 
+	        REFERENCES users (id)
+	        ON DELETE CASCADE,
+    CONSTRAINT fk_comment_id
+        FOREIGN KEY(comment_id) 
+	        REFERENCES comment (content_id)
+	        ON DELETE CASCADE
+);
 
 CREATE TABLE faq (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
