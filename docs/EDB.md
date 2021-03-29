@@ -216,6 +216,18 @@ Since all relations are in the Boyce-Codd Normal Form (BCNF), the relational sch
 
 > Brief presentation of the artefact goals.
 
+This artefact contains: 
+- the physical schema of the database;
+- the identification and characterisation of the indexes
+- the support of data integrity rules with triggers
+- the definition of the database user-defined functions
+- the database's workload
+- the complete database creation script, including all SQL necessary to define all integrity constraints, indexes and triggers
+  
+This artefact shows the database transactions needed to assure the integrity of the data in the presence of concurrent accesses.
+
+For each transaction, the isolation level is explicitly stated and justified and read-only transactions to improve global performance are identified and justified. This artefact also contains the database's workload as well as the complete database creation script, 
+
 ### 1. Database Workload
  
 > A study of the predicted system load (database load), organized in subsections.  
@@ -224,22 +236,147 @@ Since all relations are in the Boyce-Codd Normal Form (BCNF), the relational sch
  
 > Estimate of tuples at each relation.  
 
-| **Relation reference** | **Relation Name** | **Order of magnitude**        | **Estimated growth** |
+| **Relation reference** | **Relation Name** | **Order of magnitude** | **Estimated growth** |
 | ------------------ | ------------- | ------------------------- | -------- |
-| R01                | Table1        | units|dozens|hundreds|etc | order per time |
-| R02                | Table2        | units|dozens|hundreds|etc | dozens per month |
-| R03                | Table3        | units|dozens|hundreds|etc | hundreds per day |
-| R04                | Table4        | units|dozens|hundreds|etc | no growth |
+| R01                | users | thousands | units per day
+| R02                | follow | tens of thousands | hundreds per day
+| R03                | ban | hundreds | units per week
+| R04                | content | hundreds of thousands | thousands per day
+| R05                | tag | hundreds | hundreds per day
+| R06                | news | thousands | hundreds per day
+| R07                | news_tag | units | dozens per day
+| R08                | comment | hundreds of thousands | thousands per day
+| R09                | request | thousands | dozens per day
+| R10                | report_users | hundreds | units per day
+| R11                | report_content | thousands | dozens per day 
+| R12                | partner_request | dozens | units per week   
+| R13                | unban_appeal | hundreds | units per week
+| R14                | vote | millions | thousand per day
+| R15                | follow_notification | tens of thousands | hundreds per day
+| R16                | vote_notification | millions | thousand per day
+| R17                | comment_notification | hundreds of thousands | thousands per day
+| R18                | faq | dozens | units per month
+
+
 
 #### 1.2. Frequent Queries
  
 > Most important queries (SELECT) and their frequency.  
 
-| **Query**       | SELECT01                               |
+| **Query**       | SELECTXX                               |
 | ---             | ---                                    |
 | **Description** | One sentence describing the query goal |
 | **Frequency**   | magnitude per time                     |
 | `SQL code`                                              ||
+
+
+
+| **Query**       | SELECT01                               |
+| ---             | ---                                    |
+| **Description** | Display one specific News Post |
+| **Frequency**   | Tens of thousands per day |
+```sql
+    SELECT news.title, news.image, content.nr_votes, news.nr_comments, content.body, content.date, users.username, users.is_partner
+        FROM news, content, users
+        WHERE news.content_id = $id 
+            AND news.content_id = content.id
+            AND content.author_id = users.id
+            AND users.is_deleted = false;          
+```
+
+| **Query**       | SELECT02                               |
+| ---             | ---                                    |
+| **Description** | Get comments from Post |
+| **Frequency**   | Tens of thousands per day |
+```sql
+    SELECT comment.content_id, content.body, content.date, content.nr_votes, users.username, users.is_partner, users.is_deleted, comment.reply_to_id
+        FROM news, comment, content, users
+        WHERE news.content_id = $id 
+            AND comment.news_id = news.content_id
+            AND content.author_id = users.id;
+```
+
+| **Query**       | SELECT03 |
+| ---             | --- |
+| **Description** | Tags from Post |
+| **Frequency**   | Hundreds of thousands per day |
+```sql
+    SELECT tag.name
+        FROM news, news_tag, tag
+        WHERE news.id = $id 
+            AND news_tag.news_id = news.id
+            AND tag.id = news_tag.tag_id;      
+```
+
+| **Query**       | SELECT04 |
+| ---             | --- |
+| **Description** | Get trending news |
+| **Frequency**   | Hundreds of thousands per day |
+```sql
+    SELECT news.title, news.image, content.date, users.username, user.is_partner
+        FROM news, content, users
+        WHERE news.content_id = $id 
+            AND news.content_id = content.id
+            AND content.author_id = users.id
+            AND users.is_deleted = false
+        ORDER BY news.trending_score DESC;        
+```
+
+| **Query**       | SELECT05 |
+| ---             | --- |
+| **Description** | Get all recent news |
+| **Frequency**   | Hundreds of thousands per day |
+```sql
+    SELECT news.title, news.image, content.nr_votes, news.nr_comments, content.body, content.date, users.username, users.is_partner
+        FROM news, content, users
+        WHERE news.content_id = content.id
+            AND content.author_id = users.id
+            AND users.is_deleted = false
+        ORDER BY content.date DESC
+        OFFSET $offset
+        LIMIT 25;        
+```
+
+| **Query**       | SELECT01 |
+| ---             | --- |
+| **Description** | Get recent news for main page when logged in |
+| **Frequency**   | Hundreds of thousands per day |
+```sql
+    SELECT news.title, news.image, content.date, content.body, content.nr_votes, users.username, user.is_partner
+        FROM news, content, users
+        WHERE news.content_id = content.id
+            AND content.author_id = users.id
+            AND users.is_deleted = false
+            AND content.author_id IN (SELECT follow.users_id FROM follow  WHERE follow.follower_id = $my_users_id)
+        ORDER BY content.date DESC;
+        OFFSET $offset
+        LIMIT 25;      
+```
+
+
+
+
+| **Query**       | SELECT07                               |
+| ---             | ---                                    |
+| **Description** | User Profile |
+| **Frequency**   | Hundreds per day                     |
+```sql
+    SELECT users.username,users.description,users.photo,users.birthdate,users.gender,users.is_deleted,users.is_banned,users.reputation, users.is_partner, users.is_moderator
+    WHERE users.id = $id ;
+          
+```
+
+| **Query**       | SELECT08                               |
+| ---             | ---                                    |
+| **Description** | User Posts |
+| **Frequency**   | Hundreds per day                     |
+```sql
+    SELECT news.* from users
+    INNER JOIN content on content.author_id=id
+    INNER JOIN news on news.content_id=content.id
+    WHERE users.id = $id ;
+          
+```
 
 #### 1.3. Frequent Updates
 
@@ -280,8 +417,14 @@ Since all relations are in the Boyce-Codd Normal Form (BCNF), the relational sch
 | **Type**            | B-tree, Hash, GiST or GIN              |
 | **Clustering**      | Clustering of the index                |
 | **Justification**   | Justification for the proposed index   |
-| `SQL code`                                                  ||
-
+| 
+```sql
+CREATE INDEX search_content_title_idx ON content USING GIST (setweight(to_tsvector('english', content.title),'A'));
+CREATE INDEX search_content_body_idx ON content USING GIST (setweight(to_tsvector('english', content.body),'C'));
+CREATE INDEX search_tag_idx ON tag USING GIST (setweight(to_tsvector('english', tag.name),'B'));
+CREATE INDEX search_username_idx ON tag USING GIST (setweight(to_tsvector('simple', users.username),'B'));
+```
+||
 ### 3. Triggers
  
 > User-defined functions and trigger procedures that add control structures to the SQL language or perform complex computations, are identified and described to be trusted by the database server. Every kind of function (SQL functions, Stored procedures, Trigger procedures) can take base types, composite types, or combinations of these as arguments (parameters). In addition, every kind of function can return a base type or a composite type. Functions can also be defined to return sets of base or composite values.  
@@ -289,7 +432,14 @@ Since all relations are in the Boyce-Codd Normal Form (BCNF), the relational sch
 | **Trigger**      | TRIGGER01                              |
 | ---              | ---                                    |
 | **Description**  | Trigger description, including reference to the business rules involved |
-| `SQL code`                                             ||
+| `SQL code`
+
+| **Trigger**      | TRIGGER01                              |
+| ---              | ---                                    |
+| **Description**  | Ensure that only moderators can approve / reject requests |
+| `SQL code` | ```sql`
+
+`` |
 
 ### 4. Transactions
  
@@ -300,6 +450,15 @@ Since all relations are in the Boyce-Codd Normal Form (BCNF), the relational sch
 | Justification   | Justification for the transaction.  |
 | Isolation level | Isolation level of the transaction. |
 | `Complete SQL Code`                                   ||
+
+### 5. Complete SQL Code
+ 
+> The database script must also include the SQL to populate a database with test data with an amount of tuples suitable for testing and with plausible values for the fields of the database.  
+> This code should also be included in the group's git repository as an SQL script, and a link include here.  
+
+#### 5.1. Database schema
+
+#### 5.2. Database population
 
 
 ## Annex A. SQL Code
@@ -395,6 +554,7 @@ CREATE TABLE content (
     author_id INTEGER NOT NULL,
     body TEXT NOT NULL,
     date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    nr_votes INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
     CONSTRAINT fk_author_id
         FOREIGN KEY(author_id) 
@@ -598,6 +758,7 @@ CREATE TABLE faq (
     answer TEXT NOT NULL,
     PRIMARY KEY(id)
 );
+
 ```
 
 
