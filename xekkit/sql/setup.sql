@@ -97,6 +97,7 @@ CREATE TABLE news (
     title TEXT NOT NULL,
     image TEXT UNIQUE,
     trending_score INTEGER NOT NULL CHECK (trending_score >= 0),
+    nr_comments INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
         FOREIGN KEY(content_id) 
