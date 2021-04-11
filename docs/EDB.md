@@ -618,7 +618,7 @@ CREATE TABLE comment (
 CREATE TABLE request (
    id INTEGER GENERATED ALWAYS AS IDENTITY,
    from_id INTEGER NOT NULL,
-   moderator_id INTEGER NOT NULL, /* CHECK moderator_id.is_moderator == true WITH TRIGGERS*/
+   moderator_id INTEGER, /* CHECK moderator_id.is_moderator == true WITH TRIGGERS*/
    reason TEXT NOT NULL,
    creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
    status STATUS_TYPE,
