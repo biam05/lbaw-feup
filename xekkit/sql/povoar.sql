@@ -102,4 +102,4 @@ insert into comment(content_id, news_id,reply_to_id) values (2,4,2);
 insert into comment(content_id, news_id,reply_to_id) values (3,2,null);
 insert into comment(content_id, news_id,reply_to_id) values (4,3,null);
 
-insert into request(from_id, moderator_id, reason, creation_date,status,revision_date) values (
+/* insert into request(from_id, moderator_id, reason, creation_date,status,revision_date) values ( */
