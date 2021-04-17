@@ -224,7 +224,7 @@ CREATE TABLE vote (
 	        ON DELETE CASCADE
 );
 
-CREATE TABLE follow_notifications (
+CREATE TABLE follow_notification (
     follower_id INTEGER,
     users_id INTEGER,
     in_new BOOLEAN NOT NULL DEFAULT true,

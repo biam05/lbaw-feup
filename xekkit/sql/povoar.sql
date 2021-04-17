@@ -15,7 +15,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('iyoudee', 'adrainse@goo.ne.jp', 'LOUT2zpl', 'reintermediate open-source methodologies', 'png', '09/24/1979', 'm', '78', false, false, false, false);
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('jwarfieldf', 'mervinef@behance.net', 'HN9mhx', 'incubate robust channels', 'jpg', '04/30/1935', 'f', '29489', false, false, false, false);
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('iodomg', 'bwashbrookg@bloglovin.com', 'ZdTpo2Atsf', 'benchmark collaborative content', 'png', '03/16/2013', 'f', '504', false, false, false, false); --não tem idade suficiente
-insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('sphonixh', 'sduchesneh@moonfruit.com', 'J4GQnyXC8C', 'aggregate revolutionary bandwidth', 'png', '06/05/1954', 'f', '2387', false, false, true, false); --partner com reputação inferior ao requerido
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('sphonixh', 'sduchesneh@moonfruit.com', 'J4GQnyXC8C', 'aggregate revolutionary bandwidth', 'png', '06/05/1954', 'f', '2387', false, false, true, false); 
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('fosbidstoni', 'tdoddemeedei@umn.edu', '5PwEC1GpWoU', 'engage user-centric web-readiness', 'png', '10/08/2005', 'm', '28422', false, false, false, false);
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values ('bturrillj', 'jwarlowj@g.co', '3NRCEXNardY', 'enhance frictionless e-business', 'png', '11/11/1924', 'm', '105001', false, false, true, false);
 
@@ -73,6 +73,7 @@ Russia ambassador, one of the few foreign envoys in the country, said that while
 
 "Thank god, it is a long shot from the Arduous March, and I hope it would never come to that," Ambassador Alexander Matsegora told Russias TASS news agency according to a transcript published on Wednesday.
 ',0);
+
 insert into content(author_id, title, nr_votes values(19, 'Man, North Korea is such a prison',0);
 insert into content(author_id, title, nr_votes values(20, 'ikr',0);
 insert into content(author_id, title, nr_votes values(15, 'My president <3',0);
@@ -100,6 +101,40 @@ insert into news_tag(news_id, tag_id) values (1,1);
 insert into comment(content_id, news_id,reply_to_id) values (1,4,null);
 insert into comment(content_id, news_id,reply_to_id) values (2,4,2);
 insert into comment(content_id, news_id,reply_to_id) values (3,2,null);
-insert into comment(content_id, news_id,reply_to_id) values (4,3,null);
 
-/* insert into request(from_id, moderator_id, reason, creation_date,status,revision_date) values ( */
+
+
+insert into vote (users_id, content_id, value) values (20, 4, 1);
+insert into vote (users_id, content_id, value) values (7, 2, 1);
+insert into vote (users_id, content_id, value) values (19, 2, -1);
+insert into vote (users_id, content_id, value) values (15, 5, 1);
+insert into vote (users_id, content_id, value) values (8, 3, 1);
+insert into vote (users_id, content_id, value) values (14, 2, 1);
+insert into vote (users_id, content_id, value) values (16, 3, -1);
+insert into vote (users_id, content_id, value) values (7, 5, -1);
+insert into vote (users_id, content_id, value) values (4, 5, 1);
+insert into vote (users_id, content_id, value) values (3, 6, 1);
+insert into vote (users_id, content_id, value) values (20, 5, -1);
+insert into vote (users_id, content_id, value) values (12, 1, 1);
+insert into vote (users_id, content_id, value) values (1, 3, 1);
+insert into vote (users_id, content_id, value) values (18, 3, -1);
+insert into vote (users_id, content_id, value) values (4, 2, 1);
+insert into vote (users_id, content_id, value) values (20, 4, 1);
+insert into vote (users_id, content_id, value) values (6, 8, 1);
+insert into vote (users_id, content_id, value) values (11, 8, -1);
+insert into vote (users_id, content_id, value) values (16, 8, -1);
+insert into vote (users_id, content_id, value) values (2, 7, 1);
+insert into vote (users_id, content_id, value) values (5, 1, 1);
+insert into vote (users_id, content_id, value) values (19, 5, -1);
+insert into vote (users_id, content_id, value) values (9, 6, 1);
+insert into vote (users_id, content_id, value) values (7, 1, -1);
+insert into vote (users_id, content_id, value) values (7, 3, 1);
+insert into vote (users_id, content_id, value) values (17, 2, 1);
+insert into vote (users_id, content_id, value) values (3, 6, 1);
+insert into vote (users_id, content_id, value) values (19, 2, 1);
+insert into vote (users_id, content_id, value) values (14, 1, 1);
+insert into vote (users_id, content_id, value) values (7, 4, -1);
+
+
+insert into faq(question, answer) values ("How does Xekkit deal with inappropriate comments?","You can request for a User to be banned and later our moderators will analyse said request and decide wether that behaviour is inappropriate");
+
