@@ -671,7 +671,7 @@ CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
     $BODY$
     DECLARE news_title TEXT = (SELECT title FROM news WHERE news.content_id = new.id);
     BEGIN
-        IF news_title not NULL THEN
+        IF news_title <> NULL THEN
             IF NEW.body <> OLD.body THEN
                 UPDATE news
                 SET search = 
