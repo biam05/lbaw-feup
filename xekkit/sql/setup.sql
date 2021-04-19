@@ -671,11 +671,13 @@ CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
     $BODY$
     DECLARE news_title TEXT = (SELECT title FROM news WHERE news.content_id = new.id);
     BEGIN
-        IF news_title <> NULL THEN
+        IF news_title not NULL THEN
             IF NEW.body <> OLD.body THEN
-                NEW.search = 
-                    setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
-                    setweight(to_tsvector(coalesce(NEW.body, '')), 'B');
+                UPDATE news
+                SET search = 
+                        setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
+                        setweight(to_tsvector(coalesce(NEW.body, '')), 'B')
+                WHERE news.content_id = new.id;
             END IF;
         END IF;
         
@@ -720,4 +722,3 @@ CREATE TRIGGER cnews_search_update
     BEFORE INSERT OR UPDATE ON users
     FOR EACH ROW
     EXECUTE PROCEDURE users_search_update();   
-

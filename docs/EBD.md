@@ -258,11 +258,11 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Display one specific News Post |
 | **Frequency**   | thousands per day |
 ```sql
-    SELECT n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date, u.username, u.is_partner, u.is_deleted, u.is_banned
-    FROM news n, content c, users u
-    WHERE n.content_id = $id 
-        AND n.content_id = c.id
-        AND c.author_id = u.id;          
+SELECT n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date, u.username, u.is_partner, u.is_deleted, u.is_banned
+FROM news n, content c, users u
+WHERE n.content_id = $id 
+    AND n.content_id = c.id
+    AND c.author_id = u.id;          
 ```
 
 | **Query**       | SELECT02 |
@@ -270,12 +270,12 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Get comments from Post |
 | **Frequency**   | thousands per day |
 ```sql
-    SELECT cm.content_id, ct.body, ct.date, ct.nr_votes, u.username, u.is_partner, u.is_deleted, u.is_banned, cm.reply_to_id
-    FROM news n, comment cm, content ct, users u
-    WHERE n.content_id = $id 
-        AND cm.news_id = n.content_id
-        AND n.content_id = ct.id
-        AND ct.author_id = u.id;
+SELECT cm.content_id, ct.body, ct.date, ct.nr_votes, u.username, u.is_partner, u.is_deleted, u.is_banned, cm.reply_to_id
+FROM news n, comment cm, content ct, users u
+WHERE n.content_id = $id 
+    AND cm.news_id = n.content_id
+    AND n.content_id = ct.id
+    AND ct.author_id = u.id;
 ```
 
 | **Query**       | SELECT03 |
@@ -283,11 +283,11 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Tags from Post |
 | **Frequency**   | tens of thousands per day |
 ```sql
-    SELECT t.name
-    FROM news n, news_tag nt, tag t
-    WHERE n.content_id = $id 
-        AND nt.news_id = n.content_id
-        AND t.id = nt.tag_id;      
+SELECT t.name
+FROM news n, news_tag nt, tag t
+WHERE n.content_id = $id 
+    AND nt.news_id = n.content_id
+    AND t.id = nt.tag_id;      
 ```
 
 | **Query**       | SELECT04 |
@@ -295,15 +295,15 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Get trending news |
 | **Frequency**   | thousands per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.date, u.username, u.is_partner
-    FROM news n, content c, users u
-    WHERE n.content_id = c.id
-        AND c.author_id = u.id
-        AND u.is_deleted = 'false'
-        AND u.is_banned = 'false'
-    ORDER BY n.trending_score DESC
-    LIMIT 25        
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.date, u.username, u.is_partner
+FROM news n, content c, users u
+WHERE n.content_id = c.id
+    AND c.author_id = u.id
+    AND u.is_deleted = 'false'
+    AND u.is_banned = 'false'
+ORDER BY n.trending_score DESC
+LIMIT 25        
+OFFSET $offset;
 ```
 
 | **Query**       | SELECT05 |
@@ -311,15 +311,15 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Get all recent news |
 | **Frequency**   | thousands per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date, u.username, u.is_partner
-    FROM news n, content c, users u
-    WHERE n.content_id = c.id
-        AND c.author_id = u.id
-        AND u.is_deleted = 'false'
-        AND u.is_banned = 'false'
-    ORDER BY c.date DESC
-    LIMIT 25     
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date, u.username, u.is_partner
+FROM news n, content c, users u
+WHERE n.content_id = c.id
+    AND c.author_id = u.id
+    AND u.is_deleted = 'false'
+    AND u.is_banned = 'false'
+ORDER BY c.date DESC
+LIMIT 25     
+OFFSET $offset;
 ```
 
 | **Query**       | SELECT06 |
@@ -327,16 +327,16 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Get recent news from users I follow |
 | **Frequency**   | thousands per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.date, c.body, c.nr_votes, u.username, u.is_partner
-    FROM news n, content c, users u
-    WHERE n.content_id = c.id
-        AND c.author_id = u.id
-        AND u.is_deleted = 'false'
-        AND u.is_banned = 'false'
-        AND c.author_id IN (SELECT f.users_id FROM follow f WHERE f.follower_id = $my_users_id)
-    ORDER BY c.date DESC
-    LIMIT 25     
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.date, c.body, c.nr_votes, u.username, u.is_partner
+FROM news n, content c, users u
+WHERE n.content_id = c.id
+    AND c.author_id = u.id
+    AND u.is_deleted = 'false'
+    AND u.is_banned = 'false'
+    AND c.author_id IN (SELECT f.users_id FROM follow f WHERE f.follower_id = $my_users_id)
+ORDER BY c.date DESC
+LIMIT 25     
+OFFSET $offset;
 ```
 
 | **Query**       | SELECT07 |
@@ -344,9 +344,9 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | User Profile |
 | **Frequency**   | hundreds per day |
 ```sql
-    SELECT u.username, u.description, u.photo, u.is_deleted, u.is_banned, u.reputation, u.is_partner, u.is_moderator
-    FROM users u
-    WHERE u.id = $users_id;     
+SELECT u.username, u.description, u.photo, u.is_deleted, u.is_banned, u.reputation, u.is_partner, u.is_moderator
+FROM users u
+WHERE u.id = $users_id;     
 ```
 
 | **Query**       | SELECT07 |
@@ -354,9 +354,9 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | See edit user profile page |
 | **Frequency**   | tens per day |
 ```sql
-    SELECT u.username, u.description, u.photo, u.email, u.birthdate, u.gender, u.is_deleted, u.is_banned, u.reputation, u.is_partner, u.is_moderator
-    FROM users u
-    WHERE u.id = $users_id;     
+SELECT u.username, u.description, u.photo, u.email, u.birthdate, u.gender, u.is_deleted, u.is_banned, u.reputation, u.is_partner, u.is_moderator
+FROM users u
+WHERE u.id = $users_id;     
 ```
 
 
@@ -365,14 +365,14 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | User Posts by date |
 | **Frequency**   | hundreds per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date 
-    FROM users u, content c, news n
-    WHERE u.id = $users_id 
-        AND c.author_id = u.id
-        AND n.content_id = c.id
-    ORDER BY c.date DESC
-    LIMIT 25     
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date 
+FROM users u, content c, news n
+WHERE u.id = $users_id 
+    AND c.author_id = u.id
+    AND n.content_id = c.id
+ORDER BY c.date DESC
+LIMIT 25     
+OFFSET $offset;
 ```
 
 
@@ -381,14 +381,14 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | User Posts by trending |
 | **Frequency**   | hundreds per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date 
-    FROM users u, content c, news n
-    WHERE u.id = $users_id 
-        AND c.author_id = u.id
-        AND n.content_id = c.id
-    ORDER BY n.trending_score DESC
-    LIMIT 25    
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date 
+FROM users u, content c, news n
+WHERE u.id = $users_id 
+    AND c.author_id = u.id
+    AND n.content_id = c.id
+ORDER BY n.trending_score DESC
+LIMIT 25    
+OFFSET $offset;
 ```
 
 
@@ -397,14 +397,14 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | User Posts by nr_votes |
 | **Frequency**   | hundreds per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date 
-    FROM users u, content c, news n
-    WHERE u.id = $users_id 
-        AND c.author_id = u.id
-        AND n.content_id = c.id
-    ORDER BY c.nr_votes DESC
-    LIMIT 25    
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date 
+FROM users u, content c, news n
+WHERE u.id = $users_id 
+    AND c.author_id = u.id
+    AND n.content_id = c.id
+ORDER BY c.nr_votes DESC
+LIMIT 25    
+OFFSET $offset;
 ```
 
 
@@ -413,9 +413,9 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Users I follow |
 | **Frequency**   | tens per day |
 ```sql
-    SELECT u.id, u.username, u.is_partner, u.photo, u.reputation, u.is_banned, u.is_deleted
-    FROM users u
-    WHERE u.id IN (SELECT f.users_id FROM follow f WHERE f.follower_id = $my_users_id);  
+SELECT u.id, u.username, u.is_partner, u.photo, u.reputation, u.is_banned, u.is_deleted
+FROM users u
+WHERE u.id IN (SELECT f.users_id FROM follow f WHERE f.follower_id = $my_users_id);  
 ```
 
 
@@ -424,20 +424,20 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | User notifications |
 | **Frequency**   | millions per day |
 ```sql
-    SELECT n.follower_id, n.is_new, n.creation_date
-    FROM follow_notification n
-    WHERE n.users_id = $my_users_id
-    ORDER BY n.is_new DESC, n.creation_date DESC;
+SELECT n.follower_id, n.is_new, n.creation_date
+FROM follow_notification n
+WHERE n.users_id = $my_users_id
+ORDER BY n.is_new DESC, n.creation_date DESC;
 
-    SELECT n.voter_id, n.content_id, n.is_new, n.creation_date
-    FROM vote_notification n
-    WHERE n.author_id = $my_users_id
-    ORDER BY n.is_new DESC, n.creation_date DESC;   
-    
-    SELECT n.comment_id, n.is_new, n.creation_date
-    FROM comment_notification n
-    WHERE n.users_id = $my_users_id
-    ORDER BY n.is_new DESC, n.creation_date DESC;
+SELECT n.voter_id, n.content_id, n.is_new, n.creation_date
+FROM vote_notification n
+WHERE n.author_id = $my_users_id
+ORDER BY n.is_new DESC, n.creation_date DESC;   
+
+SELECT n.comment_id, n.is_new, n.creation_date
+FROM comment_notification n
+WHERE n.users_id = $my_users_id
+ORDER BY n.is_new DESC, n.creation_date DESC;
 ```
 
 
@@ -446,13 +446,13 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Moderator notifications |
 | **Frequency**   | hundreads per day |
 ```sql
-    SELECT r.id, r.from_id, r.moderator_id, r.reason, r.creation_date, r.status, r.revision_date, ru.to_users_id, rc.to_content_id, ua.ban_id
-    FROM request r, report_users ru, report_content rc, unban_appeal ua, partner_request pr
-    WHERE r.id = ru.request_id
-        OR r.id = rc.request_id
-        OR r.id = ua.request_id
-        OR r.id = pr.request_id
-    ORDER BY r.revision_date DESC NULLS FIRST, r.creation_date DESC;
+SELECT r.id, r.from_id, r.moderator_id, r.reason, r.creation_date, r.status, r.revision_date, ru.to_users_id, rc.to_content_id, ua.ban_id
+FROM request r, report_users ru, report_content rc, unban_appeal ua, partner_request pr
+WHERE r.id = ru.request_id
+    OR r.id = rc.request_id
+    OR r.id = ua.request_id
+    OR r.id = pr.request_id
+ORDER BY r.revision_date DESC NULLS FIRST, r.creation_date DESC;
 ```
 
 
@@ -461,8 +461,8 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | FAQ |
 | **Frequency**   | tens per day |
 ```sql
-   SELECT *
-   FROM faq;
+SELECT *
+FROM faq;
 ```
 
 
@@ -471,16 +471,16 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Description** | Search news |
 | **Frequency**   | thousands per day |
 ```sql
-    SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date, u.username, u.is_partner
-    FROM news n, content c, users u
-    WHERE n.search @@ websearch_to_tsquery('english', $search_term)
-        AND n.content_id = c.id
-        AND c.author_id = u.id
-        AND u.is_deleted = 'false'
-        AND u.is_banned = 'false'
-    ORDER BY ts_rank(n.search, websearch_to_tsquery('english', $serach_term)) DESC
-    LIMIT 25
-    OFFSET $offset;
+SELECT n.content_id, n.title, n.image, c.nr_votes, n.nr_comments, c.body, c.date, u.username, u.is_partner
+FROM news n, content c, users u
+WHERE n.search @@ websearch_to_tsquery('english', $search_term)
+    AND n.content_id = c.id
+    AND c.author_id = u.id
+    AND u.is_deleted = 'false'
+    AND u.is_banned = 'false'
+ORDER BY ts_rank(n.search, websearch_to_tsquery('english', $serach_term)) DESC
+LIMIT 25
+OFFSET $offset;
 ```
 
 
@@ -507,7 +507,12 @@ For each transaction, the isolation level is explicitly stated and justified and
 | **Frequency**   | dozens per day                     |
 ```sql
 UPDATE users,
-SET username = $username, email = $email, description = $description, photo = $photo, birthdate = $birthdate, gender = $gender
+SET username = $username, 
+    email = $email, 
+    description = $description, 
+    photo = $photo, 
+    birthdate = $birthdate, 
+    gender = $gender
 WHERE id = $id;
 ```
 
@@ -527,7 +532,9 @@ WHERE id = $id;
 | **Frequency**   | dozens per day                     |
 ```sql
 UPDATE news, content
-SET news.title = $title, news.image = $image, content.body = $body
+SET news.title = $title, 
+    news.image = $image, 
+    content.body = $body
 WHERE news.content_id = $content_id
     AND news.content_id = content.id;
 ```
@@ -548,7 +555,8 @@ WHERE content.author_id = $id;
 | **Frequency**   | units per month                   |
 ```sql
 UPDATE faq
-SET question = $question, answer = $answer
+SET question = $question, 
+    answer = $answer
 WHERE id = $id;
 ```
 
@@ -568,7 +576,9 @@ WHERE users_id = $id;
 | **Frequency**   | units per month                   |
 ```sql
 UPDATE request
-SET moderator_id = $my_id, status = $status, revision_date = NOW()
+SET moderator_id = $my_id, 
+    status = $status, 
+    revision_date = NOW()
 WHERE id = $request_id;
 ```
 
@@ -579,7 +589,8 @@ WHERE id = $request_id;
 ```sql
 UPDATE follow_notification
 SET is_new = 'false'
-WHERE follower_id = $follower_id AND users_id = $users_id;
+WHERE follower_id = $follower_id 
+    AND users_id = $users_id;
 ```
 
 | **Query**       | UPDATE09                               |
@@ -589,7 +600,9 @@ WHERE follower_id = $follower_id AND users_id = $users_id;
 ```sql
 UPDATE vote_notification
 SET is_new = 'false'
-WHERE voter_id = $voter_id AND content_id = $content_id AND author_id = $author_id;
+WHERE voter_id = $voter_id 
+    AND content_id = $content_id 
+    AND author_id = $author_id;
 ```
 
 | **Query**       | UPDATE10                               |
@@ -599,7 +612,8 @@ WHERE voter_id = $voter_id AND content_id = $content_id AND author_id = $author_
 ```sql
 UPDATE comment_notification
 SET is_new = 'false'
-WHERE users_id = $users_id AND comment_id = $comment_id;
+WHERE users_id = $users_id 
+    AND comment_id = $comment_id;
 ```
 
 | **Query**       | UPDATE11                               |
@@ -639,7 +653,7 @@ WHERE id = $id
 | **Frequency**   | units per day                    |
 ```sql
 INSERT INTO users 
-    VALUES (NULL, $username, $email, $password, $description, $photo, $birthdate, $gender, NULL, NULL, NULL, NULL, NULL, NULL); 
+VALUES (NULL, $username, $email, $password, $description, $photo, $birthdate, $gender, NULL, NULL, NULL, NULL, NULL, NULL); 
 ```
 
 | **Query**       | INSERT02                              |
@@ -648,7 +662,7 @@ INSERT INTO users
 | **Frequency**   | hundreads per day                      |
 ```sql
 INSERT INTO follow
-    VALUES ($follower_id, $users_id);
+VALUES ($follower_id, $users_id);
 ```
 
 | **Query**       | INSERT03                              |
@@ -657,7 +671,7 @@ INSERT INTO follow
 | **Frequency**   | units per week                      |
 ```sql
 INSERT INTO ban
-    VALUES (NULL, $users_id, $moderator_id, NULL, $end_date, $reason);
+VALUES (NULL, $users_id, $moderator_id, NULL, $end_date, $reason);
 ```
 
 
@@ -667,7 +681,7 @@ INSERT INTO ban
 | **Frequency**   | dozens per day                     |
 ```sql
 INSERT INTO tag
-    VALUES (NULL, $name);
+VALUES (NULL, $name);
 ```
 
 
@@ -677,7 +691,7 @@ INSERT INTO tag
 | **Frequency**   | hundreads per day                     |
 ```sql
 INSERT INTO news_tag
-    VALUES ($news_id, $tags_id);
+VALUES ($news_id, $tags_id);
 ```
 
 
@@ -687,7 +701,7 @@ INSERT INTO news_tag
 | **Frequency**   | thousands per day |
 ```sql
 INSERT INTO vote
-    VALUES ($users_id, $content_id, $value);
+VALUES ($users_id, $content_id, $value);
 ```
 
 
@@ -697,7 +711,7 @@ INSERT INTO vote
 | **Frequency**   | units per month |
 ```sql
 INSERT INTO faq
-    VALUES (NULL, $question, $answer);
+VALUES (NULL, $question, $answer);
 ```
 
 | **Query**       | DELETE01 |
@@ -850,35 +864,32 @@ CREATE INDEX content_author_idx ON content USING hash(author_id);
  
 
 #### 2.2. Full-text Search Indices 
+ 
 
-> The system being developed must provide full-text search features supported by PostgreSQL. Thus, it is necessary to specify the fields where full-text search will be available and the associated setup, namely all necessary configurations, indexes definitions and other relevant details.  
-
-| **Index**           | IDX07                                  |
-| ---                 | ---                                    |
-| **Related queries** | SELECT01, ...                          |
+| **Index**           | IDX07 |
+| ---                 | --- |
+| **Related queries** | SELECT15 |
 | **Relation**        | news |
-| **Attribute**       | title |
+| **Attribute**       | search |
 | **Type**            | GIST |
 | **Clustering**      | No |
-| **Justification**   | Used to improve performance of full text searches when searching for news, gist because news is dynamic data |
+| **Justification**   | Used to improve performance of full text searches when searching for news, gist because news is dynamic data. It uses information about the news' title and body. |
  ```sql
 ALTER TABLE news ADD COLUMN search TSVECTOR;
 CREATE INDEX search_news_idx ON news USING GIST (search);
-
  ```
  
-| **Index**           | IDX08                                  |
-| ---                 | ---                                    |
-| **Related queries** | SELECT01, ...                          |
+| **Index**           | IDX08 |
+| ---                 | ---  |
+| **Related queries** | SELECT16 |
 | **Relation**        | users    |
-| **Attribute**       | username   |
+| **Attribute**       | search   |
 | **Type**            | GIN |
 | **Clustering**      | No |
-| **Justification**   | Used to improve performance of full text searches when searching for users, gin because users data is rarely changed. |
+| **Justification**   | Used to improve performance of full text searches when searching for users, gin because users data is rarely changed. It uses information about the user's username and description. |
  ```sql
 ALTER TABLE users ADD COLUMN search TSVECTOR;
 CREATE INDEX search_users_idx ON users USING GIN (search);
-
  ```
 
 ### 3. Triggers 
@@ -892,7 +903,7 @@ CREATE OR REPLACE FUNCTION action_is_from_moderator() RETURNS TRIGGER AS
     $BODY$
         BEGIN
             IF NOT (SELECT is_moderator FROM users WHERE users.id = new.moderator_id) THEN 
-                RAISE EXCEPTION 'There must be a moderator to update a request status.';
+                RAISE EXCEPTION 'Only moderators can update a request status.';
             END IF;
             RETURN NEW;
         END
@@ -910,14 +921,11 @@ CREATE TRIGGER trigger_is_from_moderator
 | **Description**  | A user cannot follow himself |
 | **Justification**| A user cannot be able to follow himself, so a trigger is needed to verify if the current user is trying to follow himself. |
  ```sql
-DROP FUNCTION IF EXISTS follow_self() CASCADE;
-DROP TRIGGER IF EXISTS follow_self ON follow;
-
 CREATE OR REPLACE FUNCTION follow_self() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         IF NEW.follower_id=NEW.users_id THEN
-            RAISE EXCEPTION 'A user cannot follow himself';
+            RAISE EXCEPTION 'A user cannot follow himself.';
         END IF;
         RETURN New;
     END
@@ -928,13 +936,12 @@ CREATE TRIGGER follow_self
     BEFORE INSERT ON follow
     FOR EACH ROW
     EXECUTE PROCEDURE follow_self();
-    
  ```
 
 | **Trigger**      | TRIGGER03                             |
 | ---              | ---                                    |
 | **Description**  | An Authenticated User can only receive a maximum of 5 points per day related to voting on other user's news/comments. |
-| **Justification**| Since a user can onlyreceive a maximum of 5 points per day related to voting on other user's news/comments, a trigger is needed to verify the current number of votes done in one day|
+| **Justification**| Since a user can only receive a maximum of 5 reputation points per day related to voting on other user's news/comments, a trigger is needed to verify the current number of votes done in one day. If that number is lower than 5 this trigger also updates the user's reputation value. |
  ```sql
 CREATE OR REPLACE FUNCTION maximum_rep_day() RETURNS TRIGGER AS
     $BODY$
@@ -962,7 +969,6 @@ CREATE TRIGGER maximum_rep_day
     BEFORE INSERT ON vote
     FOR EACH ROW
     EXECUTE PROCEDURE maximum_rep_day();
-    
  ```
 
 | **Trigger**      | TRIGGER04                            |
@@ -970,9 +976,6 @@ CREATE TRIGGER maximum_rep_day
 | **Description**  | The minimum age for a user to be registers is 13 years old |
 | **Justification**| A used can't create an account in our website when his age is lower than 13 years old, so a trigger is needed to verify when creating an account or updating the account information if the birthdate given guarantees that the user is at least 13 years old. |
  ```sql
-DROP FUNCTION IF EXISTS minimum_age() CASCADE;
-DROP TRIGGER IF EXISTS minimum_age ON users;
-
 CREATE OR REPLACE FUNCTION minimum_age() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -995,9 +998,6 @@ CREATE TRIGGER minimum_age
 | **Description**  | An Authenticated User can't vote on his own news/comments. |
 | **Justification**| An Authenticated User can't vote on his own news/comments, so a trigger is needed to verify if the current user is trying to vote on news/comments posted by himself.|
  ```sql
-DROP FUNCTION IF EXISTS vote_self() CASCADE;
-DROP TRIGGER IF EXISTS vote_self ON vote;
-
 CREATE OR REPLACE FUNCTION vote_self() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1020,9 +1020,6 @@ CREATE TRIGGER vote_self
 | **Description**  | Deal with Request |
 | **Justification**| A trigger is needed to deal with the approved requests to change the information about a certain user or a certain content. |
  ```sql
-DROP FUNCTION IF EXISTS deal_with_request() CASCADE;
-DROP TRIGGER IF EXISTS deal_with_request ON request;
-
 CREATE OR REPLACE FUNCTION deal_with_request() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1052,7 +1049,6 @@ CREATE TRIGGER deal_with_request
     AFTER UPDATE ON request
     FOR EACH ROW
     EXECUTE PROCEDURE deal_with_request();
-
  ```
 
 | **Trigger**      | TRIGGER07                            |
@@ -1060,9 +1056,6 @@ CREATE TRIGGER deal_with_request
 | **Description**  | Increase Number of Comments in a News Post |
 | **Justification**| A trigger is needed to increase the number of comments in a news post when a new comment is added. |
  ```sql
-DROP FUNCTION IF EXISTS increase_comments() CASCADE;
-DROP TRIGGER IF EXISTS increase_comments ON comment;
-
 CREATE OR REPLACE FUNCTION increase_comments() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1078,7 +1071,6 @@ CREATE TRIGGER increase_comments
     AFTER INSERT ON comment
     FOR EACH ROW
     EXECUTE PROCEDURE increase_comments(); 
-
  ```
 
 | **Trigger**      | TRIGGER08                            |
@@ -1086,9 +1078,6 @@ CREATE TRIGGER increase_comments
 | **Description**  | Decrease Number of Comments in a News Post |
 | **Justification**| A trigger is needed to decrease the number of comments in a news post when comment is deleted. |
  ```sql
-DROP FUNCTION IF EXISTS decrease_comments() CASCADE;
-DROP TRIGGER IF EXISTS decrease_comments ON comment;
-
 CREATE OR REPLACE FUNCTION decrease_comments() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1104,17 +1093,13 @@ CREATE TRIGGER decrease_comments
     AFTER DELETE ON comment
     FOR EACH ROW
     EXECUTE PROCEDURE decrease_comments(); 
-
  ```
 
 | **Trigger**      | TRIGGER09                            |
 | ---              | ---                                    |
 | **Description**  | Increase Trending Score and Number of Votes with a Vote |
-| **Justification**| A trigger is needed to increase the trending score and the number of votes in a certain content when when a user upvotes it. |
+| **Justification**| A trigger is needed to increase the trending score and increase/decrease the number of votes in a certain content when when a user upvotes/downvotes on it. |
  ```sql
-DROP FUNCTION IF EXISTS increase_ts_and_votes() CASCADE;
-DROP TRIGGER IF EXISTS increase_ts_and_votes ON vote;
-
 CREATE OR REPLACE FUNCTION increase_ts_and_votes() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1142,11 +1127,8 @@ CREATE TRIGGER increase_ts_and_votes
 | **Trigger**      | TRIGGER10                            |
 | ---              | ---                                    |
 | **Description**  | Decrease Trending Score and Number of Votes with a Vote|
-| **Justification**| A trigger is needed to decrease the trending score and the number of votes in a certain content when when a user downvotes it. |
+| **Justification**| A trigger is needed to decrease the trending score and decrease/increase the number of votes in a certain content when when a user removes the upvote/downvote on it. This trigger also removes one reputation point to the user that removed the vote. |
  ```sql
-DROP FUNCTION IF EXISTS decrease_ts_and_votes() CASCADE;
-DROP TRIGGER IF EXISTS decrease_ts_and_votes ON vote;
-
 CREATE OR REPLACE FUNCTION decrease_ts_and_votes() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1171,7 +1153,6 @@ CREATE TRIGGER decrease_ts_and_votes
     AFTER DELETE ON vote
     FOR EACH ROW
     EXECUTE PROCEDURE decrease_ts_and_votes(); 
-
  ```
 
 | **Trigger**      | TRIGGER11                            |
@@ -1179,9 +1160,6 @@ CREATE TRIGGER decrease_ts_and_votes
 | **Description**  | Create Follow Notification |
 | **Justification**| A trigger is needed to create a new follow notification when an user starts following another. |
  ```sql
-DROP FUNCTION IF EXISTS create_follow_notification() CASCADE;
-DROP TRIGGER IF EXISTS create_follow_notification ON follow;
-
 CREATE OR REPLACE FUNCTION create_follow_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1197,8 +1175,6 @@ CREATE TRIGGER create_follow_notification
     AFTER INSERT ON follow
     FOR EACH ROW
     EXECUTE PROCEDURE create_follow_notification(); 
-
-
  ```
 
 | **Trigger**      | TRIGGER12                            |
@@ -1206,9 +1182,6 @@ CREATE TRIGGER create_follow_notification
 | **Description**  | Create Vote Notification |
 | **Justification**| A trigger is needed to create a new vote notification when an user upvotes a certain content from another user. |
  ```sql
-DROP FUNCTION IF EXISTS create_vote_notification() CASCADE;
-DROP TRIGGER IF EXISTS create_vote_notification ON vote;
-
 CREATE OR REPLACE FUNCTION create_vote_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1232,9 +1205,6 @@ CREATE TRIGGER create_vote_notification
 | **Description**  | Create Comment Notification |
 | **Justification**| A trigger is needed to create a new comment notification when an user comments a certain content from another user. |
  ```sql
-DROP FUNCTION IF EXISTS create_comment_notification() CASCADE;
-DROP TRIGGER IF EXISTS create_comment_notification ON comment;
-
 CREATE OR REPLACE FUNCTION create_comment_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
@@ -1295,16 +1265,17 @@ CREATE TRIGGER news_search_update
 | **Description**  | Update TSVECTOR (News) |
 | **Justification**| A trigger is needed to update the TSVECTOR when the body of a news post is edited, so when searching, the information shown is in sync with the changes. |
 ```sql
-
 CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
     $BODY$
     DECLARE news_title TEXT = (SELECT title FROM news WHERE news.content_id = new.id);
     BEGIN
         IF news_title not NULL THEN
             IF NEW.body <> OLD.body THEN
-                NEW.search = 
-                    setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
-                    setweight(to_tsvector(coalesce(NEW.body, '')), 'B');
+                UPDATE news
+                SET search = 
+                        setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
+                        setweight(to_tsvector(coalesce(NEW.body, '')), 'B')
+                WHERE news.content_id = new.id;
             END IF;
         END IF;
         
@@ -1317,7 +1288,6 @@ CREATE TRIGGER news_body_search_update
     BEFORE UPDATE ON content
     FOR EACH ROW
     EXECUTE PROCEDURE news_body_search_update();
-
 ```
 
 | **Trigger**      | TRIGGER16                            |
@@ -2151,11 +2121,13 @@ CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
     $BODY$
     DECLARE news_title TEXT = (SELECT title FROM news WHERE news.content_id = new.id);
     BEGIN
-        IF news_title <> NULL THEN
+        IF news_title not NULL THEN
             IF NEW.body <> OLD.body THEN
-                NEW.search = 
-                    setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
-                    setweight(to_tsvector(coalesce(NEW.body, '')), 'B');
+                UPDATE news
+                SET search = 
+                        setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
+                        setweight(to_tsvector(coalesce(NEW.body, '')), 'B')
+                WHERE news.content_id = new.id;
             END IF;
         END IF;
         
