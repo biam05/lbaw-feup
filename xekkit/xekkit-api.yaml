@@ -294,6 +294,8 @@ paths:
                     description: 'Failed edit profile. Redirect to user profile.'
                     value: '/users/{username}'
 
+
+
   /users/change-password/{username}:
     post:
       operationId: R112
