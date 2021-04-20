@@ -1,0 +1,343 @@
+openapi: 3.0.0
+
+info:
+  version: '1.0'
+  title: 'LBAW XEKKIT Web API'
+  description: 'Web Resources Specification (A7) for XEKKIT'
+
+servers:
+  - description: 'Production server'
+    url: http://lbaw2114-prod.fe.up.pt
+
+externalDocs:
+  description: Find more info here.
+  url: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/eap#a7-high-level-architecture-privileges-web-resources-specification
+    
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+  - name: 'M02: Create/edit Content'
+  - name: 'M03: Search and See Content'
+  - name: 'M04: Search and See Users'
+  - name: 'M05: Notifications'
+  - name: 'M06: Requests'
+  - name: 'M07: Moderator Administration'
+  - name: 'M08: Static Pages'
+
+paths:
+  /:
+    get:
+      operationId: R101
+      summary: 'R101: Home page'
+      description: 'Provide home page. Access: PUB, USR, MOD'
+      tags:
+        - 'M03: Search and See Content'
+      responses:
+        '200':
+            description: 'Ok. IF PUB: Show [UI01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui01:-main); ELSE: Show [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui02:-main-logged-in)'
+                  
+  /login:
+    get:
+      operationId: R102
+      summary: 'R102: Login Form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show [UI07](hhttps://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui07:-log-in)'
+    post:
+      operationId: R103
+      summary: 'R103: Login Action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                inputUsername:          
+                  type: string
+                inputPassword:  
+                  type: string
+              required:
+                - inputUsername
+                - inputPassword
+
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/'
+                302Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+
+  /logout:
+    post:
+      operationId: R104
+      summary: 'R104: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR, MOD, BAN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      responses:
+        '302':
+          description: 'Redirect after processing the logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to home page.'
+                  value: '/'                            
+                                
+  /password-recovery:
+    get:
+      operationId: R105
+      summary: 'R105: Password Recovery Page'
+      description: 'Password recovery page. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Page to recovery password.'
+              
+
+    post:
+      operationId: R106
+      summary: 'R106: Password Recovery Action'
+      description: 'Password recovery action. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                inputEmail:
+                  type: string
+              required:
+                - inputEmail
+
+      responses:
+        '302':
+          description: 'Redirect after processing the request.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to home page.'
+                  value: '/login'
+                  
+  /register:
+    get:
+      operationId: R107
+      summary: 'R107: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show [UI08](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui08:-sign-Up)'
+
+    post:
+      operationId: R108
+      summary: 'R108: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                inputUsername:
+                  type: string
+                inputEmail:
+                  type: string
+                inputPassword:
+                  type: string
+                inputConfirmPassword:
+                  type: string
+                inputBirthDate:
+                  type: string
+                inputGender:
+                  type: string
+              required:
+                - inputUsername
+                - inputEmail
+                - inputPassword
+                - inputConfirmPassword
+                - inputBirthDate
+                - inputGender
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/'
+                302Failure:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+
+  /users/{username}:
+    get:
+      operationId: R109
+      summary: 'R109: View user profile'
+      description: 'Show the individual user profile. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI12](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui12-my-profile)'
+
+  /users/edit/{username}:
+    get:
+      operationId: R110
+      summary: 'R110: Edit user profile'
+      description: 'Form to edit the individual user profile. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Show [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+
+    post:
+        operationId: R111
+        summary: 'R111: Edit Profile Action'
+        description: 'Processes the edit user form submission. Access: USR'
+        tags:
+          - 'M01: Authentication and Individual Profile'
+          
+        parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+        requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  email:
+                    type: string
+                  birth_date:
+                    type: string
+                  gender:
+                    type: string
+                  description:
+                    type: string
+                required:
+                  - username
+                  - email
+                  - birth_date
+                  - gender
+
+        responses:
+          '302':
+            description: 'Redirect after processing the edit user information.'
+            headers:
+              Location:
+                schema:
+                  type: string
+                examples:
+                  302Success:
+                    description: 'Successful edit profile. Redirect to user profile.'
+                    value: '/users/{username}'
+                  302Failure:
+                    description: 'Failed edit profile. Redirect to user profile.'
+                    value: '/users/{username}'
+
+  /users/change-password/{username}:
+    post:
+      operationId: R112
+      summary: 'R112: Change Password Action'
+      description: 'Processes the change user password form submission. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                confirm_password:
+                  type: string
+                new_password:
+                  type: string
+              required:
+                - old_password
+                - confirm_password
+                - new_password
+
+      responses:
+        '302':
+          description: 'Redirect to edit profile page after proessing.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful change password. Redirect to user edit profile page.'
+                  value: '/users/edit/{username}'
+                302Failure:
+                  description: 'Failed to change password. Rediret to user edit profile page.'
+                  value: '/users/edit/{username}'
