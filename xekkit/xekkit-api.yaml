@@ -24,10 +24,11 @@ tags:
   - name: 'M08: Static Pages'
 
 paths:
+
   /:
     get:
-      operationId: R101
-      summary: 'R101: Home page'
+      operationId: R301
+      summary: 'R301: Home page'
       description: 'Provide home page. Access: PUB, USR, MOD'
       tags:
         - 'M03: Search and See Content'
@@ -204,7 +205,7 @@ paths:
                   description: 'Failed authentication. Redirect to login form.'
                   value: '/login'
 
-  /users/{username}:
+  /users/myprofile:
     get:
       operationId: R109
       summary: 'R109: View user profile'
@@ -320,10 +321,13 @@ paths:
               properties:
                 old_password:
                   type: string
+                  format: password
                 confirm_password:
                   type: string
+                  format: password
                 new_password:
                   type: string
+                  format: password
               required:
                 - old_password
                 - confirm_password
@@ -338,8 +342,189 @@ paths:
                 type: string
               examples:
                 302Success:
-                  description: 'Successful change password. Redirect to user edit profile page.'
+                  description: 'Successful change password. Redirect to usert edit profile'
                   value: '/users/edit/{username}'
                 302Failure:
-                  description: 'Failed to change password. Rediret to user edit profile page.'
+                  description: 'Failed to change password. Redirect to user edit profile'
                   value: '/users/edit/{username}'
+
+  /create/news/{username}:
+    post:
+      operationId: R201
+      description: 'R201: Create news content Access:USR, MOD'
+      responses:
+        '302':
+          description: 'Successful news creation Redirect to News content'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+              required:
+                - title
+                - body
+
+  /create/comment/{username}:
+    post:
+      operationId: R202
+      description: 'R202: Create comment  Access:USR, MOD'
+      responses:
+        '302':
+          description: 'Successful comment creation Redirect to news content'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+
+  /edit/news/{news_id}:
+    post:
+      operationId: R203
+      description: 'R203: Create news content Access:OWN'
+      responses:
+        '302':
+          description: 'Successful news EDITION. Redirect to News content'
+      
+      parameters:
+        - in: path
+          name: news_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+
+                
+  /edit/comment/{comment_id}:
+    post:
+      operationId: R204
+      description: 'R204: Edit  Access:OWN'
+      responses:
+        '302':
+          description: 'Successful comment edition Redirect to news content'
+      
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+
+
+
+  /view/news/{news_id}:
+    get:
+      operationId: TBD31 #TBD
+      summary: 'TBD31: View a Specific News Post.'
+      description: 'Provide Specific News Post. Access: PUB, USR, OWN, MOD'
+      tags:
+        - 'M03: See Users/Content'
+      responses:
+        '200':
+          description: 'Ok. Show [UI09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post)'
+  
+  /view/{username}:
+    get:
+      operationId: TBD32 #TBD
+      summary: "TBD32: View a User's profile."
+      description: "Provide a User's Profile. Access: PUB, USR, MOD"
+      tags:
+        - 'M03: See Users/Content'
+      responses:
+        '200':
+          description: 'Ok. Show [UI11](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui11-third-party-profile)'
+  
+
+  /search:
+    get:
+      operationId: TBD41 #TBD
+      summary: 'TBD41: Search News and Users.'
+      description: 'Provide News and Users Searched. Access: PUB, USR, OWN, MOD'
+      tags:
+        - 'M04: Search Users/Content'
+      responses:
+        '200':
+          description: "Ok. Show [UI10](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui10-search)"
+    ### post?
+  
+
+  /view/{username}/notifications:
+    get:
+      operationId: TBD3 #TBD
+      summary: "TBD3: View User's Notification."
+      description: "Provide User's Notifications. Access: OWN, MOD"
+      tags:
+        - 'M05: Notifications'
+      responses:
+        '200':
+          description: 'Ok. Show [UI15](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui15-notifications)'
+  
+  /view/{username}/requests:
+    get:
+      operationId: TBD4 #TBD
+      summary: "TBD4: View Requests."
+      description: "Provide Requests. Access: MOD"
+      tags:
+        - 'M07: Moderator Administration'
+      responses:
+        '200':
+          description: 'Ok. Show [UI16](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui16-moderator-options)'
+  
+
+    
