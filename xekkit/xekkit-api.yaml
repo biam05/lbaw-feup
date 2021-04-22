@@ -466,7 +466,33 @@ paths:
               required:
                 - body 
 
+  /delete/news/{news_id}:
+    post:
+      operationId: R205
+      description: 'R205: Delete Access:OWN'
+      responses:
+        '302':
+          description: 'Successful news deletion. Redirect to homepage'
+      parameters:
+        - in: path
+          name: news_id
+          schema:
+            type: integer
+          required: true
 
+  /delete/comment/{comment_id}:
+    post:
+      operationId: R206
+      description: 'R206: Delete Comment:OWN'
+      responses:
+        '302':
+          description: 'Successful comment deletion. Redirect to homepage'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true  
 
   /view/news/{news_id}:
     get:
@@ -478,7 +504,14 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post)'
-  
+      parameters:
+        - in: path
+          name: news_id
+          schema:
+            type: integer
+          required: true
+
+
   /view/{username}:
     get:
       operationId: TBD32 #TBD
@@ -489,7 +522,12 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI11](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui11-third-party-profile)'
-  
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
 
   /search:
     get:
@@ -514,7 +552,14 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI15](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui15-notifications)'
-  
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+
   /view/{username}/requests:
     get:
       operationId: TBD4 #TBD
@@ -525,6 +570,59 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI16](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui16-moderator-options)'
-  
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+
+  /accept_request/{request_id}:
+    post:
+      operationId: TBD5 #TBD
+      description: 'TBD5: Accept Request:MOD'
+      responses:
+        '302':
+           description: 'Successfully accepted request. Redirect to requests page'
+      parameters:
+        - in: path
+          name: request_id
+          schema:
+            type: integer
+          required: true
+
+  /reject_request/{request_id}:
+    post:
+      operationId: TBD6 #TBD
+      description: 'TBD6: Accept Request:MOD'
+      responses:
+        '302':
+           description: 'Successfully rejected request. Redirect to requests page'
+
+  /upvote/{content_id}:         
+    post:
+      operationId: TBD7 #TBD
+      description: 'TBD7: Upvote content:USR, MOD'
+      responses:
+        '302':
+           description: 'Successfully upvoted content. Redirect to news page'
+
+  /downvote/{content_id}:         
+    post:
+      operationId: TBD9 #TBD
+      description: 'TBD9: Downvote content:USR, MOD'
+      responses:
+        '302':
+           description: 'Successfully downvoted content. Redirect to news page'
+
+  /report/{content_id}:         
+    post:
+      operationId: TBD9 #TBD
+      description: 'TBD9: Downvote content:USR, MOD'
+      responses:
+        '302':
+           description: 'Successfully downvoted content. Redirect to news page'
+
 
     
