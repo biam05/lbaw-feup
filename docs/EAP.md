@@ -1,6 +1,6 @@
 # EAP: Architecture Specification and Prototype
 
-> Project vision
+This project intends to build a Collaborative news website, where anyone can read, publish news and share them with friends, while avoiding the spread of fake news.
 
 ## A7: High-level architecture. Privileges. Web resources specification
 
@@ -42,6 +42,7 @@ This section defines the permissions used in the modules to establish the condit
 This section includes the completr API specification in OpenAPI (YAML).
 
 OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/master/xekkit/xekkit-api.yaml
+
 OpenAPI Swagger: https://app.swaggerhub.com/apis/lbaw2114/lbaw-xekkit_web_api/1.0
 
 ```yaml
