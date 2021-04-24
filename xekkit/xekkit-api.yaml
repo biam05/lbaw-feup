@@ -592,6 +592,7 @@ paths:
             type: integer
           required: true
 
+
   /reject_request/{request_id}:
     post:
       operationId: TBD6 #TBD
@@ -599,7 +600,14 @@ paths:
       responses:
         '302':
            description: 'Successfully rejected request. Redirect to requests page'
+      parameters:
+        - in: path
+          name: request_id
+          schema:
+            type: integer
+          required: true
 
+          
   /upvote/{content_id}:         
     post:
       operationId: TBD7 #TBD
@@ -607,6 +615,13 @@ paths:
       responses:
         '302':
            description: 'Successfully upvoted content. Redirect to news page'
+      parameters:
+        - in: path
+          name: content_id
+          schema:
+            type: integer
+          required: true
+
 
   /downvote/{content_id}:         
     post:
@@ -615,14 +630,26 @@ paths:
       responses:
         '302':
            description: 'Successfully downvoted content. Redirect to news page'
+      parameters:
+        - in: path
+          name: content_id
+          schema:
+            type: integer
+          required: true
+
 
   /report/{content_id}:         
     post:
       operationId: TBD9 #TBD
-      description: 'TBD9: Downvote content:USR, MOD'
+      description: 'TBD9: Report content:USR, MOD'
       responses:
         '302':
-           description: 'Successfully downvoted content. Redirect to news page'
-
+           description: 'Successfully reported content. Redirect to news page'
+      parameters:
+        - in: path
+          name: content_id
+          schema:
+            type: integer
+          required: true
 
     
