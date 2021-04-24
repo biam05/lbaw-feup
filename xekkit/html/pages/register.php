@@ -63,13 +63,13 @@ draw_header();
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-select" id="gender" aria-label="Gender *" required>
+                <select class="form-select" id="inputGender" aria-label="Gender *" required>
                     <option selected></option>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
                     <option value="2">Rather Not Say</option>
                 </select>
-                <label for="gender">Gender*</label>
+                <label for="inputGender">Gender*</label>
                 <div class="invalid-feedback">
                         Please select you gender.
                     </div>
