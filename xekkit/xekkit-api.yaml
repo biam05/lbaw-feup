@@ -15,31 +15,21 @@ externalDocs:
     
 tags:
   - name: 'M01: Authentication and Individual Profile'
-  - name: 'M02: Create/edit Content'
-  - name: 'M03: Search and See Content'
-  - name: 'M04: Search and See Users'
+  - name: 'M02: Create/Edit Content'
+  - name: 'M03: See Users/Content'
+  - name: 'M04: Search Users/Content'
   - name: 'M05: Notifications'
-  - name: 'M06: Requests'
+  - name: 'M06: Create Requests'
   - name: 'M07: Moderator Administration'
   - name: 'M08: Static Pages'
 
 paths:
+  # -------------------- M01 --------------------  
 
-  /:
-    get:
-      operationId: R301
-      summary: 'R301: Home page'
-      description: 'Provide home page. Access: PUB, USR, MOD'
-      tags:
-        - 'M03: Search and See Content'
-      responses:
-        '200':
-            description: 'Ok. IF PUB: Show [UI01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui01:-main); ELSE: Show [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui02:-main-logged-in)'
-                  
   /login:
     get:
-      operationId: R102
-      summary: 'R102: Login Form'
+      operationId: R101
+      summary: 'R101: Login Form'
       description: 'Provide login form. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -47,8 +37,8 @@ paths:
         '200':
           description: 'Ok. Show [UI07](hhttps://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui07:-log-in)'
     post:
-      operationId: R103
-      summary: 'R103: Login Action'
+      operationId: R102
+      summary: 'R102: Login Action'
       description: 'Processes the login form submission. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -85,8 +75,8 @@ paths:
 
   /logout:
     post:
-      operationId: R104
-      summary: 'R104: Logout Action'
+      operationId: R103
+      summary: 'R103: Logout Action'
       description: 'Logout the current authenticated user. Access: USR, MOD, BAN'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -103,10 +93,10 @@ paths:
                   description: 'Successful logout. Redirect to home page.'
                   value: '/'                            
                                 
-  /password-recovery:
+  /my-profile/password-recovery:
     get:
-      operationId: R105
-      summary: 'R105: Password Recovery Page'
+      operationId: R104
+      summary: 'R104: Password Recovery Page'
       description: 'Password recovery page. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -116,8 +106,8 @@ paths:
               
 
     post:
-      operationId: R106
-      summary: 'R106: Password Recovery Action'
+      operationId: R105
+      summary: 'R105: Password Recovery Action'
       description: 'Password recovery action. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -147,8 +137,8 @@ paths:
                   
   /register:
     get:
-      operationId: R107
-      summary: 'R107: Register Form'
+      operationId: R106
+      summary: 'R106: Register Form'
       description: 'Provide new user registration form. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -157,8 +147,8 @@ paths:
           description: 'Ok. Show [UI08](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui08:-sign-Up)'
 
     post:
-      operationId: R108
-      summary: 'R108: Register Action'
+      operationId: R107
+      summary: 'R107: Register Action'
       description: 'Processes the new user registration form submission. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -205,16 +195,16 @@ paths:
                   description: 'Failed authentication. Redirect to login form.'
                   value: '/login'
 
-  /my-profile:
+  /my-profile/{username}:
     get:
-      operationId: R109
-      summary: 'R109: View user profile'
+      operationId: R108
+      summary: 'R108: View user profile'
       description: 'Show the individual user profile. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
 
       parameters:
-        - in: session
+        - in: path
           name: username
           schema:
             type: string
@@ -224,16 +214,16 @@ paths:
         '200':
           description: 'Ok. Show [UI12](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui12-my-profile)'
 
-  /my-profile/edit:
+  /my-profile/edit/{username}:
     get:
-      operationId: R110
-      summary: 'R110: Edit user profile'
+      operationId: R109'
+      summary: 'R109: Edit user profile'
       description: 'Form to edit the individual user profile. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
 
       parameters:
-        - in: session
+        - in: path
           name: username
           schema:
             type: string
@@ -244,14 +234,14 @@ paths:
           description: 'Ok. Show [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
 
     post:
-        operationId: R111
-        summary: 'R111: Edit Profile Action'
+        operationId: R110
+        summary: 'R110: Edit Profile Action'
         description: 'Processes the edit user form submission. Access: USR'
         tags:
           - 'M01: Authentication and Individual Profile'
           
         parameters:
-        - in: session
+        - in: path
           name: username
           schema:
             type: string
@@ -295,18 +285,16 @@ paths:
                     description: 'Failed edit profile. Redirect to user profile.'
                     value: '/my-profile'
 
-
-
-  /my-profile/change-password:
+  /my-profile/{username}/change-password:
     post:
-      operationId: R112
-      summary: 'R112: Change Password Action'
+      operationId: R111
+      summary: 'R111: Change Password Action'
       description: 'Processes the change user password form submission. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
       
       parameters:
-        - in: session
+        - in: path
           name: username
           schema:
             type: string
@@ -347,11 +335,16 @@ paths:
                 302Failure:
                   description: 'Failed to change password. Redirect to user edit profile'
                   value: '/my-profile/edit'
+  
+  # -------------------- M02 -------------------- 
 
-  /create/news/{username}:
+  /news/create/{username}:
     post:
       operationId: R201
-      description: 'R201: Create news content Access:USR, MOD'
+      summary: 'R201: Create news action'
+      description: 'Create news content. Access: USR, MOD'
+      tags:
+        - 'M02: Create/Edit Content'
       responses:
         '302':
           description: 'Successful news creation Redirect to News content'
@@ -381,10 +374,13 @@ paths:
                 - title
                 - body
 
-  /create/comment/{username}:
+  /comment/create/{username}:
     post:
       operationId: R202
-      description: 'R202: Create comment  Access:USR, MOD'
+      summary: 'R202: Create comment action'
+      description: 'Create comment. Access: USR, MOD'
+      tags:
+        - 'M02: Create/Edit Content'
       responses:
         '302':
           description: 'Successful comment creation Redirect to news content'
@@ -410,10 +406,13 @@ paths:
               required:
                 - body 
 
-  /edit/news/{news_id}:
+  /news/edit/{news_id}:
     post:
       operationId: R203
-      description: 'R203: Create news content Access:OWN'
+      summary: 'R203: Edit news action'
+      description: 'Edit news content. Access: OWN'
+      tags:
+        - 'M02: Create/Edit Content'
       responses:
         '302':
           description: 'Successful news EDITION. Redirect to News content'
@@ -441,12 +440,14 @@ paths:
                   format: binary
               required:
                 - body
-
-                
-  /edit/comment/{comment_id}:
+           
+  /comment/edit/{comment_id}:
     post:
       operationId: R204
-      description: 'R204: Edit  Access:OWN'
+      summary: 'R204: Edit comment action'
+      description: 'Edit Comment. Access: OWN'
+      tags:
+        - 'M02: Create/Edit Content'
       responses:
         '302':
           description: 'Successful comment edition Redirect to news content'
@@ -472,10 +473,13 @@ paths:
               required:
                 - body 
 
-  /delete/news/{news_id}:
+  /news/delete/{news_id}:
     post:
       operationId: R205
-      description: 'R205: Delete Access:OWN'
+      summary: 'R205: Delete News action'
+      description: 'Delete News. Access: OWN'
+      tags:
+        - 'M02: Create/Edit Content'
       responses:
         '302':
           description: 'Successful news deletion. Redirect to homepage'
@@ -486,10 +490,13 @@ paths:
             type: integer
           required: true
 
-  /delete/comment/{comment_id}:
+  /comment/delete/{comment_id}:
     post:
       operationId: R206
-      description: 'R206: Delete Comment:OWN'
+      summary: 'R206: Delete comment action'
+      description: 'Delete Comment. Access: OWN'
+      tags:
+        - 'M02: Create/Edit Content'
       responses:
         '302':
           description: 'Successful comment deletion. Redirect to homepage'
@@ -500,10 +507,23 @@ paths:
             type: integer
           required: true  
 
-  /view/news/{news_id}:
+  # -------------------- M03 -------------------- 
+
+  /:
     get:
-      operationId: TBD31 #TBD
-      summary: 'TBD31: View a Specific News Post.'
+      operationId: R301
+      summary: 'R301: Home page'
+      description: 'Provide home page. Access: PUB, USR, MOD'
+      tags:
+        - 'M03: See Users/Content'
+      responses:
+        '200':
+            description: 'Ok. IF PUB: Show [UI01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui01:-main); ELSE: Show [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui02:-main-logged-in)'
+
+  /news/{news_id}:
+    get:
+      operationId: R302
+      summary: 'R302: View a Specific News Post.'
       description: 'Provide Specific News Post. Access: PUB, USR, OWN, MOD'
       tags:
         - 'M03: See Users/Content'
@@ -517,11 +537,10 @@ paths:
             type: integer
           required: true
 
-
-  /view/{username}:
+  /profile/{username}:
     get:
-      operationId: TBD32 #TBD
-      summary: "TBD32: View a User's profile."
+      operationId: R303
+      summary: "R303: View a User's profile."
       description: "Provide a User's Profile. Access: PUB, USR, MOD"
       tags:
         - 'M03: See Users/Content'
@@ -534,30 +553,66 @@ paths:
           schema:
             type: string
           required: true
+  
+  /vote/upvote/{content_id}:         
+    post:
+      operationId: R304
+      summary: 'R304: Upvote Content'
+      description: 'Upvote content. Access: USR, MOD'
+      tags:
+        - 'M03: See Users/Content'
+      responses:
+        '302':
+           description: 'Successfully upvoted content. Redirect to news page'
+      parameters:
+        - in: path
+          name: content_id
+          schema:
+            type: integer
+          required: true
 
-  /search:
+  /vote/downvote/{content_id}:         
+    post:
+      operationId: R305
+      summary: 'R305: Downvote Content'
+      description: 'Downvote content. Access: USR, MOD'
+      tags:
+        - 'M03: See Users/Content'
+      responses:
+        '302':
+           description: 'Successfully downvoted content. Redirect to news page'
+      parameters:
+        - in: path
+          name: content_id
+          schema:
+            type: integer
+          required: true
+  
+  # -------------------- M04 -------------------- 
+ 
+  /search/{search_string}:
     get:
-      operationId: TBD41 #TBD
-      summary: 'TBD41: Search News and Users.'
+      operationId: R401
+      summary: 'R401: Search News and Users.'
       description: 'Provide News and Users Searched. Access: PUB, USR, OWN, MOD'
       tags:
         - 'M04: Search Users/Content'
       parameters:
         - in: path
-          name: q
+          name: search_string
           schema:
             type: string
           required: true
       responses:
         '200':
           description: "Ok. Show [UI10](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui10-search)"
-    ### post?
-  
 
-  /view/{username}/notifications:
+  # -------------------- M05 -------------------- 
+
+  /notifications/{username}:
     get:
-      operationId: TBD3 #TBD
-      summary: "TBD3: View User's Notification."
+      operationId: R501
+      summary: "R501: View User's Notification."
       description: "Provide User's Notifications. Access: OWN, MOD"
       tags:
         - 'M05: Notifications'
@@ -570,12 +625,111 @@ paths:
           schema:
             type: string
           required: true
+  
+  # -------------------- M06 --------------------
+  
+  /request/report/content/{content_id}:         
+    post:
+      operationId: R601
+      summary: "R601: Report content action"
+      description: 'Report content. Access: USR, MOD'
+      tags:
+        - 'M06: Create Requests'
+      responses:
+        '302':
+           description: 'Successfully reported content. Redirect to news page.'
+      parameters:
+        - in: path
+          name: content_id
+          schema:
+            type: integer
+          required: true
 
+  /request/report/user/{user_id}:         
+    post:
+      operationId: R602
+      summary: "R602: Report User action"
+      description: 'Report User. Access: USR, MOD'
+      tags:
+        - 'M06: Create Requests'
+      responses:
+        '302':
+           description: 'Successfully reported user. Redirect to user page.'
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+  
+  /request/partner_request/{username}:
+    post:
+      operationId: R603
+      summary: "R603: Create partner request action"
+      description: 'Create a partner request. Access: USR, MOD'
+      tags:
+        - 'M06: Create Requests'
+      responses:
+        '302':
+          description: 'Successful partner request creation Redirect to User profile'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
 
-  /view/{username}/requests:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+
+              required:
+                - reason
+
+  /request/unban_appeal/{username}:
+    post:
+      operationId: R604
+      summary: "R604: Create unban appeal action"
+      description: 'Create unban appeal. Access: BAN'
+      tags:
+        - 'M06: Create Requests'
+      responses:
+        '302':
+          description: 'Successful unban appeal creation Redirect to User profile'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+
+              required:
+                - reason
+  
+  # -------------------- M07 --------------------
+
+  /request/view/{username}:
     get:
-      operationId: TBD4 #TBD
-      summary: "TBD4: View Requests."
+      operationId: R701
+      summary: "R701: View Requests."
       description: "Provide Requests. Access: MOD"
       tags:
         - 'M07: Moderator Administration'
@@ -589,11 +743,13 @@ paths:
             type: string
           required: true
 
-
-  /accept_request/{request_id}:
+  /request/accept/{request_id}:
     post:
-      operationId: TBD5 #TBD
-      description: 'TBD5: Accept Request:MOD'
+      operationId: R702
+      summary: "R702: Accept Request."
+      description: 'Accept Request. Access: MOD'
+      tags:
+        - 'M07: Moderator Administration'
       responses:
         '302':
            description: 'Successfully accepted request. Redirect to requests page'
@@ -604,11 +760,13 @@ paths:
             type: integer
           required: true
 
-
-  /reject_request/{request_id}:
+  /request/reject/{request_id}:
     post:
-      operationId: TBD6 #TBD
-      description: 'TBD6: Accept Request:MOD'
+      operationId: R703
+      summary: "R703: Accept Request"
+      description: 'Accept Request. Access: MOD'
+      tags:
+        - 'M07: Moderator Administration'
       responses:
         '302':
            description: 'Successfully rejected request. Redirect to requests page'
@@ -619,49 +777,29 @@ paths:
             type: integer
           required: true
 
-          
-  /upvote/{content_id}:         
-    post:
-      operationId: TBD7 #TBD
-      description: 'TBD7: Upvote content:USR, MOD'
+  # -------------------- M08 --------------------
+
+  /faq:
+    get:
+      operationId: R801
+      summary: 'R801: FAQ'
+      description: 'Frequent asked questions page. Access: PUB, USR, MOD'
+      tags:
+        - 'M08: Static Pages'
+
       responses:
-        '302':
-           description: 'Successfully upvoted content. Redirect to news page'
-      parameters:
-        - in: path
-          name: content_id
-          schema:
-            type: integer
-          required: true
+        '200':
+          description: 'Ok. IF PUB, USR Show [UI05](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui05-faq)
+                            IF MOD Show [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator'
 
+  /about:
+    get:
+      operationId: R802
+      summary: 'R802: About'
+      description: 'About page. Access: PUB, USR, MOD'
+      tags:
+        - 'M08: Static Pages'
 
-  /downvote/{content_id}:         
-    post:
-      operationId: TBD9 #TBD
-      description: 'TBD9: Downvote content:USR, MOD'
       responses:
-        '302':
-           description: 'Successfully downvoted content. Redirect to news page'
-      parameters:
-        - in: path
-          name: content_id
-          schema:
-            type: integer
-          required: true
-
-
-  /report/{content_id}:         
-    post:
-      operationId: TBD9 #TBD
-      description: 'TBD9: Report content:USR, MOD'
-      responses:
-        '302':
-           description: 'Successfully reported content. Redirect to news page'
-      parameters:
-        - in: path
-          name: content_id
-          schema:
-            type: integer
-          required: true
-
-    
+        '200':
+          description: 'Ok. Show [UI04](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui04-about)'
