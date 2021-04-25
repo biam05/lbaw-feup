@@ -93,7 +93,7 @@ paths:
                   description: 'Successful logout. Redirect to home page.'
                   value: '/'                            
                                 
-  /my-profile/password-recovery:
+  /password-recovery:
     get:
       operationId: R104
       summary: 'R104: Password Recovery Page'
@@ -195,26 +195,7 @@ paths:
                   description: 'Failed authentication. Redirect to login form.'
                   value: '/login'
 
-  /my-profile/{username}:
-    get:
-      operationId: R108
-      summary: 'R108: View user profile'
-      description: 'Show the individual user profile. Access: USR'
-      tags:
-        - 'M01: Authentication and Individual Profile'
-
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-
-      responses:
-        '200':
-          description: 'Ok. Show [UI12](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui12-my-profile)'
-
-  /my-profile/edit/{username}:
+  /users/{username}/edit:
     get:
       operationId: R109'
       summary: 'R109: Edit user profile'
@@ -285,7 +266,7 @@ paths:
                     description: 'Failed edit profile. Redirect to user profile.'
                     value: '/my-profile'
 
-  /my-profile/{username}/change-password:
+  /users/{username}/change-password:
     post:
       operationId: R111
       summary: 'R111: Change Password Action'
@@ -537,7 +518,7 @@ paths:
             type: integer
           required: true
 
-  /profile/{username}:
+  /users/{username}:
     get:
       operationId: R303
       summary: "R303: View a User's profile."
@@ -590,10 +571,10 @@ paths:
   
   # -------------------- M04 -------------------- 
  
-  /search/?q=search_string:
+  /search:
     get:
       operationId: R401
-      summary: 'R401: Search News and Users.'
+      summary: 'R401: Search News and Users'
       description: 'Provide News and Users Searched. Access: PUB, USR, OWN, MOD'
       tags:
         - 'M04: Search Users/Content'
@@ -603,6 +584,7 @@ paths:
           schema:
             type: string
           required: true
+          allowReserved: true
       responses:
         '200':
           description: "Ok. Show [UI10](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui10-search)"
