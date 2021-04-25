@@ -590,7 +590,7 @@ paths:
   
   # -------------------- M04 -------------------- 
  
-  /search/{search_string}:
+  /search/?q=search_string:
     get:
       operationId: R401
       summary: 'R401: Search News and Users.'
@@ -598,8 +598,8 @@ paths:
       tags:
         - 'M04: Search Users/Content'
       parameters:
-        - in: path
-          name: search_string
+        - in: query
+          name: q
           schema:
             type: string
           required: true
