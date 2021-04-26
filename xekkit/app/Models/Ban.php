@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Ban extends Model
+{
+    use HasFactory;
+
+    /**
+     * The table's name.
+     *
+     * @var string
+     */
+    protected $table = 'ban';
+
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+
+    /**
+     * Get the user associated with the ban.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+
+    /**
+     * Get the moderator associated with the ban.
+     */
+    public function moderator()
+    {
+        return $this->belongsTo(User::class, 'moderator_id');
+    }
+
+    /**
+     * Get the unban_appeal related to this ban.
+     */
+    public function unbanAppeal()
+    {
+        return $this->hasOne(UnbanAppeal::class, 'ban_id');
+    }
+
+}

@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CommentNotification extends Model
+{
+    use HasFactory;
+
+    /**
+     * The table's name.
+     *
+     * @var string
+     */
+    protected $table = 'comment_notification';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * Get the comment associated with the comment notification.
+     */
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'comment_id');
+    }
+}

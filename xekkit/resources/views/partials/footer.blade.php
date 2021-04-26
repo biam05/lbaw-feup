@@ -13,8 +13,3 @@
     
     </div>
 </footer>
-
-<script type="text/javascript" src={{ asset('js/main.js') }} defer>
-</body>
-
-</html>

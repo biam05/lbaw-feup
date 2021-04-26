@@ -50,7 +50,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
-                                <li><a class="dropdown-item" href="../pages/login.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="/login/">Logout</a></li>
                             </ul>
                                 
                         </div>
@@ -65,17 +65,17 @@
                     <li class="nav-item p-1">
                         <a href="../pages/profile.php" class="nav-link">My Profile</a>
                     <li class="nav-item p-1">
-                        <a href="../pages/login.php" class="nav-link">Logout</a>
+                        <a href="/logout/" class="nav-link">Logout</a>
                     </li>
                 </ul>
             <?php } else { ?>
                 <!-- Desktop and Mobile right side of nav bar -->
                 <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
                     <li class="nav-item ms-auto">
-                        <a class="btn btn-primary" href="../pages/login.php">Login</a>
+                        <a class="btn btn-primary" href="/login/">Login</a>
                     </li>
                     <li class="nav-item ms-auto">
-                        <a class="btn btn-primary" href="../pages/register.php">Register</a>
+                        <a class="btn btn-primary" href="/register/">Register</a>
                     </li>
                 </ul>
             <?php } ?>
