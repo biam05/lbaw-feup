@@ -152,8 +152,6 @@ paths:
                   type: string
                 inputPassword:
                   type: string
-                inputConfirmPassword:
-                  type: string
                 inputBirthDate:
                   type: string
                 inputGender:
@@ -162,7 +160,6 @@ paths:
                 - inputUsername
                 - inputEmail
                 - inputPassword
-                - inputConfirmPassword
                 - inputBirthDate
                 - inputGender
 
@@ -295,6 +292,29 @@ paths:
       responses:
         '204':
           description: 'Password changed successfully.'
+        '403':
+          description: 'This is not your profile.'
+        '400':
+          description: 'Bad Request.'
+          
+  /users/{username}/edit/remove-partner/:
+    patch:
+      operationId: R110
+      summary: 'R110: Remove partner status'
+      description: 'Remove partner status. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      responses:
+        '204':
+          description: 'Partner status removed successfully.'
         '403':
           description: 'This is not your profile.'
         '400':
@@ -631,7 +651,7 @@ paths:
           required: true
           
       responses:
-        '201':
+        '204':
           description: 'Successfully removed vote on content.'
         '400':
           description: 'Bad Request.'
@@ -780,50 +800,118 @@ paths:
   
   # -------------------- M06 --------------------
   
-  /request/report/content/{content_id}:         
+  /comment/report/:         
     post:
       operationId: R601
-      summary: "R601: Report content action"
-      description: 'Report content. Access: USR, MOD'
+      summary: "R601: Report comment action"
+      description: 'Report comment. Access: USR'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '303':
-           description: 'Successfully reported content. Redirect to news page.'
+        
       parameters:
-        - in: path
-          name: content_id
+        - in: header
+          name: id
           schema:
             type: integer
           required: true
-
-  /request/report/user/{user_id}:         
+        
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+          
+      responses:
+        '201':
+          description: 'Report created.'
+        '401':
+          description: 'Login to report.'
+        '400':
+          description: 'Bad request.'
+          
+  /news/{id}/report/:         
     post:
       operationId: R602
-      summary: "R602: Report User action"
+      summary: "R602: Report news action"
+      description: 'Report news. Access: USR'
+      tags:
+        - 'M06: Create Requests'
+        
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+          
+      responses:
+        '201':
+          description: 'Report created.'
+        '401':
+          description: 'Login to report.'
+        '400':
+          description: 'Bad request.'
+
+  /users/{username}/report/:         
+    post:
+      operationId: R603
+      summary: "R603: Report User action"
       description: 'Report User. Access: USR, MOD'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '303':
-           description: 'Successfully reported user. Redirect to user page.'
+
       parameters:
         - in: path
-          name: user_id
+          name: username
           schema:
             type: integer
           required: true
+          
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+          
+      responses:
+        '201':
+          description: 'Report created.'
+        '401':
+          description: 'Login to report.'
+        '400':
+          description: 'Bad request.'
   
-  /request/partner_request/{username}:
+  /users/{username}/partner_request/:
     post:
-      operationId: R603
-      summary: "R603: Create partner request action"
+      operationId: R604
+      summary: "R604: Create partner request action"
       description: 'Create a partner request. Access: USR, MOD'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '302':
-          description: 'Successful partner request creation Redirect to User profile'
       
       parameters:
         - in: path
@@ -841,20 +929,24 @@ paths:
               properties:
                 reason:
                   type: string
-
               required:
                 - reason
+                
+      responses:
+        '201':
+          description: 'Partner request created.'
+        '401':
+          description: 'Login to create a partner request.'
+        '400':
+          description: 'Bad request.'
 
-  /request/unban_appeal/{username}:
+  /request/{username}/unban_appeal/:
     post:
-      operationId: R604
-      summary: "R604: Create unban appeal action"
+      operationId: R605
+      summary: "R605: Create unban appeal action"
       description: 'Create unban appeal. Access: BAN'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '303':
-          description: 'Successful unban appeal creation Redirect to User profile'
       
       parameters:
         - in: path
@@ -872,62 +964,69 @@ paths:
               properties:
                 reason:
                   type: string
-
               required:
                 - reason
+      
+      responses:
+        '201':
+          description: 'Unban appeal created.'
+        '401':
+          description: 'Login to create an unban appeal.'
+        '400':
+          description: 'Bad request.'
   
   # -------------------- M07 --------------------
 
-  /request/view/{username}:
-    get:
-      operationId: R701
-      summary: "R701: View Requests"
-      description: "Provide Requests. Access: MOD"
-      tags:
-        - 'M07: Moderator Administration'
-      responses:
-        '200':
-          description: 'Ok. Show [UI16](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui16-moderator-options)'
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-
-  /request/accept/{request_id}:
-    post:
+  /request/{id}/accept/:
+    patch:
       operationId: R702
       summary: "R702: Accept Request"
       description: 'Accept Request. Access: MOD'
       tags:
         - 'M07: Moderator Administration'
-      responses:
-        '303':
-           description: 'Successfully accepted request. Redirect to requests page'
+        
       parameters:
         - in: path
-          name: request_id
+          name: id
           schema:
             type: integer
           required: true
+        - in: header
+          name: ban_time
+          schema:
+            type: integer
+          required: false
+          
+      responses:
+        '201':
+          description: 'Request accepted.'
+        '401':
+          description: 'You are not a moderator.'
+        '400':
+          description: 'Bad request.'
 
-  /request/reject/{request_id}:
-    post:
+  /request/{id}/reject/:
+    patch:
       operationId: R703
       summary: "R703: Accept Request"
       description: 'Accept Request. Access: MOD'
       tags:
         - 'M07: Moderator Administration'
-      responses:
-        '303':
-           description: 'Successfully rejected request. Redirect to requests page'
+      
       parameters:
         - in: path
-          name: request_id
+          name: id
           schema:
             type: integer
           required: true
+          
+      responses:
+        '201':
+          description: 'Request rejected.'
+        '401':
+          description: 'You are not a moderator.'
+        '400':
+          description: 'Bad request.'
           
 
   # -------------------- M08 --------------------
@@ -944,9 +1043,48 @@ paths:
         '200':
           description: 'Ok. IF PUB, USR Show [UI05](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui05-faq)
                             IF MOD Show [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator'
-    
-    patch:
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faq'
+                      
+    post:
       operationId: R802
+      summary: 'R802: Create FAQ'
+      description: 'Creat frequent asked question. Access: MOD'
+      tags:
+        - 'M08: Static Pages'
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - question
+                - answer
+              properties:
+                id:
+                  type: integer
+                question:
+                  type: string
+                answer:
+                  type: string
+                  
+      responses:
+        '201':
+          description: 'FAQ Created. Reload FAQ page.'
+        '403':
+          description: 'Forbiden Access'
+        '400':
+          description: 'Bad Request.'
+          
+    patch:
+      operationId: R803
       summary: 'R802: Edit FAQ'
       description: 'Edit frequent asked question. Access: MOD'
       tags:
@@ -973,12 +1111,14 @@ paths:
       responses:
         '205':
           description: 'FAQ Edited. Reload FAQ page.'
+        '403':
+          description: 'Forbiden Access'
         '404':
           description: 'FAQ Not Found'
              
                   
     delete:
-      operationId: R803
+      operationId: R804
       summary: 'R803: Delete FAQ'
       description: 'Delete frequently asked question. Access: MOD'
       tags:
@@ -987,6 +1127,8 @@ paths:
       responses:
         '205':
           description: 'FAQ Deleted. Reload FAQ page.'
+        '403':
+          description: 'Forbiden Access'
         '404':
           description: 'FAQ Not Found'
           
@@ -1001,7 +1143,7 @@ paths:
 
   /about/:
     get:
-      operationId: R804
+      operationId: R805
       summary: 'R804: About'
       description: 'About page. Access: PUB, USR, MOD'
       tags:
@@ -1209,3 +1351,13 @@ components:
           type: boolean
         ban_id:
           type: integer
+          
+    Faq:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        answer:
+          type: string
