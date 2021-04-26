@@ -200,62 +200,62 @@ paths:
           description: 'This is not your profile.'
 
     patch:
-        operationId: R108
-        summary: 'R108: Edit User Profile Action'
-        description: 'Processes the edit user form submission. Access: USR'
-        tags:
-          - 'M01: Authentication and Individual Profile'
-          
-        parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
+      operationId: R108
+      summary: 'R108: Edit User Profile Action'
+      description: 'Processes the edit user form submission. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+        
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
 
-        requestBody:
-          required: true
-          content:
-            application/x-www-form-urlencoded:
-              schema:
-                type: object
-                properties:
-                  username:
-                    type: string
-                  email:
-                    type: string
-                  birth_date:
-                    type: string
-                  gender:
-                    type: string
-                  description:
-                    type: string
-                required:
-                  - username
-                  - email
-                  - birth_date
-                  - gender
-
-        responses:
-          '204':
-            description: 'User information updated.'
-          '403':
-            description: 'This is not your profile.'
-          '400':
-            description: 'Bad Request.'
-          '409':
-            description: 'Invalid information.'
-            content:
-              text/plain:
-                schema:
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
                   type: string
-                examples: 
-                  username:
-                    value: 'Username'
-                    summary: 'Username already in use.'
-                  email:
-                    value: 'Email'
-                    summary: 'Email already in use.'
+                email:
+                  type: string
+                birth_date:
+                  type: string
+                gender:
+                  type: string
+                description:
+                  type: string
+              required:
+                - username
+                - email
+                - birth_date
+                - gender
+
+      responses:
+        '204':
+          description: 'User information updated.'
+        '403':
+          description: 'This is not your profile.'
+        '400':
+          description: 'Bad Request.'
+        '409':
+          description: 'Invalid information.'
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples: 
+                username:
+                  value: 'Username'
+                  summary: 'Username already in use.'
+                email:
+                  value: 'Email'
+                  summary: 'Email already in use.'
 
   /users/{username}/edit/change-password/:
     patch:
@@ -319,6 +319,31 @@ paths:
           description: 'This is not your profile.'
         '400':
           description: 'Bad Request.'
+          
+  /users/{username}/edit/delete/:
+    patch:
+      operationId: R111
+      summary: 'R110: Delete user'
+      description: 'Delete user. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+
+      responses:
+        '205':
+          description: 'User is set as deleted.'
+        '400':
+          description: 'Bad Request.'
+        '403':
+          description: 'This is not your profile.'
+        '404':
+          description: 'This user does not exist.'
   
   # -------------------- M02 -------------------- 
 
