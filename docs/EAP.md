@@ -108,17 +108,18 @@ paths:
 
       responses:
         '303':
-          description: 'Redirect to main page after successfull login.'
+          description: 'Redirect after login.'
           headers:
-            Location: 
+            Location:
               schema:
                 type: string
-              description: 'Redirect to / [[UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)]'
-        '400':
-          description: 'Wrong login credentials.'
-              
-        
-        
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)'
+                  value: '/'
+                303Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login/'
                 
 
   /logout/:
@@ -136,8 +137,14 @@ paths:
             Location:
               schema:
                 type: string
-              description: 'Redirect to / [[US01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui01-main)].'
-                                           
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [US01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui01-main).'
+                  value: '/'
+                303Error:
+                  description: 'Failed logout. Redirect to main page.'
+                  value: '/'
+
                                 
   /password-recovery/:
     post:
@@ -160,12 +167,18 @@ paths:
 
       responses:
         '303':
-          description: 'Successful request password recorvery. Redirect to home page.'
+          description: 'Successful request password recorvery. Redirect to login.'
           headers:
             Location:
               schema:
                 type: string
-              description: 'Redirect to / [[US07](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui07-log-in)].'
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [US07](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui07-log-in).'
+                  value: '/login/'
+                303Error:
+                  description: 'Failed password recovery. Redirect to login.'
+                  value: '/login/'
                   
                   
   /register/:
@@ -212,14 +225,19 @@ paths:
 
       responses:
         '303':
-          description: 'Redirect after successfully register new user.'
+          description: 'Redirect after register new user.'
           headers:
             Location:
               schema:
                 type: string
-              description: 'Redirect to / [[UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)]'
-        '409':
-          description: 'Username already in use.'
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)'
+                  value: '/'
+                303Error:
+                  description: 'Failed register. Redirect to register.'
+                  value: '/register/'
+
 
   /users/{username}/edit/:
     get:
@@ -243,8 +261,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserEdit'
-        '401':
-          description: 'This is not your profile.'
 
     patch:
       operationId: R108
@@ -284,25 +300,20 @@ paths:
                 - gender
 
       responses:
-        '204':
-          description: 'User information updated.'
-        '403':
-          description: 'This is not your profile.'
-        '400':
-          description: 'Bad Request.'
-        '409':
-          description: 'Invalid information.'
-          content:
-            text/plain:
+        '303':
+          description: 'Redirect after edit user action.'
+          headers:
+            Location:
               schema:
                 type: string
-              examples: 
-                username:
-                  value: 'Username'
-                  summary: 'Username already in use.'
-                email:
-                  value: 'Email'
-                  summary: 'Email already in use.'
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+                  value: '/users/{username}/edit/'
+                303Error:
+                  description: 'Failed edition. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+  
 
   /users/{username}/edit/change-password/:
     patch:
@@ -335,14 +346,22 @@ paths:
               required:
                 - old_password
                 - new_password
-
+      
       responses:
-        '204':
-          description: 'Password changed successfully.'
-        '403':
-          description: 'This is not your profile.'
-        '400':
-          description: 'Bad Request.'
+        '303':
+          description: 'Redirect after change password action.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+                  value: '/users/{username}/edit/'
+                303Error:
+                  description: 'Failed to change password. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+
           
   /users/{username}/edit/remove-partner/:
     patch:
@@ -358,14 +377,22 @@ paths:
           schema:
             type: string
           required: true
-
+          
       responses:
-        '204':
-          description: 'Partner status removed successfully.'
-        '403':
-          description: 'This is not your profile.'
-        '400':
-          description: 'Bad Request.'
+        '303':
+          description: 'Redirect after remove partner action.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+                  value: '/users/{username}/edit/'
+                303Error:
+                  description: 'Failed to remove partner. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+
           
   /users/{username}/edit/delete/:
     patch:
@@ -381,16 +408,22 @@ paths:
           schema:
             type: string
           required: true
-
+          
       responses:
-        '205':
-          description: 'User is set as deleted.'
-        '400':
-          description: 'Bad Request.'
-        '403':
-          description: 'This is not your profile.'
-        '404':
-          description: 'This user does not exist.'
+        '303':
+          description: 'Redirect after delete user action.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [US01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui01-main).'
+                  value: '/'
+                303Error:
+                  description: 'Failed to delete user. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+
   
   # -------------------- M02 -------------------- 
 
@@ -421,17 +454,20 @@ paths:
                 - body
                 
       responses:
-        '201':
-          description: 'News post created.'
+        '303':
+          description: 'Redirect after create news post.'
           headers:
             Location:
               schema:
                 type: string
-              description: 'Redirect to /news/{id} [[UI09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post)]'
-        '401':
-          description: 'Unauthorized, please login.'
-        '400':
-          description: 'Bad Request.'
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to created post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed to create news post. Redirect to main page [US02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in).'
+                  value: '/'
+                
 
   /comment/create/:
     post:
@@ -456,16 +492,19 @@ paths:
                 - body 
                 
       responses:
-        '201':
-          description: 'Comment created.'
-          content:
-            application/json:
+        '303':
+          description: 'Redirect after create comment.'
+          headers:
+            Location:
               schema:
-                $ref: '#/components/schemas/Comment'
-        '401':
-          description: 'Unauthorized, please login.'
-        '400':
-          description: 'Bad Request.'
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to commented post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed to create comment. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
 
   /news/{id}/:
     patch:
@@ -499,12 +538,19 @@ paths:
                 - body
                 
       responses:
-        '205':
-          description: 'Successful news edition. Reload news page.'
-        '403':
-          description: 'This is not your post.'
-        '400':
-          description: 'Bad Request.'
+        '303':
+          description: 'Redirect after edit news post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to eddited post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
           
     delete:
       operationId: R204
@@ -521,17 +567,19 @@ paths:
           required: true
           
       responses:
-        '205':
-          description: 'News post successfully deleted.'
+        '303':
+          description: 'Redirect after delete news post.'
           headers:
             Location:
               schema:
                 type: string
-              description: 'Redirect to / [[UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)]'
-        '403':
-          description: 'This is not your post.'
-        '400':
-          description: 'Bad Request.'
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in).'
+                  value: '/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
            
   /comment/:
     patch:
@@ -556,12 +604,19 @@ paths:
                 - body 
   
       responses:
-        '205':
-          description: 'Successful comment edition. Reload page.'
-        '401':
-          description: 'Login to comment.'
-        '400':
-          description: 'Bad Request.'
+        '303':
+          description: 'Redirect after edit comment.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to commented post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
 
     delete:
       operationId: R206
@@ -569,13 +624,6 @@ paths:
       description: 'Delete Comment. Access: OWN'
       tags:
         - 'M02: Create/Edit Content'
-      responses:
-        '205':
-          description: 'Comment successfully deleted. Reload page.'
-        '403':
-          description: 'This is not your comment.'
-        '400':
-          description: 'Bad Request.'
       
       parameters:
         - in: header
@@ -583,6 +631,21 @@ paths:
           schema:
             type: integer
           required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after delete comment.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
 
   # -------------------- M03 -------------------- 
 
@@ -705,8 +768,6 @@ paths:
           description: 'Successfully voted on content.'
         '401':
           description: 'Login to vote.'
-        '400':
-          description: 'Bad Request.'
           
     delete:
       operationId: R305
@@ -725,8 +786,6 @@ paths:
       responses:
         '204':
           description: 'Successfully removed vote on content.'
-        '400':
-          description: 'Bad Request.'
   
   # -------------------- M04 -------------------- 
  
@@ -762,8 +821,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/UserPreview'
-        '400':
-          description: 'Bad Request.'
+
                     
 
   # -------------------- M05 -------------------- 
@@ -832,10 +890,8 @@ paths:
       responses: 
         '201':
           description: 'Notification marked as seen.'
-        '401':
-          description: 'Login to see notifications.'
-        '400':
-          description: 'Bad request.'
+        '404':
+          description: 'Notification not found.'
           
     delete:
       operationId: R503
@@ -864,10 +920,8 @@ paths:
       responses: 
         '201':
           description: 'Notification deleted.'
-        '401':
-          description: 'Login to see notifications.'
-        '400':
-          description: 'Bad request.'
+        '404':
+          description: 'Notification not found.'
   
   
   # -------------------- M06 --------------------
@@ -904,8 +958,6 @@ paths:
           description: 'Report created.'
         '401':
           description: 'Login to report.'
-        '400':
-          description: 'Bad request.'
           
   /news/{id}/report/:         
     post:
@@ -939,8 +991,6 @@ paths:
           description: 'Report created.'
         '401':
           description: 'Login to report.'
-        '400':
-          description: 'Bad request.'
 
   /users/{username}/report/:         
     post:
@@ -974,8 +1024,6 @@ paths:
           description: 'Report created.'
         '401':
           description: 'Login to report.'
-        '400':
-          description: 'Bad request.'
   
   /users/{username}/partner_request/:
     post:
@@ -1009,8 +1057,6 @@ paths:
           description: 'Partner request created.'
         '401':
           description: 'Login to create a partner request.'
-        '400':
-          description: 'Bad request.'
 
   /request/{username}/unban_appeal/:
     post:
@@ -1044,8 +1090,6 @@ paths:
           description: 'Unban appeal created.'
         '401':
           description: 'Login to create an unban appeal.'
-        '400':
-          description: 'Bad request.'
   
   # -------------------- M07 --------------------
 
@@ -1074,8 +1118,6 @@ paths:
           description: 'Request accepted.'
         '401':
           description: 'You are not a moderator.'
-        '400':
-          description: 'Bad request.'
 
   /request/{id}/reject/:
     patch:
@@ -1097,8 +1139,6 @@ paths:
           description: 'Request rejected.'
         '401':
           description: 'You are not a moderator.'
-        '400':
-          description: 'Bad request.'
           
 
   # -------------------- M08 --------------------
@@ -1148,12 +1188,19 @@ paths:
                   type: string
                   
       responses:
-        '201':
-          description: 'FAQ Created. Reload FAQ page.'
-        '403':
-          description: 'Forbiden Access'
-        '400':
-          description: 'Bad Request.'
+        '303':
+          description: 'Redirect after create faq.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                303Error:
+                  description: 'Failed to create faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
           
     patch:
       operationId: R803
@@ -1181,13 +1228,19 @@ paths:
                   type: string
                   
       responses:
-        '205':
-          description: 'FAQ Edited. Reload FAQ page.'
-        '403':
-          description: 'Forbiden Access'
-        '404':
-          description: 'FAQ Not Found'
-             
+        '303':
+          description: 'Redirect after edit faq.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                303Error:
+                  description: 'Failed to edit faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
                   
     delete:
       operationId: R804
@@ -1195,14 +1248,6 @@ paths:
       description: 'Delete frequently asked question. Access: MOD'
       tags:
         - 'M08: Static Pages'
-      
-      responses:
-        '205':
-          description: 'FAQ Deleted. Reload FAQ page.'
-        '403':
-          description: 'Forbiden Access'
-        '404':
-          description: 'FAQ Not Found'
           
       parameters:
         - in: query
@@ -1210,6 +1255,21 @@ paths:
           schema:
             type: integer
           required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after delete faq.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                303Error:
+                  description: 'Failed to delete faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
                 
     
 
@@ -1432,7 +1492,7 @@ components:
         question:
           type: string
         answer:
-          type: string    
+          type: string
 ```
 
 
