@@ -1,5 +1,7 @@
 <?php
 
+use app\Http\Controllers\NewsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,17 +13,22 @@
 |
 */
 // Home
-Route::get('/','HomepageController@show')->name('/home');
+Route::get('/','NewsController@show')->name('home');
 
 // TESTE 205
-Route::patch('/teste', function(){
-    return response('Hello World', 205)->header('Content-Type', 'text/plain');
-});
+/* Route::patch('/', function(){
+    return response(205);
+}); */
 
 
 // Users
- Route::get('/users/{username}/', 'UserController@list');
+Route::get('/users/{username}/', 'UserController@list');
 // Route::get('cards/{id}', 'CardController@show');
+
+//News
+Route::get('/news/', [NewsController::class, 'show']);
+
+
 
 // API
 // Route::put('api/cards', 'CardController@create');
@@ -34,8 +41,8 @@ Route::patch('/teste', function(){
 
 
 // Authentication
-Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'Auth\LoginController@login');
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register', 'Auth\RegisterController@register');
+Route::get('/login/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login/', 'Auth\LoginController@login');
+Route::get('/logout/', 'Auth\LoginController@logout')->name('logout');
+Route::get('/register/', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register/', 'Auth\RegisterController@register');

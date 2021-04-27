@@ -41,7 +41,7 @@ This section defines the permissions used in the modules to establish the condit
 
 This section includes the completr API specification in OpenAPI (YAML).
 
-OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/master/xekkit/xekkit-api.yaml
+OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/a8/xekkit/a7_openapi.yaml
 OpenAPI Swagger: https://app.swaggerhub.com/apis/lbaw2114/lbaw-xekkit_web_api/1.0
 
 ```yaml
