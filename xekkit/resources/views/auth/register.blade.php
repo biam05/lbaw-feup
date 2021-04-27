@@ -1,39 +1,79 @@
 @extends('layouts.app')
 
-@section('content')
-<form method="POST" action="{{ route('register') }}">
-    {{ csrf_field() }}
+@section('content')  
+<main class="container">
+    <div class="row align-items-center vh-100">           
+        @include('partials.auth.login_title')
+        <form method="POST" action="{{ route('register') }}" class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate >
+            {{ csrf_field() }}
+            <p class="text-center fs-1">Register</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="inputUsername" placeholder="Username" value="{{ old('username')}}" required>
+                <label for="inputUsername">Username *</label>
+                @if ($errors->has('username'))
+                  <div class="invalid-feedback">
+                      {{ $errors->first('username') }}
+                  </div>
+                @endif
+            </div>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ old('email')}}" required>
+              <label for="inputEmail" class="form-label">Email *</label>
+              @if ($errors->has('email'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('email') }}
+                </div>
+              @endif
+            </div>
 
-    <label for="name">Name</label>
-    <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
-    @if ($errors->has('name'))
-      <span class="error">
-          {{ $errors->first('name') }}
-      </span>
-    @endif
+            <div class="row g-2">
+              <div class="col form-floating mb-3">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" value="{{ old('password')}}" required>
+                  <label for="inputPassword" class="form-label">Password *</label>
+                  @if ($errors->has('password'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('password') }}
+                    </div>
+                  @endif                  
+              </div>
+              <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="row g-2">
+              <div class="col form-floating mb-3">
+                  <input type="password" class="form-control pe-5" id="inputConfirmPassword" placeholder="Confirm Password" required>
+                  <label for="inputConfirmPassword" class="form-label">Confirm Password *</label>
+              </div>
+              <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="inputBirthDate" placeholder="Birth Date" value="{{old('date')}}"required>
+              <label for="inputBirthDate" class="form-label">Birth Date *</label>
+            </div>
+            <div class="form-floating mb-3">
+              <select class="form-select" id="inputGender" aria-label="Gender *" value="{{'gender'}}"required>
+                  <option selected></option>
+                  <option value="0">Male</option>
+                  <option value="1">Female</option>
+                  <option value="2">Rather Not Say</option>
+              </select>
+              <label for="inputGender">Gender*</label>
+              @if ($errors->has('gender'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('gender') }}
+                </div>
+              @endif
+            </div>
+            <a href="{{ route('login') }}">Already have an account?</a>
+            <div class="col-autom text-center">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>   
+        </form>
+    </div>
+</main>
 
-    <label for="email">E-Mail Address</label>
-    <input id="email" type="email" name="email" value="{{ old('email') }}" required>
-    @if ($errors->has('email'))
-      <span class="error">
-          {{ $errors->first('email') }}
-      </span>
-    @endif
-
-    <label for="password">Password</label>
-    <input id="password" type="password" name="password" required>
-    @if ($errors->has('password'))
-      <span class="error">
-          {{ $errors->first('password') }}
-      </span>
-    @endif
-
-    <label for="password-confirm">Confirm Password</label>
-    <input id="password-confirm" type="password" name="password_confirmation" required>
-
-    <button type="submit">
-      Register
-    </button>
-    <a class="button button-outline" href="{{ route('login') }}">Login</a>
-</form>
+<script src={{ asset('js/validate_form.js') }} defer></script>    
 @endsection
