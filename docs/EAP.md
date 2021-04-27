@@ -1414,7 +1414,7 @@ components:
         date:
           type: string
         nr_votes:
-          type: string
+          type: integer
         username:
           type: string
         partner:
@@ -1430,7 +1430,7 @@ components:
       type: object
       properties:
         follower_id:
-          type: integer
+          type: string
         is_new:
           type: boolean
         date:
@@ -1440,7 +1440,7 @@ components:
       type: object
       properties:
         voter_id:
-          type: integer
+          type: string
         content_id:
           type: integer
         is_new:
@@ -1476,11 +1476,11 @@ components:
         status:
           type: string
         revision_date:
-          type: boolean
+          type: string
         to_users_id:
-          type: boolean
+          type: string
         to_content_id:
-          type: boolean
+          type: integer
         ban_id:
           type: integer
           
@@ -1494,7 +1494,6 @@ components:
         answer:
           type: string
 ```
-
 
 ---
 
