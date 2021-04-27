@@ -18,26 +18,18 @@ class UserController extends Controller
      */
     public function show($username)
     {
-      $user = User::find($username);
-      $this->authorize('show', $user);
-      return view('pages.user', ['user' => $user]);
+      return view('pages.user', ['user' => $username]);
     }
-
-
-
-
-
 
 
     //----------------------------------------
     /**
-     * Creates a new card.
+     * Edit a user.
      *
-     * @return User The card created.
+     * @return User The user edited.
      */
-    public function create(Request $request)
+    public function edit(Request $request)
     {
-      $user = new User();
 
       $this->authorize('create', $user);
 

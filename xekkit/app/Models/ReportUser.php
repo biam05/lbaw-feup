@@ -14,7 +14,7 @@ class ReportUser extends Model
      *
      * @var string
      */
-    protected $table = 'report_user';
+    protected $table = 'report_users';
 
     /**
      * The primary key associated with the table.

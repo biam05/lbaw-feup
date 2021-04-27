@@ -11,12 +11,16 @@
 |
 */
 // Home
-Route::get('/', function(){
-    return view('pages.homepage');
+Route::get('/','HomepageController@show')->name('/home');
+
+// TESTE 205
+Route::patch('/teste', function(){
+    return response('Hello World', 205)->header('Content-Type', 'text/plain');
 });
 
+
 // Users
- Route::get('users/{username}', 'UserController@list');
+ Route::get('/users/{username}/', 'UserController@list');
 // Route::get('cards/{id}', 'CardController@show');
 
 // API
@@ -30,8 +34,8 @@ Route::get('/', function(){
 
 
 // Authentication
-Route::get('/login/', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login/', 'Auth\LoginController@login');
-Route::get('/logout/', 'Auth\LoginController@logout')->name('logout');
-Route::get('/register/', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register/', 'Auth\RegisterController@register');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
