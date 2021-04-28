@@ -1511,12 +1511,13 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 | User Story reference | Name                   | Priority                   | Description                   |
 | -------------------- | ---------------------- | -------------------------- | ----------------------------- |
 | US04                 | Search Using Keywords | High | As an *User*, I want to search news and user profiles, so that I can find news/users related to the keywords used on the search. |
-| US06                 | View Profiles | High | As an *User*, I want to be able to view a profile, so that I can see the news posted by a certain user and his main information (username, achievements, date of the creation of the account) |
+| US07                 | View Specific Post | High | As an *User*, I want to be able to view one news, so that I can see all the information related to that post (commments, entire description, author, author reputation, etc.). |
 | US11                 | Sign-in | High | As a *Guest*, I want to authenticate into the system, so that I can access privileged information. |
 | US12                 | Register | High | As a *Guest*, I want to register into the system, so that I can authenticate myself into the system. |
-| US25                 | Manage Profile | High | As an *Authenticated User*, I want to change my profile information (including my password), so that it can stay updated. |
+| US22                 | Create News | High | As an *Autheticated User*, I want to create News, so that it is publicly available. |
 | US27                 | Sign Out | High | As an *Authenticated User*, I want to sign out of the system, so that I can become a guest. |
-| US29                 | Delete Profile | High | As an *Authenticated User*, I want to be able to delete my profile, so that my profile page and account no longer exists. |
+| US31                 | Edit New | High | As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated. |
+| US32                 | Remove New | High | As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available. |
 
 #### 1.2. Implemented Web Resources
 
@@ -1529,16 +1530,20 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 | R103: Logout Action | POST /logout/ |
 | R105: See Register Form | GET /register/ |
 | R106: Register Action | POST /register/ |
-| R107: Edit User Profile Form | GET /users/{username}/edit/ |
-| R108: Edit User Profile Action | PATCH /users/{username}/edit/ |
-| R109: Change Password Action | PATCH /users/{username}/edit/change-password/ |
-| R111: Delete Profile Action | PATCH /users/{username}/edit/delete/ |
+
+**M02: Create/Edit Content**
+
+| Web Resource Reference | URL                            |
+| ---------------------- | ------------------------------ |
+| R201: Create news action | POST /news/create/ |
+| R203: Edit news action | PATCH /news/{id}/ |
+| R204: Delete news action | DELETE /news/{id}/ |
 
 **M03: See Users/Content**
 
 | Web Resource Reference | URL                            |
 | ---------------------- | ------------------------------ |
-| R303: View a User's Profile. | GET /users/{username}/ |
+| R302: View a Specific News Post | GET /news/{id} |
 
 **M04: Search Users/Content**
 
@@ -1555,6 +1560,7 @@ Credentials:
     - Authenticated User: ***USERNAME/PASSWORD***
     - Partner: ***USERNAME/PASSWORD***
 The code is available at ***INSERT LINK TO GITLAB-PROTOTYPE HERE***
+
 
 
 ---
