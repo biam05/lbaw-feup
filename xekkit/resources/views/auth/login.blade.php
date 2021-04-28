@@ -10,7 +10,7 @@
             {{ csrf_field() }}
             <p class="text-center fs-1">Login</p>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="username" placeholder="Username/Email"value="{{ old('username') }}" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username/Email"value="{{ old('username') }}" required>
                 <label for="username">Username/Email</label>
                 @if ($errors->has('username'))
                     <div class="invalid-feedback">
@@ -21,7 +21,7 @@
             </div>
             <div class="row g-2">
                 <div class="col form-floating mb-3">
-                    <input type="password" class="form-control pe-5" id="password" placeholder="Password" required>
+                    <input type="password" class="form-control pe-5" id="password" name="password" placeholder="Password" required>
                     <label for="password" class="form-label">Password</label>
                     @if ($errors->has('password'))
                         <div class="invalid-feedback">
@@ -36,7 +36,7 @@
             </div>
 
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="rememberMe"  {{ old('remember') ? 'checked' : '' }}>
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" {{ old('remember') ? 'checked' : '' }}>
                 <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
 

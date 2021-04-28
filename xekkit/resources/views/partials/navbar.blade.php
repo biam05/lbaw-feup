@@ -5,12 +5,12 @@
     <div class="container-xl p-1">
         <!-- Logo -->
         <?php if (!Auth::guest()) { ?>
-            <a class="navbar-brand clickable" href="../pages/main_logged_in.php">
+            <a class="navbar-brand clickable" href="{{ route('home') }}">
             <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
             {{ config('app.name', 'Laravel') }}
             </a>
         <?php } else { ?>
-            <a class="navbar-brand clickable" href="../pages/main.php">
+            <a class="navbar-brand clickable" href="{{ route('home') }}">
             <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
             XEKKIT
             </a>
@@ -49,7 +49,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
-                                <li><a class="dropdown-item" href="/login/">Logout</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                             </ul>
                                 
                         </div>
@@ -64,17 +64,17 @@
                     <li class="nav-item p-1">
                         <a href="../pages/profile.php" class="nav-link">My Profile</a>
                     <li class="nav-item p-1">
-                        <a href="/logout/" class="nav-link">Logout</a>
+                        <a href="{{ route('logout') }}" class="nav-link">Logout</a>
                     </li>
                 </ul>
             <?php } else { ?>
                 <!-- Desktop and Mobile right side of nav bar -->
                 <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
                     <li class="nav-item ms-auto">
-                        <a class="btn btn-primary" href="/login/">Login</a>
+                        <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item ms-auto">
-                        <a class="btn btn-primary" href="/register/">Register</a>
+                        <a class="btn btn-primary" href="{{ route('register') }}">Register</a>
                     </li>
                 </ul>
             <?php } ?>
