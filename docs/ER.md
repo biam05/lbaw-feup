@@ -26,7 +26,7 @@ Users will be distributed in three groups with different permissions: moderators
 
 For the Collaborative News system, the actors are represented in Figure 1 and described in Table 1.
 
-![Actors](../img/actors.png)  
+![Actors](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/actors.png)  
 Figure 1: Actors
 
 |Identifier|Description|Examples|
@@ -46,7 +46,6 @@ Table 1: Actor's Description
 
 For the Collaborative News system, consider the user stories that are presented in the following sections.
 
-----
 #### 2.2.1 User
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -54,9 +53,9 @@ For the Collaborative News system, consider the user stories that are presented 
 |US02| See "Hot" Topics | High | As an *User*, I want to acced the "hot" topics section, so that I can see the news that have more interactions in a short time period
 |US03| See "Recent" Topics | High |As an *User*, I want to acced the "recent" topics section, so that I can see the news were published recently
 |US04| Search Using Keywords| High | As an *User*, I want to search news and user profiles, so that I can find news/users related to the keywords used on the search.
-|US05| Sign-out | High | As an *User*, I want to sign-out from my account, so that I no longer have user privilegies.
-|US06| Filter News | High | As an *User*, I want to be able to filter the news that show up after I search for a certain keywors, so that I can read the news that talk about what I wanted to read more about
-|US07| View Profiles | High | As an *User*, I want to be able to view a profile, so that I can see the news posted by a certain user and his main information (username, achievements, date of the creation of the account)
+|US05| Filter News | High | As an *User*, I want to be able to filter the news that show up after I search for a certain keywors, so that I can read the news that talk about what I wanted to read more about
+|US06| View Profiles | High | As an *User*, I want to be able to view a profile, so that I can see the news posted by a certain user and his main information (username, achievements, date of the creation of the account)
+|US07| View Specific Post | High | As an *User*, I want to be able to view one news, so that I can see all the information related to that post (commments, entire description, author, author reputation, etc.).
 |US08| Create Report | Medium | As an *User*, I want to report a(n) user/news/comment, so that the moderators can manage users/news/comments that go against the community guidelines.
 |US09| Consult FAQ | Low | As an *User*, I want to see some FAQ, so that I can get fast answers to my questions.
 |US010| Consult Contact | Low | As an *User*, I want to consult contacts, so that I can see a contact I might need.
@@ -64,7 +63,6 @@ For the Collaborative News system, consider the user stories that are presented 
 
 Table 2: User's User Stories
  
-----
 #### 2.2.2 Guest
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -75,7 +73,6 @@ Table 2: User's User Stories
 
 Table 3: Guest's User Stories
 
-----
 #### 2.2.3 Authenticated User
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -93,24 +90,22 @@ Table 3: Guest's User Stories
 
 Table 4: Authenticated User's User Stories
 
-----
 #### 2.2.4 Author
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
-|US31|Edit News|High| As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated.|
-|US32|Remove News|High| As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available.|
+|US31|Edit New|High| As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated.|
+|US32|Remove New|High| As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available.|
 |US33|Remove comment|High| As a *Author*, I want to remove a comment I previously posted, so that it is no longer publicly available.|
 |US34|Edit comment|Medium| As a *Author*, I want to edit a comment I previously posted, so that I can keep the comment updated.|
 
 Table 5: Author's User Stories
 
-----
 #### 2.2.5 Moderator
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
 |US41|Remove Post from other User|High|As a *Moderator*, I want to remove a post from another user, so that I can improve the reliability of the news published in the website.
 |US42|Remove Comment from another User|High|As a *Moderator*, I want to remove a comment from another user, so that I can improve the reliability of the news published in the website.
-|US43|Ban User|Medium|As a *Moderator*, I want to be able to ban a user from the website, so the user won't be able to see anything on our website while logged in.
+|US43|Ban User|Medium|As a *Moderator*, I want to be able to ban a user from the website, so the user won't be able to post again
 |US44|Verify Partner|Medium|As a *Moderator*, I want to be able to verify a user, so that the user reaches a bigger audience by becoming a Partner.
 |US45|View Reports|Medium|As a *Moderator*, I want to be able so see all reports made by other users, so that I can decide how I'm gonna act on the report.
 |US46|Act on Reports|Medium|As a *Moderator*, I want to be able act on a report, so that I can delete news/comments or ban users.
@@ -122,7 +117,6 @@ Table 5: Author's User Stories
 
 Table 6: Moderator's User Stories
 
-----
 #### 2.2.6 Partner
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -130,7 +124,6 @@ Table 6: Moderator's User Stories
 
 Table 7: Partner's User Stories
 
-----
 #### 2.2.7 Banned User
 |Identifier|Name|Priority|Description|
 |-------|------|------|------|
@@ -142,7 +135,6 @@ Table 8: Banned User's User Stories
 ### 2.3 Supplementary Requirements
 This annex contains business rules, technical requirements and other non-functional requirements on the project.
 
-----
 #### 2.3.1 Business Rules
 Identifier|Name|Description
 |-------|------|------|
@@ -152,10 +144,10 @@ BR03 | Unable to Self-vote | An Authenticated User can't vote on his own news/co
 BR04 | User maximum reputation per day received by voting | An Authenticated User can only receive a maximum of 5 poins per day related to voting on other user's news/comments.
 BR05 | Authenticated User Upvoting News | Authenticated User upvotes on news give 1 reputation point to the voting user and 5 reputation vote to the creator of the news voted on.
 BR06 | Authenticated User Downvoting News | Authenticated User downvotes on news give 1 reputation point do the voting user and removes 5 reputation vote to the creator of the news voted on.
-BR07 | Authenticated User Upvoting Comment | Authenticated User upvotes on comments give 1 reputation point do the voting user  and 1 reputation vote to the creator of the comment voted on.
-BR08 | Authenticated User Downvoting Comment | Authenticated User downvotes on comments give 1 reputation point do the voting user and removes 1 reputation vote to the creator of the comment voted on.
-BR09 | Partner Upvoting | Partner upvotes give 1 reputation point do the voting user  and 10 reputation vote to the creator of the news/comment voted on.
-BR10 | Partner Downvoting | Partner downvotes give 1 reputation point do the voting user and removes 10 reputation vote to the creator of the news/comment voted on.
+BR07 | Any User Upvoting Comment | Authenticated User upvotes on comments give 1 reputation point do the voting user  and 1 reputation vote to the creator of the comment voted on.
+BR08 | Any User Downvoting Comment | Authenticated User downvotes on comments give 1 reputation point do the voting user and removes 1 reputation vote to the creator of the comment voted on.
+BR09 | Partner Upvoting News | Partner upvotes give 1 reputation point do the voting user  and 10 reputation vote to the creator of the news voted on.
+BR10 | Partner Downvoting News | Partner downvotes give 1 reputation point do the voting user and removes 10 reputation vote to the creator of the news voted on.
 BR11 | Deleted Profile | When an Authenticated User is deleted, he's posts/comments/votes stay in the database, but the user profile page is deleted.
 BR12 | Minimum age | The minimum age for a user to be registered is 13 years old.
 BR13 | Partner's News Priority | A Partner's has a bigger probability to appear in the top of the user's feed
@@ -168,7 +160,6 @@ BR19 | Valorization of Recent News | Having two news, a recent one and an old on
 
 Table 9: Business Rules
 
----
 #### 2.3.2 Technical Requirements
 
 Identifier|Name|Description
@@ -185,18 +176,17 @@ TR08|Security|The system shall protect information from unauthorised access thro
 TR10|Scalability|The system must be prepared to deal with the growth in the number of users and their actions.
 **TR11**|**Ethics**|**The system must respect the ethical principles in software development (for example, the password must be stored encrypted to ensure that only the owner knows it).**
 
-We belive the most critical requirements are that our system should be easy to use, so that users don't get bored and leave when looking for something, should also be robust so that intentional (or even unintentional) invalid inputs don't crash the entire system and finally it should respect the ethical principles in software development so that, in case someone manages to hack us, sensible data remains encrypted.
+We belive the most critical requirements are that our system should be easy to use, so that users don't get bored and leave when looking for something, should also be robust so that intentional (or even unintentional) invalid inputs don't crash the entire system and finally it should respect the ethical principles in software development so that in case someone manages to hack us sensible data remains encrypted.
 
 Table 10: Technical Requirements
 
-----
+
 #### 2.3.3 Restrictions
 Identifier|Name|Description
 |-------|------|------|
 C01|Deadline|End of semester.
 
 Table 11: Restrictions
-
 
 ## A3 - User Interface Prototype
 
@@ -207,7 +197,7 @@ This artifact includes an overview of the interface and common features, a sitem
 ### 3.1 Interface and common features
 **Xekkit** is a web application based on HTML5, JavaScript and CSS. The user interface was implemented using the Bootstrap framework.
 
-![front page](../img/common_features.png)
+![front page](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/common_features.png)
  
 Figure 1: Interface's guidelines.
  1. Logo 
@@ -226,7 +216,7 @@ Different sections have clearly distinct styles in order to highlight distinct h
 
 The site map gives the team an idea of the website structure and pages hierarchy.
 
-![sitemap](../img/sitemap.png) 
+![sitemap](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/sitemap.png) 
 
 Figure 2: [Sitemap](https://projects.invisionapp.com/freehand/document/yc9IALtkz).
 
@@ -235,7 +225,7 @@ Figure 2: [Sitemap](https://projects.invisionapp.com/freehand/document/yc9IALtkz
 
 Wireflows are presented to represent some of the main user interactions with the website.
 
-![wireflows](../img/wireflows.png) 
+![wireflows](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/wireflows.png) 
 
 Figure 3: [Wireflows](https://projects.invisionapp.com/freehand/document/yc9IALtkz). 
 
@@ -269,7 +259,7 @@ Main website page where you can consult trending news on top, last news on cente
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Main Page](../img/main.png) | ![Main Page Mobile](../img/main_mobile.png) |
+| ![Main Page](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/main.png) | ![Main Page Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/main_mobile.png) |
 
 Figure 4: [Main Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main.php). 
 
@@ -280,7 +270,7 @@ Main website page again with the difference that because of being logged in you 
 
 | Desktop | Mobile1 | Mobile2 |
 |---------|---------|---------|
-| ![Main Page Logged in](../img/main_logged_in.png) | ![Main Page Logged in Mobile](../img/main_logged_in_mobile.png) | ![Main Page Logged in Mobile](../img/main_logged_in_explore_mobile.png)
+| ![Main Page Logged in](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/main_logged_in.png) | ![Main Page Logged in Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/main_logged_in_mobile.png) | ![Main Page Logged in Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/main_logged_in_explore_mobile.png)
 
 Figure 5: [Main Page Logged in](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main_logged_in.php). 
 
@@ -291,7 +281,7 @@ Modal box where you can create a new post when logged in.
 
 | Desktop | Mobile |
 |---------|--------|
-| ![New Post](../img/new_post.png) | ![New Post Mobile](../img/new_post_mobile.png) | 
+| ![New Post](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/new_post.png) | ![New Post Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/new_post_mobile.png) | 
 
 Figure 6: [New Post](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/main_logged_in.php) and then click on green button "Make new post".
 
@@ -302,7 +292,7 @@ In this page you can see our team and where we got our inspiration to build this
 
 | Desktop | Mobile |
 |---------|--------|
-| ![About](../img/about.png) | ![About Mobile](../img/about_mobile.png) |
+| ![About](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/about.png) | ![About Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/about_mobile.png) |
  
  Figure 6: [About Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/about_us.php).
 
@@ -313,7 +303,7 @@ Here is where you can se some of the most frequently asked questions about our w
 
 | Desktop | Mobile |
 |---------|--------|
-| ![FAQ](../img/faq.png) | ![FAQ Mobile](../img/faq_mobile.png) |
+| ![FAQ](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/faq.png) | ![FAQ Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/faq_mobile.png) |
 
 Figure 7: [FAQ Page](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/faq.php).
 
@@ -324,7 +314,7 @@ Here is where the motherator can edit and add questions to the FAQ page.
 
 | Desktop | Mobile |
 |---------|--------|
-| ![FAQ Moderator](../img/faq_moderator.png) | ![FAQ Moderator Mobile](../img/faq_moderator_mobile.png) |
+| ![FAQ Moderator](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/faq_moderator.png) | ![FAQ Moderator Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/faq_moderator_mobile.png) |
  
 Figure 8: [FAQ Moderator](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/faq_moderator.php).
 
@@ -335,7 +325,7 @@ In this page you can authenticate yourself in our website (if you already have a
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Log in](../img/login.png) | ![Log in Mobile](../img/login_mobile.png) |
+| ![Log in](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/login.png) | ![Log in Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/login_mobile.png) |
 
 Figure 10: [Log in](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/login.php).
 
@@ -346,7 +336,7 @@ In this page you can create a new account.
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Sign Up](../img/register.png) | ![Sign Up Mobile](../img/register_mobile.png) |
+| ![Sign Up](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/register.png) | ![Sign Up Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/register_mobile.png) |
 
 Figure 11: [Sign Up](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/register.php).
 
@@ -358,7 +348,7 @@ If you are the owner of the post you are seeing, you have the option to edit or 
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Post](../img/news.png)| ![Post](../img/news_mobile.png)|
+| ![Post](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/news.png)| ![Post](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/news_mobile.png)|
 
 Figure 12: [Post](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/news.php).
 
@@ -369,8 +359,8 @@ When you perform a search query (by typing on the serach bar) this is tha page w
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Search](../img/search.png)| ![Search Mobile](../img/search_mobile.png)|
-| ![Search Users](../img/search_users.png)| ![Search Users Mobile](../img/search_users_mobile.png)|
+| ![Search](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/search.png)| ![Search Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/search_mobile.png)|
+| ![Search Users](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/search_users.png)| ![Search Users Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/search_users_mobile.png)|
  
 Figure 13 and 14: [Search](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/search.php).
 
@@ -381,8 +371,8 @@ This is how you can see other people's profiles. On the desktop version is an ex
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Third-Party Profile](../img/profile_other_follow.png)| ![Third-Party Profile Mobile](../img/profile_other_unfollow_mobile.png)|
-| ![Third-Party Profile Following](../img/profile_other_follow_following_tab.png)| ![Third-Party Profile Mobile](../img/profile_other_unfollow_following_tab_mobile.png)|
+| ![Third-Party Profile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/profile_other_follow.png)| ![Third-Party Profile Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/profile_other_unfollow_mobile.png)|
+| ![Third-Party Profile Following](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/profile_other_follow_following_tab.png)| ![Third-Party Profile Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/profile_other_unfollow_following_tab_mobile.png)|
 
 Figure 15 and 16: [Third-Party Profile (unfollow button)](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/profile_other_unfollow.php) and [Third-Party Profile (follow button)](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/profile_other_follow.php).
 
@@ -393,7 +383,7 @@ This is how you can see your own profile. The difference between this page and t
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Profile](../img/profile.png) | ![Profile Mobile](../img/profile_mobile.png)|
+| ![Profile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/profile.png) | ![Profile Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/profile_mobile.png)|
 
 Figure 17: [My Profile](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/profile.php).
 
@@ -404,7 +394,7 @@ This is an example of how you can edit your profile. On the desktop version is a
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Edit Profile](../img/edit_profile_no_partner.png)| ![Edit Profile Mobile](../img/edit_profile_partner_mobile.png)|
+| ![Edit Profile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/edit_profile_no_partner.png)| ![Edit Profile Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/edit_profile_partner_mobile.png)|
 
 Figure 18: [Edit Profile Partner](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/edit_profile.php) and [Edit Profile non Partner](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/edit_profile_no_partner.php).
 
@@ -415,7 +405,7 @@ When you click the button "Ask for Partner" a modal box will appear where you mu
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Ask Partner](../img/ask_partner.png) | ![Ask Partner Mobile](../img/ask_partner_mobile.png) |
+| ![Ask Partner](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/ask_partner.png) | ![Ask Partner Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/ask_partner_mobile.png) |
 
 Figure 19: [Edit Profile](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/edit_profile_no_partner.php) and then click on yellow button "Ask for Partner".
 
@@ -426,7 +416,7 @@ When you click the yellow bell on the navigantion bar you end up in this page wh
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Notifications](../img/notifications.png) | ![Notifications Mobile](../img/notifications_mobile.png) |
+| ![Notifications](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/notifications.png) | ![Notifications Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/notifications_mobile.png) |
 
 Figure 20: [Notifications](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/notifications.php).
 
@@ -437,7 +427,7 @@ If you are a moderator of our website, you will also have access to a tab inside
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Moderator](../img/moderator.png) | ![Moderator Mobile](../img/moderator_mobile.png) |
+| ![Moderator](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/moderator.png) | ![Moderator Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/moderator_mobile.png) |
 
 Figure 21: [Moderator Options](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/notifications.php) and then click on "Moderator" tab.
 
@@ -448,7 +438,7 @@ If you were banned, you will see this page.
 
 | Desktop | Mobile |
 |---------|--------|
-| ![Banned](../img/banned.png) | ![Banned Mobile](../img/banned_mobile.png) |
+| ![Banned](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/banned.png) | ![Banned Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/banned_mobile.png) |
 
 Figure 21: [Banned User](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/banned.php).
 
@@ -459,7 +449,7 @@ If you try to access some page you don't have permissions to access or that does
 
 | Desktop | Mobile |
 |---------|--------|
-| ![404](../img/404.png) | ![404 Mobile](../img/404_mobile.png) |
+| ![404](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/404.png) | ![404 Mobile](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/raw/master/img/404_mobile.png) |
 
 Figure 21: [Page Not Found](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/404.php).
 
@@ -469,6 +459,8 @@ Figure 21: [Page Not Found](http://lbaw2114-piu.lbaw-prod.fe.up.pt/pages/404.php
 
 Changes made since the first submission (15/03/2021):
 
+- Deleted a User Story that was not supposed to be in the "User" table (Sign-Out).
+- Added a User Story that was not created in the "User" table (View Specific Post).
 
 ----
 GROUP2114, 15/03/2021
