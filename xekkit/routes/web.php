@@ -1,6 +1,11 @@
 <?php
 
 use app\Http\Controllers\NewsController;
+use app\Http\Controllers\HomepageController;
+use app\Http\Controllers\ItemController;
+use app\Http\Controllers\UserController;
+use app\Http\Controllers\Auth\LoginController;
+use app\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,37 +17,21 @@ use app\Http\Controllers\NewsController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Home
-Route::get('/','NewsController@show')->name('home');
-
-// TESTE 205
-/* Route::patch('/', function(){
-    return response(205);
-}); */
-
-
-// Users
-Route::get('/users/{username}/', 'UserController@list');
-// Route::get('cards/{id}', 'CardController@show');
-
-//News
-Route::get('/news/', [NewsController::class, 'show']);
-
-
-
-// API
-// Route::put('api/cards', 'CardController@create');
-// Route::delete('api/cards/{card_id}', 'CardController@delete');
-// Route::put('api/cards/{card_id}/', 'ItemController@create');
-// Route::post('api/item/{id}', 'ItemController@update');
-// Route::delete('api/item/{id}', 'ItemController@delete');
-
-
 
 
 // Authentication
-Route::get('/login/', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login/', 'Auth\LoginController@login');
-Route::get('/logout/', 'Auth\LoginController@logout')->name('logout');
-Route::get('/register/', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register/', 'Auth\RegisterController@register');
+Route::get('/login/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login/', [LoginController::class, 'login']);
+Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register/', [RegisterController::class, 'register']);
+
+
+// Home
+Route::get('/', [HomepageController::class, 'show']);
+
+// Users
+Route::get('/users/{username}/', [UserController::class, 'show']);
+
+//News
+Route::get('/news/', [NewsController::class, 'show']);
