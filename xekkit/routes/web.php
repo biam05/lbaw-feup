@@ -1,11 +1,12 @@
 <?php
 
-use app\Http\Controllers\NewsController;
-use app\Http\Controllers\HomepageController;
-use app\Http\Controllers\ItemController;
-use app\Http\Controllers\UserController;
-use app\Http\Controllers\Auth\LoginController;
-use app\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,22 @@ Route::get('/login/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login/', [LoginController::class, 'login']);
 Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register/', [RegisterController::class, 'register']);
+Route::post('/register/', [RegisterController::class, 'register'])->name('register');
 
 
-// Home
-Route::get('/', [HomepageController::class, 'show']);
-
-// Users
-Route::get('/users/{username}/', [UserController::class, 'show']);
 
 //News
-Route::get('/news/', [NewsController::class, 'show']);
+Route::get('/news/{id}/', [NewsController::class, 'show']);
+
+// Home
+Route::get('/', [HomepageController::class, 'show'])->name('home');
+
+
+
+Route::get('/clear-all-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    echo "Cleared all caches successfully.";
+  });

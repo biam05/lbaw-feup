@@ -62,20 +62,14 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function register(array $data)
+    protected function create(array $data)
     {
-        this->validate($data);
-
-        $user = User::create([
+        return User::create([
             'username' => $data['inputUsername'],
             'email' => $data['inputEmail'],
             'password' => bcrypt($data['inputPassword']),
             'birthDate' => $data['inputBirthDate'],
             'gender' => $data['inputBirthDate'],
         ]);
-
-        auth()->login($user);
-
-        return redirect()->to('/');
     }
 }

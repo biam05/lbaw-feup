@@ -1,11 +1,15 @@
 @extends('layouts.app')
+
+@section('title', 'Xekkit')
+
+
 @section('content')
 <main style="margin-bottom: 60px;">
-  @include('partials.navbar')
+
   @include('partials.trending')
 
   <?php
-  if(!Auth::guest()){?>
+  if(auth()->check()){?>
       @include('partials.modals.new_post')
       <!-- TODO if user é o owner do post-->
       @include('partials.modals.delete_post')
@@ -17,7 +21,7 @@
     <?php 
     }?>
 
-    @include('partials.modals.report_post')
+  @include('partials.modals.report_post')
   @include('partials.modals.delete_post')
 
   <div class="container-xl">

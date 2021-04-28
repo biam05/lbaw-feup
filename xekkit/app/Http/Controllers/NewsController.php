@@ -13,10 +13,10 @@ class NewsController extends Controller
     /**
      * Shows the news for a given news_id.
      *
-     * @param  string  $news_id
+     * @param  string  $id
      * @return Response
      */
-    public function show()
+    public function show($id)
     {
       return view('pages.news');
     }

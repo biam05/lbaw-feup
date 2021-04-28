@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-
-use App\Models\User;
 
 class HomepageController extends Controller
 {
     /**
-     * Shows the user for a given username.
+     * Shows the news for a given news_id.
      *
      * @return Response
      */

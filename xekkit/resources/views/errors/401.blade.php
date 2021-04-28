@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', '401')
+
 @section('content') 
 
 <div class="text-center text-white p-5">

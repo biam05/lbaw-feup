@@ -1,10 +1,22 @@
 @extends('layouts.app')
 
-@include('partials.navbar')
+@section('title', 'News')
+
 @section('content')
 
 <main style="margin-bottom: 60px;">
-
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-8">
+                @include('partials.post')
+                @include('partials.comments')
+            </div>
+        
+            <div class="hidden-md-down col-lg-auto">
+            </div>
+        </div>
+        
+    </div>
 </main>
 
 @endsection

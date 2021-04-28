@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title', 'Login')
 
 @section('content')  
 <main class="container">
@@ -8,8 +10,8 @@
             {{ csrf_field() }}
             <p class="text-center fs-1">Login</p>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="inputUsername" placeholder="Username/Email"value="{{ old('username') }}" required>
-                <label for="inputUsername">Username/Email</label>
+                <input type="text" class="form-control" id="username" placeholder="Username/Email"value="{{ old('username') }}" required>
+                <label for="username">Username/Email</label>
                 @if ($errors->has('username'))
                     <div class="invalid-feedback">
                         <!-- Username not found. -->
@@ -19,8 +21,8 @@
             </div>
             <div class="row g-2">
                 <div class="col form-floating mb-3">
-                    <input type="password" class="form-control pe-5" id="inputPassword" placeholder="Password" required>
-                    <label for="inputPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control pe-5" id="password" placeholder="Password" required>
+                    <label for="password" class="form-label">Password</label>
                     @if ($errors->has('password'))
                         <div class="invalid-feedback">
                             <!-- Invalid password. -->

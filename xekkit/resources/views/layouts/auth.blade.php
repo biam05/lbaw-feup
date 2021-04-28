@@ -41,7 +41,6 @@
     </script>
   </head>
   <body class="w-100">
-    @include('partials.navbar')
     @yield('content')
     @include('partials.footer')
   </body>

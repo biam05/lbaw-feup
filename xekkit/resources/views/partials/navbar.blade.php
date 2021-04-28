@@ -1,8 +1,7 @@
-<!-- TODO ver se está logged in na base de dados -->
-<!-- TODO buscar o nome do user à base de dados-->
-<script defer src="../js/nav_bar_search.js"></script>
-<!-- navbar-expand-lg-->
+
 <nav class="navbar sticky-top navbar-expand-sm navbar-dark custom_navbar">
+    <!-- TODO ver se está logged in na base de dados -->
+    <!-- TODO buscar o nome do user à base de dados-->
     <div class="container-xl p-1">
         <!-- Logo -->
         <?php if (!Auth::guest()) { ?>
@@ -88,3 +87,5 @@
         </form>
     </div>
 </nav>
+
+<script defer src="../js/nav_bar_search.js"></script>
