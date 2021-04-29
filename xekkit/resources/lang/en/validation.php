@@ -103,6 +103,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'password' => [
+            'regex' => 'The :attribute must have at least one lower case, one upper case and one numeric character.'
+        ]
     ],
 
     /*

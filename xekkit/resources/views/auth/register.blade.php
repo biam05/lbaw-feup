@@ -3,71 +3,111 @@
 @section('title', 'Register')
 
 @section('content')  
-<main class="container">
-    <div class="row align-items-center vh-100">           
+<div class="container">
+    <div class="row align-items-center">           
         @include('partials.auth.login_title')
-        <form method="post" action="{{ route('register') }}" class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate >
+        <form method="post" action="{{ route('register') }}" class="col-lg-5 p-3 g-3 border bg-light" novalidate >
             {{ csrf_field() }}
             <p class="text-center fs-1">Register</p>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ old('username')}}" required>
+                <input 
+                    type="text" 
+                    class="form-control @if ($errors->has('username')) is-invalid @endif" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Username" 
+                    value="{{ old('username')}}" 
+                    required
+                >
                 <label for="username">Username *</label>
-                @if ($errors->has('username'))
-                  <div class="invalid-feedback">
-                      {{ $errors->first('username') }}
-                  </div>
-                @endif
+                <div class="invalid-feedback">
+                    {{ $errors->first('username') }}
+                </div>
             </div>
             <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email')}}" required>
-              <label for="email" class="form-label">Email *</label>
-              @if ($errors->has('email'))
+                <input 
+                    type="email" 
+                    class="form-control @if ($errors->has('email')) is-invalid @endif" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Email" 
+                    value="{{ old('email')}}" 
+                    required
+                >
+                <label for="email" class="form-label">Email *</label>
                 <div class="invalid-feedback">
                     {{ $errors->first('email') }}
                 </div>
-              @endif
             </div>
-
+            
             <div class="row g-2">
-              <div class="col form-floating mb-3">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="{{ old('password')}}" required>
-                  <label for="password" class="form-label">Password *</label>
-                  @if ($errors->has('password'))
+                <div class="col form-floating mb-3">
+                    <input 
+                        type="password" 
+                        class="form-control @if ($errors->has('password')) is-invalid @endif" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Password" 
+                        required
+                    >
+                    <label for="password" class="form-label">Password *</label>
                     <div class="invalid-feedback">
                         {{ $errors->first('password') }}
                     </div>
-                  @endif                  
-              </div>
-              <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-              </div>
+                </div>
+                <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </div>
             </div>
             <div class="row g-2">
-              <div class="col form-floating mb-3">
-                  <input type="password" class="form-control pe-5" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
-                  <label for="password_confirmation" class="form-label">Confirm Password *</label>
-              </div>
-              <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-              </div>
+                <div class="col form-floating mb-3">
+                    <input 
+                        type="password" 
+                        class="form-control pe-5" 
+                        id="password_confirmation" 
+                        name="password_confirmation" 
+                        placeholder="Confirm Password" 
+                        required
+                    >
+                    <label for="password_confirmation" class="form-label">Confirm Password *</label>
+                </div>
+                <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </div>
             </div>
             <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date" value="{{old('date')}}"required>
-              <label for="birthDate" class="form-label">Birth Date *</label>
+                <input 
+                    type="date" 
+                    class="form-control @if ($errors->has('birthDate')) is-invalid @endif" 
+                    id="birthDate" 
+                    name="birthDate" 
+                    placeholder="Birth Date" 
+                    value="{{old('birthDate')}}" 
+                    required
+                >
+                <label for="birthDate" class="form-label">Birth Date *</label>
+                <div class="invalid-feedback">
+                    {{ $errors->first('birthDate') }}
+                </div>
             </div>
             <div class="form-floating mb-3">
-              <select class="form-select" id="gender" name="gender" aria-label="Gender *" required>
-                  <option selected></option>
-                  <option value="m">Male</option>
-                  <option value="f">Female</option>
-                  <option value="n">Rather Not Say</option>
-              </select>
-              <label for="gender">Gender*</label>
-              @if ($errors->has('gender'))
+                <select 
+                    class="form-select @if ($errors->has('birthDate')) is-invalid @endif" 
+                    id="gender" 
+                    name="gender" 
+                    aria-label="Gender *" 
+                    value="{{old('gender')}}" 
+                    required
+                >
+                    <option selected></option>
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                    <option value="n">Rather Not Say</option>
+                </select>
+                <label for="gender">Gender*</label>
                 <div class="invalid-feedback">
                     {{ $errors->first('gender') }}
                 </div>
-              @endif
             </div>
             <a href="{{ route('login') }}">Already have an account?</a>
             <div class="col-autom text-center">
@@ -75,7 +115,7 @@
             </div>   
         </form>
     </div>
-</main>
+</div>
 
 <script src={{ asset('js/validate_form.js') }} defer></script>    
 @endsection

@@ -43,4 +43,4 @@ Route::get('/clear-all-cache', function() {
     Artisan::call('view:clear');
     Artisan::call('config:clear');
     echo "Cleared all caches successfully.";
-  });
+});

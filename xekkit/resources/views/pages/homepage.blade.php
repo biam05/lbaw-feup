@@ -4,7 +4,6 @@
 
 
 @section('content')
-<main style="margin-bottom: 60px;">
 
   @include('partials.trending')
 
@@ -59,6 +58,6 @@
       </div>
   </nav>
 </div>
-</main>
+
 
 @endsection

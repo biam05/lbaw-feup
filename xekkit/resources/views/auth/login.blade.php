@@ -4,33 +4,24 @@
 
 @section('content')  
 <main class="container">
-    <div class="row align-items-center vh-100">           
+    <div class="row align-items-center">           
         @include('partials.auth.login_title')
-        <form method="POST" action="{{ route('login') }}" class="col-lg-5 p-3 g-3 border needs-validation bg-light" novalidate >
+        <form method="POST" action="{{ route('login') }}" class="col-lg-5 p-3 g-3 border bg-light" novalidate >
             {{ csrf_field() }}
             <p class="text-center fs-1">Login</p>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username/Email"value="{{ old('username') }}" required>
                 <label for="username">Username/Email</label>
-                @if ($errors->has('username'))
-                    <div class="invalid-feedback">
-                        <!-- Username not found. -->
-                        {{ $errors->first('username') }}
-                    </div>
-                @endif
             </div>
             <div class="row g-2">
                 <div class="col form-floating mb-3">
-                    <input type="password" class="form-control pe-5" id="password" name="password" placeholder="Password" required>
+                    <input type="password" class="form-control pe-5 @if ($errors->has('username')) is-invalid @endif" id="password" name="password" placeholder="Password" required>
                     <label for="password" class="form-label">Password</label>
-                    @if ($errors->has('password'))
-                        <div class="invalid-feedback">
-                            <!-- Invalid password. -->
-                            {{ $errors->first('password') }}
-                        </div>
-                    @endif
+                    <div class="invalid-feedback">
+                        {{ $errors->first('username') }}
+                    </div>
                 </div>
-                <div onclick="toggleEye(this)" class="col-1 text-center align-self-center">
+                <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
             </div>
