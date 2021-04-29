@@ -4,25 +4,26 @@
     <!-- TODO buscar o nome do user à base de dados-->
     <div class="container-xl p-1">
         <!-- Logo -->
-        <?php if (!Auth::guest()) { ?>
+        @guest
             <a class="navbar-brand clickable" href="{{ route('home') }}">
             <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
             {{ config('app.name', 'Laravel') }}
             </a>
-        <?php } else { ?>
+        @endguest
+        @auth
             <a class="navbar-brand clickable" href="{{ route('home') }}">
             <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
             XEKKIT
             </a>
-         <?php } ?>
+        @endauth
         
 
         <!-- Mobile search and notifications -->
         <div class="mobile ms-auto pe-2">
             <a href="javascript:void(0)"><i onclick="openSearchBar()" class="text-white clickable fas fa-search me-3"></i></a>
-            <?php if (!Auth::guest()) { ?>
+            @auth
             <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
-            <?php } ?>
+            @endauth
         </div>
 
         <!-- responsive right toggler-->
@@ -37,7 +38,7 @@
                 <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
             </form>
             
-            <?php if (!Auth::guest()) { ?>
+            @auth
                 <!-- Desktop right side of nav bar -->
                 <div class="desktop ms-auto d-inline-flex">
                     
@@ -67,7 +68,8 @@
                         <a href="{{ route('logout') }}" class="nav-link">Logout</a>
                     </li>
                 </ul>
-            <?php } else { ?>
+            @endauth
+            @guest
                 <!-- Desktop and Mobile right side of nav bar -->
                 <ul class="navbar-nav ms-auto my-2 my-lg-0 gap-2">
                     <li class="nav-item ms-auto">
@@ -77,7 +79,7 @@
                         <a class="btn btn-primary" href="{{ route('register') }}">Register</a>
                     </li>
                 </ul>
-            <?php } ?>
+            @endguest
         </div>
     </div>
     <div id="search-bar-mobile" class="mobile search-form-mobile w-100 p-2">
