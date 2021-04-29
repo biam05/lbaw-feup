@@ -188,3 +188,8 @@ a.text-primary:hover, a.text-primary:focus {
     background-color: #308643;
     border-color: #308643;
 }
+
+.dropdown-menu-dark .dropdown-item:active {
+    color: #212529;
+    background-color: #43bb5d;
+}
