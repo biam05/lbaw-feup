@@ -39,6 +39,7 @@ CREATE TABLE users(
     is_partner BOOLEAN NOT NULL DEFAULT false,
     is_banned BOOLEAN NOT NULL DEFAULT false,
     is_deleted BOOLEAN NOT NULL DEFAULT false,
+    remember_token TEXT,
     PRIMARY KEY(id)
 );
 
