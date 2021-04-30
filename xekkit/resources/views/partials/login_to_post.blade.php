@@ -1,4 +1,4 @@
-<script defer src="../js/image_preview.js"></script>
+
 <div class="container-xl">
     <div class="row justify-content-center p-3">
         <div class="col-md-7 col-9">

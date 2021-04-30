@@ -1,16 +1,7 @@
-<div class="container-xl">
-    <div class="row justify-content-center p-3">
-        <div class="col-md-7 col-9">
-            <h2 class="text-white text-center">Something New? Share with us!</h2>
-        </div>
-        <button type="button" class="col-md-2 col-7 btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPost">
-            Make new post
-        </button>
-    </div>
-</div>
-
+{{-- <script defer src={{ asset('js/image_preview.js') }}></script>
+ --}}
 <!-- Modal -->
-<div class="modal fade text-white" id="newPost" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
+<div class="modal fade text-white" id="editPost" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-light-dark">
             <div class="modal-header">
@@ -21,22 +12,24 @@
                 <form method="post" action="/news/create/">
                     <div class="mb-3">
                         <label for="News-modal-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="News-modal-title">
+                        <input type="text" class="form-control" id="News-modal-title" value="teste">
                     </div>
 
                     <div class="mb-3">
                         <label for="News-modal-tags" class="form-label">Tags</label>
-                        <input type="text" class="form-control" id="News-modal-tags">
+                        <input type="text" class="form-control" id="News-modal-tags" value="pop music">
                         <p id="parentTags"></p>
                     </div>
 
                     <div class="mb-3">
                         <label for="News-modal-description" class="form-label">Description</label>
                         <span id="News-modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
+                            The 19-year-old singer felt 'embarrassed' to accept the night's biggest honour for 'Everything I Wanted' because she was thought Megan Thee Stallion 'deserved' it more for 'Savage', her collaboration with Beyonce.
                         </span>
                     </div>
                     <div class="mb-3">
                         <div class="container" id="file-display-area">
+                            <img src={{ asset('img/billieeilish.jpg') }} width=400>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -55,4 +48,3 @@
         </div>
     </div>
 </div>
-<script defer src={{ asset('js/image_preview.js') }}></script>

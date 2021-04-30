@@ -11,14 +11,15 @@
     @include('partials.modals.new_post')
     <!-- TODO if user é o owner do post-->
     @include('partials.modals.delete_post')
+    @include('partials.modals.edit_post')
 @endauth
   
 @guest
-    @include('partials.login_to_post')
+@include('partials.login_to_post')
 @endguest
 
 @include('partials.modals.report_post')
-@include('partials.modals.delete_post')
+
 
 <div class="container-xl">
     <div class="row hidden-md-down">

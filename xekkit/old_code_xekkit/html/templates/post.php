@@ -15,7 +15,8 @@ function draw_post($title, $description, $author, $partner, $date, $tags, $image
                 <h5 ><?= $title ?></h5>
             </a>
             
-            <?php if ($is_mine) { ?>
+            <?php 
+            if ($is_mine) { ?>
                 <div class="col-auto">
                     <button type="button" class="card-report clickable-big text-primary pe-2 preventer" data-bs-toggle="modal" data-bs-target="#todo">
                     <i class="fa fa-pencil" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
