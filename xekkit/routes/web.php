@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Content\CommentController;
 use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ItemController;
@@ -30,10 +31,15 @@ Route::post('/register/', [RegisterController::class, 'register']);
 
 
 
-// News
+// Content
 Route::get('/news/{id}/', [NewsController::class, 'show']);
-Route::post('/news/create/', [NewsController::class, 'createNews']);
-Route::post('/comment/create/', [NewsController::class, 'createComment']);
+Route::post('/news/create/', [NewsController::class, 'create']);
+Route::patch('/news/{id}/', [NewsController::class, 'edit']);
+Route::delete('/news/{id}/', [NewsController::class, 'delete']);
+
+Route::post('/comment/create/', [CommentController::class, 'create']);
+Route::patch('/comment/', [CommentController::class, 'edit']);
+Route::delete('/comment/', [CommentController::class, 'delete']);
 
 
 // Home
