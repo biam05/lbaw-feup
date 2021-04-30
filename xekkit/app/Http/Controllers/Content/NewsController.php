@@ -23,11 +23,11 @@ class NewsController extends Controller
     public function show($id)
     {
         $news = News::find($id);
-        if (empty($news)) {
+        if (empty($news) && !empty($news->content->author_id)) {
             throw new NotFoundHttpException();
         }
         $author = User::find($news->content->author_id);
-        if (empty($news)) {
+        if (empty($author)) {
             throw new NotFoundHttpException();
         }
 
