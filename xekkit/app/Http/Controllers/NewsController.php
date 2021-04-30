@@ -19,9 +19,9 @@ class NewsController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
-    {
+    {        
         $news = DB::table('news')->where('content_id', $id)->first();
-        $comments = DB::table('comments')->where('news_id', $id)->get();
+        $comments = DB::table('comment')->where('news_id', $id)->get();
         $comments_array = [];
         foreach ($comments as $comment){
 
@@ -29,7 +29,7 @@ class NewsController extends Controller
         if (empty($news)) {
             throw new NotFoundHttpException();
         }
-
+       
         return view('pages.news', ['news' => $news]);
     }
 
