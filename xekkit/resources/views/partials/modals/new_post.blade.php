@@ -19,7 +19,8 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/news/create/">
+                <form method="post" action="/news/create/" type="multipart/form-data">
+                    {{ csrf_field() }}
                     <div class="mb-3">
                         <label for="News-modal-title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="News-modal-title">
