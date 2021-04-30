@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '404')
+@section('title', 'Page Not Found • Xekkit')
 
 @section('content')  
 

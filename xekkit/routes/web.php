@@ -4,6 +4,7 @@ use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -29,7 +30,7 @@ Route::post('/register/', [RegisterController::class, 'register']);
 
 
 
-//News
+// News
 Route::get('/news/{id}/', [NewsController::class, 'show']);
 Route::post('/news/create/', [NewsController::class, 'createNews']);
 Route::post('/comment/create/', [NewsController::class, 'createComment']);
@@ -38,6 +39,8 @@ Route::post('/comment/create/', [NewsController::class, 'createComment']);
 // Home
 Route::get('/', [HomepageController::class, 'show'])->name('home');
 
+// Search
+Route::get('/search/', [SearchController::class, 'show']);
 
 
 Route::get('/clear-all-cache', function() {
