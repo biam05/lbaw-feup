@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,12 +23,16 @@ class NewsController extends Controller
     public function show($id)
     {
         $news = News::find($id);
-
         if (empty($news)) {
             throw new NotFoundHttpException();
         }
-       
-        return view('pages.news', ['news' => $news]);
+        $author = User::find($news->content->author_id);
+        if (empty($news)) {
+            throw new NotFoundHttpException();
+        }
+
+
+        return view('pages.news', ['news' => $news, 'author' => $author]);
     }
 
 
