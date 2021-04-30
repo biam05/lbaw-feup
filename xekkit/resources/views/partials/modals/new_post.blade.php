@@ -19,12 +19,12 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" action="/news/create/">
                     <div class="mb-3">
                         <label for="News-modal-title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="News-modal-title">
                     </div>
-            
+
                     <div class="mb-3">
                         <label for="News-modal-tags" class="form-label">Tags</label>
                         <input type="text" class="form-control" id="News-modal-tags">
@@ -46,7 +46,7 @@
                             <i class="fa fa-upload"></i> Image/video to upload
                         </label>
                     </div>
-                    
+
                     <div id=error-display-area>
                     </div>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

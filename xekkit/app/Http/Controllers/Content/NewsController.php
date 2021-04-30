@@ -68,12 +68,17 @@ class NewsController extends Controller
 
     public function edit(Request $request, $id)
     {
+        echo "<pre>";
+        print_r($request);
+        echo "</pre>";
+        die;
+
         try {
             $news = News::find($id);
             if ($news->content->author_id === Auth::user()->id) {
-                $news->content->body = $request->input('body');
-                $news->title = $request->input('title');
-                $image = $request->file('news_image');
+                $news->content->body = $request->input('News-modal-description');
+                $news->title = $request->input('News-modal-title');
+                $image = $request->file('fileToUpload');
                 $name = Str::slug($request->input('title')) . '_' . time();
                 $folder = '/uploads/images/';
                 $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
