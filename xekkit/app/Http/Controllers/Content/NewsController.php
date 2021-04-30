@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Content;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +20,9 @@ class NewsController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
-    {        
-        $news = DB::table('news')->where('content_id', $id)->first();
-        $comments = DB::table('comment')->where('news_id', $id)->get();
-        $comments_array = [];
-        foreach ($comments as $comment){
+    {
+        $news = News::find($id);
 
-        }
         if (empty($news)) {
             throw new NotFoundHttpException();
         }

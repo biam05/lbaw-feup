@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
@@ -31,6 +31,9 @@ Route::post('/register/', [RegisterController::class, 'register']);
 
 //News
 Route::get('/news/{id}/', [NewsController::class, 'show']);
+Route::post('/news/create/', [NewsController::class, 'createNews']);
+Route::post('/comment/create/', [NewsController::class, 'createComment']);
+
 
 // Home
 Route::get('/', [HomepageController::class, 'show'])->name('home');
