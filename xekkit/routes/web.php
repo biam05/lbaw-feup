@@ -5,6 +5,7 @@ use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -44,6 +45,8 @@ Route::delete('/comment/', [CommentController::class, 'delete']);
 // Home
 Route::get('/', [HomepageController::class, 'show'])->name('home');
 
+// Search
+Route::get('/search/', [SearchController::class, 'show']);
 
 
 Route::get('/clear-all-cache', function() {
