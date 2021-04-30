@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Content;
 
+use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\News;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class NewsController extends Controller
+class CommentController extends Controller
 {
     /**
      * Shows the news for a given news_id.
@@ -18,7 +20,7 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function create()
     {
         $news = News::where('content_id', $id)->first();
 
@@ -29,33 +31,13 @@ class NewsController extends Controller
         return view('pages.news', ['news' => $news]);
     }
 
-
-    //----------------------------------------
-
-    /**
-     * Edit a news.
-     *
-     * @return News The news edited.
-     */
-    public function edit(Request $request)
-    {
-
-        $this->authorize('create', $news);
-
-        $news->name = $request->input('name');
-        $news->news_id = Auth::news()->id;
-        $news->save();
-
-        return $news;
-    }
-
     public function delete(Request $request, $id)
     {
-        $news = News::find($id);
+        $comment = Comment::find($id);
 
-        $this->authorize('delete', $news);
-        $news->delete();
+        $this->authorize('delete', $comment);
+        $comment->delete();
 
-        return $news;
+        return $comment;
     }
 }
