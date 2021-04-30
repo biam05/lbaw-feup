@@ -20,12 +20,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = DB::table('news')->where('content_id', $id)->first();
-        $comments = DB::table('comments')->where('news_id', $id)->get();
-        $comments_array = [];
-        foreach ($comments as $comment){
+        $news = News::where('content_id', $id)->first();
 
-        }
         if (empty($news)) {
             throw new NotFoundHttpException();
         }

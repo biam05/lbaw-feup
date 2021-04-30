@@ -14,7 +14,7 @@ class Comment extends Model
      *
      * @var string
      */
-    protected $table = 'commment';
+    protected $table = 'comment';
 
     /**
      * The primary key associated with the table.
