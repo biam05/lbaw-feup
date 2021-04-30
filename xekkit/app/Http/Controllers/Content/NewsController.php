@@ -46,6 +46,10 @@ class NewsController extends Controller
 
     public function create(Request $request)
     {
+        echo "<pre>";
+        print_r($request);
+        echo "</pre>";
+        die;
         try {
             $news = new news;
             $news->content->author_id = Auth::user()->id;
@@ -68,11 +72,6 @@ class NewsController extends Controller
 
     public function edit(Request $request, $id)
     {
-        echo "<pre>";
-        print_r($request);
-        echo "</pre>";
-        die;
-
         try {
             $news = News::find($id);
             if ($news->content->author_id === Auth::user()->id) {
@@ -104,10 +103,12 @@ class NewsController extends Controller
                 Session::flash('message', 'Successfully deleted post!');
             } else {
                 Session::flash('message', 'Error on delete post!');
+
                 return redirect('/news/' . $id);
             }
         } catch (Exception $e) {
             Session::flash('message', 'Error on delete post!');
+
             return redirect('/news/' . $id);
         }
 
