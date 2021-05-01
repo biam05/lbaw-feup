@@ -33,7 +33,7 @@
 
         <div class="collapse navbar-collapse gap-4" id="navbarSupportedContent">
             <!-- Desktop search bar -->
-            <form class="desktop d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
+            <form class="desktop d-flex flex-grow-1 justify-content-center" action="{{ route('search') }}">
                 <input class="form-control" style="max-width:300px;" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
             </form>

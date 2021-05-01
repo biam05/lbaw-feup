@@ -13,7 +13,7 @@
         </div>
     
         <sidebar class="hidden-md-down col-lg-auto">
-            @include('partials.sidebar_author', ['user'=>'x/johndoe', 'reputation'=>254789, 'partner'=>true])
+            @include('partials.user_card', ['user'=>'x/johndoe', 'reputation'=>254789, 'partner'=>true])
         </sidebar>
     </div>
     

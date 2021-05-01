@@ -46,7 +46,7 @@ Route::delete('/comment/', [CommentController::class, 'delete']);
 Route::get('/', [HomepageController::class, 'show'])->name('home');
 
 // Search
-Route::get('/search/', [SearchController::class, 'show']);
+Route::get('/search/', [SearchController::class, 'show'])->name('search');
 
 
 Route::get('/clear-all-cache', function() {

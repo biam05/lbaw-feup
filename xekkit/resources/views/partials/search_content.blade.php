@@ -8,12 +8,17 @@
 <section class="tab-content"> 
     <!-- News tab -->
     <div class="tab-pane fade show active" id="search-news" role="tabpanel" aria-labelledby="search-news-tab">
-        
+        @include('partials.post')
     </div>
 
     <!-- Users tab -->
     <div class="tab-pane fade" id="search-users" role="tabpanel" aria-labelledby="search-users-tab">
-               
+        <div class="row text-white pt-4 justify-content-evenly">                
+            @include('partials.user_card', ['user'=>"x/andre", 'reputation'=>254789, 'partner'=>true])
+            @include('partials.user_card', ['user'=>"x/antonio", 'reputation'=>54789, 'partner'=>false])
+            @include('partials.user_card', ['user'=>'x/joaquim', 'reputation'=>4789, 'partner'=>false])
+            @include('partials.user_card', ['user'=>'x/jorge', 'reputation'=>54579, 'partner'=>false])
+        </div>        
         
     </div>
 </section>
