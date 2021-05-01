@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'News') <!-- quero que apareça o titulo da noticia se calhar? -->
+@section('title', 'News | ' . $news->title) <!-- quero que apareça o titulo da noticia se calhar? -->
 
 @section('content')
 
@@ -13,7 +13,7 @@
         </div>
 
         <sidebar class="hidden-md-down col-lg-auto">
-            @include('partials.user_card', ['author'=> $author])
+            @include('partials.user_card')
         </sidebar>
     </div>
 
