@@ -40,7 +40,6 @@ class NewsController extends Controller
             throw new NotFoundHttpException();
         }
 
-
         return view('pages.news', ['news' => $news, 'author' => $author]);
     }
 

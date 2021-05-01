@@ -3,14 +3,13 @@
         <img src="../img/user.png" class="card-img-top" alt="user image" style="width: 10rem;">
         <div class="card-body">
             <button class="card-title clickable text-white">
-                <? if($partner){?>
+                @if($author->is_partner)
                     <i class="fas fa-check"></i>
-                <?}?>
-                <?= $user?>
+                @endif
+                <h5>{{ $author->username  }}</h5>
                 </button>
             <div class="card-text">
-                <p>Reputation</p>
-                <h2><?= $reputation?></h2>
+                <p>Reputation: {{ $author->reputation  }}</p>
             </div>
         </div>
     </div>

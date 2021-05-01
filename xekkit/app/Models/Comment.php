@@ -48,7 +48,7 @@ class Comment extends Model
     /**
      * Get the news associated with the comment.
      */
-    public function new()
+    public function news()
     {
         return $this->belongsTo(News::class, 'news_id');
     }

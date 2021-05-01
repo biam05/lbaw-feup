@@ -6,17 +6,17 @@
 
 
 <div class="container-xl">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-lg-8">
             @include('partials.post')
             @include('partials.comments')
         </div>
-    
+
         <sidebar class="hidden-md-down col-lg-auto">
-            @include('partials.user_card', ['user'=>'x/johndoe', 'reputation'=>254789, 'partner'=>true])
+            @include('partials.user_card', ['author'=> $author])
         </sidebar>
     </div>
-    
+
 </div>
 
 
