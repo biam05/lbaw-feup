@@ -7,7 +7,7 @@
         </h2>
         <div id="filterSearchCollapse" class="accordion-collapse collapse" aria-labelledby="filterSearch" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                @include('partials.options')
+                @include('partials.search.options')
             </div>
         </div>
     </div>

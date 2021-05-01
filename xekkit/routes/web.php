@@ -33,20 +33,27 @@ Route::post('/register/', [RegisterController::class, 'register']);
 
 // Content
 Route::get('/news/{id}/', [NewsController::class, 'show']);
-Route::post('/news/create/', [NewsController::class, 'create']);
-Route::patch('/news/{id}/', [NewsController::class, 'edit']);
-Route::delete('/news/{id}/', [NewsController::class, 'delete']);
-
-Route::post('/comment/create/', [CommentController::class, 'create']);
-Route::patch('/comment/', [CommentController::class, 'edit']);
-Route::delete('/comment/', [CommentController::class, 'delete']);
-
 
 // Home
 Route::get('/', [HomepageController::class, 'show'])->name('home');
 
 // Search
 Route::get('/search/', [SearchController::class, 'show'])->name('search');
+
+
+// Authenticated needed for this routes
+Route::middleware(['auth'])->group(function () {
+
+    // news
+    Route::post('/news/create/', [NewsController::class, 'create']);
+    Route::patch('/news/{id}/', [NewsController::class, 'edit']);
+    Route::delete('/news/{id}/', [NewsController::class, 'delete']);
+
+    // comments
+    Route::post('/comment/create/', [CommentController::class, 'create']);
+    Route::patch('/comment/', [CommentController::class, 'edit']);
+    Route::delete('/comment/', [CommentController::class, 'delete']);
+});
 
 
 Route::get('/clear-all-cache', function() {

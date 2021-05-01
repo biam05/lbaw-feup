@@ -45,10 +45,6 @@ class NewsController extends Controller
 
     public function create(Request $request)
     {
-        echo "<pre>";
-        print_r($request);
-        echo "</pre>";
-        die;
         try {
             $news = new news;
             $news->content->author_id = Auth::user()->id;
@@ -56,7 +52,7 @@ class NewsController extends Controller
             $news->title = $request->input('title');
             $image = $request->file('news_image');
             $name = Str::slug($request->input('title')) . '_' . time();
-            $folder = '/uploads/images/';
+            $folder = '/img/news/';
             $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
             $this->uploadOne($image, $folder, 'public', $name);
             $news->image = $filePath;
@@ -64,7 +60,7 @@ class NewsController extends Controller
             Session::flash('message', 'Successfully created post!');
         } catch (Exception $e) {
             Session::flash('message', 'Error on create post!');
-        }
+        } 
 
         return redirect('/');
     }
@@ -78,7 +74,7 @@ class NewsController extends Controller
                 $news->title = $request->input('News-modal-title');
                 $image = $request->file('fileToUpload');
                 $name = Str::slug($request->input('title')) . '_' . time();
-                $folder = '/uploads/images/';
+                $folder = '/img/news/';
                 $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
                 $this->uploadOne($image, $folder, 'public', $name);
                 $news->image = $filePath;

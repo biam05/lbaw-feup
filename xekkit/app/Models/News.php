@@ -62,7 +62,8 @@ class News extends Model
         return $this->belongsToMany(Tag::class, 'news_tag', 'news_id', 'tag_id');
     }
 
-    public function formatDate($full = false){
+    public function formatDate($full = false)
+    {
         $now = new DateTime;
         $ago = new DateTime($this->content->date);
         $diff = $now->diff($ago);

@@ -5,17 +5,17 @@
 
 @section('content')
 
-@include('partials.trending')
+@include('partials.news.trending')
 
 @auth
     @include('partials.modals.new_post')
-    <!-- TODO if user é o owner do post-->
+    
     @include('partials.modals.delete_post')
     @include('partials.modals.edit_post')
 @endauth
   
 @guest
-@include('partials.login_to_post')
+    @include('partials.login_to_post')
 @endguest
 
 @include('partials.modals.report_post')
@@ -24,7 +24,7 @@
 <div class="container-xl">
     <div class="row hidden-md-down">
         <div class="col-12 col-lg-9">
-            @include('partials.post')
+            {{-- @include('partials.recent_posts') --}}
         </div>
     <div class="col-lg-3">
         <section class="container bg-light-dark text-white p-3 text-center">
@@ -46,7 +46,7 @@
     </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-            @include('partials.post')
+            {{-- @include('partials.recent_posts') --}}
         </div>
         <div class="tab-pane fade" id="pills-explore" role="tabpanel" aria-labelledby="pills-explore-tab">
             <section class="container-xl bg-light-dark text-white p-3 text-center">

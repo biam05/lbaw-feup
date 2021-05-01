@@ -729,6 +729,62 @@ CREATE TRIGGER cnews_search_update
  */
 
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'beatriz', 
+    'beatriz@xekkit.com', 
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'Sou a Beatriz.', 
+    'beatriz.png', 
+    '02/20/1992', 
+    'f', 
+    '500000', 
+    true, 
+    false, 
+    false, 
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'andre', 
+    'andre@xekkit.com', 
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'Sou o Andre.', 
+    'andre.jpg', 
+    '02/10/2000', 
+    'm', 
+    '500000', 
+    true, 
+    false, 
+    true, 
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'guilherme', 
+    'guilherme@xekkit.com', 
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'Sou o Guilerme.', 
+    'guilherme.jpg', 
+    '02/20/1922', 
+    'm', 
+    '500000', 
+    true, 
+    false, 
+    false, 
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'ricardo', 
+    'ricardo@xekkit.com', 
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'Sou o Ricardo.', 
+    'ricardo.jpg', 
+    '02/20/1922', 
+    'f', 
+    '500000', 
+    true, 
+    false, 
+    false, 
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
     'mpitchers0', 
     'lpriestner0@tiny.cc', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
@@ -1065,10 +1121,10 @@ insert into tag (name) values('covid');
 insert into tag (name) values('celebreties');
 insert into tag (name) values('music');
 
-insert into news(content_id,title, image, trending_score, nr_comments) values (1,'How New Mexico Became the State With the Highest Rate of Full Vaccinations','png',0,0);
-insert into news(content_id,title, image, trending_score, nr_comments) values (2,'Biden promises to deliver on police reform during meeting with Congressional Black Caucus','png',0,0);
-insert into news(content_id,title, image, trending_score, nr_comments) values (3,'Philippines files new diplomatic protests over Chinese boats in disputed waters','png',0,0);
-insert into news(content_id,title, image, trending_score, nr_comments) values (4,'Russian ambassador says no famine in North Korea, trade may resume soon','jpg',0,0);
+insert into news(content_id,title, image, trending_score, nr_comments) values (1,'How New Mexico Became the State With the Highest Rate of Full Vaccinations','1.gif',0,0);
+insert into news(content_id,title, image, trending_score, nr_comments) values (2,'Biden promises to deliver on police reform during meeting with Congressional Black Caucus','2.jpg',0,0);
+insert into news(content_id,title, image, trending_score, nr_comments) values (3,'Philippines files new diplomatic protests over Chinese boats in disputed waters','3.jpeg',0,0);
+insert into news(content_id,title, image, trending_score, nr_comments) values (4,'Russian ambassador says no famine in North Korea, trade may resume soon',null,0,0);
 
 insert into news_tag(news_id, tag_id) values (1,2);
 insert into news_tag(news_id, tag_id) values (2,2);

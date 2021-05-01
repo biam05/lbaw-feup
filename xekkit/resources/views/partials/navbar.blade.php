@@ -33,8 +33,8 @@
 
         <div class="collapse navbar-collapse gap-4" id="navbarSupportedContent">
             <!-- Desktop search bar -->
-            <form class="desktop d-flex flex-grow-1 justify-content-center" action="{{ route('search') }}">
-                <input class="form-control" style="max-width:300px;" type="search" placeholder="Search" aria-label="Search">
+            <form class="desktop d-flex flex-grow-1 justify-content-center" action="{{ route('search') }}" method="get">
+                <input class="form-control" style="max-width:300px;" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
             </form>
             
@@ -46,7 +46,7 @@
                             
                         <div class="nav-item navbar-nav dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, johndoe!
+                                Hello, {{Auth::user()->username}}!
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
@@ -60,7 +60,7 @@
                 <!-- Mobile right side of nav bar -->
                 <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2 p-2 text-end bg-light-dark">
                     <li class="nav-item p-1">
-                        <h3 class="text-white">Hello, johndoe!</h3>
+                        <h3 class="text-white">Hello, {{Auth::user()->username}}!</h3>
                     </li>
                     <li class="nav-item p-1">
                         <a href="../pages/profile.php" class="nav-link">My Profile</a>
@@ -83,8 +83,8 @@
         </div>
     </div>
     <div id="search-bar-mobile" class="mobile search-form-mobile w-100 p-2">
-        <form class="d-flex flex-grow-1 justify-content-center" action="../pages/search.php">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex flex-grow-1 justify-content-center" action="{{ route('search') }}" method="get">
+            <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search">
             <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>

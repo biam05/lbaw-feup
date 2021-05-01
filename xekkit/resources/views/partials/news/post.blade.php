@@ -6,7 +6,7 @@
             </a>
 
             <!-- TODO verificar se é o owner -->
-            @if (!empty(Auth::user()->id) && $news->content->author_id === Auth::user()->id)
+            @if (Auth::user() && $news->content->author_id === Auth::user()->id)
                 <div class="col-auto">
                     <button type="button" class="card-report clickable-big text-primary pe-2 preventer" data-bs-toggle="modal" data-bs-target="#editPost">
                         <i class="fa fa-pencil" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
@@ -23,20 +23,20 @@
         </div>
 
         <div class="row justify-content-between card-subtitle mb-2">
-            <a class="col-auto clickable text-muted text-decoration-none" href="/user/{{ $author->username  }}">
+            <a class="col-auto clickable text-muted text-decoration-none" href="/user/{{$news->content->author->username  }}">
                 <h6>
-                    @if($author->is_partner)
+                    @if($news->content->author->is_partner)
                         <i class="fas fa-check"></i>
                     @endif
-                    {{ $author->username  }}
+                    {{ $news->content->author->username  }}
                 </h6>
             </a>
             <h6 class="col-auto text-muted">{{ $news->formatDate() }}</h6>
         </div>
 
-        @if(!empty($news->image))
-            <img src={{ asset($news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
-        @endif
+        @isset($news->image)
+            <img src={{ asset('img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
+        @endisset
         <p class="card-text mt-3">
             {{$news->content->body}}
         </p>

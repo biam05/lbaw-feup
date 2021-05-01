@@ -9,21 +9,22 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/news/create/">
+                <form method="patch" action="/news/{edit}/"">
+                    {{csrf_field()}}
                     <div class="mb-3">
                         <label for="News-modal-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="News-modal-title" value="teste">
+                        <input type="text" name="title" class="form-control" id="News-modal-title" value="teste">
                     </div>
 
                     <div class="mb-3">
                         <label for="News-modal-tags" class="form-label">Tags</label>
-                        <input type="text" class="form-control" id="News-modal-tags" value="pop music">
+                        <input type="text" name="tags" class="form-control" id="News-modal-tags" value="pop music">
                         <p id="parentTags"></p>
                     </div>
 
                     <div class="mb-3">
                         <label for="News-modal-description" class="form-label">Description</label>
-                        <span id="News-modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
+                        <span id="News-modal-description" name="description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
                             The 19-year-old singer felt 'embarrassed' to accept the night's biggest honour for 'Everything I Wanted' because she was thought Megan Thee Stallion 'deserved' it more for 'Savage', her collaboration with Beyonce.
                         </span>
                     </div>
@@ -34,7 +35,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="custom-file-upload form-control" id="modal-image">
-                            <input type="file" name="photo" id="fileToUpload" accept="image/*">
+                            <input type="file" name="image" id="fileToUpload" accept="image/*">
                             <i class="fa fa-upload"></i> Image/video to upload
                         </label>
                     </div>
