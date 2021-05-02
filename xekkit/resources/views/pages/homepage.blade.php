@@ -19,7 +19,7 @@
 @include('partials.news.trending')
 
 @auth
-    @include('partials.modals.new_post', ['errors' => $errors])
+    @include('partials.modals.new_post')
 
     
     @include('partials.modals.delete_post')
