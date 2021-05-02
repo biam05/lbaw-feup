@@ -28,7 +28,7 @@ class NewsController extends Controller
      */
     public function show(Request $request, $id)
     {
-        
+
         $news = News::findOrFail($id);
         $this->authorize('view', $news);
         $author = User::findOrFail($news->content->author_id);
@@ -50,8 +50,7 @@ class NewsController extends Controller
         //     return back()->withErrors($validator->errors());
         // }
 
-        $id = 0;
-        $id = DB::transaction(function () use ($request, $id) {
+        $id = DB::transaction(function () use ($request) {
             // create content
             $content = new Content;
 
@@ -66,10 +65,9 @@ class NewsController extends Controller
             $news = new News;
             $news->title = $request->input('title');
 
-            if($request->hasFile('image')){
+            if ($request->hasFile('image')) {
                 $image_name = $content->id . '.' . $request->file('image')->extension();
-                $path = $request->file('image')->storeAs('/public/img/news/', $image_name);
-
+                $request->file('image')->storeAs('/public/img/news/', $image_name);
                 $news->image = $image_name;
             }
 
@@ -94,40 +92,40 @@ class NewsController extends Controller
     public function edit(Request $request, $id)
     {
         try {
-            $news = News::find($id);
-            if ($news->content->author_id === Auth::user()->id) {
-                $news->content->body = $request->input('News-modal-description');
-                $news->title = $request->input('News-modal-title');
-                $image = $request->file('fileToUpload');
-                $name = Str::slug($request->input('title')) . '_' . time();
-                $folder = '/img/news/';
-                $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
-                $this->uploadOne($image, $folder, 'public', $name);
-                $news->image = $filePath;
-                $news->save();
-                Session::flash('message', 'Successfully updated post!');
+            $news = News::findOrFail($id);
+            $this->authorize('update', $news);
+            $news->content->body = $request->input('description');
+            $news->title = $request->input('title');
+            if ($request->hasFile('image')) {
+                $image_name = $news->content->id . '.' . $request->file('image')->extension();
+                $request->file('image')->storeAs('/public/img/news/', $image_name);
+                $news->image = $image_name;
             }
+            $news->content->save();
+            $news->save();
+
+            preg_match_all('/#(\w+)/', $request->input('description'), $hashtags);
+            
+            foreach ($hashtags[1] as $tag_text) {
+                $tag = Tag::firstOrCreate(['name' => $tag_text]);
+                $tag->news()->syncWithoutDetaching([$id]);
+            }
+            Session::flash('message', 'Successfully updated post!');
         } catch (Exception $e) {
             Session::flash('message', 'Error on update post!');
         }
 
+
         return redirect('/news/' . $id);
     }
 
-    public function delete(Request $request,$id)
+    public function delete(Request $request, $id)
     {
-        dd($request);
         try {
-            $news = News::find($id);
-            if ($news->content->author_id === Auth::user()->id) {
-                $this->authorize('delete', $news);
-                $news->delete();
-                Session::flash('message', 'Successfully deleted post!');
-            } else {
-                Session::flash('message', 'Error on delete post!');
-
-                return redirect('/news/' . $id);
-            }
+            $news = News::findOrFail($id);
+            $this->authorize('delete', $news);
+            $news->delete();
+            Session::flash('message', 'Successfully deleted post!');
         } catch (Exception $e) {
             Session::flash('message', 'Error on delete post!');
 

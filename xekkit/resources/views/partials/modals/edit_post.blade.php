@@ -8,12 +8,13 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="patch" action="/news/{{$news->content_id}}/">
+                <form method="post" action="/news/{{$news->content_id}}/">
                     {{csrf_field()}}
+                    @method('patch')
                     <div class="mb-3">
                         <label for="News-modal-title" class="form-label">Title</label>
                         <input type="text" name="title" class="form-control" id="News-modal-title" value="{{$news->title}}">
-                        
+
                     </div>
 
                     <div class="mb-3">
