@@ -114,8 +114,9 @@ class NewsController extends Controller
         return redirect('/news/' . $id);
     }
 
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
+        dd($request);
         try {
             $news = News::find($id);
             if ($news->content->author_id === Auth::user()->id) {

@@ -1,18 +1,17 @@
 
 <nav class="navbar sticky-top navbar-expand-sm navbar-dark custom_navbar">
-    <!-- TODO ver se está logged in na base de dados -->
-    <!-- TODO buscar o nome do user à base de dados-->
+
     <div class="container-xl p-1">
         <!-- Logo -->
         @guest
             <a class="navbar-brand clickable" href="{{ route('home') }}">
-            <img src="{{asset('storage/img/xekkit.png')}}" alt="" width="30" height="30" class="d-inline-block align-top spin">
+            <img src="{{asset('img/xekkit.png')}}" alt="" width="30" height="30" class="d-inline-block align-top spin">
             {{ config('app.name', 'Laravel') }}
             </a>
         @endguest
         @auth
             <a class="navbar-brand clickable" href="{{ route('home') }}">
-            <img src="{{asset('storage/img/xekkit.png')}}" alt="" width="30" height="30" class="d-inline-block align-top spin">
+            <img src="{{asset('img/xekkit.png')}}" alt="" width="30" height="30" class="d-inline-block align-top spin">
             XEKKIT
             </a>
         @endauth

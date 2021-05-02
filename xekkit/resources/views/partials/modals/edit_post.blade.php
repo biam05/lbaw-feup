@@ -1,5 +1,4 @@
-{{-- <script defer src={{ asset('js/image_preview.js') }}></script>
- --}}
+
 <!-- Modal -->
 <div class="modal fade text-white" id="editPost" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -9,28 +8,23 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="patch" action="/news/{edit}/"">
+                <form method="patch" action="/news/{{$news->content_id}}/">
                     {{csrf_field()}}
                     <div class="mb-3">
                         <label for="News-modal-title" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="News-modal-title" value="teste">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="News-modal-tags" class="form-label">Tags</label>
-                        <input type="text" name="tags" class="form-control" id="News-modal-tags" value="pop music">
-                        <p id="parentTags"></p>
+                        <input type="text" name="title" class="form-control" id="News-modal-title" value="{{$news->title}}">
+                        
                     </div>
 
                     <div class="mb-3">
                         <label for="News-modal-description" class="form-label">Description</label>
-                        <span id="News-modal-description" name="description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
-                            The 19-year-old singer felt 'embarrassed' to accept the night's biggest honour for 'Everything I Wanted' because she was thought Megan Thee Stallion 'deserved' it more for 'Savage', her collaboration with Beyonce.
-                        </span>
+                        <textarea rows="4" id="News-modal-description" name="description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
                     </div>
                     <div class="mb-3">
                         <div class="container" id="file-display-area">
-                            <img src={{ asset('storage/img/billieeilish.jpg') }} width=400>
+                            @isset($news->image)
+                            <img src={{ asset('storage/img/news/' . $news->image) }} width=400>
+                            @endisset
                         </div>
                     </div>
                     <div class="mb-3">

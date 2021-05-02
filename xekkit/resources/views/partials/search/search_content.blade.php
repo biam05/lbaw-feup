@@ -11,7 +11,7 @@
         @if(count($news) === 0)
             <p class="text-white text-center h6 pt-4 pb-3">No results found</p>
         @else
-            @each('partials.post', $news, 'news')
+            @each('partials.news.post', $news, 'news')
         @endif
     </div>
 

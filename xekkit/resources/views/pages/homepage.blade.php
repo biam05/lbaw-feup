@@ -20,10 +20,6 @@
 
 @auth
     @include('partials.modals.new_post')
-
-    
-    @include('partials.modals.delete_post')
-    @include('partials.modals.edit_post')
 @endauth
   
 @guest

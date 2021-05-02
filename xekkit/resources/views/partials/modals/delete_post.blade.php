@@ -6,10 +6,12 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            <form method="delete" action="/news/{{$news->content_id}}/">
+                {{csrf_field()}}
                 <div class="mb-3">
-                    <label for="deletePost-modal-description" class="form-label">Confim by typing your password</label>
-                    <span id="deletePost-modal-description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
-                    </span>
+                    <label for="deletePost-modal-description" class="form-label">Confirm by typing your password</label>
+                    <input type="text" id="deletePost-modal-description" name="password" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
+               
                 </div>
                 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
