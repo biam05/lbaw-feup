@@ -1,6 +1,6 @@
 
 <div style="cursor: pointer" onclick="location.href='../pages/news.php'" class="card text-white bg-dark position-relative custom_card">
-    <img class="card-img" src={{ asset('img/billieeilish.jpg') }} alt="Card image cap">
+    <img class="card-img" src={{ asset('storage/img/billieeilish.jpg') }} alt="Card image cap">
     <div class="card-img-overlay d-flex flex-column justify-content-end p-1">
         <h5 class="card-title px-1">Billie Eilish won the coveted Record of the Year at Sunday's Grammy Awards</h5>
         <div class="d-flex px-1">

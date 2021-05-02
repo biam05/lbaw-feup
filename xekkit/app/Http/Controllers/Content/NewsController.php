@@ -5,23 +5,20 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use http\Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Traits\UploadTrait;
 
 use App\Models\News;
+use App\Models\Content;
+use App\Models\Tag;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewsController extends Controller
 {
-
-    use UploadTrait;
-
     /**
      * Shows the news for a given news_id.
      *
@@ -29,14 +26,11 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $news = News::find($id);
-        if (empty($news) || empty($news->content->author_id)) {
-            throw new NotFoundHttpException();
-        }
-        $author = User::find($news->content->author_id);
-        if (empty($author)) {
+        $news = News::findOrFail($id);
+        $author = User::findOrFail($news->content->author_id);
+        if ($author->is_deleted || $author->is_banned) {
             throw new NotFoundHttpException();
         }
 
@@ -45,24 +39,57 @@ class NewsController extends Controller
 
     public function create(Request $request)
     {
-        try {
-            $news = new news;
-            $news->content->author_id = Auth::user()->id;
-            $news->content->body = $request->input('body');
-            $news->title = $request->input('title');
-            $image = $request->file('news_image');
-            $name = Str::slug($request->input('title')) . '_' . time();
-            $folder = '/img/news/';
-            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
-            $this->uploadOne($image, $folder, 'public', $name);
-            $news->image = $filePath;
-            $news->save();
-            Session::flash('message', 'Successfully created post!');
-        } catch (Exception $e) {
-            Session::flash('message', 'Error on create post!');
-        } 
+        $validator = $request->validate([
+            'title' => 'required|string',
+            'body' => 'required|string',
+            'image' => 'image|mimes: jpg,png,jpeg,gif,svg|max:2048',
+        ]);
 
-        return redirect('/');
+        // if ($validator->fails()) {
+        //     return back()->withErrors($validator->errors());
+        // }
+
+        $id = 0;
+        $id = DB::transaction(function () use ($request, $id) {
+            // create content
+            $content = new Content;
+
+            // change end of line to <br>
+            $endOfLine = ["\r\n", "\r", "\n"];
+            $content->body = str_replace($endOfLine, "<br>", $request->input('body'));
+            $content->author_id = Auth::user()->id;
+
+            $content->save();
+
+            $id = $content->id;
+
+            //create news
+            $news = new News;
+            $news->title = $request->input('title');
+
+            if($request->hasFile('image')){
+                $image_name = $content->id . '.' . $request->file('image')->extension();
+                $path = $request->file('image')->storeAs('/public/img/news/', $image_name);
+
+                $news->image = $image_name;
+            }
+
+            $news->content_id = $id;
+            $news->save();
+
+            return $id;
+        });
+
+        // Find hashtags in body
+        preg_match_all('/#(\w+)/', $request->input('body'), $hashtags);
+
+        // Hashtags are stored in $hashtags[1]
+        foreach ($hashtags[1] as $tag_text) {
+            $tag = Tag::firstOrCreate(['name' => $tag_text]);
+            $tag->news()->syncWithoutDetaching([$id]);
+        }
+
+        return redirect('/news/' . $id);
     }
 
     public function edit(Request $request, $id)

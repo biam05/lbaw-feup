@@ -28,18 +28,17 @@
                     @if($news->content->author->is_partner)
                         <i class="fas fa-check"></i>
                     @endif
-                    {{ $news->content->author->username  }}
+                    x/{{ $news->content->author->username  }}
                 </h6>
             </a>
             <h6 class="col-auto text-muted">{{ $news->formatDate() }}</h6>
         </div>
 
         @isset($news->image)
-            <img src={{ asset('img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
+            <img src={{ asset('storage/img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
         @endisset
-        <p class="card-text mt-3">
-            {{$news->content->body}}
-        </p>
+
+        <p class="card-text mt-3">{!! $news->content->body !!}</p>
     </div>
     <footer class="card-footer text-muted">
         <div class="row">

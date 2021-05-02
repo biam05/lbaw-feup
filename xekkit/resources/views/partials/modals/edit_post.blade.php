@@ -30,7 +30,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="container" id="file-display-area">
-                            <img src={{ asset('img/billieeilish.jpg') }} width=400>
+                            <img src={{ asset('storage/img/billieeilish.jpg') }} width=400>
                         </div>
                     </div>
                     <div class="mb-3">

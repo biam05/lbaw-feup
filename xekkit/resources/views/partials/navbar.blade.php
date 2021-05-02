@@ -6,13 +6,13 @@
         <!-- Logo -->
         @guest
             <a class="navbar-brand clickable" href="{{ route('home') }}">
-            <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
+            <img src="{{asset('storage/img/xekkit.png')}}" alt="" width="30" height="30" class="d-inline-block align-top spin">
             {{ config('app.name', 'Laravel') }}
             </a>
         @endguest
         @auth
             <a class="navbar-brand clickable" href="{{ route('home') }}">
-            <img src="../img/newlogo.png" alt="" width="30" height="30" class="d-inline-block align-top spin">
+            <img src="{{asset('storage/img/xekkit.png')}}" alt="" width="30" height="30" class="d-inline-block align-top spin">
             XEKKIT
             </a>
         @endauth
@@ -46,7 +46,7 @@
                             
                         <div class="nav-item navbar-nav dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, {{Auth::user()->username}}!
+                                Hello x/{{Auth::user()->username}}!
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
@@ -60,7 +60,7 @@
                 <!-- Mobile right side of nav bar -->
                 <ul class="mobile navbar-nav ms-auto my-2 my-lg-0 gap-2 p-2 text-end bg-light-dark">
                     <li class="nav-item p-1">
-                        <h3 class="text-white">Hello, {{Auth::user()->username}}!</h3>
+                        <h3 class="text-white">Hello x/{{Auth::user()->username}}!</h3>
                     </li>
                     <li class="nav-item p-1">
                         <a href="../pages/profile.php" class="nav-link">My Profile</a>

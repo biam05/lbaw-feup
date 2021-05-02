@@ -32,7 +32,7 @@ Route::post('/register/', [RegisterController::class, 'register']);
 
 
 // Content
-Route::get('/news/{id}/', [NewsController::class, 'show']);
+Route::get('/news/{id}/', [NewsController::class, 'show'])->where(['id'=>'[0-9]+']);
 
 // Home
 Route::get('/', [HomepageController::class, 'show'])->name('home');
@@ -46,8 +46,8 @@ Route::middleware(['auth'])->group(function () {
 
     // news
     Route::post('/news/create/', [NewsController::class, 'create']);
-    Route::patch('/news/{id}/', [NewsController::class, 'edit']);
-    Route::delete('/news/{id}/', [NewsController::class, 'delete']);
+    Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
+    Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
 
     // comments
     Route::post('/comment/create/', [CommentController::class, 'create']);

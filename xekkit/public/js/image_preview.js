@@ -3,7 +3,7 @@ window.onload = function () {
     var fileInput = document.querySelectorAll('#fileToUpload');
 
     if (fileInput !== undefined && fileInput !== null) {
-        console.log(fileInput.length);
+        //console.log(fileInput.length);
         fileInput.forEach(handler) 
      } 
 }

@@ -5,10 +5,22 @@
 
 @section('content')
 
+@if ($errors->any())
+<div class="container-xl alert alert-danger">
+    <h4> Something went wrong: </h4>
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 @include('partials.news.trending')
 
 @auth
-    @include('partials.modals.new_post')
+    @include('partials.modals.new_post', ['errors' => $errors])
+
     
     @include('partials.modals.delete_post')
     @include('partials.modals.edit_post')

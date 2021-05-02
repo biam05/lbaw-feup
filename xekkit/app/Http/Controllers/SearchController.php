@@ -12,7 +12,7 @@ class SearchController extends Controller
     
     public function show(Request $request)
     {        
-        $search = $request->input('search');
+        $search = $request->query('search');
 
         $reservedSymbols = ['\''];
         $search = str_replace($reservedSymbols, '\\\'', $search);

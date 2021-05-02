@@ -42,7 +42,7 @@ class NewsPolicy
      */
     public function create(User $user)
     {
-        return Auth::check();
+        
     }
 
     /**
@@ -54,7 +54,7 @@ class NewsPolicy
      */
     public function update(User $user, News $news)
     {
-        return Auth::check();
+        return $user->id == $news->content->author_id;
     }
 
     /**

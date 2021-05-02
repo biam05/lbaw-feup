@@ -91,7 +91,7 @@ CREATE TABLE content (
 
 CREATE TABLE tag (
     id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
-    name VARCHAR(20) NOT NULL UNIQUE,
+    name VARCHAR(40) NOT NULL UNIQUE,
     PRIMARY KEY(id)
 );
 
@@ -99,7 +99,7 @@ CREATE TABLE news (
     content_id INTEGER NOT NULL,
     title TEXT NOT NULL,
     image TEXT,
-    trending_score INTEGER NOT NULL CHECK (trending_score >= 0),
+    trending_score INTEGER NOT NULL DEFAULT 0 CHECK (trending_score >= 0),
     nr_comments INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
