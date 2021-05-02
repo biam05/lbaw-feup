@@ -1,6 +1,6 @@
 
 <!-- Modal -->
-<div class="modal fade text-white" id="editPost" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
+<div class="modal fade text-white" id="editPost_{{$news->content_id}}" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-light-dark">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/news/{{$news->content_id}}/">
+                <form method="post" action="/news/{{$news->content_id}}/" enctype="multipart/form-data">
                     {{csrf_field()}}
                     @method('patch')
                     <div class="mb-3">
@@ -19,24 +19,22 @@
 
                     <div class="mb-3">
                         <label for="News-modal-description" class="form-label">Description</label>
-                        <textarea rows="4" id="News-modal-description" name="description" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
+                        <textarea rows="4" id="News-modal-description" name="body" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
                     </div>
                     <div class="mb-3">
                         <div class="container" id="file-display-area">
                             @isset($news->image)
-                            <img src={{ asset('storage/img/news/' . $news->image) }} width=400>
+                                <img src="{{ asset('storage/img/news/' . $news->image)}}"></img>
                             @endisset
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="custom-file-upload form-control" id="modal-image">
-                            <input type="file" name="image" id="fileToUpload" accept="image/*">
-                            <i class="fa fa-upload"></i> Image/video to upload
+                            <input type="file" name="image" id="fileToUpload" value="{{ asset('storage/img/news/' . $news->image)}}" accept="image/*">
+                            <i class="fa fa-upload"></i> Image to upload
                         </label>
                     </div>
 
-                    <div id=error-display-area>
-                    </div>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -44,3 +42,4 @@
         </div>
     </div>
 </div>
+<script defer src={{ asset('js/image_preview.js') }}></script>

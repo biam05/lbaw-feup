@@ -19,7 +19,7 @@ class SearchController extends Controller
 
         
         $news = News::whereRaw('search @@ websearch_to_tsquery(\'english\', ?)', [$search])
-            ->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?))', [$search])
+            ->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search])
             ->get();
 
         foreach($news as $new){
@@ -27,8 +27,8 @@ class SearchController extends Controller
             //$new->content->author = $new->content->author;
         }
         
-        $users = User::whereRaw('search @@ websearch_to_tsquery(\'english\', ?)', [$search])
-            ->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?))', [$search])
+        $users = User::whereRaw('search @@ websearch_to_tsquery(\'simple\', ?)', [$search])
+            ->orderByRaw('ts_rank(search, websearch_to_tsquery(\'simple\', ?)) DESC', [$search])
             ->get();
       
         return view('pages.search', ['news' => $news, 'users' => $users]);

@@ -43,6 +43,24 @@
     <body class="w-100">
         @include('partials.navbar')
         <main>
+
+            @if ($errors->any())
+            <div class="container-xl alert alert-danger">
+                <h4> Something went wrong: </h4>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+            @if (Session::has('success'))
+            <div class="container-xl alert alert-success">
+                <h5> {{ Session::get('success') }} </h5>
+            </div>
+            @endif
+
             @yield('content')
         </main>
         @include('partials.footer')

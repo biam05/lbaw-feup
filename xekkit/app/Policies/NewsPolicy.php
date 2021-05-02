@@ -32,12 +32,12 @@ class NewsPolicy
      *
      * @return mixed
      */
-    public function view(User $user, News $news)
+    public function view(?User $user, News $news)
     {
         if ($news->content->author->is_banned || $news->content->author->is_deleted) {
             return Response::deny('The user that created this post is either banned or deleted.');
         } else {
-            return !(Auth::check() && (Auth::user()->is_banned || Auth::user()->is_deleted)) ? Response::allow() : Response::deny('You can not see any posts.');
+            return !(optional($user)->is_banned || optional($user)->is_deleted);
         }
     }
 

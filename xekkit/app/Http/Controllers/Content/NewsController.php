@@ -8,6 +8,8 @@ use http\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\News;
 use App\Models\Content;
@@ -45,10 +47,6 @@ class NewsController extends Controller
             'body' => 'required|string',
             'image' => 'image|mimes: jpg,png,jpeg,gif,svg|max:2048',
         ]);
-
-        // if ($validator->fails()) {
-        //     return back()->withErrors($validator->errors());
-        // }
 
         $id = DB::transaction(function () use ($request) {
             // create content
@@ -91,47 +89,71 @@ class NewsController extends Controller
 
     public function edit(Request $request, $id)
     {
-        try {
-            $news = News::findOrFail($id);
-            $this->authorize('update', $news);
-            $news->content->body = $request->input('description');
-            $news->title = $request->input('title');
-            if ($request->hasFile('image')) {
-                $image_name = $news->content->id . '.' . $request->file('image')->extension();
-                $request->file('image')->storeAs('/public/img/news/', $image_name);
-                $news->image = $image_name;
+        $news = News::findOrFail($id);
+        $this->authorize('update', $news);
+        
+        $validator = $request->validate([
+            'title' => 'required|string',
+            'body' => 'required|string',
+            'image' => 'image|mimes: jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+            
+        $news->content->body = $request->input('body');
+        $news->title = $request->input('title');
+
+        if ($request->hasFile('image')) {
+            $image_name = $news->content->id . '.' . $request->file('image')->extension();
+
+            if(!empty($news->image)){
+                Storage::delete('/public/img/news/' . $news->image);
             }
+
+            $request->file('image')->storeAs('/public/img/news/', $image_name);
+            $news->image = $image_name;
+        }
+
+        DB::transaction(function () use ($news) {
             $news->content->save();
             $news->save();
+        });
 
-            preg_match_all('/#(\w+)/', $request->input('description'), $hashtags);
-            
-            foreach ($hashtags[1] as $tag_text) {
-                $tag = Tag::firstOrCreate(['name' => $tag_text]);
-                $tag->news()->syncWithoutDetaching([$id]);
-            }
-            Session::flash('message', 'Successfully updated post!');
-        } catch (Exception $e) {
-            Session::flash('message', 'Error on update post!');
+        preg_match_all('/#(\w+)/', $request->input('body'), $hashtags);
+        
+        // clear all tags from news
+        $news->tags()->sync([]);
+        
+        foreach ($hashtags[1] as $tag_text) {
+            $tag = Tag::firstOrCreate(['name' => $tag_text]);
+            $tag->news()->syncWithoutDetaching([$id]);
         }
 
 
-        return redirect('/news/' . $id);
+
+        return redirect('/news/' . $id)->with('success', 'Your post was successfully updated.');
     }
 
     public function delete(Request $request, $id)
     {
-        try {
-            $news = News::findOrFail($id);
-            $this->authorize('delete', $news);
-            $news->delete();
-            Session::flash('message', 'Successfully deleted post!');
-        } catch (Exception $e) {
-            Session::flash('message', 'Error on delete post!');
+        $validator = $request->validate([
+            'password' => 'required|string',
+        ]);
 
-            return redirect('/news/' . $id);
+        $news = News::findOrFail($id);
+        $this->authorize('delete', $news);
+
+
+        if (! Hash::check($request->password, $request->user()->password)) {
+            return back()->withErrors([
+                'password' => ['The provided password does not match our records.']
+            ]);
         }
 
-        return redirect('/');
+        if(!empty($news->image)){
+            Storage::delete('/public/img/news/' . $news->image);
+        }
+
+        $news->content->delete();
+
+        return redirect('/')->with('success', 'Your post was successfully deleted.');
     }
 }

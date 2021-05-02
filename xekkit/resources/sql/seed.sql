@@ -642,14 +642,14 @@ CREATE OR REPLACE FUNCTION news_search_update() RETURNS TRIGGER AS
     BEGIN
         IF TG_OP = 'INSERT' THEN
             NEW.search = 
-                setweight(to_tsvector(coalesce(NEW.title, '')), 'A') || 
-                setweight(to_tsvector(coalesce(news_body, '')), 'B');
+                setweight(to_tsvector(coalesce(NEW.title, '')), 'B') || 
+                setweight(to_tsvector(coalesce(news_body, '')), 'C');
         END IF;
         IF TG_OP = 'UPDATE' THEN
             IF NEW.title <> OLD.title THEN
                 NEW.search = 
-                    setweight(to_tsvector(coalesce(NEW.title, '')), 'A') || 
-                    setweight(to_tsvector(coalesce(news_body, '')), 'B');
+                    setweight(to_tsvector(coalesce(NEW.title, '')), 'B') || 
+                    setweight(to_tsvector(coalesce(news_body, '')), 'C');
             END IF;
         END IF;
         
@@ -676,8 +676,8 @@ CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
             IF NEW.body <> OLD.body THEN
                 UPDATE news
                 SET search = 
-                        setweight(to_tsvector(coalesce(news_title, '')), 'A') || 
-                        setweight(to_tsvector(coalesce(NEW.body, '')), 'B')
+                        setweight(to_tsvector(coalesce(news_title, '')), 'B') || 
+                        setweight(to_tsvector(coalesce(NEW.body, '')), 'C')
                 WHERE news.content_id = new.id;
             END IF;
         END IF;
