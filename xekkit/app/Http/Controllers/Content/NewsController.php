@@ -28,17 +28,18 @@ class NewsController extends Controller
      */
     public function show(Request $request, $id)
     {
+        
         $news = News::findOrFail($id);
+        $this->authorize('view', $news);
         $author = User::findOrFail($news->content->author_id);
-        if ($author->is_deleted || $author->is_banned) {
-            throw new NotFoundHttpException();
-        }
 
         return view('pages.news', ['news' => $news, 'author' => $author]);
     }
 
     public function create(Request $request)
     {
+        $this->authorize('create', News::class);
+
         $validator = $request->validate([
             'title' => 'required|string',
             'body' => 'required|string',
@@ -54,9 +55,7 @@ class NewsController extends Controller
             // create content
             $content = new Content;
 
-            // change end of line to <br>
-            $endOfLine = ["\r\n", "\r", "\n"];
-            $content->body = str_replace($endOfLine, "<br>", $request->input('body'));
+            $content->body = $request->input('body');
             $content->author_id = Auth::user()->id;
 
             $content->save();

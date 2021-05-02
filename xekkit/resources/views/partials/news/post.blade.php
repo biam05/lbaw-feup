@@ -38,7 +38,7 @@
             <img src={{ asset('storage/img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
         @endisset
 
-        <p class="card-text mt-3">{!! $news->content->body !!}</p>
+        <p class="card-text mt-3">{!! nl2br(e($news->content->body)) !!}</p>
     </div>
     <footer class="card-footer text-muted">
         <div class="row">

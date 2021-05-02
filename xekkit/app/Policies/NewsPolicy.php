@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\Response;
 
 class NewsPolicy
 {
@@ -19,7 +19,7 @@ class NewsPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return !($user->is_banned || $user->is_deleted);
     }
 
     /**
@@ -31,7 +31,9 @@ class NewsPolicy
      */
     public function view(User $user, News $news)
     {
-        //
+        if($news->content->author->is_banned || $news->content->author->is_deleted)
+            return Response::deny('The user that created this post is either banned or deleted.');
+        else return !($user->is_banned || $user->is_deleted);
     }
 
     /**
@@ -42,7 +44,7 @@ class NewsPolicy
      */
     public function create(User $user)
     {
-        
+        return !($user->is_banned || $user->is_deleted);
     }
 
     /**
@@ -54,7 +56,7 @@ class NewsPolicy
      */
     public function update(User $user, News $news)
     {
-        return $user->id == $news->content->author_id;
+        return $user->id === $news->content->author_id && !($user->is_banned || $user->is_deleted);
     }
 
     /**
@@ -67,7 +69,7 @@ class NewsPolicy
     public function delete(User $user, News $news)
     {
         // Only a news author can delete it
-        return $user->id == $news->content->author_id;
+        return $user->id === $news->content->author_id && !($user->is_banned || $user->is_deleted);
     }
 
 }
