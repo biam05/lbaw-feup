@@ -7,7 +7,7 @@ info:
 
 servers:
   - description: 'Production server'
-    url: http://lbaw2114-prod.fe.up.pt
+    url: http://lbaw2114.lbaw-prod.fe.up.pt/
 
 externalDocs:
   description: Find more info here.

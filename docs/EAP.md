@@ -54,7 +54,7 @@ info:
 
 servers:
   - description: 'Production server'
-    url: http://lbaw2114-prod.fe.up.pt
+    url: http://lbaw2114.lbaw-prod.fe.up.pt/
 
 externalDocs:
   description: Find more info here.
@@ -1694,7 +1694,7 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 
 ### 2. Prototype
 
-The prototype is available at ***INSERT LINK TO PRODUCTION HERE***
+The prototype is available at http://lbaw2114.lbaw-prod.fe.up.pt/
 
 Credentials:
 - **Moderator**: 
@@ -1707,7 +1707,7 @@ Credentials:
   - Username: joao
   - Password: test1234
   
-The code is available at ***INSERT LINK TO GITLAB-PROTOTYPE HERE***
+The code is available at https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/tree/master/xekkit
 
 
 ---
