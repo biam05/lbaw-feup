@@ -1721,7 +1721,7 @@ Changes made to the first submission (03/05/2021):
 ***
 GROUP2114, 03/05/2021
  
- - Beatriz Mendes, up201806551@fe.up.pt 
+ - Beatriz Mendes, up201806551@fe.up.pt (A7 editor)
  - Guilherme Calassi, up201800157@fe.up.pt
- - Luís André Assunção, up201806140@fe.up.pt 
+ - Luís André Assunção, up201806140@fe.up.pt (A8 editor)
  - Ricardo Cardoso, up201604686@fe.up.pt
