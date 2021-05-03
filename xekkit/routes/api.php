@@ -24,10 +24,10 @@ Route::get('load-posts-search', [SearchController::class, 'loadPostsSearch']);
 
 Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
 
+Route::post('/vote', [ContentController::class, 'toggleVote']);
+
 // Route::get('load-posts', [SearchController::class, 'loadPosts']);
 
 // Route::get('load-users', [SearchController::class, 'loadUsers']);
 
 // Route::get('load-comments', [CommentController::class, 'loadComments']);
-
-Route::middleware('auth:api')->post('/vote', [ContentController::class, 'toggleVote']);
