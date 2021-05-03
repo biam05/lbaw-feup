@@ -60,4 +60,4 @@ draw_nav_bar($logged);
 draw_footer();
 ?>
 
-<script defer src="../js/search.js"></script>
+

@@ -9,8 +9,19 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    // Don't add create and update timestamps in database.
-    public $timestamps  = false;
+    /**
+     * The table's name.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +29,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 
+        'email', 
+        'password',
+        'birthdate',
+        'gender',
     ];
 
     /**
@@ -31,9 +46,53 @@ class User extends Authenticatable
     ];
 
     /**
-     * The cards this user owns.
+     * The contents the users has voted on.
      */
-     public function cards() {
-      return $this->hasMany('App\Models\Card');
+    public function voteOn() {
+        return $this->hasMany(Content::class, 'vote', 'users_id', 'content_id')->withPivot('value');
     }
+
+    /**
+     * The users I follow.
+     */
+    public function following() {
+        return $this->hasMany(User::class, 'follow', 'follower_id', 'users_id');
+    }
+
+    /**
+     * The users that follow me.
+     */
+    public function followedBy() {
+        return $this->hasMany(User::class, 'follow', 'users_id', 'follower_id');
+    }
+
+    /**
+     * The bans I have.
+     */
+    public function bans() {
+        return $this->hasMany(Ban::class, 'users_id');
+    }
+
+    /**
+     * The bans I have moderated.
+     */
+    public function moderatedBans() {
+        return $this->hasMany(Ban::class, 'moderator_id');
+    }
+
+    /**
+     * The requests I have made.
+     */
+    public function requests() {
+        return $this->hasMany(Request::class, 'users_id');
+    }
+
+    /**
+     * The content I have made.
+     */
+    public function contents() {
+        return $this->hasMany(Content::class, 'author_id');
+    }
+
+
 }

@@ -12,7 +12,7 @@ This specification adheres to the OpenAPI standard using YAML.
 
 ### 1. Overview
 
-The overview of the web application to implement will be presented in the *Overview* section. Here the modules will be identifier and briefly described. The web resources will be associated with each module and will be described in the individual documentation of each module.
+The overview of the web application to implement will be presented in this section. Here the modules will be identified and briefly described. The web resources will be associated with each module and will be described in the individual documentation of each module.
 
 | Modules | Description |
 |-------- | ----------- |
@@ -41,8 +41,7 @@ This section defines the permissions used in the modules to establish the condit
 
 This section includes the completr API specification in OpenAPI (YAML).
 
-OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/master/xekkit/xekkit-api.yaml
-
+OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/a8/xekkit/a7_openapi.yaml
 OpenAPI Swagger: https://app.swaggerhub.com/apis/lbaw2114/lbaw-xekkit_web_api/1.0
 
 ```yaml
@@ -74,7 +73,7 @@ tags:
 paths:
   # -------------------- M01 --------------------  
 
-  /login:
+  /login/:
     get:
       operationId: R101
       summary: 'R101: Login Form'
@@ -84,6 +83,7 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI07](hhttps://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui07:-log-in)'
+  
     post:
       operationId: R102
       summary: 'R102: Login Action'
@@ -107,21 +107,22 @@ paths:
                 - inputPassword
 
       responses:
-        '302':
-          description: 'Redirect after processing the login credentials.'
+        '303':
+          description: 'Redirect after login.'
           headers:
             Location:
               schema:
                 type: string
               examples:
-                302Success:
-                  description: 'Successful authentication. Redirect to user profile.'
+                303Success:
+                  description: 'Ok. Redirect to [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)'
                   value: '/'
-                302Error:
+                303Error:
                   description: 'Failed authentication. Redirect to login form.'
-                  value: '/login'
+                  value: '/login/'
+                
 
-  /logout:
+  /logout/:
     post:
       operationId: R103
       summary: 'R103: Logout Action'
@@ -130,32 +131,25 @@ paths:
         - 'M01: Authentication and Individual Profile'
 
       responses:
-        '302':
+        '303':
           description: 'Redirect after processing the logout.'
           headers:
             Location:
               schema:
                 type: string
               examples:
-                302Success:
-                  description: 'Successful logout. Redirect to home page.'
-                  value: '/'                            
-                                
-  /my-profile/password-recovery:
-    get:
-      operationId: R104
-      summary: 'R104: Password Recovery Page'
-      description: 'Password recovery page. Access: PUB'
-      tags:
-        - 'M01: Authentication and Individual Profile'
-      responses:
-        '200':
-          description: 'Page to recovery password.'
-              
+                303Success:
+                  description: 'Ok. Redirect to [US01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui01-main).'
+                  value: '/'
+                303Error:
+                  description: 'Failed logout. Redirect to main page.'
+                  value: '/'
 
+                                
+  /password-recovery/:
     post:
-      operationId: R105
-      summary: 'R105: Password Recovery Action'
+      operationId: R104
+      summary: 'R104: Password Recovery Action'
       description: 'Password recovery action. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -172,21 +166,25 @@ paths:
                 - inputEmail
 
       responses:
-        '302':
-          description: 'Redirect after processing the request.'
+        '303':
+          description: 'Successful request password recorvery. Redirect to login.'
           headers:
             Location:
               schema:
                 type: string
               examples:
-                302Success:
-                  description: 'Successful request password recorvery. Redirect to home page.'
-                  value: '/login'
+                303Success:
+                  description: 'Ok. Redirect to [US07](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui07-log-in).'
+                  value: '/login/'
+                303Error:
+                  description: 'Failed password recovery. Redirect to login.'
+                  value: '/login/'
                   
-  /register:
+                  
+  /register/:
     get:
-      operationId: R106
-      summary: 'R106: Register Form'
+      operationId: R105
+      summary: 'R105: See Register Form'
       description: 'Provide new user registration form. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -195,8 +193,8 @@ paths:
           description: 'Ok. Show [UI08](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui08:-sign-Up)'
 
     post:
-      operationId: R107
-      summary: 'R107: Register Action'
+      operationId: R106
+      summary: 'R106: Register Action'
       description: 'Processes the new user registration form submission. Access: PUB'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -214,8 +212,6 @@ paths:
                   type: string
                 inputPassword:
                   type: string
-                inputConfirmPassword:
-                  type: string
                 inputBirthDate:
                   type: string
                 inputGender:
@@ -224,48 +220,29 @@ paths:
                 - inputUsername
                 - inputEmail
                 - inputPassword
-                - inputConfirmPassword
                 - inputBirthDate
                 - inputGender
 
       responses:
-        '302':
-          description: 'Redirect after processing the new user information.'
+        '303':
+          description: 'Redirect after register new user.'
           headers:
             Location:
               schema:
                 type: string
               examples:
-                302Success:
-                  description: 'Successful authentication. Redirect to user profile.'
+                303Success:
+                  description: 'Ok. Redirect to [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in)'
                   value: '/'
-                302Failure:
-                  description: 'Failed authentication. Redirect to login form.'
-                  value: '/login'
+                303Error:
+                  description: 'Failed register. Redirect to register.'
+                  value: '/register/'
 
-  /my-profile/{username}:
+
+  /users/{username}/edit/:
     get:
-      operationId: R108
-      summary: 'R108: View user profile'
-      description: 'Show the individual user profile. Access: USR'
-      tags:
-        - 'M01: Authentication and Individual Profile'
-
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-
-      responses:
-        '200':
-          description: 'Ok. Show [UI12](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui12-my-profile)'
-
-  /my-profile/edit/{username}:
-    get:
-      operationId: R109'
-      summary: 'R109: Edit user profile'
+      operationId: R107'
+      summary: 'R107: Edit User Profile Form'
       description: 'Form to edit the individual user profile. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -280,63 +257,68 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
-
-    post:
-        operationId: R110
-        summary: 'R110: Edit Profile Action'
-        description: 'Processes the edit user form submission. Access: USR'
-        tags:
-          - 'M01: Authentication and Individual Profile'
-          
-        parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-
-        requestBody:
-          required: true
           content:
-            application/x-www-form-urlencoded:
+            application/json:
               schema:
-                type: object
-                properties:
-                  username:
-                    type: string
-                  email:
-                    type: string
-                  birth_date:
-                    type: string
-                  gender:
-                    type: string
-                  description:
-                    type: string
-                required:
-                  - username
-                  - email
-                  - birth_date
-                  - gender
+                $ref: '#/components/schemas/UserEdit'
 
-        responses:
-          '302':
-            description: 'Redirect after processing the edit user information.'
-            headers:
-              Location:
-                schema:
+    patch:
+      operationId: R108
+      summary: 'R108: Edit User Profile Action'
+      description: 'Processes the edit user form submission. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+        
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
                   type: string
-                examples:
-                  302Success:
-                    description: 'Successful edit profile. Redirect to user profile.'
-                    value: '/my-profile'
-                  302Failure:
-                    description: 'Failed edit profile. Redirect to user profile.'
-                    value: '/my-profile'
+                email:
+                  type: string
+                birth_date:
+                  type: string
+                gender:
+                  type: string
+                description:
+                  type: string
+              required:
+                - username
+                - email
+                - birth_date
+                - gender
 
-  /my-profile/{username}/change-password:
-    post:
-      operationId: R111
-      summary: 'R111: Change Password Action'
+      responses:
+        '303':
+          description: 'Redirect after edit user action.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+                  value: '/users/{username}/edit/'
+                303Error:
+                  description: 'Failed edition. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+  
+
+  /users/{username}/edit/change-password/:
+    patch:
+      operationId: R109
+      summary: 'R109: Change Password Action'
       description: 'Processes the change user password form submission. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -358,44 +340,36 @@ paths:
                 old_password:
                   type: string
                   format: password
-                confirm_password:
-                  type: string
-                  format: password
                 new_password:
                   type: string
                   format: password
               required:
                 - old_password
-                - confirm_password
                 - new_password
-
+      
       responses:
-        '302':
-          description: 'Redirect to edit profile page after proessing.'
+        '303':
+          description: 'Redirect after change password action.'
           headers:
             Location:
               schema:
                 type: string
               examples:
-                302Success:
-                  description: 'Successful change password. Redirect to usert edit profile'
-                  value: '/my-profile/edit'
-                302Failure:
-                  description: 'Failed to change password. Redirect to user edit profile'
-                  value: '/my-profile/edit'
-  
-  # -------------------- M02 -------------------- 
+                303Success:
+                  description: 'Ok. Redirect to [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+                  value: '/users/{username}/edit/'
+                303Error:
+                  description: 'Failed to change password. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
 
-  /news/create/{username}:
-    post:
-      operationId: R201
-      summary: 'R201: Create news action'
-      description: 'Create news content. Access: USR, MOD'
+          
+  /users/{username}/edit/remove-partner/:
+    patch:
+      operationId: R110
+      summary: 'R110: Remove partner status'
+      description: 'Remove partner status. Access: USR'
       tags:
-        - 'M02: Create/Edit Content'
-      responses:
-        '302':
-          description: 'Successful news creation Redirect to News content'
+        - 'M01: Authentication and Individual Profile'
       
       parameters:
         - in: path
@@ -403,11 +377,68 @@ paths:
           schema:
             type: string
           required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after remove partner action.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui13-edit-profile)'
+                  value: '/users/{username}/edit/'
+                303Error:
+                  description: 'Failed to remove partner. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+
+          
+  /users/{username}/edit/delete/:
+    patch:
+      operationId: R111
+      summary: 'R110: Delete user'
+      description: 'Delete user. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after delete user action.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [US01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui01-main).'
+                  value: '/'
+                303Error:
+                  description: 'Failed to delete user. Redirect to edit page.'
+                  value: '/users/{username}/edit/'
+
+  
+  # -------------------- M02 -------------------- 
+
+  /news/create/:
+    post:
+      operationId: R201
+      summary: 'R201: Create news action'
+      description: 'Create news content. Access: USR'
+      tags:
+        - 'M02: Create/Edit Content'
 
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -421,24 +452,30 @@ paths:
               required:
                 - title
                 - body
+                
+      responses:
+        '303':
+          description: 'Redirect after create news post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to created post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed to create news post. Redirect to main page [US02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in).'
+                  value: '/'
+                
 
-  /comment/create/{username}:
+  /comment/create/:
     post:
       operationId: R202
       summary: 'R202: Create comment action'
       description: 'Create comment. Access: USR, MOD'
       tags:
         - 'M02: Create/Edit Content'
-      responses:
-        '302':
-          description: 'Successful comment creation Redirect to news content'
-      
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
       
       requestBody:
         required: true
@@ -453,21 +490,33 @@ paths:
                   type: integer
               required:
                 - body 
+                
+      responses:
+        '303':
+          description: 'Redirect after create comment.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to commented post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed to create comment. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
 
-  /news/edit/{news_id}:
-    post:
+  /news/{id}/:
+    patch:
       operationId: R203
       summary: 'R203: Edit news action'
       description: 'Edit news content. Access: OWN'
       tags:
         - 'M02: Create/Edit Content'
-      responses:
-        '302':
-          description: 'Successful news EDITION. Redirect to News content'
       
       parameters:
         - in: path
-          name: news_id
+          name: id
           schema:
             type: integer
           required: true
@@ -485,27 +534,60 @@ paths:
                   type: string
                 image:
                   type: string
-                  format: binary
               required:
                 - body
-           
-  /comment/edit/{comment_id}:
-    post:
+                
+      responses:
+        '303':
+          description: 'Redirect after edit news post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to eddited post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+          
+    delete:
       operationId: R204
-      summary: 'R204: Edit comment action'
-      description: 'Edit Comment. Access: OWN'
+      summary: 'R204: Delete News action'
+      description: 'Delete News. Access: OWN'
       tags:
         - 'M02: Create/Edit Content'
-      responses:
-        '302':
-          description: 'Successful comment edition Redirect to news content'
-      
+        
       parameters:
         - in: path
-          name: comment_id
+          name: id
           schema:
             type: integer
           required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after delete news post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui02-main-logged-in).'
+                  value: '/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+           
+  /comment/:
+    patch:
+      operationId: R205
+      summary: 'R205: Edit comment action'
+      description: 'Edit Comment. Access: OWN'
+      tags:
+        - 'M02: Create/Edit Content'
       
       requestBody:
         required: true
@@ -514,46 +596,56 @@ paths:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
                 body:
                   type: string
-                reply_to_id:
-                  type: integer
               required:
                 - body 
-
-  /news/delete/{news_id}:
-    post:
-      operationId: R205
-      summary: 'R205: Delete News action'
-      description: 'Delete News. Access: OWN'
-      tags:
-        - 'M02: Create/Edit Content'
+  
       responses:
-        '302':
-          description: 'Successful news deletion. Redirect to homepage'
-      parameters:
-        - in: path
-          name: news_id
-          schema:
-            type: integer
-          required: true
+        '303':
+          description: 'Redirect after edit comment.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to commented post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
 
-  /comment/delete/{comment_id}:
-    post:
+    delete:
       operationId: R206
       summary: 'R206: Delete comment action'
       description: 'Delete Comment. Access: OWN'
       tags:
         - 'M02: Create/Edit Content'
-      responses:
-        '302':
-          description: 'Successful comment deletion. Redirect to homepage'
+      
       parameters:
-        - in: path
-          name: comment_id
+        - in: header
+          name: id
           schema:
             type: integer
-          required: true  
+          required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after delete comment.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
+                303Error:
+                  description: 'Failed. Redirect to post [US09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post).'
+                  value: '/news/{id}/'
 
   # -------------------- M03 -------------------- 
 
@@ -564,162 +656,515 @@ paths:
       description: 'Provide home page. Access: PUB, USR, MOD'
       tags:
         - 'M03: See Users/Content'
+        
       responses:
         '200':
-            description: 'Ok. IF PUB: Show [UI01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui01:-main); ELSE: Show [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui02:-main-logged-in)'
+          description: 'Ok. IF PUB: Show [UI01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui01:-main); ELSE: Show [UI02](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui02:-main-logged-in)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trending_news:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrendingPost'
+                  last_news:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+                  explore:
+                    type: array
+                    items:
+                      type: string
 
-  /news/{news_id}:
+  /news/{id}:
     get:
       operationId: R302
       summary: 'R302: View a Specific News Post.'
       description: 'Provide Specific News Post. Access: PUB, USR, OWN, MOD'
       tags:
         - 'M03: See Users/Content'
+        
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          
       responses:
         '200':
           description: 'Ok. Show [UI09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui09-post)'
-      parameters:
-        - in: path
-          name: news_id
-          schema:
-            type: integer
-          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: 'News post not found.'
 
-  /profile/{username}:
+  /users/{username}:
     get:
       operationId: R303
-      summary: "R303: View a User's profile."
+      summary: "R303: View a User's profile"
       description: "Provide a User's Profile. Access: PUB, USR, MOD"
       tags:
         - 'M03: See Users/Content'
+        
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          
       responses:
         '200':
           description: 'Ok. Show [UI11](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui11-third-party-profile)'
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  trending_news:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrendingPost'
+                  last_news:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+                  following:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserPreview'
+        '404':
+          description: 'User not found.'
   
-  /vote/upvote/{content_id}:         
-    post:
+  /api/load-posts:
+    get:
       operationId: R304
-      summary: 'R304: Upvote Content'
-      description: 'Upvote content. Access: USR, MOD'
+      summary: 'R304: Load More Posts'
+      description: 'Load More Posts. Access: PUB, USR'
       tags:
         - 'M03: See Users/Content'
-      responses:
-        '302':
-           description: 'Successfully upvoted content. Redirect to news page'
       parameters:
-        - in: path
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: "Return posts for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+        '400':
+          description: "Error in parameters"
+                      
+  /api/load-users:
+    get:
+      operationId: R306
+      summary: 'R306: Load More Users'
+      description: 'Load More Users. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: "Return users for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          description: "Error in parameters"
+      
+  /api/load-comments:
+    get:
+      operationId: R308
+      summary: 'R308: Load More Comments'
+      description: 'Load More Comments. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
           name: content_id
           schema:
             type: integer
           required: true
-
-  /vote/downvote/{content_id}:         
+      responses:
+        '200':
+          description: "Return comments for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+        '400':
+          description: "Error in parameters"
+  /api/vote/:         
     post:
-      operationId: R305
-      summary: 'R305: Downvote Content'
-      description: 'Downvote content. Access: USR, MOD'
+      operationId: R309
+      summary: 'R309: Upvote/Downvote Content'
+      description: 'Upvote/Downvote content. Access: USR'
       tags:
         - 'M03: See Users/Content'
-      responses:
-        '302':
-           description: 'Successfully downvoted content. Redirect to news page'
+        
       parameters:
-        - in: path
+        - in: header
           name: content_id
           schema:
             type: integer
           required: true
+        - in: header
+          name: upvote
+          schema:
+            type: boolean
+          required: true
+                
+      responses:
+        '201':
+          description: 'Successfully voted on content.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to vote.'
+          
+    delete:
+      operationId: R310
+      summary: 'R310: Delete Vote on Content'
+      description: 'Delete Vote on Content. Access: USR'
+      tags:
+        - 'M03: See Users/Content'
+
+      parameters:
+        - in: header
+          name: content_id
+          schema:
+            type: integer
+          required: true
+          
+      responses:
+        '204':
+          description: 'Successfully removed vote on content.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to delete vote.'
   
   # -------------------- M04 -------------------- 
  
-  /search/{search_string}:
+  /search/:
     get:
       operationId: R401
-      summary: 'R401: Search News and Users.'
+      summary: 'R401: Search News and Users'
       description: 'Provide News and Users Searched. Access: PUB, USR, OWN, MOD'
       tags:
         - 'M04: Search Users/Content'
+        
       parameters:
-        - in: path
-          name: search_string
+        - in: query
+          name: search
           schema:
             type: string
-          required: true
+          required: false
+          allowReserved: true
+          
       responses:
         '200':
           description: "Ok. Show [UI10](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui10-search)"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserPreview'
+
+                    
 
   # -------------------- M05 -------------------- 
 
-  /notifications/{username}:
+  /notifications/:
     get:
       operationId: R501
-      summary: "R501: View User's Notification."
-      description: "Provide User's Notifications. Access: OWN, MOD"
+      summary: "R501: View User's Notification"
+      description: "Provide User's Notifications. Access: USR, MOD"
       tags:
-        - 'M05: Notifications'
+        - 'M05: Notifications' 
+        
       responses:
         '200':
-          description: 'Ok. Show [UI15](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui15-notifications)'
+          description: 'Ok. Show [UI15](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui15-notifications). If MOD also show [UI16](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui16-moderator-options)'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  follows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FollowNotification'
+                  votes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VoteNotification'
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentNotification'
+                  moderator:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ModeratorNotification'
+                    default: []
+        '401':
+          description: 'Login to see notifications.'
+          
+    patch:
+      operationId: R502
+      summary: "R502: Mark Notification as seen"
+      description: "Mark Notification as seen. Access: USR, MOD"
+      tags:
+        - 'M05: Notifications'
+        
       parameters:
-        - in: path
-          name: username
+        - in: header
+          name: notification
           schema:
-            type: string
+            type: object
+            properties:
+              notification_type:
+                type: string
+              id1:
+                type: integer
+              id2:
+                type: integer
+            required:
+              - notification_type
+              - id1
           required: true
+
+        
+      responses: 
+        '201':
+          description: 'Notification marked as seen.'
+        '404':
+          description: 'Notification not found.'
+          
+    delete:
+      operationId: R503
+      summary: "R503: Delete Notification"
+      description: "Dark Notification."
+      tags:
+        - 'M05: Notifications'
+        
+      parameters:
+        - in: header
+          name: notification
+          schema:
+            type: object
+            properties:
+              notification_type:
+                type: string
+              id1:
+                type: integer
+              id2:
+                type: integer
+            required:
+              - notification_type
+              - id1
+          required: true
+        
+      responses: 
+        '201':
+          description: 'Notification deleted.'
+        '404':
+          description: 'Notification not found.'
+  
   
   # -------------------- M06 --------------------
   
-  /request/report/content/{content_id}:         
+  /comment/report/:         
     post:
       operationId: R601
-      summary: "R601: Report content action"
-      description: 'Report content. Access: USR, MOD'
+      summary: "R601: Report comment action"
+      description: 'Report comment. Access: USR'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '302':
-           description: 'Successfully reported content. Redirect to news page.'
+        
       parameters:
-        - in: path
-          name: content_id
+        - in: header
+          name: id
           schema:
             type: integer
           required: true
-
-  /request/report/user/{user_id}:         
+        
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+          
+      responses:
+        '201':
+          description: 'Report created.'
+        '401':
+          description: 'Login to report.'
+          
+  /news/{id}/report/:         
     post:
       operationId: R602
-      summary: "R602: Report User action"
+      summary: "R602: Report news action"
+      description: 'Report news. Access: USR'
+      tags:
+        - 'M06: Create Requests'
+        
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+          
+      responses:
+        '201':
+          description: 'Report created.'
+        '401':
+          description: 'Login to report.'
+
+  /users/{username}/report/:         
+    post:
+      operationId: R603
+      summary: "R603: Report User action"
       description: 'Report User. Access: USR, MOD'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '302':
-           description: 'Successfully reported user. Redirect to user page.'
+
       parameters:
         - in: path
-          name: user_id
+          name: username
           schema:
             type: integer
           required: true
+          
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+                - body 
+          
+      responses:
+        '201':
+          description: 'Report created.'
+        '401':
+          description: 'Login to report.'
   
-  /request/partner_request/{username}:
+  /users/{username}/partner_request/:
     post:
-      operationId: R603
-      summary: "R603: Create partner request action"
+      operationId: R604
+      summary: "R604: Create partner request action"
       description: 'Create a partner request. Access: USR, MOD'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '302':
-          description: 'Successful partner request creation Redirect to User profile'
       
       parameters:
         - in: path
@@ -737,20 +1182,22 @@ paths:
               properties:
                 reason:
                   type: string
-
               required:
                 - reason
+                
+      responses:
+        '201':
+          description: 'Partner request created.'
+        '401':
+          description: 'Login to create a partner request.'
 
-  /request/unban_appeal/{username}:
+  /request/{username}/unban_appeal/:
     post:
-      operationId: R604
-      summary: "R604: Create unban appeal action"
+      operationId: R605
+      summary: "R605: Create unban appeal action"
       description: 'Create unban appeal. Access: BAN'
       tags:
         - 'M06: Create Requests'
-      responses:
-        '302':
-          description: 'Successful unban appeal creation Redirect to User profile'
       
       parameters:
         - in: path
@@ -768,69 +1215,71 @@ paths:
               properties:
                 reason:
                   type: string
-
               required:
                 - reason
+      
+      responses:
+        '201':
+          description: 'Unban appeal created.'
+        '401':
+          description: 'Login to create an unban appeal.'
   
   # -------------------- M07 --------------------
 
-  /request/view/{username}:
-    get:
-      operationId: R701
-      summary: "R701: View Requests."
-      description: "Provide Requests. Access: MOD"
-      tags:
-        - 'M07: Moderator Administration'
-      responses:
-        '200':
-          description: 'Ok. Show [UI16](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/wikis/er#ui16-moderator-options)'
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-
-  /request/accept/{request_id}:
-    post:
+  /request/{id}/accept/:
+    patch:
       operationId: R702
-      summary: "R702: Accept Request."
+      summary: "R702: Accept Request"
       description: 'Accept Request. Access: MOD'
       tags:
         - 'M07: Moderator Administration'
-      responses:
-        '302':
-           description: 'Successfully accepted request. Redirect to requests page'
+        
       parameters:
         - in: path
-          name: request_id
+          name: id
           schema:
             type: integer
           required: true
+        - in: header
+          name: ban_time
+          schema:
+            type: integer
+          required: false
+          
+      responses:
+        '201':
+          description: 'Request accepted.'
+        '401':
+          description: 'You are not a moderator.'
 
-  /request/reject/{request_id}:
-    post:
+  /request/{id}/reject/:
+    patch:
       operationId: R703
       summary: "R703: Accept Request"
       description: 'Accept Request. Access: MOD'
       tags:
         - 'M07: Moderator Administration'
-      responses:
-        '302':
-           description: 'Successfully rejected request. Redirect to requests page'
+      
       parameters:
         - in: path
-          name: request_id
+          name: id
           schema:
             type: integer
           required: true
+          
+      responses:
+        '201':
+          description: 'Request rejected.'
+        '401':
+          description: 'You are not a moderator.'
+          
 
   # -------------------- M08 --------------------
 
-  /faq:
+  /faq/:
     get:
       operationId: R801
-      summary: 'R801: FAQ'
+      summary: 'R801: See FAQ'
       description: 'Frequent asked questions page. Access: PUB, USR, MOD'
       tags:
         - 'M08: Static Pages'
@@ -839,11 +1288,128 @@ paths:
         '200':
           description: 'Ok. IF PUB, USR Show [UI05](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui05-faq)
                             IF MOD Show [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator'
-
-  /about:
-    get:
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faq'
+                      
+    post:
       operationId: R802
-      summary: 'R802: About'
+      summary: 'R802: Create FAQ'
+      description: 'Creat frequent asked question. Access: MOD'
+      tags:
+        - 'M08: Static Pages'
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - question
+                - answer
+              properties:
+                id:
+                  type: integer
+                question:
+                  type: string
+                answer:
+                  type: string
+                  
+      responses:
+        '303':
+          description: 'Redirect after create faq.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                303Error:
+                  description: 'Failed to create faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+          
+    patch:
+      operationId: R803
+      summary: 'R802: Edit FAQ'
+      description: 'Edit frequent asked question. Access: MOD'
+      tags:
+        - 'M08: Static Pages'
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - question
+                - answer
+              properties:
+                id:
+                  type: integer
+                question:
+                  type: string
+                answer:
+                  type: string
+                  
+      responses:
+        '303':
+          description: 'Redirect after edit faq.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                303Error:
+                  description: 'Failed to edit faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                  
+    delete:
+      operationId: R804
+      summary: 'R803: Delete FAQ'
+      description: 'Delete frequently asked question. Access: MOD'
+      tags:
+        - 'M08: Static Pages'
+          
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          required: true
+          
+      responses:
+        '303':
+          description: 'Redirect after delete faq.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                303Success:
+                  description: 'Ok. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                303Error:
+                  description: 'Failed to delete faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
+                  value: '/faq/'
+                
+    
+
+  /about/:
+    get:
+      operationId: R805
+      summary: 'R804: About'
       description: 'About page. Access: PUB, USR, MOD'
       tags:
         - 'M08: Static Pages'
@@ -851,8 +1417,225 @@ paths:
       responses:
         '200':
           description: 'Ok. Show [UI04](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui04-about)'
+          
+          
+# -------------------- Components --------------------
+  
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        image:
+          type: string
+        nr_votes:
+          type: integer
+        nr_comments:
+          type: integer
+        body:
+          type: string
+        date:
+          type: string
+        author:
+          type: string
+        partner:
+          type: boolean
+        deleted:
+          type: boolean
+          default: false
+        banned:
+          type: boolean
+          default: false
+        tags:
+          type: array
+          items:
+            type: string
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          default: []
+          
+    TrendingPost:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        image:
+          type: string
+        date:
+          type: string
+        author:
+          type: string
+        partner:
+          type: boolean
 
+
+    UserPreview:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        partner:
+          type: boolean
+        photo:
+          type: string
+        reputation:
+          type: string
+    
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        description:
+          type: string
+        photo:
+          type: string
+        deleted:
+          type: boolean
+        banned:
+          type: boolean
+        reputation:
+          type: integer
+        partner:
+          type: boolean
+        moderator:
+          type: boolean
+    
+    UserEdit:
+      type: object
+      properties:
+        username:
+          type: string
+        description:
+          type: string
+        photo:
+          type: string
+        deleted:
+          type: boolean
+        banned:
+          type: boolean
+        reputation:
+          type: integer
+        partner:
+          type: boolean
+        moderator:
+          type: boolean
+        email:
+          type: string
+        birthdate:
+          type: string
+        gender:
+          type: string
+          
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        body:
+          type: string
+        date:
+          type: string
+        nr_votes:
+          type: integer
+        username:
+          type: string
+        partner:
+          type: boolean
+        deleted:
+          type: boolean
+        banned:
+          type: boolean
+        reply_to:
+          type: integer
+        
+    FollowNotification:
+      type: object
+      properties:
+        follower_id:
+          type: string
+        is_new:
+          type: boolean
+        date:
+          type: string
+    
+    VoteNotification:
+      type: object
+      properties:
+        voter_id:
+          type: string
+        content_id:
+          type: integer
+        is_new:
+          type: boolean
+        date:
+          type: string
+
+      
+    CommentNotification:
+      type: object
+      properties:
+        comment_id:
+          type: integer
+        is_new:
+          type: boolean
+        date:
+          type: string
+
+
+    ModeratorNotification:
+      type: object
+      properties:
+        id:
+          type: integer
+        from_id:
+          type: string
+        moderator_id:
+          type: string
+        reason:
+          type: string
+        creation_date:
+          type: string
+        status:
+          type: string
+        revision_date:
+          type: string
+        to_users_id:
+          type: string
+        to_content_id:
+          type: integer
+        ban_id:
+          type: integer
+          
+    Faq:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        answer:
+          type: string
+          
+    Message:
+      type: object
+      properties:
+        status:
+          type: boolean
+        message:
+          type: string
 ```
+
 
 
 ---
@@ -860,40 +1643,71 @@ paths:
 
 ## A8: Vertical prototype
 
-> Brief presentation of the artefact goals.
+The Artificat A8 (Vertical Prototype) includes the implementation of some user stories and aims to validate the architecture presented.
 
 ### 1. Implemented Features
 
 #### 1.1. Implemented User Stories
 
-> Identify the user stories that were implemented in the prototype.  
-
 | User Story reference | Name                   | Priority                   | Description                   |
 | -------------------- | ---------------------- | -------------------------- | ----------------------------- |
-| US01                 | Name of the user story | Priority of the user story | Description of the user story |
-
-...
+| US04                 | Search Using Keywords | High | As an *User*, I want to search news and user profiles, so that I can find news/users related to the keywords used on the search. |
+| US07                 | View Specific Post | High | As an *User*, I want to be able to view one news, so that I can see all the information related to that post (commments, entire description, author, author reputation, etc.). |
+| US11                 | Sign-in | High | As a *Guest*, I want to authenticate into the system, so that I can access privileged information. |
+| US12                 | Register | High | As a *Guest*, I want to register into the system, so that I can authenticate myself into the system. |
+| US22                 | Create News | High | As an *Autheticated User*, I want to create News, so that it is publicly available. |
+| US27                 | Sign Out | High | As an *Authenticated User*, I want to sign out of the system, so that I can become a guest. |
+| US31                 | Edit New | High | As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated. |
+| US32                 | Remove New | High | As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available. |
 
 #### 1.2. Implemented Web Resources
 
-> Identify the web resources that were implemented in the prototype.  
-
-> Module M01: Module Name  
+**M01: Authentication and Individual Profile** 
 
 | Web Resource Reference | URL                            |
 | ---------------------- | ------------------------------ |
-| R01: Web resource name | URL to access the web resource |
+| R101: Login Form | GET /login/ |
+| R102: Login Action | POST /login/ |
+| R103: Logout Action | POST /logout/ |
+| R105: See Register Form | GET /register/ |
+| R106: Register Action | POST /register/ |
 
-...
+**M02: Create/Edit Content**
 
-> Module M02: Module Name  
+| Web Resource Reference | URL                            |
+| ---------------------- | ------------------------------ |
+| R201: Create news action | POST /news/create/ |
+| R203: Edit news action | PATCH /news/{id}/ |
+| R204: Delete news action | DELETE /news/{id}/ |
 
-...
+**M03: See Users/Content**
+
+| Web Resource Reference | URL                            |
+| ---------------------- | ------------------------------ |
+| R302: View a Specific News Post | GET /news/{id}/ |
+
+**M04: Search Users/Content**
+
+| Web Resource Reference | URL                            |
+| ---------------------- | ------------------------------ |
+| R401: Search News and Users | GET /search/ |
 
 ### 2. Prototype
 
-> URL of the prototype plus user credentials necessary to test all features.  
-> Link to the prototype source code in the group's git repository.  
+The prototype is available at ***INSERT LINK TO PRODUCTION HERE***
+
+Credentials:
+- **Moderator**: 
+  - Username: ricardo
+  - Password: test1234
+- **Partner**:
+  - Username: andre
+  - Password: test1234
+- **Authenticated User**:
+  - Username: joao
+  - Password: test1234
+  
+The code is available at ***INSERT LINK TO GITLAB-PROTOTYPE HERE***
 
 
 ---
@@ -901,13 +1715,13 @@ paths:
 
 ## Revision history
 
-Changes made to the first submission:
-1. Item 1
-1. ..
+Changes made to the first submission (03/05/2021):
+
 
 ***
-GROUP21gg, DD/MM/2021
+GROUP2114, 03/05/2021
  
-* Group member 1 name, email (Editor)
-* Group member 2 name, email
-* ...
+ - Beatriz Mendes, up201806551@fe.up.pt (A7 editor)
+ - Guilherme Calassi, up201800157@fe.up.pt
+ - Luís André Assunção, up201806140@fe.up.pt (A8 editor)
+ - Ricardo Cardoso, up201604686@fe.up.pt

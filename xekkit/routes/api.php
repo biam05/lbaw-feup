@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Content\CommentController;
+use App\Http\Controllers\Content\ContentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,4 +18,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', 'Auth\LoginController@getUser');
+Route::middleware('auth:api')->get('/user', [LoginController::class, 'getUser']);
+
+Route::get('load-posts-search', [SearchController::class, 'loadPostsSearch']);
+
+Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
+
+Route::post('/vote', [ContentController::class, 'toggleVote']);
+
+// Route::get('load-posts', [SearchController::class, 'loadPosts']);
+
+// Route::get('load-users', [SearchController::class, 'loadUsers']);
+
+// Route::get('load-comments', [CommentController::class, 'loadComments']);
