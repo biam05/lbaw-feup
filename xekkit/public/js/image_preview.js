@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    var fileInput = document.querySelectorAll('#fileToUpload');
+    var fileInput = [...document.getElementsByClassName('fileToUpload')];
 
     if (fileInput !== undefined && fileInput !== null) {
         fileInput.forEach(handler) 

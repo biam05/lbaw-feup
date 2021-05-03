@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse gap-4" id="navbarSupportedContent">
             <!-- Desktop search bar -->
             <form class="desktop d-flex flex-grow-1 justify-content-center" action="{{ route('search') }}" method="get">
-                <input class="form-control" style="max-width:300px;" type="search" name="search" placeholder="Search" aria-label="Search">
+                <input class="form-control" style="max-width:300px;" type="search" name="search" placeholder="Search" aria-label="Search" required>
                 <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
             </form>
             
@@ -83,7 +83,7 @@
     </div>
     <div id="search-bar-mobile" class="mobile search-form-mobile w-100 p-2">
         <form class="d-flex flex-grow-1 justify-content-center" action="{{ route('search') }}" method="get">
-            <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search">
+            <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search" required>
             <button class="btn btn-outline-success ms-1" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>

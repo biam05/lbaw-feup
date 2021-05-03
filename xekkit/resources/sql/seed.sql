@@ -724,6 +724,51 @@ CREATE TRIGGER cnews_search_update
     FOR EACH ROW
     EXECUTE PROCEDURE users_search_update();   
 
+
+--Trigger 17 - Update TSVECTOR (News)
+DROP FUNCTION IF EXISTS tags_insert_search_update() CASCADE;
+DROP TRIGGER IF EXISTS tags_insert_search_update ON content;
+
+CREATE OR REPLACE FUNCTION tags_insert_search_update() RETURNS TRIGGER AS
+    $BODY$
+    DECLARE tag TEXT = (SELECT name FROM tag WHERE tag.id = new.tag_id);
+    BEGIN
+        UPDATE news
+        SET search = search || setweight(to_tsvector(coalesce(tag, '')), 'A')
+        WHERE news.content_id = new.news_id;
+
+        RETURN NEW;
+    END  
+    $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER tags_insert_search_update
+    AFTER INSERT ON news_tag
+    FOR EACH ROW
+    EXECUTE PROCEDURE tags_insert_search_update();
+
+--Trigger 18 - Update TSVECTOR (News)
+DROP FUNCTION IF EXISTS tags_delete_search_update() CASCADE;
+DROP TRIGGER IF EXISTS tags_delete_search_update ON content;
+
+CREATE OR REPLACE FUNCTION tags_delete_search_update() RETURNS TRIGGER AS
+    $BODY$
+    DECLARE tag TEXT = (SELECT name FROM tag WHERE tag.id = old.tag_id);
+    BEGIN
+        UPDATE news
+        SET search = ts_delete(search, coalesce(tag, ''))
+        WHERE news.content_id = old.news_id;
+
+        RETURN old;
+    END  
+    $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER tags_delete_search_update
+    AFTER DELETE ON news_tag
+    FOR EACH ROW
+    EXECUTE PROCEDURE tags_delete_search_update();
+
 /**
  * POPULATE
  */
@@ -785,11 +830,25 @@ insert into users (username, email, password, description, photo, birthdate, gen
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'joao', 
+    'joao@xekkit.com', 
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'Sou o Joao.', 
+    null, 
+    '02/20/1995', 
+    'm', 
+    '1000', 
+    false, 
+    false, 
+    false, 
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
     'mpitchers0', 
     'lpriestner0@tiny.cc', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'morph distributed schemas', 
-    'png', 
+    null, 
     '02/20/1922', 
     'f', 
     '01532', 
@@ -803,7 +862,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'cjenyns1@meetup.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'optimize robust solutions', 
-    'png', 
+    null, 
     '05/06/1947', 
     'f', 
     '735', 
@@ -817,7 +876,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'sgiacovelli2@about.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'streamline virtual web-readiness', 
-    'png', 
+    null, 
     '04/11/1943', 
     'f', 
     '9917', 
@@ -831,7 +890,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'bferagh3@eepurl.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'unleash clicks-and-mortar platforms', 
-    'png', 
+    null, 
     '01/14/1919', 
     'n', 
     '64397', 
@@ -845,7 +904,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'abilbery4@acquirethisname.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'iterate back-end channels', 
-    'jpg', 
+    null, 
     '06/22/2006', 
     'm', 
     '2023', 
@@ -859,7 +918,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'eelles5@unesco.org', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'transition magnetic infrastructures', 
-    'png', 
+    null, 
     '10/08/2002', 
     'n', 
     '36', 
@@ -873,7 +932,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'nsherrington6@arizona.edu', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'mesh value-added infrastructures', 
-    'png', 
+    null, 
     '04/19/1917', 
     'f', 
     '34', 
@@ -887,7 +946,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'ncamier7@uol.com.br', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'engineer collaborative users', 
-    'png', 
+    null, 
     '01/20/1976', 
     'n', 
     '89', 
@@ -901,7 +960,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'showgego8@psu.edu', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'utilize seamless partnerships', 
-    'jpg', 
+    null, 
     '09/12/1932', 
     'n', 
     '335', 
@@ -915,7 +974,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'akittow9@1688.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'brand interactive partnerships', 
-    'png', 
+    null, 
     '08/31/1963', 
     'm', 
     '2', 
@@ -929,7 +988,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'ayoulla@dropbox.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'mesh revolutionary applications', 
-    'gif', 
+    null, 
     '08/17/1927', 
     'm', 
     '34685', 
@@ -943,7 +1002,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'lwanneb@blogtalkradio.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'enable revolutionary systems', 
-    'png', 
+    null, 
     '12/22/1965', 
     'f', 
     '24', 
@@ -957,7 +1016,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'ssamarthc@aol.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'engineer clicks-and-mortar relationships', 
-    'png', 
+    null, 
     '12/13/1931', 
     'f', 
     '109', 
@@ -971,7 +1030,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'nbrendeld@spiegel.de', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'envisioneer sexy users', 
-    'gif', 
+    null, 
     '07/01/1906', 
     'm', 
     '77', 
@@ -985,7 +1044,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'adrainse@goo.ne.jp', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'reintermediate open-source methodologies', 
-    'png', 
+    null, 
     '09/24/1979', 
     'm', 
     '78', 
@@ -999,7 +1058,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'mervinef@behance.net', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'incubate robust channels', 
-    'jpg', 
+    null, 
     '04/30/1935', 
     'f', 
     '29489', 
@@ -1013,7 +1072,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'bwashbrookg@bloglovin.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'benchmark collaborative content', 
-    'png', 
+    null, 
     '03/16/2000', 
     'f', 
     '504', 
@@ -1027,7 +1086,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'sduchesneh@moonfruit.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'aggregate revolutionary bandwidth', 
-    'png', 
+    null, 
     '06/05/1954', 
     'f', 
     '2387', 
@@ -1041,7 +1100,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'tdoddemeedei@umn.edu', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'engage user-centric web-readiness', 
-    'png', 
+    null, 
     '10/08/2005', 
     'm', 
     '28422', 
@@ -1055,7 +1114,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'jwarlowj@g.co', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'enhance frictionless e-business', 
-    'png', 
+    null, 
     '11/11/1924', 
     'm', 
     '105001', 
@@ -1082,11 +1141,11 @@ insert into ban (users_id, moderator_id, end_date, reason) values (11, 2, '5/9/2
 insert into ban (users_id, moderator_id, end_date, reason) values (20, 6, '7/1/2022', 'Marketed Ponzi scheme'); 
 insert into ban (users_id, moderator_id, end_date, reason) values (14, 6, null, 'Used dangerous external link'); 
 
-insert into content(author_id, body, nr_votes) values(5,'New Mexico, which has one of the highest poverty rates in the U.S., is a vaccination pacesetter thanks to decisive political decisions, homegrown technology and cooperation.',0);
+insert into content(author_id, body, nr_votes) values(5,'New Mexico, which has one of the highest poverty rates in the U.S., is a vaccination pacesetter thanks to decisive political decisions, homegrown technology and cooperation. #economy #politics',0);
 insert into content(author_id, body, nr_votes) values(12,
 'President Joe Biden said Tuesday that he plans to deliver “a lot” on police reform but would not elaborate further ahead of a meeting that afternoon with Vice President Kamala Harris and key members of the Congressional Black Caucus in the Oval Office.
 Biden, speaking days after police killed Daunte Wright, a 20-year-old Black man, in a Minneapolis suburb, said he would inform reporters of his plans to reform police at a later date.
-The White House billed Tuesday afternoon’s meeting with members of the CBC as an opportunity to create a path forward on voting rights, racial equity and infrastructure legislation. The meeting comes a few days after Susan Rice, director of the Domestic Policy Council, announced that the Biden administration was pausing the creation of a national police oversight commission.',5); 
+The White House billed Tuesday afternoon’s meeting with members of the CBC as an opportunity to create a path forward on voting rights, racial equity and infrastructure legislation. The meeting comes a few days after Susan Rice, director of the Domestic Policy Council, announced that the Biden administration was pausing the creation of a national police oversight commission. #politics',5); 
 insert into content(author_id, body, nr_votes) values(15,'MANILA (Reuters) - The Philippines filed fresh diplomatic protests to China on Wednesday after accusing its giant neighbour of undertaking illegal fishing and massing more than 240 boats within the Southeast Asian countrys territorial waters.
 
 The Philippine Department of Foreign Affairs said that two protests had been lodged, days after Manila summoned Chinese Ambassador Huang Xilian to press for the withdrawal of its vessels on the disputed Whitsun Reef in the South China Sea and other Philippine maritime zones.
@@ -1099,7 +1158,7 @@ A Philippine government taskforce said the vessels, which are about 60 metres (1
 
 "The continuous swarming of Chinese vessels poses a threat to the safety of navigation, safety of life at sea, and impedes the exclusive right of Filipinos to benefit from the marine wealth in the EEZ," the task force said in a statement late on Monday.
 
-China embassy in Manila and the foreign ministry in Beijing did not immediately respond to requests for comment.',0);
+China embassy in Manila and the foreign ministry in Beijing did not immediately respond to requests for comment. #politics',0);
 insert into content(author_id, body, nr_votes) values(5,'Life is difficult in North Korea but there is no famine and some cross-border shipments may resume soon, Russia ambassador in Pyongyang said, a week after North Korean leader Kim Jong Un declared the country was facing a "worst-ever situation."
 
 Kim last week urged ruling party officials to wage another “Arduous March” of work and sacrifice, linking the current economic crises to a period in the 1990s of famine and disaster.
@@ -1107,7 +1166,7 @@ Kim last week urged ruling party officials to wage another “Arduous March” o
 Russia ambassador, one of the few foreign envoys in the country, said that while it was unclear exactly what Kim meant the current situation could not be compared to that period.
 
 "Thank god, it is a long shot from the Arduous March, and I hope it would never come to that," Ambassador Alexander Matsegora told Russias TASS news agency according to a transcript published on Wednesday.
-',0);
+#politics',0);
 
 insert into content(author_id, body, nr_votes) values(19, 'Man, North Korea is such a prison',0);
 insert into content(author_id, body, nr_votes) values(20, 'ikr',0);

@@ -10,8 +10,8 @@
                 @method('delete')
                 {{csrf_field()}}
                 <div class="mb-3">
-                    <label for="deletePost-modal-description" class="form-label">Confirm by typing your password</label>
-                    <input type="password" id="deletePost-modal-description" name="password" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
+                    <label for="deletePost-modal-description_{{$news->content_id}}" class="form-label">Confirm by typing your password</label>
+                    <input type="password" id="deletePost-modal-description_{{$news->content_id}}" name="password" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">
                 </div>
                 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

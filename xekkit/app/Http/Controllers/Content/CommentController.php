@@ -40,4 +40,17 @@ class CommentController extends Controller
 
         return $comment;
     }
+
+    public function loadComments()
+    {
+        $validator = $request->validate([
+            'pagination' => 'number|min:0',
+            'offset' => 'number|min:0',
+            'content_id' => 'number|min:0'
+        ]);
+
+        $pagination = $request->query('pagination') ?? 0;
+        $offset = $request->query('offset') ?? 0;
+        $content_id = $request->query('content_id');
+    }
 }

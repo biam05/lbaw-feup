@@ -9,9 +9,7 @@
     <div class="row mt-4">
         <div class="col-lg-8">
             @include('partials.news.post')
-            @if(count($news->comments))
-                @include('partials.news.comments')
-            @endif
+            @include('partials.news.comments')
         </div>
 
         <sidebar class="hidden-md-down col-lg-auto">

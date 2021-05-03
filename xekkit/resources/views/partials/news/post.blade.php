@@ -47,7 +47,7 @@
     <footer class="card-footer text-muted">
         <div class="row">
             @foreach ($news->tags as $tag)
-                <button class="col-auto clickable text-white px-1">#{{ $tag->name }}</button>
+                <a href="/search?search={{$tag->name}}" class="col-auto clickable text-white px-1 text-decoration-none">#{{ $tag->name }}</a>
             @endforeach
         </div>
         <div class="row align-items-center">

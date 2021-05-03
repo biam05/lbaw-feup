@@ -391,7 +391,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -696,10 +696,209 @@ paths:
         '404':
           description: 'User not found.'
   
-  /vote/:         
-    post:
+  /api/load-posts:
+    get:
       operationId: R304
-      summary: 'R304: Upvote/Downvote Content'
+      summary: 'R304: Load More Posts'
+      description: 'Load More Posts. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: "Return posts for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+        '400':
+          description: "Error in parameters"
+          
+  /api/load-posts-search:
+    get:
+      operationId: R305
+      summary: 'R305: Load More Posts'
+      description: 'Load More Posts. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: "Return posts for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+        '400':
+          description: "Error in parameters"
+                      
+  /api/load-users:
+    get:
+      operationId: R306
+      summary: 'R306: Load More Users'
+      description: 'Load More Users. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: "Return users for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          description: "Error in parameters"
+          
+  /api/load-users-search:
+    get:
+      operationId: R307
+      summary: 'R307: Load More Users'
+      description: 'Load More Users. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: "Return users for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          description: "Error in parameters"
+      
+  /api/load-comments:
+    get:
+      operationId: R308
+      summary: 'R308: Load More Comments'
+      description: 'Load More Comments. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: content_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: "Return comments for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+        '400':
+          description: "Error in parameters"
+  /api/vote/:         
+    post:
+      operationId: R309
+      summary: 'R309: Upvote/Downvote Content'
       description: 'Upvote/Downvote content. Access: USR'
       tags:
         - 'M03: See Users/Content'
@@ -719,12 +918,21 @@ paths:
       responses:
         '201':
           description: 'Successfully voted on content.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
         '401':
           description: 'Login to vote.'
           
     delete:
-      operationId: R305
-      summary: 'R305: Delete Vote on Content'
+      operationId: R310
+      summary: 'R310: Delete Vote on Content'
       description: 'Delete Vote on Content. Access: USR'
       tags:
         - 'M03: See Users/Content'
@@ -739,6 +947,17 @@ paths:
       responses:
         '204':
           description: 'Successfully removed vote on content.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to delete vote.'
   
   # -------------------- M04 -------------------- 
  
@@ -1445,4 +1664,12 @@ components:
         question:
           type: string
         answer:
+          type: string
+          
+    Message:
+      type: object
+      properties:
+        status:
+          type: boolean
+        message:
           type: string

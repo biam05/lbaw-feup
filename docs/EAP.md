@@ -12,7 +12,7 @@ This specification adheres to the OpenAPI standard using YAML.
 
 ### 1. Overview
 
-The overview of the web application to implement will be presented in the *Overview* section. Here the modules will be identifier and briefly described. The web resources will be associated with each module and will be described in the individual documentation of each module.
+The overview of the web application to implement will be presented in this section. Here the modules will be identified and briefly described. The web resources will be associated with each module and will be described in the individual documentation of each module.
 
 | Modules | Description |
 |-------- | ----------- |
@@ -43,6 +43,7 @@ This section includes the completr API specification in OpenAPI (YAML).
 
 OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/a8/xekkit/a7_openapi.yaml
 OpenAPI Swagger: https://app.swaggerhub.com/apis/lbaw2114/lbaw-xekkit_web_api/1.0
+
 
 ```yaml
 openapi: 3.0.0
@@ -438,7 +439,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -743,10 +744,209 @@ paths:
         '404':
           description: 'User not found.'
   
-  /vote/:         
-    post:
+  /api/load-posts:
+    get:
       operationId: R304
-      summary: 'R304: Upvote/Downvote Content'
+      summary: 'R304: Load More Posts'
+      description: 'Load More Posts. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: "Return posts for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+        '400':
+          description: "Error in parameters"
+          
+  /api/load-posts-search:
+    get:
+      operationId: R305
+      summary: 'R305: Load More Posts'
+      description: 'Load More Posts. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: "Return posts for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+        '400':
+          description: "Error in parameters"
+                      
+  /api/load-users:
+    get:
+      operationId: R306
+      summary: 'R306: Load More Users'
+      description: 'Load More Users. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+      responses:
+        '200':
+          description: "Return users for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          description: "Error in parameters"
+          
+  /api/load-users-search:
+    get:
+      operationId: R307
+      summary: 'R307: Load More Users'
+      description: 'Load More Users. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: "Return users for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          description: "Error in parameters"
+      
+  /api/load-comments:
+    get:
+      operationId: R308
+      summary: 'R308: Load More Comments'
+      description: 'Load More Comments. Access: PUB, USR'
+      tags:
+        - 'M03: See Users/Content'
+      parameters:
+        - in: query
+          name: pagination
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+        - in: query
+          name: content_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: "Return comments for pagination"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+        '400':
+          description: "Error in parameters"
+  /api/vote/:         
+    post:
+      operationId: R309
+      summary: 'R309: Upvote/Downvote Content'
       description: 'Upvote/Downvote content. Access: USR'
       tags:
         - 'M03: See Users/Content'
@@ -766,12 +966,21 @@ paths:
       responses:
         '201':
           description: 'Successfully voted on content.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
         '401':
           description: 'Login to vote.'
           
     delete:
-      operationId: R305
-      summary: 'R305: Delete Vote on Content'
+      operationId: R310
+      summary: 'R310: Delete Vote on Content'
       description: 'Delete Vote on Content. Access: USR'
       tags:
         - 'M03: See Users/Content'
@@ -786,6 +995,17 @@ paths:
       responses:
         '204':
           description: 'Successfully removed vote on content.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to delete vote.'
   
   # -------------------- M04 -------------------- 
  
@@ -1493,7 +1713,16 @@ components:
           type: string
         answer:
           type: string
+          
+    Message:
+      type: object
+      properties:
+        status:
+          type: boolean
+        message:
+          type: string
 ```
+
 
 ---
 
@@ -1505,8 +1734,6 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 ### 1. Implemented Features
 
 #### 1.1. Implemented User Stories
-
-> Perguntar: Implementamos a ABOUT, FAQ? São Low Priority
 
 | User Story reference | Name                   | Priority                   | Description                   |
 | -------------------- | ---------------------- | -------------------------- | ----------------------------- |
@@ -1556,10 +1783,18 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 The prototype is available at ***INSERT LINK TO PRODUCTION HERE***
 
 Credentials:
-    - Moderator: ***USERNAME/PASSWORD***
-    - Authenticated User: ***USERNAME/PASSWORD***
-    - Partner: ***USERNAME/PASSWORD***
+- **Moderator**: 
+  - Username: ricardo
+  - Password: test1234
+- **Partner**:
+  - Username: andre
+  - Password: test1234
+- **Authenticated User**:
+  - Username: joao
+  - Password: test1234
+  
 The code is available at ***INSERT LINK TO GITLAB-PROTOTYPE HERE***
+
 
 
 
@@ -1568,13 +1803,13 @@ The code is available at ***INSERT LINK TO GITLAB-PROTOTYPE HERE***
 
 ## Revision history
 
-Changes made to the first submission:
-1. Item 1
-1. ..
+Changes made to the first submission (03/05/2021):
+
 
 ***
-GROUP21gg, DD/MM/2021
+GROUP2114, 03/05/2021
  
-* Group member 1 name, email (Editor)
-* Group member 2 name, email
-* ...
+ - Beatriz Mendes, up201806551@fe.up.pt 
+ - Guilherme Calassi, up201800157@fe.up.pt
+ - Luís André Assunção, up201806140@fe.up.pt 
+ - Ricardo Cardoso, up201604686@fe.up.pt

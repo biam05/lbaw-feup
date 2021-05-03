@@ -47,7 +47,9 @@ class News extends Model
     }
 
     /**
-     * Get the comments associaceted with the news.
+     * Get the comments 
+            
+        associaceted with the news.
      */
     public function comments()
     {

@@ -12,14 +12,14 @@
                     {{csrf_field()}}
                     @method('patch')
                     <div class="mb-3">
-                        <label for="News-modal-title" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="News-modal-title" value="{{$news->title}}">
+                        <label for="News-modal-title_{{$news->content_id}}" class="form-label">Title</label>
+                        <input type="text" name="title" class="form-control" id="News-modal-title_{{$news->content_id}}" value="{{$news->title}}">
 
                     </div>
 
                     <div class="mb-3">
-                        <label for="News-modal-description" class="form-label">Description</label>
-                        <textarea rows="4" id="News-modal-description" name="body" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
+                        <label for="News-modal-description_{{$news->content_id}}" class="form-label">Description</label>
+                        <textarea rows="4" id="News-modal-description_{{$news->content_id}}" name="body" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
                     </div>
                     <div class="mb-3">
                         <div class="container" id="file-display-area">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="custom-file-upload form-control" id="modal-image">
-                            <input type="file" name="image" id="fileToUpload" value="{{ asset('storage/img/news/' . $news->image)}}" accept="image/*">
+                            <input type="file" name="image" class="fileToUpload" value="{{ asset('storage/img/news/' . $news->image)}}" accept="image/*">
                             <i class="fa fa-upload"></i> Image to upload
                         </label>
                     </div>
@@ -42,4 +42,7 @@
         </div>
     </div>
 </div>
-<script defer src={{ asset('js/image_preview.js') }}></script>
+
+@once
+    <script defer src={{ asset('js/image_preview.js') }}></script>
+@endonce
