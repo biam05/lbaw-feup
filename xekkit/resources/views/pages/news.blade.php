@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'News | ' . $news->title) <!-- quero que apareça o titulo da noticia se calhar? -->
+@section('title', 'News | ' . $news->title)
 
 @section('content')
 
@@ -11,11 +11,10 @@
             @include('partials.news.post')
             @include('partials.news.comments')
         </div>
-
         <sidebar class="hidden-md-down col-lg-auto">
             @include('partials.users.user_card', ['user'=> $author])
         </sidebar>
     </div>
-
+</div>
 
 @endsection

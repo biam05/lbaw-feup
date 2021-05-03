@@ -11,22 +11,7 @@
         @if(count($news) === 0)
             <p class="text-white text-center h6 pt-4 pb-3">No results found</p>
         @else
-        
-        <script>
-            let select = document.getElementById("sort-select");
-            select.addEventListener("change", function()
-            {
-                let allNews = document.getElementById("posts-result");
-                
-                var xhttp = new XMLHttpRequest();
-                
-                xhttp.open("GET", "/api/load-posts-search?sortBy="+ select.value +"&search=" + @json($query), false);
-                xhttp.send();
-                let news = JSON.parse(xhttp.responseText);
-                console.log(news);
-                console.log(allNews);    
-            });
-        </script>
+
             <div id="posts-result">
                 @each('partials.news.post', $news, 'news')
             </div>

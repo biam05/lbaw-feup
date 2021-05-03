@@ -40,6 +40,7 @@ CREATE TABLE users(
     is_banned BOOLEAN NOT NULL DEFAULT false,
     is_deleted BOOLEAN NOT NULL DEFAULT false,
     remember_token TEXT,
+    api_token TEXT UNIQUE,
     PRIMARY KEY(id)
 );
 

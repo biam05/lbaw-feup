@@ -30,4 +30,4 @@ Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
 
 // Route::get('load-comments', [CommentController::class, 'loadComments']);
 
-Route::post('vote', [ContentController::class, 'makeVote']);
+Route::middleware('auth:api')->post('/vote', [ContentController::class, 'toggleVote']);

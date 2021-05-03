@@ -44,7 +44,6 @@ This section includes the completr API specification in OpenAPI (YAML).
 OpenAPI YAML: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/a8/xekkit/a7_openapi.yaml
 OpenAPI Swagger: https://app.swaggerhub.com/apis/lbaw2114/lbaw-xekkit_web_api/1.0
 
-
 ```yaml
 openapi: 3.0.0
 
@@ -781,49 +780,6 @@ paths:
                       $ref: '#/components/schemas/Post'
         '400':
           description: "Error in parameters"
-          
-  /api/load-posts-search:
-    get:
-      operationId: R305
-      summary: 'R305: Load More Posts'
-      description: 'Load More Posts. Access: PUB, USR'
-      tags:
-        - 'M03: See Users/Content'
-      parameters:
-        - in: query
-          name: pagination
-          schema:
-            type: integer
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: integer
-          required: false
-        - in: query
-          name: sortBy
-          schema:
-            type: integer
-          required: false
-        - in: query
-          name: search
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: "Return posts for pagination"
-          content: 
-            application/json:
-              schema:
-                type: object
-                properties:
-                  posts:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Post'
-        '400':
-          description: "Error in parameters"
                       
   /api/load-users:
     get:
@@ -848,49 +804,6 @@ paths:
           schema:
             type: integer
           required: false
-      responses:
-        '200':
-          description: "Return users for pagination"
-          content: 
-            application/json:
-              schema:
-                type: object
-                properties:
-                  posts:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/User'
-        '400':
-          description: "Error in parameters"
-          
-  /api/load-users-search:
-    get:
-      operationId: R307
-      summary: 'R307: Load More Users'
-      description: 'Load More Users. Access: PUB, USR'
-      tags:
-        - 'M03: See Users/Content'
-      parameters:
-        - in: query
-          name: pagination
-          schema:
-            type: integer
-          required: false
-        - in: query
-          name: page
-          schema:
-            type: integer
-          required: false
-        - in: query
-          name: sortBy
-          schema:
-            type: integer
-          required: false
-        - in: query
-          name: search
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: "Return users for pagination"
@@ -1724,6 +1637,7 @@ components:
 ```
 
 
+
 ---
 
 
@@ -1743,6 +1657,7 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 | US12                 | Register | High | As a *Guest*, I want to register into the system, so that I can authenticate myself into the system. |
 | US22                 | Create News | High | As an *Autheticated User*, I want to create News, so that it is publicly available. |
 | US27                 | Sign Out | High | As an *Authenticated User*, I want to sign out of the system, so that I can become a guest. |
+| US28                 | Vote | High | As an *Authenticated User*, I want to upvote/downvote (and even remove/change my vote on) any news/comments, so that I can manifest my like/dislike. |
 | US31                 | Edit New | High | As a *Author*, I want to edit a post I previously posted, so that I can keep the information updated. |
 | US32                 | Remove New | High | As a *Author*, I want to remove a post I previously posted, so that it is no longer publicly available. |
 
@@ -1770,7 +1685,8 @@ The Artificat A8 (Vertical Prototype) includes the implementation of some user s
 
 | Web Resource Reference | URL                            |
 | ---------------------- | ------------------------------ |
-| R302: View a Specific News Post | GET /news/{id} |
+| R302: View a Specific News Post | GET /news/{id}/ |
+| R309: Upvote/Downvote Content | POST /api/vote/ |
 
 **M04: Search Users/Content**
 
@@ -1794,6 +1710,7 @@ Credentials:
   - Password: test1234
   
 The code is available at ***INSERT LINK TO GITLAB-PROTOTYPE HERE***
+
 
 
 

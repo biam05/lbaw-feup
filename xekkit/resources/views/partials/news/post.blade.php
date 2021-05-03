@@ -52,14 +52,14 @@
         </div>
         <div class="row align-items-center">
             <div class="col-auto d-flex flex-column pe-1">
-                <button class="clickable-big">
+                <button onclick='vote("{{ $news->content->id }}", true)' class="clickable-big">
                     <i class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                 </button>
-                <button class="clickable-big">
+                <button onclick='vote("{{ $news->content->id }}", false)' class="clickable-big">
                     <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                 </button>
             </div>
-            <span class="col-auto ps-1 text-white">{{$news->content->nr_votes}}</span>
+            <span class="col-auto ps-1 text-white" id="n-votes">{{$news->content->nr_votes}}</span>
             <button class="col-auto clickable text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>
                 &nbsp;{{$news->nr_comments}}
@@ -67,3 +67,7 @@
         </div>
     </footer>
 </div>
+
+@once
+    <script defer src="{{ asset('js/vote.js') }}"></script>
+@endonce
