@@ -35,7 +35,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="custom-file-upload form-control" id="modal-image">
-                            <input type="file" name="image" id="fileToUpload" value="{{ old('image')}}" accept="image/*">
+                            <input type="file" name="image" class="fileToUpload" value="{{ old('image')}}" accept="image/*">
                             <i class="fa fa-upload"></i> Image to upload
                         </label>
                     </div>

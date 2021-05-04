@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content bg-light-dark">
             <div class="modal-header">
-                <h5 class="modal-title text-white" id="newPostLabel">New Post</h5>
+                <h5 class="modal-title text-white" id="newPostLabel">Edit Post</h5>
                 <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -12,9 +12,8 @@
                     {{csrf_field()}}
                     @method('patch')
                     <div class="mb-3">
-                        <label for="News-modal-title_{{$news->content_id}}" class="form-label">Title</label>
+                        <label for="News-modal-title_{{$news->content_id}}" class="form-label">Edit Post</label>
                         <input type="text" name="title" class="form-control" id="News-modal-title_{{$news->content_id}}" value="{{$news->title}}">
-
                     </div>
 
                     <div class="mb-3">
@@ -24,7 +23,7 @@
                     <div class="mb-3">
                         <div class="container" id="file-display-area">
                             @isset($news->image)
-                                <img src="{{ asset('storage/img/news/' . $news->image)}}"></img>
+                                <img src="{{ asset('storage/img/news/' . $news->image)}}" style="object-fit: contain; width:225px;"></img>
                             @endisset
                         </div>
                     </div>
