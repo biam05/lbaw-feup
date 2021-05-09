@@ -26,15 +26,17 @@ class HomepageController extends Controller
         }
       }
 
-      $recentPosts = News::all();
-      foreach($recentPosts as $recentPost){
-        $recentPost->content = $recentPost->content;
+      $posts = News::all();
+      foreach($posts as $post){
+        $post->content = $post->content;
       }
 
-      $recentPosts = $recentPosts->sortByDesc('content.date');      
-      $hotPosts = $recentPosts->sortByDesc('content.nr_votes');
+      $recentPosts = $posts->sortByDesc('content.date');      
+      $hotPosts = $posts->sortByDesc('content.nr_votes');
+      $trendingPosts = $posts->sortByDesc('trending_score');
 
       return view('pages.homepage', [
+        'trendingPosts' => $trendingPosts,
         'feedPosts' => $feedPosts,
         'recentPosts'=> $recentPosts, 
         'hotPosts'=> $hotPosts]);
