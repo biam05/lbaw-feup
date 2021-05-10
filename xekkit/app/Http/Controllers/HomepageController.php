@@ -17,14 +17,14 @@ class HomepageController extends Controller
     public function show(Request $request)
     {      
 
-      $following = Auth::user()->following;
+      // $following = Auth::user()->following;
       $feedPosts = array();
-      foreach($following as $user){
-        $contents = $user->contents;
-        foreach($contents as $content){
-          array_push($feedPosts, $content->new);
-        }
-      }
+      // foreach($following as $user){
+      //   $contents = $user->contents;
+      //   foreach($contents as $content){
+      //     array_push($feedPosts, $content->new);
+      //   }
+      // }
 
       $posts = News::all();
       foreach($posts as $post){
