@@ -5,8 +5,14 @@
             mask-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0));
 }
 
+.custom_card img{
+    object-fit: cover;
+    height: 14rem;
+}
+
 .custom_card{
     width: 18rem;
+    height: 15rem;
 }
 
 .card-deck::-webkit-scrollbar {
