@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\News;
 use App\Models\Content;
+use App\Models\ReportContent;
 use App\Models\Tag;
+
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -156,4 +158,40 @@ class NewsController extends Controller
 
         return redirect('/')->with('success', 'Your post was successfully deleted.');
     }
+
+
+    public function report(Request $request, $id)
+    {
+       
+        $validator = $request->validate([
+            'body' => 'required|string',
+        ]);
+
+        $news = News::findOrFail($id);
+        $this->authorize('report', News::class);
+
+        DB::transaction(function () use ($request, $id) {
+            // create request
+            $db_request = new Request;
+           
+            $db_request->reason = $request->input('body');
+            $db_request->from_id = Auth::user()->id;
+
+            $db_request->save();
+
+            $request_id = $db_request->id;
+
+            //create report
+            $report = new ReportContent();
+            $report->request_id=$request_id;
+            $report->to_content_id=$request->$id;
+
+            $report->save();
+
+            return $request_id;
+        });
+
+        return redirect()->back();
+    }
+
 }
