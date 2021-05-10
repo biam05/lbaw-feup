@@ -1,5 +1,9 @@
 <div style="cursor: pointer" onclick="location.href='/news/{{$news->content_id}}'" class="card text-white bg-dark position-relative custom_card">
-    <img class="card-img" src={{ asset('storage/img/news/' . $news->image) }} alt="Card image cap">
+    @if(isset($news->image))
+        <img class="card-img" src={{ asset('storage/img/news/' . $news->image) }} alt="Card image cap">
+    @else
+        <div class="custom_card bg-light-dark card-img"></div>
+    @endif       
     <div class="card-img-overlay d-flex flex-column justify-content-end p-1">
         <h5 class="card-title px-1">{{$news->title}}</h5>
         <div class="d-flex px-1">
