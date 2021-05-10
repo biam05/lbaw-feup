@@ -1,7 +1,8 @@
 <?php
 
 function draw_card($img_src, $title, $tags, $date, $user)
-{ ?>
+{ 
+    ?>
 
 <div style="cursor: pointer" onclick="location.href='../pages/news.php'" class="card text-white bg-dark position-relative custom_card">
     <img class="card-img" src="<?=$img_src ?>" alt="Card image cap">
@@ -33,7 +34,8 @@ function draw_card($img_src, $title, $tags, $date, $user)
  * Draws the header for all pages. 
  */
 function draw_trending()
-{ ?>
+{ 
+    ?>
 
 <div class="container-xl my-2">
     <h2 class="text-center text-light">Trending News</h2>
