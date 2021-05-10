@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\News;
+use App\Models\Content;
+use App\Models\Tag;
 
 class UserController extends Controller
 {
@@ -18,7 +21,9 @@ class UserController extends Controller
      */
     public function show($username)
     {
-      return view('pages.user', ['user' => $username]);
+      $user = User::where('username','=',$username)->first();      
+      //$user = User::findOrFail($username);
+      return view('pages.user', ['user' => $user]);
     }
 
 
