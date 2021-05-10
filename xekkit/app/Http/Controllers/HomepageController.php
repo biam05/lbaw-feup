@@ -17,24 +17,26 @@ class HomepageController extends Controller
     public function show(Request $request)
     {      
 
-      $following = Auth::user()->following;
+      // $following = Auth::user()->following;
       $feedPosts = array();
-      foreach($following as $user){
-        $contents = $user->contents;
-        foreach($contents as $content){
-          array_push($feedPosts, $content->new);
-        }
+      // foreach($following as $user){
+      //   $contents = $user->contents;
+      //   foreach($contents as $content){
+      //     array_push($feedPosts, $content->new);
+      //   }
+      // }
+
+      $posts = News::all();
+      foreach($posts as $post){
+        $post->content = $post->content;
       }
 
-      $recentPosts = News::all();
-      foreach($recentPosts as $recentPost){
-        $recentPost->content = $recentPost->content;
-      }
-
-      $recentPosts = $recentPosts->sortByDesc('content.date');      
-      $hotPosts = $recentPosts->sortByDesc('content.nr_votes');
+      $recentPosts = $posts->sortByDesc('content.date');      
+      $hotPosts = $posts->sortByDesc('content.nr_votes');
+      $trendingPosts = $posts->sortByDesc('trending_score');
 
       return view('pages.homepage', [
+        'trendingPosts' => $trendingPosts,
         'feedPosts' => $feedPosts,
         'recentPosts'=> $recentPosts, 
         'hotPosts'=> $hotPosts]);
