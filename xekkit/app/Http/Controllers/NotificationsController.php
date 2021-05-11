@@ -16,19 +16,16 @@ class NotificationsController extends Controller
     {      
         $notifications = array();
 
-        $follow_notifications = FollowNotification::where('users_id', Auth::id())
-            ->orderBy('')
-            ->get();
-        $comment_notifications = CommentNotification::where('users_id', Auth::id())
-            ->get();
-        $vote_notifications = VoteNotification::where('author_id', Auth::id())
-            ->get();
-
-        array_push($notifications, $follow_notifications);
-        array_push($notifications, $comment_notifications);
-        array_push($notifications, $vote_notifications);
+        $follow_notifications = Auth::user()->followNotifications;
+        $comment_notifications = Auth::user()->commentNotifications;
+        $vote_notifications = Auth::user()->voteNotifications;
         
-
+            
+        $notifications = $follow_notifications
+            ->toBase()->merge($comment_notifications)
+            ->toBase()->merge($vote_notifications)
+            ->sortByDesc('creation_date');
+        
         return view('pages.notifications', [
             'notifications' => $notifications,
         ]);

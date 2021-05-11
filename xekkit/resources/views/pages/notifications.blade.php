@@ -15,18 +15,18 @@
         </li>
     </ul>
 
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-notification" role="tabpanel" aria-labelledby="pills-notification-tab">
-            <?php
-                draw_user_notifications();
-            ?>
+    @if(Auth::user()->is_moderator)
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-notification" role="tabpanel" aria-labelledby="pills-notification-tab">
+                @each('partials.notifications.all', $notifications, 'notification', 'partials.notifications.none')
+            </div>
+            <div class="tab-pane fade" id="pills-moderator" role="tabpanel" aria-labelledby="pills-moderator-tab">
+                {{-- @each() --}}
+            </div>
         </div>
-        <div class="tab-pane fade" id="pills-moderator" role="tabpanel" aria-labelledby="pills-moderator-tab">
-            <?php
-                draw_partner_requests();
-            ?>
-        </div>
-    </div>
+    @else
+        @each('partials.notifications.all', $notifications, 'notification', 'partials.notifications.none')
+    @endif
 </div>
 
 @endsection
