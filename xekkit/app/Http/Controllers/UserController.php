@@ -21,8 +21,20 @@ class UserController extends Controller
      */
     public function show($username)
     {
-      $user = User::where('username','=',$username)->first();      
-      //$user = User::findOrFail($username);
+      $user = User::where('username','=',$username)->first();   
+
+      // $posts = News::addSelect(['users_id' => Content::select('author_id')])
+      // ->where('users_id','author_id');
+
+      // foreach($posts as $post){
+      //   $post->content = $post->content;
+      // }
+
+
+      // $recentPosts = $posts->sortByDesc('content.date');      
+      // $topPosts = $posts->sortByDesc('content.nr_votes');
+      // $trendingPosts = $posts->sortByDesc('trending_score');
+
       return view('pages.user', ['user' => $user]);
     }
 

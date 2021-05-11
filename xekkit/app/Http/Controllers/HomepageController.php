@@ -17,14 +17,25 @@ class HomepageController extends Controller
     public function show(Request $request)
     {      
 
-      // $following = Auth::user()->following;
       $feedPosts = array();
-      // foreach($following as $user){
-      //   $contents = $user->contents;
-      //   foreach($contents as $content){
-      //     array_push($feedPosts, $content->new);
-      //   }
+
+      // if(Auth::check()){
+      //   $feedPosts = DB::select('
+      //   SELECT n.content_id, n.title, n.image, c.date, c.body, c.nr_votes, u.username, u.is_partner
+      //   FROM news n, content c, users u
+      //   WHERE n.content_id = c.id
+      //       AND c.author_id = u.id
+      //       AND u.is_deleted = \'false\'
+      //       AND u.is_banned = \'false\'
+      //       AND c.author_id IN (SELECT f.users_id FROM follow f WHERE f.follower_id = :my_users_id)
+      //   ORDER BY c.date DESC
+      //   ', ['my_users_id' => Auth::id()]);
+
+
+      //   //dd(Auth::user()->username);
       // }
+      
+      
 
       $posts = News::all();
       foreach($posts as $post){
