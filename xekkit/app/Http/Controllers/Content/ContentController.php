@@ -23,39 +23,39 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ContentController extends Controller
 {
     public function toggleVote(Request $request)
-    {
-        return response()->json($request);
+    {        
+        //return response()->json($request);
         $validator = Validator::make($request->all(), [
             'content_id' => 'required|integer',
             'upvote' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
-        }
+            return response()->json('yes');
+        }        
+
+        // $content_id = $request->header('content_id');
+        // $upvote = $request->header('upvote');
+
+        // $content = Content::findOrFail($content_id);
+
+        // $response = [
+        //     'status' => false,
+        //     'message' => "Vote ERROR"
+        // ];
         
-
-        $content_id = $request->header('content_id');
-        $upvote = $request->header('upvote');
-
-        $content = Content::findOrFail($content_id);
-
-        $response = [
-            'status' => false,
-            'message' => "Vote ERROR"
-        ];
+        // $user = Auth::user();
+        // return response()->json(json_encode(Auth::user()));
+        // $value = $user->is_partner ? 10 : 1;
+        // $value = $upvote ? $value : -$value;
         
-        $user = Auth::user();
-        return response()->json(json_encode(Auth::user()));
-        $value = $user->is_partner ? 10 : 1;
-        $value = $upvote ? $value : -$value;
-        
-        $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        // $user->voteOn()->toggle([$content_id => ['value' => $value]]);
 
-        $response = [
-            'status' => true,
-            'message' => $content->nr_votes
-        ];
-        return response()->json($response);
+        // $response = [
+        //     'status' => true,
+        //     'message' => $content->nr_votes
+        // ];
+
+        // return response()->json($response);
     }
 }
