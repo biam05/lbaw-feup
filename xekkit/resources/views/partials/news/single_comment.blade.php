@@ -11,6 +11,7 @@
                         <i class="fas fa-check"></i>
                     <?}?>
                     <?= $author?></a><?= $date?></small>
+            {{--     @include('partials.modals.report_post', ['report_to_id' => $content_id, 'type'=>"comment"]) --}}
                 <button class="clickable-big text-muted ps-2"><i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i></button>
             </p> 
         </div> 

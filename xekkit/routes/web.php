@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use Illuminate\Routing\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,15 +40,15 @@ Route::get('/', [HomepageController::class, 'show'])->name('home');
 // Search
 Route::get('/search/', [SearchController::class, 'show'])->name('search');
 
+
 // Authenticated needed for this routes
 Route::middleware(['auth'])->group(function () {
-    
+
     // news
     Route::post('/news/create/', [NewsController::class, 'create']);
     Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
     Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
     Route::post('/news/{id}/report/', [NewsController::class, 'report'])->where(['id'=>'[0-9]+']);
-    
     
     // comments
     Route::post('/comment/create/', [CommentController::class, 'create']);

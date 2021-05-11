@@ -21,7 +21,7 @@
                 @include('partials.modals.edit_post', ['news' => $news])
             @endif
                 @include('partials.modals.report_post', ['report_to_id' => $news->content_id, 'type'=>"news"])
-                <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportModal_{{$news->content_id}}">
+                <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportContent_{{$news->content_id}}">
                     <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
                 </button>
             

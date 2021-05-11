@@ -15,6 +15,7 @@ use App\Models\News;
 use App\Models\Content;
 use App\Models\ReportContent;
 use App\Models\Tag;
+use App\Models\Request_db;
 
 
 use Illuminate\Support\Facades\Session;
@@ -162,17 +163,17 @@ class NewsController extends Controller
 
     public function report(Request $request, $id)
     {
-       
+      
         $validator = $request->validate([
             'body' => 'required|string',
         ]);
 
         $news = News::findOrFail($id);
-        $this->authorize('report', News::class);
+        
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request;
+            $db_request = new Request_db;
            
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
@@ -184,7 +185,7 @@ class NewsController extends Controller
             //create report
             $report = new ReportContent();
             $report->request_id=$request_id;
-            $report->to_content_id=$request->$id;
+            $report->to_content_id=$id;
 
             $report->save();
 
