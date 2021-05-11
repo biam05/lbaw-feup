@@ -21,21 +21,24 @@ class UserController extends Controller
      */
     public function show($username)
     {
-      $user = User::where('username','=',$username)->first();   
+        $user = User::where('username','=',$username)->first();   
 
-      // $posts = News::addSelect(['users_id' => Content::select('author_id')])
-      // ->where('users_id','author_id');
+        $posts = News::whereIn('content_id', function($query) use ($user) {
+            $query->select('id')
+                ->from('content')
+                ->where('author_id', $user->id);
+        })->get();
 
-      // foreach($posts as $post){
-      //   $post->content = $post->content;
-      // }
+        $recentPosts = $posts->sortByDesc('content.date');      
+        $topPosts = $posts->sortByDesc('content.nr_votes');
+        $trendingPosts = $posts->sortByDesc('trending_score');
 
-
-      // $recentPosts = $posts->sortByDesc('content.date');      
-      // $topPosts = $posts->sortByDesc('content.nr_votes');
-      // $trendingPosts = $posts->sortByDesc('trending_score');
-
-      return view('pages.user', ['user' => $user]);
+        return view('pages.user', [
+            'user' => $user,
+            'recentPosts' => $recentPosts,
+            'topPosts' => $topPosts,
+            'trendingPosts' => $trendingPosts,
+        ]);
     }
 
 
@@ -48,22 +51,22 @@ class UserController extends Controller
     public function edit(Request $request)
     {
 
-      $this->authorize('create', $user);
+        $this->authorize('create', $user);
 
-      $user->name = $request->input('name');
-      $user->user_id = Auth::user()->id;
-      $user->save();
+        $user->name = $request->input('name');
+        $user->user_id = Auth::user()->id;
+        $user->save();
 
-      return $user;
+        return $user;
     }
 
     public function delete(Request $request, $id)
     {
-      $user = User::find($id);
+        $user = User::find($id);
 
-      $this->authorize('delete', $user);
-      $user->delete();
+        $this->authorize('delete', $user);
+        $user->delete();
 
-      return $user;
+        return $user;
     }
 }

@@ -54,15 +54,10 @@
             @include('partials.tab', ['active' => False, 'type' => 'following', 'pc' => False, 'name' => "Following"])
         </ul>
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
-                
-            </div>
-            <div class="tab-pane fade" id="pills-top" role="tabpanel" aria-labelledby="pills-top-tab">
-                
-            </div>
-            <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
-                
-            </div>
+            @include('partials.tab_content', ['active'=>True, 'type'=>'trending', 'pc'=>False, 'explore'=>False, 'posts'=>$trendingPosts])
+            @include('partials.tab_content', ['active'=>True, 'type'=>'top', 'pc'=>False, 'explore'=>False, 'posts'=>$topPosts])
+            @include('partials.tab_content', ['active'=>True, 'type'=>'new', 'pc'=>False, 'explore'=>False, 'posts'=>$recentPosts])
+            
             <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
                
             </div>
