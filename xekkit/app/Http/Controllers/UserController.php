@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\News;
 use App\Models\Content;
-use App\Models\Tag;
+use App\Models\Follow;
 
 class UserController extends Controller
 {
@@ -33,11 +33,16 @@ class UserController extends Controller
         $topPosts = $posts->sortByDesc('content.nr_votes');
         $trendingPosts = $posts->sortByDesc('trending_score');
 
+        $following = $user->following;
+
+        //dd($following);
+
         return view('pages.user', [
             'user' => $user,
             'recentPosts' => $recentPosts,
             'topPosts' => $topPosts,
             'trendingPosts' => $trendingPosts,
+            'following' => $following
         ]);
     }
 

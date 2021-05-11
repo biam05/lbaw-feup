@@ -55,11 +55,17 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             @include('partials.tab_content', ['active'=>True, 'type'=>'trending', 'pc'=>False, 'explore'=>False, 'posts'=>$trendingPosts])
-            @include('partials.tab_content', ['active'=>True, 'type'=>'top', 'pc'=>False, 'explore'=>False, 'posts'=>$topPosts])
-            @include('partials.tab_content', ['active'=>True, 'type'=>'new', 'pc'=>False, 'explore'=>False, 'posts'=>$recentPosts])
+            @include('partials.tab_content', ['active'=>False, 'type'=>'top', 'pc'=>False, 'explore'=>False, 'posts'=>$topPosts])
+            @include('partials.tab_content', ['active'=>False, 'type'=>'new', 'pc'=>False, 'explore'=>False, 'posts'=>$recentPosts])
             
             <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
-               
+                @if(count($following) === 0)
+                    <p class="text-white text-center h6 pt-4 pb-3">No results found</p>
+                @else
+                    <div class="row text-white pt-4 justify-content-evenly">                        
+                        @each('partials.users.user_card', $following, 'user')
+                    </div>
+                @endif 
             </div>
         </div>
     </nav>
