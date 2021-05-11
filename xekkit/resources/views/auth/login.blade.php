@@ -9,7 +9,7 @@
         <form method="POST" action="{{ route('login') }}" class="col-lg-5 p-3 g-2 border bg-light" novalidate>
             {{ csrf_field() }}
             <p class="text-center fs-1">Login</p>
-            <div class="form-floating mb-3 col-11">
+            <div class="form-floating mb-3">
                 <input 
                     type="text" 
                     class="form-control @if ($errors->has('*')) is-invalid @endif" 

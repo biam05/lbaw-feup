@@ -775,6 +775,20 @@ CREATE TRIGGER tags_delete_search_update
  */
 
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'admin', 
+    'admin@xekkit.com', 
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'Sou o Admin/Moderador.', 
+    'beatriz.png', 
+    '02/20/1992', 
+    'f', 
+    '500000', 
+    true, 
+    false, 
+    false, 
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
     'beatriz', 
     'beatriz@xekkit.com', 
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */

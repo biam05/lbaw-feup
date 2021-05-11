@@ -5,12 +5,13 @@ window.onload = function () {
     if (fileInput !== undefined && fileInput !== null) {
         fileInput.forEach(handler) 
      } 
+     console.log(fileDisplayArea)
 }
 
 function handler(value, index)
 {
     let fileDisplayArea = document.querySelectorAll('#file-display-area');
-    
+
     value.addEventListener('change', function () {
         let file = value.files[0];
         let reader = new FileReader();
@@ -24,7 +25,6 @@ function handler(value, index)
 
                 fileDisplayArea[index].appendChild(img);
             }
-
             reader.readAsDataURL(file);
     });
 }
