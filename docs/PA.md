@@ -1,6 +1,6 @@
 # PA: Product and Presentation
 
-> Project vision
+This project intends to build a Collaborative news website, where anyone can read, publish news and share them with friends, while avoiding the spread of fake news.
 
 ## A9: Product
 
@@ -13,7 +13,7 @@
 
 ### 2. Usage
 
-> URL to the product: http://lbaw2114.lbaw-prod.fe.up.pt  
+Link: http://lbaw2114.lbaw-prod.fe.up.pt  
 
 #### 2.1. Administration Credentials
 
@@ -63,13 +63,85 @@
 
 #### 8.2 User Stories
 
-> Detail the status of the implementation of each user story.  
-> Also include the new user stories that were created during the project.  
+### M01 - Authentication and Individual Profile
 
-| US Identifier | Name    | Priority                       | Team members               | State  |
-| ------------- | ------- | ------------------------------ | -------------------------- | ------ |
-| US01          | US Name | Mandatory; Important; Optional | John Silva, Ana Sousa ...  |  100%  |
-| US02          | US Name | Mandatory; Important; Optional | John Silva                 |   75%  | 
+| US Identifier | Name| Priority | Team members| State | 
+|------ |------|------|------| -----| 
+| US11 | Sign-in | Mandatory | Ricardo Cardoso | 100% | 
+| US12 | Register | Mandatory | Ricardo Cardoso | 100% | 
+| US27 | Sign Out | Mandatory | Ricardo Cardoso | 100% | 
+| US25 | Manage Profile | Mandatory | Ricardo Cardoso | 0% | 
+| US29 | Delete Profile | Mandatory | Ricardo Cardoso | 0% | 
+| US13 | Sign-in using Google OAuth API | Optional | Ricardo Cardoso | 0% |
+| US14 | Register using Google OAuth API | Optional | Ricardo Cardoso | 0% |
+
+
+### M02 - Create/Edit Content
+| US Identifier | Name| Priority | Team members| State |
+|------ |------|------|------| -----|
+| US22 | Create News | Mandatory | Guilherme Calassi | 100% |
+| US31 | Edit News | Mandatory | Guilherme Calassi | 100% |
+| US32 | Remove News | Mandatory | Guilherme Calassi | 100% |
+| US33 | Remove comment | Mandatory | Guilherme Calassi | 0% |
+| US23 | Create/Publish Comment | Mandatory | Guilherme Calassi | 0% |
+| US41 | Remove Post from other User | Mandatory | Guilherme Calassi | 0% |
+| US42 | Remove Comment from another User | Mandatory | Guilherme Calassi | 0% |
+| US34 | Edit comment | Important | Guilherme Calassi | 0% |
+
+### M03 - See Users/Content
+| US Identifier | Name| Priority | Team members| State |
+|------ |------|------|------| -----|
+| US07 | View Specific Post | Mandatory | Beatriz Mendes | 100% |
+| US01 | See News Feed | Mandatory | Beatriz Mendes | 30% |
+| US24 | View Own Profile | Mandatory | Beatriz Mendes | 0% |
+| US06 | View Profiles | Mandatory | Beatriz Mendes | 0% |
+| US28 | Vote | Mandatory | Beatriz Mendes | 0% |
+| US26 | Follow/Unfollow Other User | Mandatory | Beatriz Mendes | 0% |
+| US02 | See "Hot" Topics | Important | Beatriz Mendes | 0% |
+| US03 | See "Recent" Topics | Important | Beatriz Mendes | 0% |
+| US21 | Personalized Feed | Important | Beatriz Mendes | 0% |
+
+### M04 - Search Users/Content
+| US Identifier | Name| Priority| Team members| State  |
+|------ |------|------|------| -----|
+| US04 | Search Using Keywords | Mandatory  | André Assunção | 100% |
+| US05 | Filter News | Important  | André Assunção | 50% |
+| US012 | Filter Users | Important | André Assunção | 50% |
+
+### M05 - Notifications
+| US Identifier | Name| Priority| Team members| State  |
+|------ |------|------|------| -----|
+| US211 | See Notifications | Mandatory | Ricardo Cardoso | 0% |
+| US45 | View Reports | Important | Ricardo Cardoso | 0% |
+| US47 | View Partner Requests | Important | Ricardo Cardoso | 0% |
+
+
+### M06 - Create Requests
+| US Identifier | Name| Priority| Team members| State  |
+|------ |------|------|------| -----|
+| US08 | Create Report | Mandatory | André Assunção | 0% |
+| US210 | Request Partner label | Important | André Assunção | 0% |
+| US51 | Stop Being a Partner | Important | André Assunção | 0% |
+| US61 | Unban Appeal | Optional | André Assunção | 0% |
+
+
+### M07 - Moderator Administration
+| US Identifier | Name| Priority| Team members| State  |
+|------ |------|------|------| -----|
+| US43 |Ban User| Important | Guilherme Calassi | 0% |
+| US44 |Verify Partner| Important | Guilherme Calassi | 0% |
+| US46 |Act on Reports| Important | Guilherme Calassi | 0% |
+| US48 |Act on Partner Requests| Important | Guilherme Calassi | 0% |
+| US49 |Remove Partner| Optional | Guilherme Calassi | 0% |
+
+### M08 - Static Pages
+| US Identifier | Name| Priority| Team members| State  |
+|------ |------|------|------| -----|
+| US09 | Consult FAQ | Optional | Beatriz Mendes | 0% |
+| US410 |Add FAQ| Optional | Beatriz Mendes | 0% |
+| US011 | See About | Optional | Beatriz Mendes | 0% |
+| US010 | Consult Contacts | Optional | Beatriz Mendes | 0% |
+
 
 
 ---
