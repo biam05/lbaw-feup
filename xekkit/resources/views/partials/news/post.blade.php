@@ -28,7 +28,7 @@
         </div>
 
         <div class="row justify-content-between card-subtitle mb-2">
-            <a class="col-auto clickable text-muted text-decoration-none" href="/user/{{$news->content->author->username  }}">
+            <a class="col-auto clickable text-muted text-decoration-none"  href="{{url('/user/' . $news->content->author->username)}}">
                 <h6>
                     @if($news->content->author->is_partner)
                         <i class="fas fa-check"></i>

@@ -64,6 +64,12 @@ class News extends Model
         return $this->belongsToMany(Tag::class, 'news_tag', 'news_id', 'tag_id');
     }
 
+    // public function getPostByUsersIFollow()
+    // {
+    //     return 
+    // }
+
+
     public function formatDate($full = false)
     {
         $now = new DateTime;

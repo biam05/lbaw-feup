@@ -9,7 +9,7 @@
         <form method="post" action="{{ route('register') }}" class="col-lg-5 p-3 g-2 border bg-light" novalidate >
             {{ csrf_field() }}
             <p class="text-center fs-1">Register</p>
-            <div class="form-floating mb-3 col-11">
+            <div class="form-floating mb-3">
                 <input 
                     type="text" 
                     class="form-control @if ($errors->has('username')) is-invalid @endif" 
@@ -24,7 +24,7 @@
                     {{ $errors->first('username') }}
                 </div>
             </div>
-            <div class="form-floating mb-3 col-11">
+            <div class="form-floating mb-3">
                 <input 
                     type="email" 
                     class="form-control @if ($errors->has('email')) is-invalid @endif" 
@@ -41,7 +41,7 @@
             </div>
             
             <div class="row g-2">
-                <div class="form-floating mb-3 col-11">
+                <div class="form-floating mb-3">
                     <input 
                         type="password" 
                         class="form-control @if ($errors->has('password')) is-invalid @endif" 
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="row g-2">
-                <div class="col form-floating mb-3 col-11">
+                <div class="col form-floating mb-3">
                     <input 
                         type="password" 
                         class="form-control pe-5" 
@@ -75,7 +75,7 @@
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </div>
             </div>
-            <div class="form-floating mb-3 col-11">
+            <div class="form-floating mb-3">
                 <input 
                     type="date" 
                     class="form-control @if ($errors->has('birthDate')) is-invalid @endif" 
@@ -90,7 +90,7 @@
                     {{ $errors->first('birthDate') }}
                 </div>
             </div>
-            <div class="form-floating mb-3 col-11">
+            <div class="form-floating mb-3">
                 <select 
                     class="form-select @if ($errors->has('birthDate')) is-invalid @endif" 
                     id="gender" 

@@ -40,6 +40,10 @@ Route::get('/', [HomepageController::class, 'show'])->name('home');
 // Search
 Route::get('/search/', [SearchController::class, 'show'])->name('search');
 
+// Profile
+Route::get('/user/{username}', [UserController::class, 'show']);
+
+
 
 // Authenticated needed for this routes
 Route::middleware(['auth'])->group(function () {
