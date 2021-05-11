@@ -49,21 +49,21 @@ class User extends Authenticatable
      * The contents the users has voted on.
      */
     public function voteOn() {
-        return $this->hasMany(Content::class, 'vote', 'users_id', 'content_id')->withPivot('value');
+        return $this->belongsToMany(Content::class, 'vote', 'users_id', 'content_id')->withPivot('value');
     }
 
     /**
      * The users I follow.
      */
     public function following() {
-        return $this->hasMany(User::class, 'follow', 'follower_id', 'users_id');
+        return $this->belongsToMany(User::class, 'follow', 'follower_id', 'users_id');
     }
 
     /**
      * The users that follow me.
      */
     public function followedBy() {
-        return $this->hasMany(User::class, 'follow', 'users_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'follow', 'users_id', 'follower_id');
     }
 
     /**
