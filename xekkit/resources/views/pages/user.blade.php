@@ -15,7 +15,8 @@
                 x/{{$user->username}}
             </h5>
             @if(Auth::user()->username != $user->username)
-                <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
+                @include('partials.modals.report_post', ['report_to_id' => $user->id, 'type'=>"user"])
+                <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
                     <i class="fas fa-exclamation-triangle"></i>
                 </button>
             @endif   
