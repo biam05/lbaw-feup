@@ -21,7 +21,7 @@
         <div class="mobile ms-auto pe-2">
             <a href="javascript:void(0)"><i onclick="openSearchBar()" class="text-white clickable fas fa-search me-3"></i></a>
             @auth
-            <a href="../pages/notifications.php"><i class="bell-notification fas fa-bell"></i></a>
+            <a href="/notifications/"><i class="bell-notification fas fa-bell"></i></a>
             @endauth
         </div>
 
@@ -41,7 +41,7 @@
                 <!-- Desktop right side of nav bar -->
                 <div class="desktop ms-auto d-inline-flex">
                     
-                        <a href="../pages/notifications.php" class="align-self-center"><i class="bell-notification fas fa-bell"></i></a>
+                        <a href="/notifications/" class="align-self-center"><i class="bell-notification fas fa-bell"></i></a>
                             
                         <div class="nav-item navbar-nav dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

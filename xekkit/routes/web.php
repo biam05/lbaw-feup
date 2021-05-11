@@ -6,6 +6,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -53,6 +54,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comment/create/', [CommentController::class, 'create']);
     Route::patch('/comment/', [CommentController::class, 'edit']);
     Route::delete('/comment/', [CommentController::class, 'delete']);
+
+    //notifications
+    Route::get('/notifications/', [NotificationsController::class, 'show']);
+    Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
+    Route::delete('/notifications/', [NotificationsController::class, 'delete']);
 });
 
 
