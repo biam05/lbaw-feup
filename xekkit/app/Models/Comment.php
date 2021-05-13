@@ -68,4 +68,8 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, 'comment_id');
     }
+
+    public function getChilds(){
+        return $this->hasMany(Comment::class, 'reply_to_id')->orderByDesc('content_id');
+    }
 }

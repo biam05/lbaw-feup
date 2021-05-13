@@ -9,10 +9,6 @@
     </div>
 </form>
 
-@if(count($news->comments))
-    <div class="container-xl p-3 bg-light-dark">
-        @foreach($news->comments as $comment)
-            @include('partials.news.single_comment', ['comment' => $comment, 'level' => 0, 'author' => 'x/uCanadaba3', 'partner' => false, 'date' => "10 hours ago", 'votes' => '15', 'replies' => '1'])
-        @endforeach
-    </div>
-@endif
+<div class="container-xl p-3 bg-light-dark">
+    @each('partials.news.single_comment', $news->getParentComments, "comment", "partials.news.no_comments")
+</div>

@@ -30,12 +30,10 @@ class NewsController extends Controller
      */
     public function show(Request $request, $id)
     {
-
         $news = News::findOrFail($id);
         $this->authorize('view', $news);
-        $author = User::findOrFail($news->content->author_id);
 
-        return view('pages.news', ['news' => $news, 'author' => $author]);
+        return view('pages.news', ['news' => $news]);
     }
 
     public function create(Request $request)

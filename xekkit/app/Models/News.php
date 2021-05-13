@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -64,8 +63,14 @@ class News extends Model
         return $this->belongsToMany(Tag::class, 'news_tag', 'news_id', 'tag_id');
     }
 
-    // public function getPostByUsersIFollow()
-    // {
-    //     return
-    // }
+    public function getParentComments(){
+        $query = $this->hasMany(Comment::class, 'news_id')->where('reply_to_id', null)->orderByDesc(
+            Content::select('date')
+                ->whereColumn('id', 'comment.content_id')
+                ->orderByDesc('date')
+                ->limit(1)
+        );
+
+        return $query;
+    }
 }
