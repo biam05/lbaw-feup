@@ -128,6 +128,7 @@ CREATE TABLE comment (
     content_id INTEGER NOT NULL,
     news_id INTEGER NOT NULL,
     reply_to_id INTEGER,
+    level INTEGER DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
         FOREIGN KEY(content_id)
@@ -474,6 +475,11 @@ CREATE OR REPLACE FUNCTION increase_comments() RETURNS TRIGGER AS
     BEGIN
         UPDATE news SET nr_comments = news.nr_comments + 1
         WHERE new.news_id=news.content_id;
+
+        IF new.reply_to_id IS NOT NULL THEN
+            UPDATE comment SET level = ((SELECT c2.level FROM comment c2 WHERE c2.content_id = new.reply_to_id) + 1)
+            WHERE comment.content_id = new.content_id;
+        END IF;
         RETURN new;
     END
 
@@ -619,8 +625,14 @@ CREATE OR REPLACE FUNCTION create_comment_notification() RETURNS TRIGGER AS
             FROM content news
             WHERE NEW.news_id = news.id;
 
-        IF NEW.reply_to_id <> NULL THEN
-            INSERT INTO comment_notification VALUES (NEW.reply_to_id, NEW.content_id, true, now());
+        IF NEW.reply_to_id IS NOT NULL THEN
+            INSERT INTO comment_notification
+            VALUES (
+                (SELECT author_id FROM content WHERE content.id = new.reply_to_id),
+                NEW.content_id,
+                true,
+                now()
+            );
         END IF;
         RETURN new;
     END
@@ -673,7 +685,7 @@ CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
     $BODY$
     DECLARE news_title TEXT = (SELECT title FROM news WHERE news.content_id = new.id);
     BEGIN
-        IF news_title <> NULL THEN
+        IF news_title IS NOT NULL THEN
             IF NEW.body <> OLD.body THEN
                 UPDATE news
                 SET search =
@@ -1187,6 +1199,9 @@ insert into content(author_id, body, nr_votes) values(19, 'Man, North Korea is s
 insert into content(author_id, body, nr_votes) values(20, 'ikr',0);
 insert into content(author_id, body, nr_votes) values(15, 'My president <3',0);
 insert into content(author_id, body, nr_votes) values(12, 'China being China',0);
+insert into content(author_id, body, nr_votes) values(4, 'Awesome!',0);
+insert into content(author_id, body, nr_votes) values(6, 'Great',2);
+insert into content(author_id, body, nr_votes) values(8, 'I disagree',0);
 
 insert into tag (name) values('economy');
 insert into tag (name) values('politics');
@@ -1210,6 +1225,9 @@ insert into comment(content_id, news_id,reply_to_id) values (5,4,null);
 insert into comment(content_id, news_id,reply_to_id) values (6,4,5);
 insert into comment(content_id, news_id,reply_to_id) values (7,2,null);
 insert into comment(content_id, news_id,reply_to_id) values (8,3,null);
+insert into comment(content_id, news_id,reply_to_id) values (9,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (10,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (11,4,null);
 
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (20, 6,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
