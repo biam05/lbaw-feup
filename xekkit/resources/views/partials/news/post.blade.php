@@ -17,6 +17,13 @@
                 </div>
                 @include('partials.modals.delete_post', ['news' => $news])
                 @include('partials.modals.edit_post', ['news' => $news])
+            @elseif (Auth::user() && Auth::user()->is_moderator)
+                <div class="col-auto">
+                    <button type="button" class="col-auto card-report clickable-big text-danger preventer" data-bs-toggle="modal" data-bs-target="#deletePostModal_{{$news->content_id}}">
+                        <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
+                    </button>
+                </div>
+                @include('partials.modals.delete_post', ['news' => $news])
             @else
                 <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportModal">
                     <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
@@ -25,7 +32,7 @@
         </div>
 
         <div class="row justify-content-between card-subtitle mb-2">
-            <a class="col-auto clickable text-muted text-decoration-none"  href="{{url('/user/' . $news->content->author->username)}}">
+            <a class="col-auto clickable text-muted text-decoration-none" href="{{url('/user/' . $news->content->author->username)}}">
                 <h6>
                     @if($news->content->author->is_partner)
                         <i class="fas fa-check"></i>
@@ -33,7 +40,7 @@
                     x/{{ $news->content->author->username  }}
                 </h6>
             </a>
-            <h6 class="col-auto text-muted">{{ $news->formatDate() }}</h6>
+            <h6 class="col-auto text-muted">{{ $news->content->formatDate() }}</h6>
         </div>
 
         <a href="/news/{{$news->content_id}}" class="clickable-small text-decoration-none">
@@ -41,7 +48,7 @@
                 <img src={{ asset('storage/img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
             @endisset
         </a>
-    
+
             <p class="card-text mt-3 text-white">{!! nl2br(e($news->content->body)) !!}</p>
     </div>
     <footer class="card-footer text-muted">
