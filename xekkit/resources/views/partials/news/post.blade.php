@@ -53,10 +53,10 @@
         <div class="row align-items-center">
             <div class="col-auto d-flex flex-column pe-1">
                 <button onclick='vote("{{ $news->content->id }}", true)' class="clickable-big">
-                    <i class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
+                    <i id="arrow_up" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                 </button>
                 <button onclick='vote("{{ $news->content->id }}", false)' class="clickable-big">
-                    <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
+                    <i id="arrow_down" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                 </button>
             </div>
             <span class="col-auto ps-1 text-white" id="n-votes">{{$news->content->nr_votes}}</span>

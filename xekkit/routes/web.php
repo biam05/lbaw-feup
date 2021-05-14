@@ -3,6 +3,7 @@
 use App\Http\Controllers\Content\CommentController;
 use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\Content\ContentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
@@ -57,6 +58,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comment/create/', [CommentController::class, 'create']);
     Route::patch('/comment/', [CommentController::class, 'edit']);
     Route::delete('/comment/', [CommentController::class, 'delete']);
+
+    // vote
+    Route::post('/api/vote', [ContentController::class, 'toggleVote']);
 });
 
 

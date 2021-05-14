@@ -24,38 +24,41 @@ class ContentController extends Controller
 {
     public function toggleVote(Request $request)
     {        
-        //return response()->json($request);
         $validator = Validator::make($request->all(), [
             'content_id' => 'required|integer',
             'upvote' => 'required|boolean'
         ]);
 
         if ($validator->fails()) {
-            return response()->json('yes');
+            return response()->json($validator);
         }        
 
-        // $content_id = $request->header('content_id');
-        // $upvote = $request->header('upvote');
+        $content_id = $request->content_id;
+        $upvote = $request->upvote;
 
-        // $content = Content::findOrFail($content_id);
+        $content = Content::findOrFail($content_id);
 
-        // $response = [
-        //     'status' => false,
-        //     'message' => "Vote ERROR"
-        // ];
+        $response = [
+            'status' => false,
+            'message' => "Vote ERROR"
+        ];
+
+        $user = Auth::user();
+
+        if($user == null) // not logged in
+            return response()->json($response);
+
+        $value = $user->is_partner ? 10 : 1;
+        $value = $upvote ? $value : -$value;
         
-        // $user = Auth::user();
-        // return response()->json(json_encode(Auth::user()));
-        // $value = $user->is_partner ? 10 : 1;
-        // $value = $upvote ? $value : -$value;
-        
-        // $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        $user->voteOn()->toggle([$content_id => ['value' => $value]]);
 
-        // $response = [
-        //     'status' => true,
-        //     'message' => $content->nr_votes
-        // ];
+        $response = [
+            'status' => true,
+            'message' => $content->nr_votes,
+            'vote' => $upvote
+        ];
 
-        // return response()->json($response);
+        return response()->json($response);
     }
 }
