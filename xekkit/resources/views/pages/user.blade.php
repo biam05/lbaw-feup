@@ -37,6 +37,7 @@
                 @auth
                     @if(Auth::user()->username == $user->username)
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
+                        @include('partials.users.partner_request')
                     @else
                         <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
                     @endif  
