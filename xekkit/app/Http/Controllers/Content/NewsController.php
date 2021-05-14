@@ -30,12 +30,10 @@ class NewsController extends Controller
      */
     public function show(Request $request, $id)
     {
-
         $news = News::findOrFail($id);
         $this->authorize('view', $news);
-        $author = User::findOrFail($news->content->author_id);
 
-        return view('pages.news', ['news' => $news, 'author' => $author]);
+        return view('pages.news', ['news' => $news]);
     }
 
     public function create(Request $request)
@@ -91,20 +89,20 @@ class NewsController extends Controller
     {
         $news = News::findOrFail($id);
         $this->authorize('update', $news);
-        
+
         $validator = $request->validate([
             'title' => 'required|string',
             'body' => 'required|string',
             'image' => 'image|mimes: jpg,png,jpeg,gif,svg|max:2048',
         ]);
-            
+
         $news->content->body = $request->input('body');
         $news->title = $request->input('title');
 
         if ($request->hasFile('image')) {
             $image_name = $news->content->id . '.' . $request->file('image')->extension();
 
-            if(!empty($news->image)){
+            if (!empty($news->image)) {
                 Storage::delete('/public/img/news/' . $news->image);
             }
 
@@ -118,16 +116,14 @@ class NewsController extends Controller
         });
 
         preg_match_all('/#(\w+)/', $request->input('body'), $hashtags);
-        
+
         // clear all tags from news
         $news->tags()->sync([]);
-        
+
         foreach ($hashtags[1] as $tag_text) {
             $tag = Tag::firstOrCreate(['name' => $tag_text]);
             $tag->news()->syncWithoutDetaching([$id]);
         }
-
-
 
         return redirect('/news/' . $id)->with('success', 'Your post was successfully updated.');
     }
@@ -139,21 +135,21 @@ class NewsController extends Controller
         ]);
 
         $news = News::findOrFail($id);
+
         $this->authorize('delete', $news);
 
-
-        if (! Hash::check($request->password, $request->user()->password)) {
+        if (!Hash::check($request->password, $request->user()->password)) {
             return back()->withErrors([
                 'password' => ['The provided password does not match our records.']
             ]);
         }
 
-        if(!empty($news->image)){
+        if (!empty($news->image)) {
             Storage::delete('/public/img/news/' . $news->image);
         }
 
         $news->content->delete();
 
-        return redirect('/')->with('success', 'Your post was successfully deleted.');
+        return redirect('/')->with('success', 'The post was successfully deleted.');
     }
 }

@@ -11,15 +11,19 @@
             <h5 class="col-auto text-white">
                 @if($user->is_partner)
                     <i class="fas fa-check"></i>
-                @endif    
+                @endif
                 x/{{$user->username}}
             </h5>
-            @if(Auth::user()->username != $user->username)
+            @if (Auth::check() && Auth::user()->is_moderator)
+                <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
+                    <i class="fas fa-trash"></i>
+                </button>
+            @elseif(Auth::user()->username != $user->username)
                 <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
                     <i class="fas fa-exclamation-triangle"></i>
                 </button>
-            @endif   
-        </div>   
+            @endif
+        </div>
         <div class="row justify-content-start text-white align-items-end mb-3">
             <div class="col-auto">
                 @if(!empty($user->photo))
@@ -40,9 +44,9 @@
                         @include('partials.users.partner_request')
                     @else
                         <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
-                    @endif  
-                @endauth   
-            </div>            
+                    @endif
+                @endauth
+            </div>
         </div>
         <p class="lead text-white mb-3">{{$user->description}}</p>
     </section>
@@ -58,15 +62,15 @@
             @include('partials.tab_content', ['active'=>True, 'type'=>'trending', 'pc'=>False, 'explore'=>False, 'posts'=>$trendingPosts])
             @include('partials.tab_content', ['active'=>False, 'type'=>'top', 'pc'=>False, 'explore'=>False, 'posts'=>$topPosts])
             @include('partials.tab_content', ['active'=>False, 'type'=>'new', 'pc'=>False, 'explore'=>False, 'posts'=>$recentPosts])
-            
+
             <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
                 @if(count($following) === 0)
                     <p class="text-white text-center h6 pt-4 pb-3">No results found</p>
                 @else
-                    <div class="row text-white pt-4 justify-content-evenly">                        
+                    <div class="row text-white pt-4 justify-content-evenly">
                         @each('partials.users.user_card', $following, 'user')
                     </div>
-                @endif 
+                @endif
             </div>
         </div>
     </nav>
