@@ -52,11 +52,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/news/create/', [NewsController::class, 'create']);
     Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
     Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
-
+    Route::post('/news/{id}/report/', [NewsController::class, 'report'])->where(['id'=>'[0-9]+']);
+    
     // comments
     Route::post('/comment/create/', [CommentController::class, 'create']);
     Route::patch('/comment/', [CommentController::class, 'edit']);
     Route::delete('/comment/', [CommentController::class, 'delete']);
+
+    Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
 });
 
 
