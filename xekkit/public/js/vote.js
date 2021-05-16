@@ -1,4 +1,4 @@
-function vote(content_id, vote, type, device){
+function vote(content_id, vote, type, device, comment){
 
     var params = {
         "content_id":parseInt(content_id),
@@ -13,13 +13,15 @@ function vote(content_id, vote, type, device){
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
     xhttp.send(JSON.stringify(params));  
-    
+
     let response = JSON.parse(xhttp.responseText);
+
     let status = response.status;
     let votes = response.message;
     if(status === true){
      
         let el = document.getElementById('n-votes_'+content_id+"_"+type+"_"+device);
+        
         el.innerText = votes;
 
         const arrow_up = document.getElementById('arrow_up_'+content_id+"_"+type+"_"+device);

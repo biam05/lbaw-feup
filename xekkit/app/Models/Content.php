@@ -69,4 +69,32 @@ class Content extends Model
         }
         return $vote;
     }
+
+    public static function getVoteFromComment(Comment $comment){
+        $vote = "";
+        if(Auth::check()){
+            $voter = $comment->content->voters()
+                ->where('users_id', Auth::id())
+                ->first();
+            if($voter != null){ //voted on the post
+                if($voter->pivot->value >= 1) $vote = "upvote";
+                else if($voter->pivot->value <= -1) $vote ="downvote";
+            }
+        }
+        return $vote;
+    }
+
+    public static function getVoteFromContent(Content $content){
+        $vote = "";
+        if(Auth::check()){
+            $voter = $content->voters()
+                ->where('users_id', Auth::id())
+                ->first();
+            if($voter != null){ //voted on the post
+                if($voter->pivot->value >= 1) $vote = "upvote";
+                else if($voter->pivot->value <= -1) $vote ="downvote";
+            }
+        }
+        return $vote;
+    }
 }

@@ -36,9 +36,7 @@ class NewsController extends Controller
         $this->authorize('view', $news);
         $author = User::findOrFail($news->content->author_id);
 
-        //$vote = ((new ContentController)->getVote($news->content));
-
-        return view('pages.news', ['news' => $news, 'author' => $author/*, 'vote' => $vote*/]);
+        return view('pages.news', ['news' => $news, 'author' => $author]);
     }
 
     public function create(Request $request)

@@ -32,7 +32,7 @@ CREATE TABLE users(
     photo TEXT,
     birthdate DATE NOT NULL, /* add trigger to check age > 13 */
     gender GENDER_TYPE NOT NULL,
-    reputation INTEGER NOT NULL DEFAULT 0 CHECK (reputation >=0),
+    reputation INTEGER NOT NULL DEFAULT 0,
     last_day_of_vote DATE,
     count_last_day_rep INTEGER DEFAULT 0,
     is_moderator BOOLEAN NOT NULL DEFAULT false,
@@ -100,7 +100,7 @@ CREATE TABLE news (
     content_id INTEGER NOT NULL,
     title TEXT NOT NULL,
     image TEXT,
-    trending_score INTEGER NOT NULL DEFAULT 0 CHECK (trending_score >= 0),
+    trending_score INTEGER NOT NULL DEFAULT 0,
     nr_comments INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id

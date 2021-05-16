@@ -51,9 +51,18 @@ class ContentController extends Controller
         $value = $user->is_partner ? 10 : 1;
         $value = $upvote ? $value : -$value;
         
+        $voted = Content::getVoteFromContent($content);
+        if($voted == "downvote"){   
+            if($upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        }
+        else if($voted == "upvote"){
+            if(!$upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        }    
+
         $user->voteOn()->toggle([$content_id => ['value' => $value]]);
         
         $content = Content::findOrFail($content_id);
+
         $response = [
             'status' => true,
             'message' => $content->nr_votes,
