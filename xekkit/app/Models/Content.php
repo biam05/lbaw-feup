@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,5 +56,17 @@ class Content extends Model
         return $this->belongsToMany(User::class, 'vote', 'content_id', 'users_id')->withPivot('value');
     }
 
-    
+    public static function getVote(News $news){
+        $vote = "";
+        if(Auth::check()){
+            $voter = $news->content->voters()
+                ->where('users_id', Auth::id())
+                ->first();
+            if($voter != null){ //voted on the post
+                if($voter->pivot->value >= 1) $vote = "upvote";
+                else if($voter->pivot->value <= -1) $vote ="downvote";
+            }
+        }
+        return $vote;
+    }
 }

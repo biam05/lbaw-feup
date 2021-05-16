@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\News;
 use App\Models\Content;
 use App\Models\Follow;
+use App\Http\Controllers\Content\ContentController;
 
 class HomepageController extends Controller
 {

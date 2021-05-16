@@ -1,3 +1,4 @@
+<?php use App\Models\Content;?>
 <div class="card mb-3 text-white bg-light-dark">
     <div class="card-body">
         <div class="row card-title justify-content-between mb-2">
@@ -53,11 +54,22 @@
         <div class="row align-items-center">
             <div class="col-auto d-flex flex-column pe-1">
                 <button onclick='vote("{{ $news->content->id }}", true, "{{$type}}", "{{$device}}")' class="clickable-big">
-                    <i id="arrow_up_{{$news->content_id}}" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
+                    
+                    @if (Content::getVote($news) === "upvote")                        
+                        <i id="arrow_up_{{$news->content_id}}_{{$type}}_{{$device}}" class="fas fa-angle-up text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
+                    @else
+                        <i id="arrow_up_{{$news->content_id}}_{{$type}}_{{$device}}" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
+                    @endif
+                    
                 </button>
                 <button onclick='vote("{{ $news->content->id }}", false, "{{$type}}", "{{$device}}")' class="clickable-big">
-                    <i id="arrow_down_{{$news->content_id}}" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
-                </button>
+                    
+                    @if (Content::getVote($news) === "downvote") 
+                        <i id="arrow_down_{{$news->content_id}}_{{$type}}_{{$device}}" class="fas fa-angle-down text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
+                    @else
+                        <i id="arrow_down_{{$news->content_id}}_{{$type}}_{{$device}}" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
+                    @endif
+                    </button>
             </div>
             <span class="col-auto ps-1 text-white" id="n-votes_{{$news->content_id}}_{{$type}}_{{$device}}">{{$news->content->nr_votes}}</span>
             <button class="col-auto clickable text-white">

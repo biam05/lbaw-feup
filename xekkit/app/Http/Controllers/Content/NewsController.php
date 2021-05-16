@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Content\ContentController;
 
 use App\Models\News;
 use App\Models\Content;
@@ -35,7 +36,9 @@ class NewsController extends Controller
         $this->authorize('view', $news);
         $author = User::findOrFail($news->content->author_id);
 
-        return view('pages.news', ['news' => $news, 'author' => $author]);
+        //$vote = ((new ContentController)->getVote($news->content));
+
+        return view('pages.news', ['news' => $news, 'author' => $author/*, 'vote' => $vote*/]);
     }
 
     public function create(Request $request)
