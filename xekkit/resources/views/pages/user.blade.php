@@ -19,7 +19,7 @@
                     <i class="fas fa-trash"></i>
                 </button>
             @elseif(Auth::user()->username != $user->username)
-            @include('partials.modals.report_post', ['report_to_id' => $user->id, 'type'=>"user"])
+            @include('partials.modals.report', ['report_to_id' => $user->id, 'type'=>"user"])
             <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
                 <i class="fas fa-exclamation-triangle"></i>
             </button>
@@ -42,7 +42,11 @@
                 @auth
                     @if(Auth::user()->username == $user->username)
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
-                        @include('partials.users.partner_request')
+                        @if($user->is_partner)
+                            @include('partials.modals.stop_partnership')
+                        @else
+                            @include('partials.modals.partner_request')
+                        @endif
                     @else
                         <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
                     @endif
