@@ -1,8 +1,8 @@
-function vote(content_id, vote){
+function vote(content_id, vote, type, device){
 
     var params = {
         "content_id":parseInt(content_id),
-        "upvote": vote,
+        "upvote": vote
     }
 
     let xhttp = new XMLHttpRequest();
@@ -14,18 +14,18 @@ function vote(content_id, vote){
 
     xhttp.send(JSON.stringify(params));
 
-    console.log(xhttp.responseText);
+  
     
     let response = JSON.parse(xhttp.responseText);
     let status = response.status;
     let votes = response.message;
-
     if(status === true){
-        const el = document.getElementById('n-votes');    
+     
+        let el = document.getElementById('n-votes_'+content_id+"_"+type+"_"+device);
         el.innerText = votes;
 
-        const arrow_up = document.getElementById('arrow_up');
-        const arrow_down = document.getElementById('arrow_down'); 
+        const arrow_up = document.getElementById('arrow_up_'+content_id);
+        const arrow_down = document.getElementById('arrow_down_'+content_id); 
         if(response.vote === true){    
             if(arrow_up.classList.contains("text-white")){
                 arrow_up.classList.remove("text-white");

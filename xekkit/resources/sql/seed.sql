@@ -591,7 +591,7 @@ CREATE TRIGGER create_follow_notification
     EXECUTE PROCEDURE create_follow_notification();
 
 
--- Trigger 12 - Create Follow Notification
+-- Trigger 12 - Create Vote Notification
 DROP FUNCTION IF EXISTS create_vote_notification() CASCADE;
 DROP TRIGGER IF EXISTS create_vote_notification ON vote;
 
@@ -611,6 +611,28 @@ CREATE TRIGGER create_vote_notification
     AFTER INSERT ON vote
     FOR EACH ROW
     EXECUTE PROCEDURE create_vote_notification();
+
+
+-- Trigger 12 - Delete Vote Notification
+DROP FUNCTION IF EXISTS delete_vote_notification() CASCADE;
+DROP TRIGGER IF EXISTS delete_vote_notification ON vote;
+
+CREATE OR REPLACE FUNCTION delete_vote_notification() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        DELETE FROM vote_notification
+            WHERE vote_notification.voter_id=old.users_id 
+            and old.content_id = vote_notification.content_id;
+        RETURN old;
+    END
+    $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_vote_notification
+    AFTER DELETE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_vote_notification();
+
 
 
 --Trigger 13 - Create Comment Notification

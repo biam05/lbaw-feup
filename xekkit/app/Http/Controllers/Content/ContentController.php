@@ -52,7 +52,8 @@ class ContentController extends Controller
         $value = $upvote ? $value : -$value;
         
         $user->voteOn()->toggle([$content_id => ['value' => $value]]);
-
+        
+        $content = Content::findOrFail($content_id);
         $response = [
             'status' => true,
             'message' => $content->nr_votes,

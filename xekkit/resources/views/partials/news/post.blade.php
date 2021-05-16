@@ -52,14 +52,14 @@
         </div>
         <div class="row align-items-center">
             <div class="col-auto d-flex flex-column pe-1">
-                <button onclick='vote("{{ $news->content->id }}", true)' class="clickable-big">
-                    <i id="arrow_up" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
+                <button onclick='vote("{{ $news->content->id }}", true, "{{$type}}", "{{$device}}")' class="clickable-big">
+                    <i id="arrow_up_{{$news->content_id}}" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                 </button>
-                <button onclick='vote("{{ $news->content->id }}", false)' class="clickable-big">
-                    <i id="arrow_down" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
+                <button onclick='vote("{{ $news->content->id }}", false, "{{$type}}", "{{$device}}")' class="clickable-big">
+                    <i id="arrow_down_{{$news->content_id}}" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                 </button>
             </div>
-            <span class="col-auto ps-1 text-white" id="n-votes">{{$news->content->nr_votes}}</span>
+            <span class="col-auto ps-1 text-white" id="n-votes_{{$news->content_id}}_{{$type}}_{{$device}}">{{$news->content->nr_votes}}</span>
             <button class="col-auto clickable text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>
                 &nbsp;{{$news->nr_comments}}

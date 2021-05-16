@@ -14,7 +14,9 @@
                     @include('partials.homepage.explore')
                 </section>
             @else
-                @each('partials.news.post', $posts, 'news')
+                @foreach($posts as $post)
+                    @include('partials.news.post', ['news'=>$post,'type'=>"{{$type}}", 'device'=>"{{$device}}"])
+                @endforeach
             @endif            
         @endif
     </div>
@@ -28,7 +30,9 @@
                     @include('partials.homepage.explore')
                 </section>
             @else
-                @each('partials.news.post', $posts, 'news')
+                @foreach($posts as $post)
+                    @include('partials.news.post', ['news'=>$post,'type'=>"{{$type}}", 'device'=>"{{$device}}"])
+                @endforeach
             @endif
         @endif    
     </div>  
