@@ -12,7 +12,7 @@
             @include('partials.news.comments')
         </div>
         <sidebar class="hidden-md-down col-lg-auto">
-            @include('partials.users.user_card', ['user'=> $author])
+            @include('partials.users.user_card', ['user'=> $news->content->author])
         </sidebar>
     </div>
 </div>

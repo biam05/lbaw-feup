@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/news/create/', [NewsController::class, 'create']);
     Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
     Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
-
+    Route::post('/news/{id}/report/', [NewsController::class, 'report'])->where(['id'=>'[0-9]+']);
+    
     // comments
     Route::post('/comment/create/', [CommentController::class, 'create']);
     Route::patch('/comment/', [CommentController::class, 'edit']);
@@ -61,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
 
     // vote
     Route::post('/api/vote', [ContentController::class, 'toggleVote']);
+
+    // report
+    Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
 });
 
 

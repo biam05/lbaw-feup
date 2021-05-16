@@ -15,7 +15,7 @@
     @include('partials.login_to_post')
 @endguest
 
-@include('partials.modals.report_post')
+
 
 <main class="container-xl">
     @include('partials.homepage.feed_pc')
