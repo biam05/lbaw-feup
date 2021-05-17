@@ -15,7 +15,7 @@
                 </section>
             @else
                 @foreach($posts as $post)
-                    @include('partials.news.post', ['news'=>$post,'type'=>"{{$type}}", 'device'=>"{{$device}}"])
+                    @include('partials.news.post', ['news'=>$post,'type'=>$type, 'device'=>$device])
                 @endforeach
             @endif            
         @endif
@@ -31,7 +31,7 @@
                 </section>
             @else
                 @foreach($posts as $post)
-                    @include('partials.news.post', ['news'=>$post,'type'=>"{{$type}}", 'device'=>"{{$device}}"])
+                    @include('partials.news.post', ['news'=>$post,'type'=>$type, 'device'=>$device])
                 @endforeach
             @endif
         @endif    
