@@ -26,8 +26,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ContentController extends Controller
 {
     public function toggleVote(Request $request)
-    {
-        return response()->json($request);
+    {        
         $validator = Validator::make($request->all(), [
             'content_id' => 'required|integer',
             'upvote' => 'required|boolean'
@@ -35,11 +34,10 @@ class ContentController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator);
-        }
-        
+        }        
 
-        $content_id = $request->header('content_id');
-        $upvote = $request->header('upvote');
+        $content_id = $request->content_id;
+        $upvote = $request->upvote;
 
         $content = Content::findOrFail($content_id);
 
@@ -47,18 +45,33 @@ class ContentController extends Controller
             'status' => false,
             'message' => "Vote ERROR"
         ];
-        
+
         $user = Auth::user();
-        return response()->json(json_encode(Auth::user()));
+
+        if($user == null) // not logged in
+            return response()->json($response);
+
         $value = $user->is_partner ? 10 : 1;
         $value = $upvote ? $value : -$value;
         
+        $voted = Content::getVoteFromContent($content);
+        if($voted == "downvote"){   
+            if($upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        }
+        else if($voted == "upvote"){
+            if(!$upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        }    
+
         $user->voteOn()->toggle([$content_id => ['value' => $value]]);
+        
+        $content = Content::findOrFail($content_id);
 
         $response = [
             'status' => true,
-            'message' => $content->nr_votes
+            'message' => $content->nr_votes,
+            'vote' => $upvote
         ];
+
         return response()->json($response);
     }
 

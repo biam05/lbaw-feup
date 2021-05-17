@@ -1,3 +1,4 @@
+
 <div class="card mb-3 text-white bg-light-dark">
     <div class="card-body">
         <div class="row card-title justify-content-between mb-2">
@@ -28,8 +29,8 @@
                 </div>
                 @include('partials.modals.delete_post', ['news' => $news])
             @elseif(Auth::user() && $news->content->author_id != Auth::user()->id)
-                @include('partials.modals.report', ['report_to_id' => $news->content_id, 'type'=>"news"])
-                <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportContent_{{$news->content_id}}">
+                @include('partials.modals.report_post', ['report_to_id' => $news->content_id, 'type'=>"news", 'tab'=>$type, 'device'=>$device])
+                <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportContent_{{$news->content_id}}_{{$type}}_{{$device}}">
                     <i class="fas fa-exclamation-triangle"></i></button>
             @endif
         </div>
@@ -61,15 +62,9 @@
             @endforeach
         </div>
         <div class="row align-items-center">
-            <div class="col-auto d-flex flex-column pe-1">
-                <button onclick='vote("{{ $news->content->id }}", true)' class="clickable-big">
-                    <i class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
-                </button>
-                <button onclick='vote("{{ $news->content->id }}", false)' class="clickable-big">
-                    <i class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
-                </button>
-            </div>
-            <span class="col-auto ps-1 text-white" id="n-votes">{{$news->content->nr_votes}}</span>
+
+            @include('partials.news.vote',['news'=>$news, 'type'=>$type, 'device'=>$device])
+            
             <button class="col-auto clickable text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>
                 &nbsp;{{$news->nr_comments}}

@@ -32,7 +32,7 @@ CREATE TABLE users(
     photo TEXT,
     birthdate DATE NOT NULL, /* add trigger to check age > 13 */
     gender GENDER_TYPE NOT NULL,
-    reputation INTEGER NOT NULL DEFAULT 0 CHECK (reputation >=0),
+    reputation INTEGER NOT NULL DEFAULT 0,
     last_day_of_vote DATE,
     count_last_day_rep INTEGER DEFAULT 0,
     is_moderator BOOLEAN NOT NULL DEFAULT false,
@@ -100,7 +100,7 @@ CREATE TABLE news (
     content_id INTEGER NOT NULL,
     title TEXT NOT NULL,
     image TEXT,
-    trending_score INTEGER NOT NULL DEFAULT 0 CHECK (trending_score >= 0),
+    trending_score INTEGER NOT NULL DEFAULT 0,
     nr_comments INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
@@ -591,7 +591,7 @@ CREATE TRIGGER create_follow_notification
     EXECUTE PROCEDURE create_follow_notification();
 
 
--- Trigger 12 - Create Follow Notification
+-- Trigger 12 - Create Vote Notification
 DROP FUNCTION IF EXISTS create_vote_notification() CASCADE;
 DROP TRIGGER IF EXISTS create_vote_notification ON vote;
 
@@ -611,6 +611,28 @@ CREATE TRIGGER create_vote_notification
     AFTER INSERT ON vote
     FOR EACH ROW
     EXECUTE PROCEDURE create_vote_notification();
+
+
+-- Trigger 12 - Delete Vote Notification
+DROP FUNCTION IF EXISTS delete_vote_notification() CASCADE;
+DROP TRIGGER IF EXISTS delete_vote_notification ON vote;
+
+CREATE OR REPLACE FUNCTION delete_vote_notification() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        DELETE FROM vote_notification
+            WHERE vote_notification.voter_id=old.users_id 
+            and old.content_id = vote_notification.content_id;
+        RETURN old;
+    END
+    $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_vote_notification
+    AFTER DELETE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_vote_notification();
+
 
 
 --Trigger 13 - Create Comment Notification
