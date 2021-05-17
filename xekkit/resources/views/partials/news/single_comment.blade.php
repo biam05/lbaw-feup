@@ -12,7 +12,7 @@
             @endif
             <p class="text-white text-muted px-2 m-0"><small>
                     <a class="col-auto text-muted pe-2" href="../user/{{ $comment->content->author->username  }}">
-                        @if($comment->content->author->is_partner){?>
+                        @if($comment->content->author->is_partner)
                         <i class="fas fa-check"></i>
                         @endif
                         x/{{ $comment->content->author->username }}</a>{{ $comment->content->formatDate() }}</small>
@@ -20,7 +20,7 @@
                     <button class="clickable-big text-muted ps-2" data-bs-toggle="modal" data-bs-target="#deletePostModal_{{$comment->content_id}}">
                         <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
                     </button>
-{{--                    @include('partials.modals.delete_post', ['news' => $news])--}}
+                    @include('partials.modals.delete_comment', ['comment' => $comment])
                 @else
                     <button class="clickable-big text-muted ps-2">
                         <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
@@ -33,16 +33,16 @@
             <div class="row align-items-center text-muted">
                 <div class="col-auto d-flex flex-row pe-1 align-items-center">
                     <button onclick='vote("{{ $comment->content->id }}", true, "", "", "")' class="clickable-big ">
-                        @if (Content::getVoteFromContent($comment->content) === "upvote")                        
+                        @if (Content::getVoteFromContent($comment->content) === "upvote")
                             <i id="arrow_up_{{$comment->content_id}}__" class="fas fa-angle-up text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                         @else
                             <i id="arrow_up_{{$comment->content_id}}__" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
-                        @endif                        
+                        @endif
                     </button>
                     <span class="col-auto ps-0 text-white" id="n-votes_{{$comment->content_id}}__">{{$comment->content->nr_votes}}</span>
                     <button onclick='vote("{{ $comment->content->id }}", false, "", "", "")' class="clickable-big">
-        
-                        @if (Content::getVoteFromContent($comment->content) === "downvote") 
+
+                        @if (Content::getVoteFromContent($comment->content) === "downvote")
                             <i id="arrow_down_{{$comment->content_id}}__" class="fas fa-angle-down text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                         @else
                             <i id="arrow_down_{{$comment->content_id}}__" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
