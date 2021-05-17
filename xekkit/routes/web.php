@@ -60,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/comment/', [CommentController::class, 'delete']);
 
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
+    Route::post('/user/{username}/partner_request', [UserController::class, 'partner_request']);
+
 });
 
 
