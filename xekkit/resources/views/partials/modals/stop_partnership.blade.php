@@ -1,1 +1,0 @@
-<a href="#" class="col-auto align-self-end btn btn-danger">Stop Partnership</a>
