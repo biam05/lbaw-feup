@@ -16,7 +16,7 @@
                         <i class="fas fa-check"></i>
                         @endif
                         x/{{ $comment->content->author->username }}</a>{{ $comment->content->formatDate() }}</small>
-                @if (Auth::user() && Auth::user()->is_moderator)
+                @if (Auth::user() && (Auth::user()->is_moderator || Auth::user()->id === $comment->content->author_id))
                     <button class="clickable-big text-muted ps-2" data-bs-toggle="modal" data-bs-target="#deletePostModal_{{$comment->content_id}}">
                         <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
                     </button>
