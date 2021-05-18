@@ -4,6 +4,7 @@
 
 @section('content')
 
+<?php use App\Models\User;?>
 
 <main class="container-xl">
     <section>
@@ -18,11 +19,11 @@
                 <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportModal">
                     <i class="fas fa-trash"></i>
                 </button>
-            @elseif(Auth::user()->username != $user->username)
-            @include('partials.modals.report_post', ['report_to_id' => $user->id, 'type'=>"user"])
-            <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
-                <i class="fas fa-exclamation-triangle"></i>
-            </button>
+            @elseif(Auth::check() && Auth::user()->username != $user->username)
+                @include('partials.modals.report_post', ['report_to_id' => $user->id, 'type'=>"user"])
+                <button type="button" class="col-auto clickable-big text-white" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </button>
             @endif
         </div>
         <div class="row justify-content-start text-white align-items-end mb-3">
@@ -44,7 +45,12 @@
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
                         @include('partials.users.partner_request')
                     @else
-                        <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
+                        @if (User::followOrUnfollow($user))
+                        <button id="follow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Follow</button>
+                        @else
+                        <button id="unfollow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Unfollow</button>
+                        @endif
+                        
                     @endif
                 @endauth
             </div>
@@ -76,5 +82,9 @@
         </div>
     </nav>
 </main>
+
+@once
+    <script defer src="{{ asset('js/follow.js') }}"></script>
+@endonce
 
 @endsection
