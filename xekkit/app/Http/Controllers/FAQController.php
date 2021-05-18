@@ -45,7 +45,9 @@ class FAQController extends Controller
         ]);
 
         $topic->question = $request->question;
-        $topic->answer = $requst->answer;
+        $topic->answer = $request->answer;
+
+        $topic->save();
 
         return redirect('/faq/')->with('success', 'The question was successfully updated.');;
     }
