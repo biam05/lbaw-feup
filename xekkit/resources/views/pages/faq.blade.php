@@ -17,8 +17,7 @@
         @if (Auth::user()->is_moderator)
             @include('partials.faq.add_question')
         @endif   
-    @endauth
-    @include('partials.modals.edit_faq')    
+    @endauth   
 </main>
 
 @endsection

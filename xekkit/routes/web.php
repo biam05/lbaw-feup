@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () {
     // follow
     Route::post('/api/follow', [UserController::class, 'toggleFollow']);
 
+    // faq
+    Route::post('/faq/', [FAQController::class, 'create']);
+    Route::patch('/faq/{id}/', [FAQController::class, 'edit']);     //TODO editar yaml
+    Route::delete('/faq/{id}/', [FAQController::class, 'delete']);  //TODO editar yaml
+
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
 });

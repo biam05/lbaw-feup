@@ -17,4 +17,46 @@ class FAQController extends Controller
             'topics' => $topics
         ]);
     }
+
+    public function create(Request $request){
+        $this->authorize('create', Faq::class);
+
+        $validator = $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string'
+        ]);
+
+        Faq::create([
+            'question' => $request->question,
+            'answer' => $request->answer,
+        ]);
+
+        return redirect('/faq/');
+    }
+
+    public function edit(Request $request, $id){
+        
+        $topic = Faq::findOrFail($id);
+        $this->authorize('update', $topic);
+
+        $validator = $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string'
+        ]);
+
+        $topic->question = $request->question;
+        $topic->answer = $request->answer;
+
+        $topic->save();
+
+        return redirect('/faq/')->with('success', 'The question was successfully updated.');;
+    }
+
+    public function delete(Request $request, $id){
+        $topic = Faq::findOrFail($id);
+        $this->authorize('delete', $topic);
+        $topic->delete();
+
+        return redirect('/faq/')->with('success', 'The question was successfully deleted.');
+    }
 }
