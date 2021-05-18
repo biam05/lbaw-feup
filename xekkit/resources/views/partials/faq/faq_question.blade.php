@@ -10,11 +10,18 @@
             @auth
                 @if(Auth::user()->is_moderator)
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-outline-primary btn-sm mt-2 me-2" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-questionID="{{$topic->id}}">Edit</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm mt-2">Remove</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm mt-2 me-2" data-bs-toggle="modal" data-bs-target="#editFAQ_{{$topic->id}}" data-bs-questionID="{{$topic->id}}">Edit</button>
+                        <form method="post" action="/faq/{{$topic->id}}">
+                            @method('delete')
+                            {{csrf_field()}}
+                            <button type="submit" class="btn btn-outline-danger btn-sm mt-2">Remove</button>
+                        </form>
+                        
                     </div> 
                 @endif   
             @endauth
         </div>
     </div>
 </div>
+
+@include('partials.modals.edit_faq', ['topic' => $topic]) 

@@ -34,11 +34,27 @@ class FAQController extends Controller
         return redirect('/faq/');
     }
 
-    public function edit(){
+    public function edit(Request $request, $id){
         
+        $topic = Faq::findOrFail($id);
+        $this->authorize('update', $topic);
+
+        $validator = $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string'
+        ]);
+
+        $topic->question = $request->question;
+        $topic->answer = $requst->answer;
+
+        return redirect('/faq/')->with('success', 'The question was successfully updated.');;
     }
 
-    public function delete(){
-        
+    public function delete(Request $request, $id){
+        $topic = Faq::findOrFail($id);
+        $this->authorize('delete', $topic);
+        $topic->delete();
+
+        return redirect('/faq/')->with('success', 'The question was successfully deleted.');
     }
 }

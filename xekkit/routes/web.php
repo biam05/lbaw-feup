@@ -70,8 +70,8 @@ Route::middleware(['auth'])->group(function () {
 
     // faq
     Route::post('/faq/', [FAQController::class, 'create']);
-    Route::patch('/faq/', [FAQController::class, 'edit']);
-    Route::delete('/faq/', [FAQController::class, 'delete']);
+    Route::patch('/faq/{id}/', [FAQController::class, 'edit']);     //TODO editar yaml
+    Route::delete('/faq/{id}/', [FAQController::class, 'delete']);  //TODO editar yaml
 
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);

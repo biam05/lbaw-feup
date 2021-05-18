@@ -28,27 +28,24 @@ class FAQPolicy
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Faq $faq
      *
      * @return mixed
      */
-    public function update(User $user, Faq $faq)
+    public function update(User $user)
     {
-        return $user->id === $news->content->author_id && !($user->is_banned || $user->is_deleted);
+        return $user->is_moderator;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Faq $faq
      *
      * @return mixed
      */
-    public function delete(User $user, Faq $faq)
+    public function delete(User $user)
     {
-        // Only a news author can delete it or a moderator
-        return ($user->id === $news->content->author_id && !($user->is_banned || $user->is_deleted)) || ($user->is_moderator && !($user->is_banned || $user->is_deleted));
+        return $user->is_moderator;
     }
 
 }
