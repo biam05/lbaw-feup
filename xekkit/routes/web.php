@@ -6,6 +6,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Content\ContentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -44,7 +45,8 @@ Route::get('/search/', [SearchController::class, 'show'])->name('search');
 // Profile
 Route::get('/user/{username}', [UserController::class, 'show']);
 
-
+// FAQ
+Route::get('/faq/', [FAQController::class, 'show'])->name('faq');
 
 // Authenticated needed for this routes
 Route::middleware(['auth'])->group(function () {
