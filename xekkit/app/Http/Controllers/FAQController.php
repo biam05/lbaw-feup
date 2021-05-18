@@ -17,4 +17,28 @@ class FAQController extends Controller
             'topics' => $topics
         ]);
     }
+
+    public function create(Request $request){
+        $this->authorize('create', Faq::class);
+
+        $validator = $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string'
+        ]);
+
+        Faq::create([
+            'question' => $request->question,
+            'answer' => $request->answer,
+        ]);
+
+        return redirect('/faq/');
+    }
+
+    public function edit(){
+        
+    }
+
+    public function delete(){
+        
+    }
 }

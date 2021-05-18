@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () {
     // follow
     Route::post('/api/follow', [UserController::class, 'toggleFollow']);
 
+    // faq
+    Route::post('/faq/', [FAQController::class, 'create']);
+    Route::patch('/faq/', [FAQController::class, 'edit']);
+    Route::delete('/faq/', [FAQController::class, 'delete']);
+
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
 });
