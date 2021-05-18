@@ -1360,6 +1360,13 @@ paths:
       tags:
         - 'M08: Static Pages'
       
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          
       requestBody:
         required: true
         content:
