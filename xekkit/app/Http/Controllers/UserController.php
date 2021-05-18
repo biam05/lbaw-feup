@@ -120,7 +120,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function stop_partnership($username)
+    public function stop_partnership(Request $request, $username)
     {
     
         $user = User::where('username','=',$username)->first();   
