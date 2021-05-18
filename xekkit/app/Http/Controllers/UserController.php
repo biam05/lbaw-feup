@@ -114,24 +114,19 @@ class UserController extends Controller
     public function partner_request(Request $request, $username)
     {
         $user = User::where('username','=',$username)->first();   
-        $user = User::findOrFail($user->id);
 
+        
 
-        $recentPosts = $posts->sortByDesc('content.date');      
-        $topPosts = $posts->sortByDesc('content.nr_votes');
-        $trendingPosts = $posts->sortByDesc('trending_score');
-
-        $following = $user->following;
-
-        //dd($following);
-
-        return view('pages.user', [
-            'user' => $user,
-            'recentPosts' => $recentPosts,
-            'topPosts' => $topPosts,
-            'trendingPosts' => $trendingPosts,
-            'following' => $following
-        ]);
+        return redirect()->back();
     }
 
+    public function stop_partnership($username)
+    {
+    
+        $user = User::where('username','=',$username)->first();   
+
+        $user->is_partner=false;
+
+        return redirect()->back();
+    }
 }

@@ -10,7 +10,7 @@
         <div class="row justify-content-start">
             <h5 class="col-auto text-white">
                 @if($user->is_partner)
-                    <i class="fas fa-check"></i>
+                    <i id="user-partner" class="fas fa-check"></i>
                 @endif
                 x/{{$user->username}}
             </h5>
@@ -45,6 +45,7 @@
                         @if($user->is_partner)
                             @include('partials.modals.stop_partnership')
                         @else
+                            {{-- verificar se está um pedido pendente --}}
                             @include('partials.modals.partner_request')
                         @endif
                     @else
