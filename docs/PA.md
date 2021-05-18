@@ -119,9 +119,9 @@ Link: http://lbaw2114.lbaw-prod.fe.up.pt
 ### M06 - Create Requests
 | US Identifier | Name| Priority| Team members| State  |
 |------ |------|------|------| -----|
-| US08 | Create Report | Mandatory | André Assunção | 0% |
-| US210 | Request Partner label | Important | André Assunção | 0% |
-| US51 | Stop Being a Partner | Important | André Assunção | 0% |
+| US08 | Create Report | Mandatory | André Assunção | 100% |
+| US210 | Request Partner label | Important | André Assunção | 75% |
+| US51 | Stop Being a Partner | Important | André Assunção | 75% |
 | US61 | Unban Appeal | Optional | André Assunção | 0% |
 
 
