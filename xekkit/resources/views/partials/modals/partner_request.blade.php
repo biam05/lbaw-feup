@@ -10,9 +10,9 @@ aria-labelledby="Report-modal-label" aria-hidden="true">
         aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <form method="post" action="/users/{{$user->username}}/partner_request">
+    <form method="post" action="/user/{{$user->username}}/partner_request/"  enctype="multipart/form-data">
         {{csrf_field()}}
-    {{ csrf_field() }}
+
     <div class="mb-3">
         <label for="PartnerRequest-modal-description" class="form-label">Tell us why you would be a great partner</label>
         <textarea name="body" id="PartnerRequest-modal-description" class="input form-control" role="textbox"

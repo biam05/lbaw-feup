@@ -22,8 +22,9 @@
                     </button>
 {{--                    @include('partials.modals.delete_post', ['news' => $news])--}}
                 @else
-                    <button class="clickable-big text-muted ps-2">
-                        <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
+                @include('partials.modals.report', ['report_to_id' => $comment->content_id, 'type'=>"comment", 'tab'=>'', 'device'=>''])
+                    <button class="clickable-big text-muted ps-2 text-white" data-bs-toggle="modal" data-bs-target="#reportContent_{{$comment->content_id}}__">
+                        <i class="fas fa-exclamation-triangle " data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
                     </button>
                 @endif
             </p>
