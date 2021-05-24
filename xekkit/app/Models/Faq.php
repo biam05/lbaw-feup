@@ -17,6 +17,16 @@ class Faq extends Model
     protected $table = 'faq';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'question', 
+        'answer', 
+    ];
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool

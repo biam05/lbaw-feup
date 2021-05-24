@@ -6,6 +6,8 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Content\ContentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -44,7 +46,11 @@ Route::get('/search/', [SearchController::class, 'show'])->name('search');
 // Profile
 Route::get('/user/{username}', [UserController::class, 'show']);
 
+// FAQ
+Route::get('/faq/', [FAQController::class, 'show'])->name('faq');
 
+// About
+Route::get('/about/', [AboutController::class, 'show'])->name('about');
 
 // Authenticated needed for this routes
 Route::middleware(['auth'])->group(function () {
@@ -54,18 +60,23 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
     Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
     Route::post('/news/{id}/report/', [NewsController::class, 'report'])->where(['id'=>'[0-9]+']);
-    
+
     // comments
     Route::post('/comment/{id}/report/', [CommentController::class, 'report'])->where(['id'=>'[0-9]+']);
     Route::post('/comment/create/', [CommentController::class, 'create']);
     Route::patch('/comment/', [CommentController::class, 'edit']);
-    Route::delete('/comment/', [CommentController::class, 'delete']);
+    Route::delete('/comment/{id}', [CommentController::class, 'delete'])->where(['id'=>'[0-9]+']);
 
     // vote
     Route::post('/api/vote', [ContentController::class, 'toggleVote']);
 
     // follow
     Route::post('/api/follow', [UserController::class, 'toggleFollow']);
+
+    // faq
+    Route::post('/faq/', [FAQController::class, 'create']);
+    Route::patch('/faq/{id}/', [FAQController::class, 'edit']);     //TODO editar yaml
+    Route::delete('/faq/{id}/', [FAQController::class, 'delete']);  //TODO editar yaml
 
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
