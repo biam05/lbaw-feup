@@ -4,8 +4,8 @@ use App\Http\Controllers\Content\CommentController;
 use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Content\ContentController;
-use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -63,6 +63,9 @@ Route::middleware(['auth'])->group(function () {
 
     // vote
     Route::post('/api/vote', [ContentController::class, 'toggleVote']);
+
+    // follow
+    Route::post('/api/follow', [UserController::class, 'toggleFollow']);
 
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);

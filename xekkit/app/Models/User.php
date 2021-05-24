@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 
@@ -123,6 +125,18 @@ class User extends Authenticatable
      */
     public function contents() {
         return $this->hasMany(Content::class, 'author_id');
+    }
+
+    public static function followOrUnfollow(User $user){
+        $following = DB::table('follow')
+            ->where('users_id', $user->id)
+            ->where('follower_id', Auth::user()->id)
+            ->first();
+
+        if($following != "") $follow = false;
+        else $follow = true;
+
+        return $follow;
     }
 
 

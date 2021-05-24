@@ -872,6 +872,70 @@ paths:
                       $ref: '#/components/schemas/Message'
         '401':
           description: 'Login to delete vote.'
+
+  /api/follow/:         
+    post:
+      operationId: R311
+      summary: 'R311: Follow User'
+      description: 'Follow User. Access: USR'
+      tags:
+        - 'M03: See Users/Content'
+        
+      parameters:
+        - in: header
+          name: users_id
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: follower_id
+          schema:
+            type: boolean
+          required: true
+                
+      responses:
+        '201':
+          description: 'Successfully followed user.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to follow.'
+          
+    delete:
+      operationId: R312
+      summary: 'R312: Delete Follow'
+      description: 'Delete Follow. Access: USR'
+      tags:
+        - 'M03: See Users/Content'
+
+      parameters:
+        - in: header
+          name: users_id
+          schema:
+            type: integer
+          required: true
+          
+      responses:
+        '204':
+          description: 'Successfully removed follow.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to delete follow.'
   
   # -------------------- M04 -------------------- 
  
