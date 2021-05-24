@@ -3,10 +3,6 @@
 @section('title', 'Profile | x/' . $user->username )
 
 @section('content')
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
 <?php use App\Models\User;?>
 
 <main class="container-xl">
