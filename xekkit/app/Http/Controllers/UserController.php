@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Request_db;
+use App\Models\PartnerRequest;
 use App\Models\ReportUser;
 use App\Models\News;
 use App\Models\Content;
@@ -115,7 +116,7 @@ class UserController extends Controller
     {
         
         $user = User::where('username','=',$username)->first();   
-
+        User::findOrFail($user->id);
         
         DB::transaction(function () use ($request) {
             // create request
@@ -129,11 +130,10 @@ class UserController extends Controller
             $request_id = $db_request->id;
 
             //create report
-            $report = new ReportUser();
-            $report->request_id=$request_id;
-            $report->to_users_id=$id;
+            $partner_request = new PartnerRequest();
+            $partner_request->request_id=$request_id;
 
-            $report->save();
+            $partner_request->save();
 
             return $request_id;
         });
@@ -145,8 +145,27 @@ class UserController extends Controller
     {
     
         $user = User::where('username','=',$username)->first();   
+        User::findOrFail($user->id);
+        
+        DB::transaction(function () use ($request) {
+            // create request
+            $db_request = new Request_db;
+           
+            $db_request->reason = $request->input('body');
+            $db_request->from_id = Auth::user()->id;
 
-        $user->is_partner=false;
+            $db_request->save();
+
+            $request_id = $db_request->id;
+
+            //create report
+            $partner_request = new PartnerRequest();
+            $partner_request->request_id=$request_id;
+
+            $partner_request->save();
+
+            return $request_id;
+        });
 
         return redirect()->back();
     }

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -85,6 +87,35 @@ class User extends Authenticatable
      */
     public function requests() {
         return $this->hasMany(Request::class, 'users_id');
+    }
+
+    /**
+     * The requests I have made.
+     */
+    public static function pendingPartnerRequests() {
+
+        $user=User::findOrFail(Auth::id());
+        /*$requests=$user->hasMany(Request_db::class, 'from_id'); */
+        DB::enableQueryLog();
+        $requests = DB::table('request')->select('id', 'status')->where('from_id',$user->id)->get();
+       
+      
+        foreach ($requests as $r)
+        {
+            $request=Request_db::findOrFail($r->id);
+            
+            if(!empty($request->partnerRequest()))
+            {
+                if($request->status==null)
+                {
+    
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+         
     }
 
     /**

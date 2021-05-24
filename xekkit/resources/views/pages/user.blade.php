@@ -3,7 +3,7 @@
 @section('title', 'Profile | x/' . $user->username )
 
 @section('content')
-
+<?php use App\Models\User;?>
 
 <main class="container-xl">
     <section>
@@ -43,10 +43,17 @@
                     @if(Auth::user()->username == $user->username)
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
                         @if($user->is_partner)
-                            @include('partials.modals.stop_partnership')
+                            
+                            
+                                @include('partials.modals.stop_partnership')
+
                         @else
                             {{-- verificar se está um pedido pendente --}}
-                            @include('partials.modals.partner_request')
+{{--                             <h1>{{User::pendingPartnerRequests()}}</h1>
+ --}}                            @if(!User::pendingPartnerRequests())
+                                @include('partials.modals.partner_request')
+                            @endif
+                           
                         @endif
                     @else
                         <a href="#" class="col-auto align-self-end btn btn-primary">Follow</a>
