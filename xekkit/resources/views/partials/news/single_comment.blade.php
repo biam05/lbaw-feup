@@ -1,4 +1,4 @@
-<?php use App\Models\Content;?>
+<?php use App\Models\Content; ?>
 <div class="row mb-3">
     @for ($i = 0; $i < $comment->level; $i++)
         <div class="col-auto ps-4"></div>
@@ -13,7 +13,7 @@
             <p class="text-white text-muted px-2 m-0"><small>
                     <a class="col-auto text-muted pe-2" href="../user/{{ $comment->content->author->username  }}">
                         @if($comment->content->author->is_partner)
-                        <i class="fas fa-check"></i>
+                            <i class="fas fa-check"></i>
                         @endif
                         x/{{ $comment->content->author->username }}</a>{{ $comment->content->formatDate() }}</small>
                 @if (Auth::user() && (Auth::user()->is_moderator || Auth::user()->id === $comment->content->author_id))
@@ -54,6 +54,22 @@
                 </button>
             </div>
         </div>
+        <form action="/comment/create/" class="container-xl mb-3 p-3 bg-light-dark" method="post">
+            @csrf
+            <input name="news_id" type="hidden" value="{{$comment->news->content_id}}">
+            <input name="reply_to_id" type="hidden" value="{{$comment->content_id}}">
+
+            <label for="postComment" class="form-label text-white">Leave a reply:</label>
+
+            <div class="row">
+                <div class="col-10">
+                    <textarea name="body" class="form-control" id="postComment" rows="1" required>{{ old('postComment')}}</textarea>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="col-auto btn btn-primary ms-auto">Send</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @each('partials.news.single_comment', $comment->getChilds, "comment")
