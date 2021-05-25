@@ -75,4 +75,5 @@
 
 @once
     <script defer src="{{ asset('js/vote.js') }}"></script>
+    <script defer src="{{ asset('js/reply.js') }}"></script>
 @endonce
