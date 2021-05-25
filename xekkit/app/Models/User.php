@@ -125,6 +125,27 @@ class User extends Authenticatable
         return $this->hasMany(Content::class, 'author_id');
     }
 
+    /**
+     * The comment notifications I have.
+     */
+    public function commentNotifications() {
+        return $this->hasMany(CommentNotification::class, 'users_id');
+    }
+
+    /**
+     * The follow notifications I have.
+     */
+    public function followNotifications() {
+        return $this->hasMany(FollowNotification::class, 'users_id');
+    }
+
+    /**
+     * The vote notifications I have.
+     */
+    public function voteNotifications() {
+        return $this->hasMany(VoteNotification::class, 'author_id');
+    }
+    
     public static function followOrUnfollow(User $user){
         $following = DB::table('follow')
             ->where('users_id', $user->id)

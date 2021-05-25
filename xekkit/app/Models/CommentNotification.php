@@ -30,4 +30,12 @@ class CommentNotification extends Model
     {
         return $this->belongsTo(Comment::class, 'comment_id');
     }
+
+    /**
+     * Get the user that made the comment.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 }

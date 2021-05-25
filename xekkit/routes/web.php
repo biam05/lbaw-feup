@@ -9,6 +9,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -66,6 +67,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comment/create/', [CommentController::class, 'create']);
     Route::patch('/comment/', [CommentController::class, 'edit']);
     Route::delete('/comment/{id}', [CommentController::class, 'delete'])->where(['id'=>'[0-9]+']);
+
+    //notifications
+    Route::get('/notifications/', [NotificationsController::class, 'show']);
+    Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
+    Route::delete('/notifications/', [NotificationsController::class, 'delete']);
+    
 
     // vote
     Route::post('/api/vote', [ContentController::class, 'toggleVote']);
