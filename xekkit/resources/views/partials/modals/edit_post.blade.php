@@ -18,7 +18,7 @@
 
                     <div class="mb-3">
                         <label for="News-modal-description_{{$news->content_id}}" class="form-label">Description</label>
-                        <textarea rows="4" id="News-modal-description_{{$news->content_id}}" name="body" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
+                        <textarea id="News-modal-description_{{$news->content_id}}" name="body" class="input form-control" role="textbox" rows="3" contenteditable aria-multiline="true">{{$news->content->body}}</textarea>
                     </div>
                     <div class="mb-3">
                         <div class="container" id="file-display-area">

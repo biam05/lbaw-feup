@@ -13,7 +13,9 @@
         @else
 
             <div id="posts-result">
-                @each('partials.news.post', $news, 'news')
+                @foreach($news as $post)
+                    @include('partials.news.post', ['news'=>$post,'type'=>"", 'device'=>""])
+                @endforeach
             </div>
         @endif
     </div>

@@ -48,7 +48,7 @@
                                 Hello x/{{Auth::user()->username}}!
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="../pages/profile.php">My Profile</a></li>
+                                <li><a class="dropdown-item" href="{{url('/user/' . Auth::user()->username)}}">My Profile</a></li>
                                 <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                             </ul>
                                 

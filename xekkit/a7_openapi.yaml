@@ -872,6 +872,70 @@ paths:
                       $ref: '#/components/schemas/Message'
         '401':
           description: 'Login to delete vote.'
+
+  /api/follow/:         
+    post:
+      operationId: R311
+      summary: 'R311: Follow User'
+      description: 'Follow User. Access: USR'
+      tags:
+        - 'M03: See Users/Content'
+        
+      parameters:
+        - in: header
+          name: users_id
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: follower_id
+          schema:
+            type: boolean
+          required: true
+                
+      responses:
+        '201':
+          description: 'Successfully followed user.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to follow.'
+          
+    delete:
+      operationId: R312
+      summary: 'R312: Delete Follow'
+      description: 'Delete Follow. Access: USR'
+      tags:
+        - 'M03: See Users/Content'
+
+      parameters:
+        - in: header
+          name: users_id
+          schema:
+            type: integer
+          required: true
+          
+      responses:
+        '204':
+          description: 'Successfully removed follow.'
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+        '401':
+          description: 'Login to delete follow.'
   
   # -------------------- M04 -------------------- 
  
@@ -1288,6 +1352,7 @@ paths:
                   description: 'Failed to create faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
                   value: '/faq/'
           
+  /faq/{id}/:
     patch:
       operationId: R803
       summary: 'R802: Edit FAQ'
@@ -1295,6 +1360,13 @@ paths:
       tags:
         - 'M08: Static Pages'
       
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          
       requestBody:
         required: true
         content:
@@ -1356,8 +1428,6 @@ paths:
                 303Error:
                   description: 'Failed to delete faq. Redirect to [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2114/-/blob/eap/docs/A3.md#ui06-edit-faq-as-moderator).'
                   value: '/faq/'
-                
-    
 
   /about/:
     get:

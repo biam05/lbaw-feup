@@ -19,7 +19,16 @@ class NotificationsController extends Controller
         $follow_notifications = Auth::user()->followNotifications;
         $comment_notifications = Auth::user()->commentNotifications;
         $vote_notifications = Auth::user()->voteNotifications;
-        
+
+        foreach($follow_notifications as $not){
+            $not->type = "follow";
+        }
+        foreach($comment_notifications as $not){
+            $not->type = "comment";
+        }
+        foreach($vote_notifications as $not){
+            $not->type = "vote";
+        }
             
         $notifications = $follow_notifications
             ->toBase()->merge($comment_notifications)

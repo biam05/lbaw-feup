@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class Request_db extends Model
 {
     use HasFactory;
 
@@ -64,6 +64,7 @@ class Request extends Model
     public function user() {
         return $this->belongsTo(User::class, 'users_id');
     }
+
 
     
 }

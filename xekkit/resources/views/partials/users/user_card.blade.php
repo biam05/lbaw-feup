@@ -1,5 +1,5 @@
 <div class="col-auto text-center mb-3 clickable">
-    <a href="#" class="text-decoration-none">
+    <a href="{{url('/user/' . $user->username)}}" class="text-decoration-none">
         <div class="card align-items-center text-white bg-light-dark pt-3" style="width: 18rem;">
             @if(!empty($user->photo))
             <img src={{ asset('storage/img/users/' . $user->photo) }} class="card-img-top" alt="{{ $user->username }}"

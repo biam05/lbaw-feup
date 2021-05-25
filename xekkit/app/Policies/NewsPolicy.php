@@ -76,8 +76,8 @@ class NewsPolicy
      */
     public function delete(User $user, News $news)
     {
-        // Only a news author can delete it
-        return $user->id === $news->content->author_id && !($user->is_banned || $user->is_deleted);
+        // Only a news author can delete it or a moderator
+        return ($user->id === $news->content->author_id && !($user->is_banned || $user->is_deleted)) || ($user->is_moderator && !($user->is_banned || $user->is_deleted));
     }
 
 }

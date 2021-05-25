@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -49,21 +51,21 @@ class User extends Authenticatable
      * The contents the users has voted on.
      */
     public function voteOn() {
-        return $this->hasMany(Content::class, 'vote', 'users_id', 'content_id')->withPivot('value');
+        return $this->belongsToMany(Content::class, 'vote', 'users_id', 'content_id')->withPivot('value');
     }
 
     /**
      * The users I follow.
      */
     public function following() {
-        return $this->hasMany(User::class, 'follow', 'follower_id', 'users_id');
+        return $this->belongsToMany(User::class, 'follow', 'follower_id', 'users_id');
     }
 
     /**
      * The users that follow me.
      */
     public function followedBy() {
-        return $this->hasMany(User::class, 'follow', 'users_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'follow', 'users_id', 'follower_id');
     }
 
     /**
@@ -85,6 +87,35 @@ class User extends Authenticatable
      */
     public function requests() {
         return $this->hasMany(Request::class, 'users_id');
+    }
+
+    /**
+     * The requests I have made.
+     */
+    public static function pendingPartnerRequests() {
+
+        $user=User::findOrFail(Auth::id());
+        /*$requests=$user->hasMany(Request_db::class, 'from_id'); */
+        DB::enableQueryLog();
+        $requests = DB::table('request')->select('id', 'status')->where('from_id',$user->id)->get();
+       
+      
+        foreach ($requests as $r)
+        {
+            $request=Request_db::findOrFail($r->id);
+            
+            if(!empty($request->partnerRequest()))
+            {
+                if($request->status==null)
+                {
+    
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+         
     }
 
     /**
@@ -113,6 +144,18 @@ class User extends Authenticatable
      */
     public function voteNotifications() {
         return $this->hasMany(VoteNotification::class, 'author_id');
+    }
+    
+    public static function followOrUnfollow(User $user){
+        $following = DB::table('follow')
+            ->where('users_id', $user->id)
+            ->where('follower_id', Auth::user()->id)
+            ->first();
+
+        if($following != "") $follow = false;
+        else $follow = true;
+
+        return $follow;
     }
 
 
