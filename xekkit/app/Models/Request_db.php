@@ -65,5 +65,6 @@ class Request_db extends Model
         return $this->belongsTo(User::class, 'users_id');
     }
 
+
     
 }

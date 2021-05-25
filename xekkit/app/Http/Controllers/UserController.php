@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use App\Models\Request_db;
+use App\Models\PartnerRequest;
 use App\Models\ReportUser;
 use App\Models\News;
 use App\Models\Content;
@@ -112,6 +113,63 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function partner_request(Request $request, $username)
+    {
+        
+        $user = User::where('username','=',$username)->first();   
+        User::findOrFail($user->id);
+        
+        DB::transaction(function () use ($request) {
+            // create request
+            $db_request = new Request_db;
+           
+            $db_request->reason = $request->input('body');
+            $db_request->from_id = Auth::user()->id;
+
+            $db_request->save();
+
+            $request_id = $db_request->id;
+
+            //create report
+            $partner_request = new PartnerRequest();
+            $partner_request->request_id=$request_id;
+
+            $partner_request->save();
+
+            return $request_id;
+        });
+
+        return redirect()->back();
+    }
+
+    public function stop_partnership(Request $request, $username)
+    {
+    
+        $user = User::where('username','=',$username)->first();   
+        User::findOrFail($user->id);
+        
+        DB::transaction(function () use ($request) {
+            // create request
+            $db_request = new Request_db;
+           
+            $db_request->reason = $request->input('body');
+            $db_request->from_id = Auth::user()->id;
+
+            $db_request->save();
+
+            $request_id = $db_request->id;
+
+            //create report
+            $partner_request = new PartnerRequest();
+            $partner_request->request_id=$request_id;
+
+            $partner_request->save();
+
+            return $request_id;
+        });
+
+        return redirect()->back();
+    }
     public function toggleFollow(Request $request){
 
         $validator = Validator::make($request->all(), [

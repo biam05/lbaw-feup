@@ -29,7 +29,7 @@
                 </div>
                 @include('partials.modals.delete_post', ['news' => $news])
             @elseif(Auth::user() && $news->content->author_id != Auth::user()->id)
-                @include('partials.modals.report_post', ['report_to_id' => $news->content_id, 'type'=>"news", 'tab'=>$type, 'device'=>$device])
+                @include('partials.modals.report', ['report_to_id' => $news->content_id, 'type'=>"news", 'tab'=>$type, 'device'=>$device])
                 <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportContent_{{$news->content_id}}_{{$type}}_{{$device}}">
                     <i class="fas fa-exclamation-triangle"></i></button>
             @endif
@@ -75,4 +75,5 @@
 
 @once
     <script defer src="{{ asset('js/vote.js') }}"></script>
+    <script defer src="{{ asset('js/reply.js') }}"></script>
 @endonce

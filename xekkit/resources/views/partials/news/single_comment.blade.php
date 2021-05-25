@@ -22,8 +22,9 @@
                     </button>
                     @include('partials.modals.delete_comment', ['comment' => $comment])
                 @else
-                    <button class="clickable-big text-muted ps-2">
-                        <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
+                @include('partials.modals.report', ['report_to_id' => $comment->content_id, 'type'=>"comment", 'tab'=>'', 'device'=>''])
+                    <button class="clickable-big text-muted ps-2 text-white" data-bs-toggle="modal" data-bs-target="#reportContent_{{$comment->content_id}}__">
+                        <i class="fas fa-exclamation-triangle " data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
                     </button>
                 @endif
             </p>
@@ -39,7 +40,7 @@
                             <i id="arrow_up_{{$comment->content_id}}__" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                         @endif
                     </button>
-                    <span class="col-auto ps-0 text-white" id="n-votes_{{$comment->content_id}}__">{{$comment->content->nr_votes}}</span>
+                    <span class="col-auto ps-0 text-white mx-1" id="n-votes_{{$comment->content_id}}__">{{$comment->content->nr_votes}}</span>
                     <button onclick='vote("{{ $comment->content->id }}", false, "", "", "")' class="clickable-big">
 
                         @if (Content::getVoteFromContent($comment->content) === "downvote")
@@ -49,12 +50,12 @@
                         @endif
                     </button>
                 </div>
-                <button type="button" class="col-auto clickable text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button onclick="addReplyBox('{{$comment->content_id}}')" type="button" class="col-auto clickable text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fas fa-reply text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Reply"></i> Reply
                 </button>
             </div>
         </div>
-        <form action="/comment/create/" class="container-xl mb-3 p-3 bg-light-dark" method="post">
+        <form id="reply_form{{$comment->content_id}}" action="/comment/create/" class="container-xl mb-3 p-3 bg-light-dark" style="display: none;" method="post">
             @csrf
             <input name="news_id" type="hidden" value="{{$comment->news->content_id}}">
             <input name="reply_to_id" type="hidden" value="{{$comment->content_id}}">
