@@ -62,14 +62,17 @@ class Comment extends Model
     }
 
     /**
-     * Get the comment (reply) associated with the comment.
+     * Get the parent comment associated with the comment.
      */
-    public function reply()
+    public function parent()
     {
-        return $this->belongsTo(Comment::class, 'comment_id');
+        return $this->belongsTo(Comment::class, 'content_id', 'reply_to_id');
     }
 
-    public function getChilds(){
+    /**
+     * Get the response comments associated with the comment.
+     */
+    public function replies(){
         return $this->hasMany(Comment::class, 'reply_to_id')->orderByDesc('content_id');
     }
 }

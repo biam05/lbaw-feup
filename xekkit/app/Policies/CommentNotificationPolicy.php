@@ -29,20 +29,20 @@ class CommentNotificationPolicy
      */
     public function viewAny(User $user)
     {
-        
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\CommentNotification $comment
+     * @param \App\Models\CommentNotification $notification
      *
      * @return mixed
      */
-    public function view(?User $user, CommentNotification $comment)
+    public function view(User $user, CommentNotification $notification)
     {
-        
+        return ($user->id === $notification->users_id );
     }
 
     /**
@@ -54,18 +54,18 @@ class CommentNotificationPolicy
      */
     public function create(User $user)
     {
-        
+        // not applicable
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\CommentNotification $comment
+     * @param \App\Models\CommentNotification $notification
      *
      * @return mixed
      */
-    public function update(User $user, CommentNotification $comment)
+    public function update(User $user, CommentNotification $notification)
     {
         
     }
@@ -74,11 +74,11 @@ class CommentNotificationPolicy
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\CommentNotification $comment
+     * @param \App\Models\CommentNotification $notification
      *
      * @return mixed
      */
-    public function delete(User $user, CommentNotification $comment)
+    public function delete(User $user, CommentNotification $notification)
     {
     
     }

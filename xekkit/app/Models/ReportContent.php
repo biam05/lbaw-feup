@@ -41,6 +41,6 @@ class ReportContent extends Model
      * The request related to this report.
      */
     public function request() {
-        return $this->hasOne(Request_db::class, 'request_id');
+        return $this->belongsTo(Request_db::class, 'request_id');
     }
 }

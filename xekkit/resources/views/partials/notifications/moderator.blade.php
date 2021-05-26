@@ -1,12 +1,15 @@
-@switch($mod_notification->type)
-    @case("follow")
-        @include('partials.notifications.follow', $mod_notification)
+@switch($notification->type)
+    @case("partner_request")
+        @include('partials.notifications.partner_request', $notification)
         @break
-    @case("comment")
-        @include('partials.notifications.comment', $mod_notification)
+    @case("report_content")
+        @include('partials.notifications.report_content', $notification)
         @break
-    @case("vote")
-        @include('partials.notifications.vote', $mod_notification)
+    @case("report_user")
+        @include('partials.notifications.report_user', $notification)
+        @break
+    @case("unban_appeal")
+        @include('partials.notifications.unban_appeal', $notification)
         @break
     @default
 @endswitch 

@@ -36,13 +36,13 @@ class FollowNotificationPolicy
      * Determine whether the user can view the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\FollowNotification $follow
+     * @param \App\Models\FollowNotification $notification
      *
      * @return mixed
      */
-    public function view(User $user, FollowNotification $follow)
+    public function view(User $user, FollowNotification $notification)
     {
-        
+        return ($user->id === $notification->users_id);
     }
 
     /**
@@ -61,11 +61,11 @@ class FollowNotificationPolicy
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\News $news
+     * @param \App\Models\FollowNotification $notification
      *
      * @return mixed
      */
-    public function update(User $user, FollowNotification $follow)
+    public function update(User $user, FollowNotification $notification)
     {
        
     }
@@ -74,11 +74,11 @@ class FollowNotificationPolicy
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\News $news
+     * @param \App\Models\FollowNotification $notification
      *
      * @return mixed
      */
-    public function delete(User $user, FollowNotification $follow)
+    public function delete(User $user, FollowNotification $notification)
     {
         
     }

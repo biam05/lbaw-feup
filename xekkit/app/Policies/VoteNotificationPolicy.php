@@ -40,9 +40,9 @@ class VoteNotificationPolicy
      *
      * @return mixed
      */
-    public function view(?User $user, VoteNotification $vote)
+    public function view(User $user, VoteNotification $notification)
     {
-        
+        return ($user->id === $notification->author_id);
     }
 
     /**
@@ -61,11 +61,11 @@ class VoteNotificationPolicy
      * Determine whether the user can update the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\VoteNotification $vote
+     * @param \App\Models\VoteNotification $v
      *
      * @return mixed
      */
-    public function update(User $user, VoteNotification $vote)
+    public function update(User $user, VoteNotification $notification)
     {
         
     }
@@ -74,11 +74,11 @@ class VoteNotificationPolicy
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\VoteNotification $vote
+     * @param \App\Models\VoteNotification $notification
      *
      * @return mixed
      */
-    public function delete(User $user, VoteNotification $vote)
+    public function delete(User $user, VoteNotification $notification)
     {
         
     }
