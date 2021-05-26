@@ -38,6 +38,13 @@ class PartnerRequest extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the request.
+     *
+     * @var string
+     */
+    public $type = "partner_request";
+
+    /**
      * The request related to this partner request.
      */
     public function request() {

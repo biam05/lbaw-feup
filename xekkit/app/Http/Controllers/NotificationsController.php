@@ -27,16 +27,6 @@ class NotificationsController extends Controller
         $follow_notifications = $user->followNotifications;
         $comment_notifications = $user->commentNotifications;
         $vote_notifications = $user->voteNotifications;
-
-        foreach($follow_notifications as $n){
-            $n->type = "follow";
-        }
-        foreach($comment_notifications as $n){
-            $n->type = "comment";
-        }
-        foreach($vote_notifications as $n){
-            $n->type = "vote";
-        }
             
         $notifications = $follow_notifications
             ->toBase()->merge($comment_notifications)
@@ -48,19 +38,6 @@ class NotificationsController extends Controller
             $report_content_requests = ReportContent::all();
             $report_user_requests = ReportUser::all();
             $unban_appeals = UnbanAppeal::all();
-
-            foreach($partner_requests as $n){
-                $n->type = "partner_request";
-            }
-            foreach($report_content_requests as $n){
-                $n->type = "report_content";
-            }
-            foreach($report_user_requests as $n){
-                $n->type = "report_user";
-            }
-            foreach($unban_appeals as $n){
-                $n->type = "unban_appeal";
-            }
 
             $mod_notifications = $partner_requests
                 ->toBase()->merge($report_content_requests)

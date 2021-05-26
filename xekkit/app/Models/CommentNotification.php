@@ -24,6 +24,13 @@ class CommentNotification extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the notification.
+     *
+     * @var string
+     */
+    public $type = "comment";
+
+    /**
      * Get the comment associated with the comment notification.
      */
     public function comment()

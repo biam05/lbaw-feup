@@ -38,6 +38,13 @@ class UnbanAppeal extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the request.
+     *
+     * @var string
+     */
+    public $type = "unban_appeal";
+
+    /**
      * The ban related to this unban appeal.
      */
     public function ban() {

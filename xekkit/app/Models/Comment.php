@@ -38,6 +38,13 @@ class Comment extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the content.
+     *
+     * @var string
+     */
+    public $type = "comment";
+
+    /**
      * Get the content associated with the comment.
      */
     public function content()

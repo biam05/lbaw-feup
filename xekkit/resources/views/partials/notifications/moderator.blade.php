@@ -1,15 +1,15 @@
-@switch($notification->type)
+@switch($request->type)
     @case("partner_request")
-        @include('partials.notifications.partner_request', $notification)
+        @include('partials.notifications.partner_request', $request)
         @break
     @case("report_content")
-        @include('partials.notifications.report_content', $notification)
+        @include('partials.notifications.report_content', $request)
         @break
     @case("report_user")
-        @include('partials.notifications.report_user', $notification)
+        @include('partials.notifications.report_user', $request)
         @break
     @case("unban_appeal")
-        @include('partials.notifications.unban_appeal', $notification)
+        @include('partials.notifications.unban_appeal', $request)
         @break
     @default
 @endswitch 

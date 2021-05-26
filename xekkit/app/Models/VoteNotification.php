@@ -24,6 +24,13 @@ class VoteNotification extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the notification.
+     *
+     * @var string
+     */
+    public $type = "vote";
+
+    /**
      * Get the user that voted on the author's content.
      */
     public function voter()

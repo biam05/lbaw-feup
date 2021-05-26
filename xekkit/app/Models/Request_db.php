@@ -62,9 +62,6 @@ class Request_db extends Model
      * The user that made the request.
      */
     public function user() {
-        return $this->belongsTo(User::class, 'users_id');
-    }
-
-
-    
+        return $this->belongsTo(User::class, 'from_id');
+    }    
 }
