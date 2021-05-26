@@ -48,6 +48,6 @@ class UnbanAppeal extends Model
      * The request related to this unban appeal.
      */
     public function request() {
-        return $this->belongsTo(Request::class, 'request_id');
+        return $this->belongsTo(Request_db::class, 'request_id');
     }
 }

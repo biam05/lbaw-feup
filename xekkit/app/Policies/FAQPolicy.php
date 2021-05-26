@@ -8,7 +8,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Auth;
 
-class FAQPolicy
+class FaqPolicy
 {
     use HandlesAuthorization;
 

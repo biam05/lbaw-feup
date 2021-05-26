@@ -41,7 +41,7 @@
             </div>
             
             <div class="row g-2">
-                <div class="form-floating mb-3">
+                <div class="col form-floating mb-3">
                     <input 
                         type="password" 
                         class="form-control @if ($errors->has('password')) is-invalid @endif" 

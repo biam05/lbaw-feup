@@ -21,7 +21,7 @@
                 @each('partials.notifications.all', $notifications, 'notification', 'partials.notifications.none')
             </div>
             <div class="tab-pane fade" id="pills-moderator" role="tabpanel" aria-labelledby="pills-moderator-tab">
-                {{-- @each() --}}
+                @each('partials.notifications.moderator', $mod_notifications, 'notification', 'partials.notifications.none')
             </div>
         </div>
     @else
