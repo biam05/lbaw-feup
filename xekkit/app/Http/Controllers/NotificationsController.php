@@ -12,7 +12,7 @@ use App\Models\VoteNotification;
 
 use App\Models\PartnerRequest;
 use App\Models\ReportContent;
-use App\Models\Reportuser;
+use App\Models\ReportUser;
 use App\Models\UnbanAppeal;
 
 class NotificationsController extends Controller
