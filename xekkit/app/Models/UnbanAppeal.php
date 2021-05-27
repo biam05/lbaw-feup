@@ -48,7 +48,7 @@ class UnbanAppeal extends Model
      * The ban related to this unban appeal.
      */
     public function ban() {
-        return $this->hasOne(Ban::class, 'ban_id');
+        return $this->belongsTo(Ban::class, 'ban_id');
     }
 
     /**

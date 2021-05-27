@@ -58,7 +58,6 @@ class NotificationsController extends Controller
                     }
                     return intval($a->request->creation_date < $b->request->creation_date);
                 });
-            dump($mod_notifications);
         }
         
         

@@ -50,4 +50,11 @@ class ReportUser extends Model
     public function request() {
         return $this->belongsTo(Request_db::class, 'request_id');
     }
+
+    /**
+     * The user reported.
+     */
+    public function user() {
+        return $this->belongsTo(User::class, 'to_users_id');
+    }
 }

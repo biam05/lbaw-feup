@@ -1,6 +1,6 @@
 @switch($request->type)
     @case("partner_request")
-        @include('partials.notifications.partner_request', ['request' => $request])
+        @include('partials.notifications.partner_request', ['request' => $request->request])
         @break
     @case("report_content")
         @include('partials.notifications.report_content', ['request' => $request])
