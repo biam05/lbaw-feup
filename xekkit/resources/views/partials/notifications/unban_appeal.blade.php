@@ -6,7 +6,10 @@
             created an <b class="text-secondary">unban appeal</b>:
         </div>
         <p class="card-text fw-light">{{$request->request->reason}}</p>
-        <p class="card-text">Ban motive:</p>
+        <p class="card-text">Banned by
+            <a href="/user/{{$request->ban->moderator->username}}" class="link-light">{{$request->ban->moderator->username}}</a>
+            {{$request->ban->printdates()}}:
+        </p>
         <p class="card-text fw-light">{{$request->ban->reason}}</p>
 
         @include('partials.notifications.request_approval', ['request' => $request->request])

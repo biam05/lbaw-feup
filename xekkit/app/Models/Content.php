@@ -71,8 +71,7 @@ class Content extends Model
         return $vote;
     }
 
-    public function formatDate($full = false)
-    {
+    public function formatDate($full = false){
         $now = new DateTime;
         $ago = new DateTime($this->date);
         $diff = $now->diff($ago);
