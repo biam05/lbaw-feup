@@ -1,1 +1,1 @@
-<p class="text-center text-white">Unban Appeal.</p>
+<p class="text-center text-light">Unban Appeal.</p>

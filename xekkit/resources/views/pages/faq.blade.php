@@ -4,7 +4,7 @@
 
 @section('content')
 
-<main class="container-xl text-white">
+<main class="container-xl text-light">
     <div class="row mb-3">
         <h1 class="col-auto"><i class="fas fa-book"></i>     FAQ</h1>
     </div>

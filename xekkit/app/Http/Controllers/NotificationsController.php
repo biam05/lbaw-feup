@@ -42,7 +42,23 @@ class NotificationsController extends Controller
             $mod_notifications = $partner_requests
                 ->toBase()->merge($report_content_requests)
                 ->toBase()->merge($report_user_requests)
-                ->toBase()->merge($unban_appeals);
+                ->toBase()->merge($unban_appeals)
+                ->sort(function ($a, $b) {
+                    // this function returns requests with status==null first, ordering those by creation date (desc)
+                    // then orders the remaining requests by revision_date (desc)
+
+                    if($a->request->status && $b->request->status){
+                        return intval($a->request->revision_date < $b->request->revision_date);
+                    }
+                    if($a->request->status){
+                        return 1;
+                    }
+                    if($b->request->status){
+                        return -1;
+                    }
+                    return intval($a->request->creation_date < $b->request->creation_date);
+                });
+            dump($mod_notifications);
         }
         
         

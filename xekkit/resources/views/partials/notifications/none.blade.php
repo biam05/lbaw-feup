@@ -1,1 +1,1 @@
-<p class="text-center text-white">You don't have any notifications.</p>
+<p class="text-center text-light">You don't have any notifications.</p>
