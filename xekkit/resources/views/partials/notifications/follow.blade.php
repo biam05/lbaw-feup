@@ -1,4 +1,4 @@
-<article class="card bg-light-dark text-white mb-3">
+<article class="card bg-light-dark text-light mb-3">
     <div class="card-body">
       <div class="card-title">
         <p>

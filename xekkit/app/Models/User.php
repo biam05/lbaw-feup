@@ -86,7 +86,7 @@ class User extends Authenticatable
      * The requests I have made.
      */
     public function requests() {
-        return $this->hasMany(Request::class, 'users_id');
+        return $this->hasMany(Request_db::class, 'users_id');
     }
 
     /**

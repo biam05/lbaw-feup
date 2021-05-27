@@ -72,7 +72,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications/', [NotificationsController::class, 'show']);
     Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
     Route::delete('/notifications/', [NotificationsController::class, 'delete']);
-    
 
     // vote
     Route::post('/api/vote', [ContentController::class, 'toggleVote']);
@@ -82,8 +81,8 @@ Route::middleware(['auth'])->group(function () {
 
     // faq
     Route::post('/faq/', [FAQController::class, 'create']);
-    Route::patch('/faq/{id}/', [FAQController::class, 'edit']);     //TODO editar yaml
-    Route::delete('/faq/{id}/', [FAQController::class, 'delete']);  //TODO editar yaml
+    Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);     //TODO editar yaml
+    Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+']);  //TODO editar yaml
 
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);

@@ -38,6 +38,13 @@ class News extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the content.
+     *
+     * @var string
+     */
+    public $type = "post";
+
+    /**
      * Get the content that owns the news.
      */
     public function content()

@@ -70,6 +70,7 @@ class Content extends Model
         }
         return $vote;
     }
+
     public function formatDate($full = false)
     {
         $now = new DateTime;
@@ -99,6 +100,4 @@ class Content extends Model
         if (!$full) $string = array_slice($string, 0, 1);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
     }
-
-
 }
