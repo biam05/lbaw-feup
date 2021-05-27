@@ -49,4 +49,14 @@ class Ban extends Model
         return $this->hasOne(UnbanAppeal::class, 'ban_id');
     }
 
+    public function printDates(){
+
+        if($this->end_date){
+            return 'from ' . date('d-m-Y', strtotime($this->start_date)) . ' until ' . date('d-m-Y', strtotime($this->end_date));
+        }
+        else{
+            return 'permanently since ' . date('d-m-Y', strtotime($this->start_date));
+        }
+    }
+
 }
