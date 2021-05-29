@@ -36,6 +36,7 @@ class User extends Authenticatable
         'password',
         'birthdate',
         'gender',
+        'is_partner',
     ];
 
     /**

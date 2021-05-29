@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Models\Request_db;
@@ -14,6 +15,7 @@ use App\Models\ReportUser;
 use App\Models\News;
 use App\Models\Content;
 use App\Models\Follow;
+
 
 class UserController extends Controller
 {
@@ -144,31 +146,17 @@ class UserController extends Controller
 
     public function stop_partnership(Request $request, $username)
     {
-    
+        if(! Hash::check($request->password, $request->user()->password)) {
+            return back()->withErrors([
+                'password' => ['The provided password does not match our records.']
+            ]);
+        }
+        
         $user = User::where('username','=',$username)->first();   
         User::findOrFail($user->id);
-        
-        DB::transaction(function () use ($request) {
-            // create request
-            $db_request = new Request_db;
-           
-            $db_request->reason = $request->input('body');
-            $db_request->from_id = Auth::user()->id;
-
-            $db_request->save();
-
-            $request_id = $db_request->id;
-
-            //create report
-            $partner_request = new PartnerRequest();
-            $partner_request->request_id=$request_id;
-
-            $partner_request->save();
-
-            return $request_id;
-        });
-
-        return redirect()->back();
+        $user->is_partner=false;
+        $user->save();
+        return redirect("/user/".$username);
     }
     public function toggleFollow(Request $request){
 

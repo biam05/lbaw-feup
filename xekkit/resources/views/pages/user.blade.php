@@ -48,9 +48,7 @@
                                 @include('partials.modals.stop_partnership')
 
                         @else
-                            {{-- verificar se está um pedido pendente --}}
-{{--                             <h1>{{User::pendingPartnerRequests()}}</h1>
- --}}                            @if(!User::pendingPartnerRequests())
+                            @if(!User::pendingPartnerRequests())
                                 @include('partials.modals.partner_request')
                             @endif
                            

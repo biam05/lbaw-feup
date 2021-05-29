@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
     Route::post('/user/{username}/partner_request/', [UserController::class, 'partner_request']);
-    Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
+    Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']); 
 
 });
 
@@ -98,4 +98,5 @@ Route::get('/clear-all-cache', function() {
     Artisan::call('view:clear');
     Artisan::call('config:clear');
     echo "Cleared all caches successfully.";
+    return redirect()->back();
 });
