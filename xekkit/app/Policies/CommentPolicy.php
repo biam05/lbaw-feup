@@ -35,7 +35,7 @@ class CommentPolicy
     public function view(?User $user, Comment $comment)
     {
         if ($comment->content->author->is_banned || $comment->content->author->is_deleted) {
-            return Response::deny('The user that created this post is either banned or deleted.');
+            return Response::deny('The user that created this comment is either banned or deleted.');
         } else {
             return !(optional($user)->is_banned || optional($user)->is_deleted);
         }

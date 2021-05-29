@@ -73,4 +73,4 @@
         </form>
     </div>
 </div>
-@each('partials.news.single_comment', $comment->getChilds, "comment")
+@each('partials.news.single_comment', $comment->replies, "comment")

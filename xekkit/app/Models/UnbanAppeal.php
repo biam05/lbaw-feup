@@ -38,16 +38,23 @@ class UnbanAppeal extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the request.
+     *
+     * @var string
+     */
+    public $type = "unban_appeal";
+
+    /**
      * The ban related to this unban appeal.
      */
     public function ban() {
-        return $this->hasOne(Ban::class, 'ban_id');
+        return $this->belongsTo(Ban::class, 'ban_id');
     }
 
     /**
      * The request related to this unban appeal.
      */
     public function request() {
-        return $this->belongsTo(Request::class, 'request_id');
+        return $this->belongsTo(Request_db::class, 'request_id');
     }
 }
