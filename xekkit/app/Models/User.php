@@ -159,5 +159,16 @@ class User extends Authenticatable
         return $follow;
     }
 
+    public static function currentBan() {
+
+        $user=User::findOrFail(Auth::id());
+        /*$requests=$user->hasMany(Request_db::class, 'from_id'); */
+        DB::enableQueryLog();
+        $ban_id = DB::table('ban')->select('id')->where('end_date>now()')->get()->first();
+       
+      
+        return $ban_id;
+         
+    }
 
 }

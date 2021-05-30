@@ -15,7 +15,7 @@ use App\Models\ReportUser;
 use App\Models\News;
 use App\Models\Content;
 use App\Models\Follow;
-
+use App\Models\UnbanAppeal;
 
 class UserController extends Controller
 {
@@ -199,5 +199,36 @@ class UserController extends Controller
 
         return response()->json($response);
     }
+
+    public function unban_appeal (Request $request, $username)
+    {
+        
+        $user = User::where('username','=',$username)->first();  
+        
+        User::findOrFail($user->id);
+        
+        DB::transaction(function () use ($request, $user) {
+            // create request
+            $db_request = new Request_db;
+           
+            $db_request->reason = $request->input('body');
+            $db_request->from_id = Auth::user()->id;
+
+            $db_request->save();
+
+            $request_id = $db_request->id;
+
+            //create report
+            $unban_appeal = new UnbanAppeal();
+            $unban_appeal->request_id=$request_id;
+            $unban_appeal->ban_id=$user->currentBan();
+            $unban_appeal->save();
+
+            return $unban_appeal;
+        });
+
+        return redirect()->back();
+    }
+
 
 }
