@@ -621,7 +621,7 @@ CREATE OR REPLACE FUNCTION delete_vote_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         DELETE FROM vote_notification
-            WHERE vote_notification.voter_id=old.users_id 
+            WHERE vote_notification.voter_id=old.users_id
             and old.content_id = vote_notification.content_id;
         RETURN old;
     END
@@ -642,7 +642,7 @@ CREATE OR REPLACE FUNCTION delete_follow_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         DELETE FROM follow_notification
-            WHERE follow_notification.users_id=old.users_id 
+            WHERE follow_notification.users_id=old.users_id
             and old.follower_id = follow_notification.follower_id;
         RETURN old;
     END
@@ -875,7 +875,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'guilherme',
     'guilherme@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Guilerme.',
+    'Sou o Guilherme.',
     'guilherme.jpg',
     '02/20/1922',
     'm',
@@ -1280,12 +1280,15 @@ insert into request(from_id,moderator_id,reason,creation_date,status,revision_da
 (20, 6,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (17, 3,'This is fake news', '2017-03-17 18:29:21', 'rejected', '2017-03-20 18:29:21');
+insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
+(19, NULL,'I want to have the check before my username ;)', '2021-05-17 05:14:46', NULL, NULL);
 
 
 insert into partner_request(request_id) values (1);
 insert into unban_appeal(request_id, ban_id) values(2,2);
 insert into report_users(request_id, to_users_id) values (3,12);
 insert into report_content(request_id, to_content_id) values (4,3);
+insert into partner_request(request_id) values (5);
 
 
 insert into vote (users_id, content_id, value) values (20, 4, 1);
