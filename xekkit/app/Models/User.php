@@ -127,6 +127,17 @@ class User extends Authenticatable
     }
 
     /**
+     * The news I have posted.
+     */
+    public function news() {
+        return News::whereIn('content_id', function($query) {
+            $query->select('id')
+                ->from('content')
+                ->where('author_id', $this->id);
+        })->get();
+    }
+
+    /**
      * The comment notifications I have.
      */
     public function commentNotifications() {
@@ -159,5 +170,12 @@ class User extends Authenticatable
         return $follow;
     }
 
-
+    /**
+     * Find user by username.
+     *
+     * @param string $username
+     */
+    public static function getUser($username) {
+        return User::where('username','=',$username)->first();
+    }
 }

@@ -27,21 +27,16 @@ class UserController extends Controller
      */
     public function show($username)
     {
-        $user = User::where('username','=',$username)->first();   
+        $this->authorize('viewAny', User::class);
 
-        $posts = News::whereIn('content_id', function($query) use ($user) {
-            $query->select('id')
-                ->from('content')
-                ->where('author_id', $user->id);
-        })->get();
+        $user = User::getUser($username);   
+        $posts = $user->news();
 
         $recentPosts = $posts->sortByDesc('content.date');      
         $topPosts = $posts->sortByDesc('content.nr_votes');
         $trendingPosts = $posts->sortByDesc('trending_score');
 
         $following = $user->following;
-
-        //dd($following);
 
         return view('pages.user', [
             'user' => $user,
