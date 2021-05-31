@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class BannedMiddleware
+class NotBannedMiddleware
 {
     /**
      * Handle an incoming request.
@@ -23,14 +23,9 @@ class BannedMiddleware
         
         $user=User::findOrFail(Auth::id());
 
-        if($user->is_banned )
+        if(!$user->is_banned )
         {
-            $user->checkBan();
-
-            if($user->is_banned)
-                return(redirect('ban'));
-            else 
-                return $next($request);
+            return(redirect('/'));
         }
         else 
             return $next($request); 

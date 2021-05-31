@@ -33,7 +33,7 @@ Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register/', [RegisterController::class, 'register']);
 
-Route::get('/ban/', [BannedPageController::class, 'show'])->name('ban');
+Route::get('/ban/', [BannedPageController::class, 'show'])->name('ban')->middleware('auth','notbanned');
 Route::post('/user/{username}/unban_appeal/', [UserController::class, 'unban_appeal']);
 
 Route::middleware(['ban'])->group(function () {
