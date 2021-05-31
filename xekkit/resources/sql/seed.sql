@@ -440,11 +440,11 @@ CREATE OR REPLACE FUNCTION deal_with_request() RETURNS TRIGGER AS
     BEGIN
         IF new.status='approved' THEN
             -- PARTNER REQUEST
-            IF EXISTS (SELECT * FROM partner_request, content WHERE new.id=request_id AND content.id=to_content_id) THEN
+            IF EXISTS (SELECT * FROM partner_request WHERE new.id=request_id) THEN
             UPDATE users SET is_partner=true where new.from_id=users.id;
             -- REPORT CONTENT REQUEST
             ELSIF EXISTS (SELECT * FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id) THEN
-                DELETE FROM content WHERE content.id=to_content_id;
+                DELETE FROM content WHERE content.id IN (SELECT to_content_id FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id);
                 -- TRANSACTION TO DELETE COMMENT/NEWs
             -- UNBAN APPEAL REQUEST
             ELSIF EXISTS (SELECT * FROM unban_appeal, users WHERE new.id=request_id AND users.id=new.from_id) THEN
@@ -1273,13 +1273,13 @@ insert into comment(content_id, news_id,reply_to_id) values (10,4,null);
 insert into comment(content_id, news_id,reply_to_id) values (11,4,null);
 
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(20, 6,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
+(20, NULL,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (12, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(20, 6,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
+(20, NULL,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(17, 3,'This is fake news', '2017-03-17 18:29:21', 'rejected', '2017-03-20 18:29:21');
+(17, NULL,'This is fake news', '2017-03-17 18:29:21', NULL, NULL );
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (19, NULL,'I want to have the check before my username ;)', '2021-05-17 05:14:46', NULL, NULL);
 
@@ -1290,6 +1290,10 @@ insert into report_users(request_id, to_users_id) values (3,12);
 insert into report_content(request_id, to_content_id) values (4,3);
 insert into partner_request(request_id) values (5);
 
+update request set moderator_id = 5, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 1;
+update request set moderator_id = 3, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 3;
+update request set moderator_id = 3, status = 'approved', revision_date = '2017-03-20 18:29:21' WHERE id = 4;
+update request set moderator_id = 4, status = 'approved', revision_date = CURRENT_DATE WHERE id = 5;
 
 insert into vote (users_id, content_id, value) values (20, 4, 1);
 insert into vote (users_id, content_id, value) values (7, 2, 1);
