@@ -12,7 +12,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-
+use App\Http\Controllers\BannedPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,28 +33,34 @@ Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register/', [RegisterController::class, 'register']);
 
+Route::get('/ban/', [BannedPageController::class, 'show'])->name('ban')->middleware('auth','notbanned');
+Route::post('/user/{username}/unban_appeal/', [UserController::class, 'unban_appeal']);
 
+Route::middleware(['ban'])->group(function () {
 
-// Content
-Route::get('/news/{id}/', [NewsController::class, 'show'])->where(['id'=>'[0-9]+']);
+    // Content
+    Route::get('/news/{id}/', [NewsController::class, 'show'])->where(['id'=>'[0-9]+']);
 
-// Home
-Route::get('/', [HomepageController::class, 'show'])->name('home');
+    // Home
+    Route::get('/', [HomepageController::class, 'show'])->name('home');
 
-// Search
-Route::get('/search/', [SearchController::class, 'show'])->name('search');
+    // Search
+    Route::get('/search/', [SearchController::class, 'show'])->name('search');
 
-// Profile
-Route::get('/user/{username}', [UserController::class, 'show']);
+    // Profile
+    Route::get('/user/{username}', [UserController::class, 'show']);
 
-// FAQ
-Route::get('/faq/', [FAQController::class, 'show'])->name('faq');
+    // FAQ
+    Route::get('/faq/', [FAQController::class, 'show'])->name('faq');
 
-// About
-Route::get('/about/', [AboutController::class, 'show'])->name('about');
+    // About
+    Route::get('/about/', [AboutController::class, 'show'])->name('about');
+});
+
 
 // Authenticated needed for this routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','ban'])->group(function () {
+
 
     // news
     Route::post('/news/create/', [NewsController::class, 'create']);
@@ -87,7 +93,8 @@ Route::middleware(['auth'])->group(function () {
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
     Route::post('/user/{username}/partner_request/', [UserController::class, 'partner_request']);
-    Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']); 
+    Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
+     
 
 });
 
