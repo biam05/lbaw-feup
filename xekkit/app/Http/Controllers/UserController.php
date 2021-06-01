@@ -30,6 +30,11 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
 
         $user = User::getUser($username);   
+
+        if($user == null){
+            return view('errors.404');
+        }
+
         $posts = $user->news();
 
         $recentPosts = $posts->sortByDesc('content.date');      
@@ -45,6 +50,11 @@ class UserController extends Controller
             'trendingPosts' => $trendingPosts,
             'following' => $following
         ]);
+    }
+
+    public function showEditPage($username)
+    {
+        this->authorize('update', $user);
     }
 
 
@@ -195,7 +205,7 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-    public function unban_appeal (Request $request, $username)
+    public function unban_appeal(Request $request, $username)
     {
         
         $user = User::where('username','=',$username)->first();  

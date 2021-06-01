@@ -3,7 +3,6 @@
 @section('title', 'Profile | x/' . $user->username )
 
 @section('content')
-<?php use App\Models\User;?>
 
 <main class="container-xl">
     <section>
@@ -19,7 +18,7 @@
                     <i class="fas fa-trash"></i>
                 </button>
             @elseif(Auth::check() && Auth::user()->username != $user->username)
-                @include('partials.modals.report_post', ['report_to_id' => $user->id, 'type'=>"user"])
+                @include('partials.modals.report', ['report_to_id' => $user->id, 'type'=>"user"])
                 <button type="button" class="col-auto clickable-big text-light" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
                     <i class="fas fa-exclamation-triangle"></i>
                 </button>
@@ -43,9 +42,7 @@
                     @if(Auth::user()->username == $user->username)
                         <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
                         @if($user->is_partner)
-                            
-                            
-                                @include('partials.modals.stop_partnership')
+                            @include('partials.modals.stop_partnership')
 
                         @else
                             @if(!User::pendingPartnerRequests())
@@ -54,10 +51,10 @@
                            
                         @endif
                     @else
-                        @if (User::followOrUnfollow($user))
-                        <button id="follow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Follow</button>
+                        @if(Auth::user()->isfollowing($user))
+                            <button id="unfollow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Unfollow</button>
                         @else
-                        <button id="unfollow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Unfollow</button>
+                            <button id="follow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Follow</button>
                         @endif
                         
                     @endif
