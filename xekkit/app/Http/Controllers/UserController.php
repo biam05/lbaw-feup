@@ -54,7 +54,9 @@ class UserController extends Controller
 
     public function showEditPage($username)
     {
-        this->authorize('update', $user);
+        $user = User::getUser($username);
+        $this->authorize('update', $user);
+        return view('pages.edit_user');
     }
 
     /**

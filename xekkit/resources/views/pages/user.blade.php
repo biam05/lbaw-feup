@@ -7,19 +7,19 @@
 <main class="container-xl">
     <section>
         <div class="row justify-content-start">
-            <h5 class="col-auto text-light">
+            <h4 class="col-auto text-light">
                 @if($user->is_partner)
                     <i id="user-partner" class="fas fa-check"></i>
                 @endif
                 x/{{$user->username}}
-            </h5>
+            </h4>
             @if (Auth::check() && Auth::user()->is_moderator)
-                <button type="button" class="col-auto clickable-big text-light" data-bs-toggle="modal" data-bs-target="#reportModal">
-                    <i class="fas fa-trash"></i>
+                <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#reportModal">
+                    <i class="fas fa-ban"></i>
                 </button>
             @elseif(Auth::check() && Auth::user()->username != $user->username)
                 @include('partials.modals.report', ['report_to_id' => $user->id, 'type'=>"user"])
-                <button type="button" class="col-auto clickable-big text-light" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
+                <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
                     <i class="fas fa-exclamation-triangle"></i>
                 </button>
             @endif
@@ -40,7 +40,7 @@
                 <h2>{{$user->reputation}}</h2>
                 @auth
                     @if(Auth::user()->username == $user->username)
-                        <a href="edit_profile.php" class="col align-self-end btn btn-primary">Edit Profile</a>
+                        <a href="/user/{{Auth::user()->username}}/edit" class="col align-self-end btn btn-primary">Edit Profile</a>
                         @if($user->is_partner)
                             @include('partials.modals.stop_partnership')
 
