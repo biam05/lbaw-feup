@@ -89,4 +89,4 @@
     </div>
 </nav>
 
-<script defer src="../js/nav_bar_search.js"></script>
+<script defer src="{{ asset('js/nav_bar_search.js') }}"></script>

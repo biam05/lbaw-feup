@@ -41,15 +41,6 @@
                 @auth
                     @if(Auth::user()->username == $user->username)
                         <a href="/user/{{Auth::user()->username}}/edit" class="col align-self-end btn btn-primary">Edit Profile</a>
-                        @if($user->is_partner)
-                            @include('partials.modals.stop_partnership')
-
-                        @else
-                            @if(!Auth::user()->pendingPartnerRequests())
-                                @include('partials.modals.partner_request')
-                            @endif
-                           
-                        @endif
                     @else
                         @if(Auth::user()->isfollowing($user))
                             <button id="follow_button" onclick='unfollow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Unfollow</button>
