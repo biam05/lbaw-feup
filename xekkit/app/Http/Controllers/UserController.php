@@ -103,6 +103,8 @@ class UserController extends Controller
      */
     public function updateUser(Request $request)
     {
+        $this->authorize('update', Auth::user());
+
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:16|unique:users,username,'.(string)Auth::id(),
             'email' => 'required|string|email|max:255|unique:users,email,'.(string)Auth::id(),
@@ -124,14 +126,27 @@ class UserController extends Controller
         return view('pages.edit_user');
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Updates user as deleted.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function deleteUser(Request $request)
     {
-        $user = User::find($id);
+        $this->authorize('delete', Auth::user());
 
-        $this->authorize('delete', $user);
-        $user->delete();
+        if(! Hash::check($request->password, Auth::user()->password)) {
+            return back()->withErrors([
+                'password' => ['The provided password does not match our records.']
+            ]);
+        }
 
-        return $user;
+        Auth::user()->is_deleted = true;
+        Auth::user()->save();
+
+        Auth::logout();
+        return redirect('/');
     }
 
     public function report(Request $request, $id)

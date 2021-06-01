@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function update(User $me, User $user)
     {
-        return ($me->id === $user->id) || $me->is_moderator;
+        return ($me->id === $user->id);
     }
 
     /**
@@ -64,6 +64,6 @@ class UserPolicy
      */
     public function delete(User $me, User $user)
     {
-        return ($me->id === $user->id) || $me->is_moderator;
+        return ($me->id === $user->id);
     }
 }

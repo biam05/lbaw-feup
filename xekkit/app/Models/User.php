@@ -87,36 +87,22 @@ class User extends Authenticatable
      * The requests I have made.
      */
     public function requests() {
-        return $this->hasMany(Request_db::class, 'users_id');
+        return $this->hasMany(Request_db::class, 'from_id');
     }
 
     /**
      * The requests I have made.
      */
-    public static function pendingPartnerRequests() {
-
-        $user=User::findOrFail(Auth::id());
-        /*$requests=$user->hasMany(Request_db::class, 'from_id'); */
-        DB::enableQueryLog();
-        $requests = DB::table('request')->select('id', 'status')->where('from_id',$user->id)->get();
-       
-      
-        foreach ($requests as $r)
-        {
-            $request=Request_db::findOrFail($r->id);
-            
-            if(!empty($request->partnerRequest()))
-            {
+    public function hasPendingPartnerRequests() {
+        foreach ($this->requests as $request){
+            if(!empty($request->partnerRequest())){
                 if($request->status==null)
                 {
-    
                     return true;
                 }
             }
         }
-        
         return false;
-         
     }
 
     /**
