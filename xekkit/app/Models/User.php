@@ -178,4 +178,18 @@ class User extends Authenticatable
     public static function getUser($username) {
         return User::where('username','=',$username)->first();
     }
+
+    public function checkBan() {
+        $bans = $this->bans()->where(function ($query) {
+            $now = DB::raw('NOW()');
+            $query->whereNull('end_date')
+                  ->orWhere('end_date','>',$now);
+        })->get();
+        
+        if($bans == null)
+        {
+            $user->is_banned=false;
+            $user->save();
+        }
+    }
 }
