@@ -20,19 +20,11 @@ class BannedMiddleware
     {
         if(Auth::guest())
         return $next($request);
-        
-        $user=User::findOrFail(Auth::id());
 
-        if($user->is_banned )
-        {
-            $user->checkBan();
-
-            if($user->is_banned)
-                return(redirect('ban'));
-            else 
-                return $next($request);
+        Auth::user()->checkBan();
+        if(!Auth::user()->is_banned){
+            return(redirect('/'));
         }
-        else 
-            return $next($request); 
+        return $next($request); 
     }
 }
