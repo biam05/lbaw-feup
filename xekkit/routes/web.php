@@ -13,6 +13,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BannedPageController;
+use App\Http\Controllers\DeletedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,70 +34,81 @@ Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register/', [RegisterController::class, 'register']);
 
-Route::middleware(['notbanned'])->group(function () {
-
-    // Content
-    Route::get('/news/{id}/', [NewsController::class, 'show'])->where(['id'=>'[0-9]+']);
-
-    // Home
-    Route::get('/', [HomepageController::class, 'show'])->name('home');
-
-    // Search
-    Route::get('/search/', [SearchController::class, 'show'])->name('search');
-
-    // Profile
-    Route::get('/user/{username}', [UserController::class, 'show']);
-
-    // FAQ
-    Route::get('/faq/', [FAQController::class, 'show'])->name('faq');
-
-    // About
-    Route::get('/about/', [AboutController::class, 'show'])->name('about');
-});
-
-
-// Authenticated needed for this routes
 Route::middleware(['auth'])->group(function () {
 
-    Route::middleware(['ban'])->group(function () {
-        Route::get('/ban/', [BannedPageController::class, 'show'])->name('ban');
-        Route::post('/user/{username}/unban_appeal/', [UserController::class, 'unban_appeal']);
-    });
+    // Deleted user
+    Route::get('/deleted_user', [DeletedController::class, 'show']);
+    Route::post('/recover_user', [DeletedController::class, 'recoverUser']);
+});
+
+Route::middleware(['deleted'])->group(function () {
 
     Route::middleware(['notbanned'])->group(function () {
 
-        // news
-        Route::post('/news/create/', [NewsController::class, 'create']);
-        Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
-        Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
-        Route::post('/news/{id}/report/', [NewsController::class, 'report'])->where(['id'=>'[0-9]+']);
+        // Content
+        Route::get('/news/{id}/', [NewsController::class, 'show'])->where(['id'=>'[0-9]+']);
 
-        // comments
-        Route::post('/comment/{id}/report/', [CommentController::class, 'report'])->where(['id'=>'[0-9]+']);
-        Route::post('/comment/create/', [CommentController::class, 'create']);
-        Route::patch('/comment/', [CommentController::class, 'edit']);
-        Route::delete('/comment/{id}', [CommentController::class, 'delete'])->where(['id'=>'[0-9]+']);
+        // Home
+        Route::get('/', [HomepageController::class, 'show'])->name('home');
 
-        //notifications
-        Route::get('/notifications/', [NotificationsController::class, 'show']);
-        Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
-        Route::delete('/notifications/', [NotificationsController::class, 'delete']);
+        // Search
+        Route::get('/search/', [SearchController::class, 'show'])->name('search');
 
-        // faq
-        Route::post('/faq/', [FAQController::class, 'create']);
-        Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);     
-        Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+']);  
+        // Profile
+        Route::get('/user/{username}', [UserController::class, 'show']);
 
-        // report
-        Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
-        Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
-        
-        // profile
-        Route::get('/user/{username}/edit', [UserController::class, 'showEditPage']);
-        Route::post('/update_password', [UserController::class, 'updatePassword']);
-        Route::post('/partner_request', [UserController::class, 'partnerRequest']);
-        Route::post('/update_profile', [UserController::class, 'updateUser']);
+        // FAQ
+        Route::get('/faq/', [FAQController::class, 'show'])->name('faq');
 
+        // About
+        Route::get('/about/', [AboutController::class, 'show'])->name('about');
+    });
+
+
+    // Authenticated needed for this routes
+    Route::middleware(['auth'])->group(function () {
+
+        Route::middleware(['ban'])->group(function () {
+            Route::get('/ban/', [BannedPageController::class, 'show'])->name('ban');
+            Route::post('/user/{username}/unban_appeal/', [UserController::class, 'unban_appeal']);
+        });
+
+        Route::middleware(['notbanned'])->group(function () {
+
+            // news
+            Route::post('/news/create/', [NewsController::class, 'create']);
+            Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);
+            Route::delete('/news/{id}/', [NewsController::class, 'delete'])->where(['id'=>'[0-9]+']);
+            Route::post('/news/{id}/report/', [NewsController::class, 'report'])->where(['id'=>'[0-9]+']);
+
+            // comments
+            Route::post('/comment/{id}/report/', [CommentController::class, 'report'])->where(['id'=>'[0-9]+']);
+            Route::post('/comment/create/', [CommentController::class, 'create']);
+            Route::patch('/comment/', [CommentController::class, 'edit']);
+            Route::delete('/comment/{id}', [CommentController::class, 'delete'])->where(['id'=>'[0-9]+']);
+
+            //notifications
+            Route::get('/notifications/', [NotificationsController::class, 'show']);
+            Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
+            Route::delete('/notifications/', [NotificationsController::class, 'delete']);
+
+            // faq
+            Route::post('/faq/', [FAQController::class, 'create']);
+            Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);     
+            Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+']);  
+
+            // report
+            Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
+            Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
+            
+            // profile
+            Route::get('/user/{username}/edit', [UserController::class, 'showEditPage']);
+            Route::post('/update_password', [UserController::class, 'updatePassword']);
+            Route::post('/partner_request', [UserController::class, 'partnerRequest']);
+            Route::post('/update_profile', [UserController::class, 'updateUser']);
+            Route::post('/delete_user', [UserController::class, 'deleteUser']);
+
+        });
     });
 });
 

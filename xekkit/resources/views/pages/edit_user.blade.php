@@ -67,6 +67,7 @@
                 <div class="col-5 form-floating mb-3">
                     <button type="button" class="btn btn-primary w-100 h-100" data-bs-toggle="modal" data-bs-target="#updatePassword">Change password</button>
                 </div>
+                
             </div>
             
             <div class="form-floating mb-3">
@@ -101,42 +102,25 @@
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#cancelPartnership">Cancel Partnership</button>
                 </div>
+                @include('partials.modals.cancel_partnership')
+            @elseif(Auth::user()->hasPendingPartnerRequests())
+                <div class="form-floating mb-3">
+                    <button type="button" class="btn btn-secondary w-100" disabled data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner (Pending) <i class="fas fa-check"></i></button>
+                </div>
             @else
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner <i class="fas fa-check"></i></button>
                 </div>
+                @include('partials.modals.partner_request')
             @endif
             <div class="form-floating mb-3">
                 <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteAccount">Delete Account</button>
             </div>
+            @include('partials.modals.delete_user')
         </section>
     </section>
-    
 </main>
 
 @include('partials.modals.update_password')
-
-@include('partials.modals.partner_request')
-
-<div class="modal fade text-white" id="deleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog text-white">
-        <div class="modal-content bg-light-dark text-white">
-            <div class="modal-header">
-                <h5 class="modal-title text-white" id="Report-modal-label">Delete Account</h5>
-                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <p>Do you wish to delete your account?</p>
-                    <p class="small">Your profile will be deleted, but your posts will stay in our website.</p>
-                </div>
-                
-                <button type="submit" class="btn btn-danger" data-bs-dismiss="modal"  onclick="location.href='main.php'">Delete Account</button>
-                </form>
-            </div>
-        
-        </div>
-    </div>
-</div>
 
 @endsection

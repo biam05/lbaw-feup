@@ -28,6 +28,13 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected function redirectTo()
+    {
+        if (auth()->user()->is_deleted == true) {
+            return '/deleted_user';
+        }
+        return '/';
+    }
 
     /**
      * Create a new controller instance.
