@@ -892,8 +892,8 @@ insert into users (username, email, password, description, photo, birthdate, gen
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'Sou o Ricardo.',
     'ricardo.jpg',
-    '02/20/1922',
-    'f',
+    '03/21/1998',
+    'm',
     '500000',
     true,
     false,

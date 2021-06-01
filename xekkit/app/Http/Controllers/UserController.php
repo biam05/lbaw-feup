@@ -23,7 +23,7 @@ class UserController extends Controller
      * Shows the user for a given username.
      *
      * @param  string  $username
-     * @return Response
+     * @return view
      */
     public function show($username)
     {
@@ -52,26 +52,76 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Shows the edit page.
+     *
+     * @param  string  $username
+     * @return view
+     */
     public function showEditPage($username)
     {
-        this->authorize('update', $user);
+        $user = User::getUser($username);
+        $this->authorize('update', $user);
+        return view('pages.edit_user');
     }
 
     /**
-     * Edit a user.
+     * Updates user password.
      *
-     * @return User The user edited.
+     * @param  Request  $request
+     * @return view
      */
-    public function edit(Request $request)
+    public function updatePassword(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'oldPassword' => 'required|string',
+            'newPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
+            'confirmNewPassword' => 'required|same:newPassword'
+        ]);
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
 
-        $this->authorize('create', $user);
+        if(! Hash::check($request->oldPassword, Auth::user()->password)) {
+            return back()->withErrors([
+                'oldPassword' => ['The provided password does not match our records.']
+            ]);
+        }
 
-        $user->name = $request->input('name');
-        $user->user_id = Auth::user()->id;
-        $user->save();
+        Auth::user()->password = bcrypt($request->newPassword);
+        Auth::user()->save();
 
-        return $user;
+        return view('pages.edit_user');
+    }
+
+    /**
+     * Updates user information.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function updateUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:16|unique:users,username,'.(string)Auth::id(),
+            'email' => 'required|string|email|max:255|unique:users,email,'.(string)Auth::id(),
+            'birthdate' => 'required|date|before:-13 years',
+            'gender' => 'required|string',
+            'description' => 'string'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        Auth::user()->username = $request->username;
+        Auth::user()->email = $request->email;
+        Auth::user()->birthdate = $request->birthdate;
+        Auth::user()->gender = $request->gender;
+        Auth::user()->description = $request->description;
+        Auth::user()->save();
+        return view('pages.edit_user');
     }
 
     public function delete(Request $request, $id)
@@ -118,33 +168,41 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function partner_request(Request $request, $username)
-    {
+    /**
+     * Create partner request.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function partnerRequest(Request $request)
+    {      
+        $validator = Validator::make($request->all(), [
+            'reason' => 'required|string'
+        ]);
         
-        $user = User::where('username','=',$username)->first();   
-        User::findOrFail($user->id);
-        
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
         DB::transaction(function () use ($request) {
             // create request
             $db_request = new Request_db;
            
-            $db_request->reason = $request->input('body');
-            $db_request->from_id = Auth::user()->id;
+            $db_request->reason = $request->reason;
+            $db_request->from_id = Auth::id();
 
             $db_request->save();
 
             $request_id = $db_request->id;
 
-            //create report
+            //create partner request
             $partner_request = new PartnerRequest();
             $partner_request->request_id=$request_id;
 
             $partner_request->save();
-
-            return $request_id;
         });
 
-        return redirect()->back();
+        return view('pages.edit_user');
     }
 
     public function stop_partnership(Request $request, $username)
