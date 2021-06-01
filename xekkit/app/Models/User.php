@@ -158,16 +158,9 @@ class User extends Authenticatable
         return $this->hasMany(VoteNotification::class, 'author_id');
     }
     
-    public static function followOrUnfollow(User $user){
-        $following = DB::table('follow')
-            ->where('users_id', $user->id)
-            ->where('follower_id', Auth::user()->id)
-            ->first();
-
-        if($following != "") $follow = false;
-        else $follow = true;
-
-        return $follow;
+    public function isFollowing(User $user){
+        $following = $this->following;
+        return $following->contains($user);
     }
 
     /**
@@ -179,6 +172,9 @@ class User extends Authenticatable
         return User::where('username','=',$username)->first();
     }
 
+    /**
+     * Checks if ban is over.
+     */
     public function checkBan() {
         $bans = $this->bans()->where(function ($query) {
             $now = DB::raw('NOW()');
