@@ -57,8 +57,6 @@ class UserController extends Controller
         this->authorize('update', $user);
     }
 
-
-    //----------------------------------------
     /**
      * Edit a user.
      *
@@ -163,7 +161,32 @@ class UserController extends Controller
         $user->save();
         return redirect("/user/".$username);
     }
-    public function toggleFollow(Request $request){
+
+    public function follow(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'users_id' => 'required|integer',
+            'follower_id' => 'required|integer'
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json($validator);
+        }   
+        
+        $user = User::findOrFail($request->follower_id);
+        
+        $user->following()->attach($request->users_id);
+
+        $response = [
+            'status' => true,
+            'message' => "Follow OK",
+            'users_id' => $request->users_id
+        ];
+
+        return response()->json($response);
+    }
+
+    public function unfollow(Request $request){
 
         $validator = Validator::make($request->all(), [
             'users_id' => 'required|integer',
@@ -173,33 +196,15 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json($validator);
         }   
+
+        $user = User::findOrFail($request->follower_id);
         
-        $users_id = $request->users_id;
-        $follower_id = $request->follower_id;
-
-        $followed = User::findOrFail($users_id);
-        $follower = Auth::user();
-
-        //$follow = Follow::findOrFail($users_id, $follower_id);
-
-        $following = DB::table('follow')
-            ->where('users_id', $users_id)
-            ->where('follower_id', $follower_id)
-            ->first();
-
-        if($following != "") $follow = false;
-        else $follow = true;
-        
-        if($follow === true) $followed->followedBy()->attach([$follower_id]);
-        else $followed->followedBy()->detach([$follower_id]);
+        $user->following()->detach($request->users_id);
 
         $response = [
             'status' => true,
-            'message' => "Follow/Unfollow OK",
-            'users_id' => $users_id,
-            'follower_id' => $follower_id,
-            'follow' => $follow
-
+            'message' => "Unfollow OK",
+            'users_id' => $request->users_id
         ];
 
         return response()->json($response);

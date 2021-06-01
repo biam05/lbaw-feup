@@ -45,14 +45,14 @@
                             @include('partials.modals.stop_partnership')
 
                         @else
-                            @if(!User::pendingPartnerRequests())
+                            @if(!Auth::user()->pendingPartnerRequests())
                                 @include('partials.modals.partner_request')
                             @endif
                            
                         @endif
                     @else
                         @if(Auth::user()->isfollowing($user))
-                            <button id="unfollow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Unfollow</button>
+                            <button id="follow_button" onclick='unfollow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Unfollow</button>
                         @else
                             <button id="follow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Follow</button>
                         @endif

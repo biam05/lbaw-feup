@@ -82,12 +82,6 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
         Route::delete('/notifications/', [NotificationsController::class, 'delete']);
 
-        // vote
-        Route::post('/api/vote', [ContentController::class, 'toggleVote']);
-
-        // follow
-        Route::post('/api/follow', [UserController::class, 'toggleFollow']);
-
         // faq
         Route::post('/faq/', [FAQController::class, 'create']);
         Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);     
@@ -110,5 +104,4 @@ Route::get('/clear-all-cache', function() {
     Artisan::call('view:clear');
     Artisan::call('config:clear');
     echo "Cleared all caches successfully.";
-    return redirect()->back();
 });

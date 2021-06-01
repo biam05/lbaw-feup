@@ -25,8 +25,12 @@ Route::get('load-posts-search', [SearchController::class, 'loadPostsSearch']);
 
 Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
 
+
 Route::post('/vote', [ContentController::class, 'toggleVote']);
-Route::post('/follow', [UserController::class, 'toggleFollow']);
+Route::post('/follow', [UserController::class, 'follow']);
+Route::post('/unfollow', [UserController::class, 'unfollow']);
+
+
 
 // Route::get('load-posts', [SearchController::class, 'loadPosts']);
 
