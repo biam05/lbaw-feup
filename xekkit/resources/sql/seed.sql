@@ -230,11 +230,12 @@ CREATE TABLE vote (
 );
 
 CREATE TABLE follow_notification (
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     follower_id INTEGER,
     users_id INTEGER,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(follower_id, users_id),
+    PRIMARY KEY(id),
     CONSTRAINT fk_follower_id
         FOREIGN KEY(follower_id)
 	        REFERENCES users (id)
@@ -577,7 +578,7 @@ DROP TRIGGER IF EXISTS create_follow_notification ON follow;
 CREATE OR REPLACE FUNCTION create_follow_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO follow_notification
+        INSERT INTO follow_notification (follower_id, users_id, is_new, creation_date)
         VALUES (new.follower_id, new.users_id, true, now());
 
         RETURN new;
