@@ -16,7 +16,7 @@ use App\Models\News;
 use App\Models\Content;
 use App\Models\ReportContent;
 use App\Models\Tag;
-use App\Models\Request;
+use App\Models\Requests;
 
 
 use Illuminate\Support\Facades\Session;
@@ -170,7 +170,7 @@ class NewsController extends Controller
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request;
+            $db_request = new Requests;
 
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;

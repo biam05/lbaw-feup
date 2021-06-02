@@ -18,7 +18,7 @@ use App\Models\UnbanAppeal;
 class NotificationsController extends Controller
 {
     public function show(Request $request)
-    {              
+    {
         $notifications = array();
         $mod_notifications = array();
 
@@ -27,7 +27,7 @@ class NotificationsController extends Controller
         $follow_notifications = $user->followNotifications;
         $comment_notifications = $user->commentNotifications;
         $vote_notifications = $user->voteNotifications;
-            
+
         $notifications = $follow_notifications
             ->toBase()->merge($comment_notifications)
             ->toBase()->merge($vote_notifications)
@@ -59,8 +59,8 @@ class NotificationsController extends Controller
                     return intval($a->request->creation_date < $b->request->creation_date);
                 });
         }
-        
-        
+
+
         return view('pages.notifications', [
             'notifications' => $notifications,
             'mod_notifications' => $mod_notifications

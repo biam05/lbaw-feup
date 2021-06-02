@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
-use App\Models\Request;
+use App\Models\Requests;
 use App\Models\PartnerRequest;
 use App\Models\ReportUser;
 use App\Models\News;
@@ -161,7 +161,7 @@ class UserController extends Controller
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request;
+            $db_request = new Requests;
 
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
@@ -201,7 +201,7 @@ class UserController extends Controller
 
         DB::transaction(function () use ($request) {
             // create request
-            $db_request = new Request;
+            $db_request = new Requests;
 
             $db_request->reason = $request->reason;
             $db_request->from_id = Auth::id();

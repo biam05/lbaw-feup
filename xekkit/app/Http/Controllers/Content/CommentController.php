@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\ReportContent;
-use App\Models\Request;
+use App\Models\Requests;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,7 +115,7 @@ class CommentController extends Controller
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request;
+            $db_request = new Requests;
 
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;

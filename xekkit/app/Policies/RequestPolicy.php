@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Request;
+use App\Models\Requests;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -25,7 +25,7 @@ class RequestPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Request  $request
+     * @param  \App\Models\Requests  $request
      * @return mixed
      */
     public function view(User $user, Request $request)
@@ -48,7 +48,7 @@ class RequestPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Request  $request
+     * @param  \App\Models\Requests  $request
      * @return mixed
      */
     public function update(User $user, Request $request)
@@ -60,7 +60,7 @@ class RequestPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Request  $request
+     * @param  \App\Models\Requests  $request
      * @return mixed
      */
     public function delete(User $user, Request $request)
@@ -72,7 +72,7 @@ class RequestPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Request  $request
+     * @param  \App\Models\Requests  $request
      * @return mixed
      */
     public function restore(User $user, Request $request)
@@ -84,7 +84,7 @@ class RequestPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Request  $request
+     * @param  \App\Models\Requests  $request
      * @return mixed
      */
     public function forceDelete(User $user, Request $request)
