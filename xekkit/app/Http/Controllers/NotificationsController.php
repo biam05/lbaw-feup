@@ -17,6 +17,12 @@ use App\Models\UnbanAppeal;
 
 class NotificationsController extends Controller
 {
+    /**
+     * Show notifications page.
+     *
+     * @param Request $request
+     * @return view
+     */
     public function show(Request $request)
     {
         $notifications = array();
@@ -65,5 +71,25 @@ class NotificationsController extends Controller
             'notifications' => $notifications,
             'mod_notifications' => $mod_notifications
         ]);
+    }
+
+    /**
+     * Deletes notification.
+     *
+     * @param Request $request
+     * @return JSON
+     */
+    public function delete(Request $request)
+    {
+
+        // TODO: delete notification from database
+
+        
+        $response = [
+            'success' => true,
+            'message' => "Deleted OK"
+        ];
+
+        return response()->json($response);
     }
 }

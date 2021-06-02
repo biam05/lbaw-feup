@@ -29,4 +29,8 @@
     @endif
 </div>
 
+@once
+    <script defer src={{ asset('js/notifications.js') }}></script>
+@endonce
+
 @endsection
