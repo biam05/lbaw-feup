@@ -4,6 +4,7 @@ use App\Http\Controllers\Content\CommentController;
 use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Content\ContentController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FAQController;
@@ -87,7 +88,11 @@ Route::middleware(['auth'])->group(function () {
     // report
     Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
     Route::post('/user/{username}/partner_request/', [UserController::class, 'partner_request']);
-    Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']); 
+    Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
+
+    // request
+    Route::patch('/request/{id}/accept/', [RequestController::class, 'approve']);
+    Route::patch('/request/{id}/reject/', [RequestController::class, 'reject']);
 
 });
 

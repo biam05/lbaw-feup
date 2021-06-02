@@ -188,7 +188,7 @@ CREATE TABLE report_content (
     CONSTRAINT fk_to_content_id
         FOREIGN KEY(to_content_id)
 	        REFERENCES content (id)
-	        ON DELETE SET NULL
+	        ON DELETE CASCADE
 );
 
 CREATE TABLE partner_request (
