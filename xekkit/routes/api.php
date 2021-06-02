@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Content\CommentController;
 use App\Http\Controllers\Content\ContentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NotificationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +30,4 @@ Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
 Route::post('/vote', [ContentController::class, 'toggleVote']);
 Route::post('/follow', [UserController::class, 'follow']);
 Route::post('/unfollow', [UserController::class, 'unfollow']);
-
-
-
-// Route::get('load-posts', [SearchController::class, 'loadPosts']);
-
-// Route::get('load-users', [SearchController::class, 'loadUsers']);
-
-// Route::get('load-comments', [CommentController::class, 'loadComments']);
+Route::post('/deleteNotification', [NotificationsController::class, 'delete']);
