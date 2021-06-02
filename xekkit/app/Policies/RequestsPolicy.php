@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
+use Illuminate\Http\Request;
 use App\Models\Requests;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RequestPolicy
+class RequestsPolicy
 {
     use HandlesAuthorization;
 
@@ -53,7 +54,7 @@ class RequestPolicy
      */
     public function update(User $user, Request $request)
     {
-        //
+        return $user->is_moderator && !($user->is_deleted || $user->is_banned);
     }
 
     /**

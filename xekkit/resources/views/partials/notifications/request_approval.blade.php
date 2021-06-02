@@ -11,12 +11,12 @@
     </p>
 @else
     <div class="d-flex">
-        <form action="/comment/{{ $request->id }}/accept/">
+        <form method="post" action="/request/{{ $request->id }}/accept/">
             {{csrf_field()}}
             @method('patch')
             <button href="#" class="btn btn-primary me-1">Accept</button>
         </form>
-        <form action="/comment/{{ $request->id }}/reject/">
+        <form method="post" action="/request/{{ $request->id }}/reject/">
             {{csrf_field()}}
             @method('patch')
             <button href="#" class="btn btn-danger">Reject</button>
