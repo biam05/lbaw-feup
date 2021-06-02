@@ -179,7 +179,7 @@ CREATE TABLE report_users (
 
 CREATE TABLE report_content (
     request_id INTEGER NOT NULL,
-    to_content_id INTEGER NOT NULL,
+    to_content_id INTEGER,
     PRIMARY KEY(request_id),
     CONSTRAINT fk_request_id
         FOREIGN KEY(request_id)
@@ -188,7 +188,7 @@ CREATE TABLE report_content (
     CONSTRAINT fk_to_content_id
         FOREIGN KEY(to_content_id)
 	        REFERENCES content (id)
-	        ON DELETE CASCADE
+	        ON DELETE SET NULL
 );
 
 CREATE TABLE partner_request (
@@ -230,11 +230,12 @@ CREATE TABLE vote (
 );
 
 CREATE TABLE follow_notification (
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     follower_id INTEGER,
     users_id INTEGER,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(follower_id, users_id),
+    PRIMARY KEY(id),
     CONSTRAINT fk_follower_id
         FOREIGN KEY(follower_id)
 	        REFERENCES users (id)
@@ -577,7 +578,7 @@ DROP TRIGGER IF EXISTS create_follow_notification ON follow;
 CREATE OR REPLACE FUNCTION create_follow_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO follow_notification
+        INSERT INTO follow_notification (follower_id, users_id, is_new, creation_date)
         VALUES (new.follower_id, new.users_id, true, now());
 
         RETURN new;
@@ -891,8 +892,8 @@ insert into users (username, email, password, description, photo, birthdate, gen
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'Sou o Ricardo.',
     'ricardo.jpg',
-    '02/20/1922',
-    'f',
+    '03/21/1998',
+    'm',
     '500000',
     true,
     false,
@@ -1290,11 +1291,6 @@ insert into report_users(request_id, to_users_id) values (3,12);
 insert into report_content(request_id, to_content_id) values (4,3);
 insert into partner_request(request_id) values (5);
 
-update request set moderator_id = 5, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 1;
-update request set moderator_id = 3, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 3;
-update request set moderator_id = 3, status = 'approved', revision_date = '2017-03-20 18:29:21' WHERE id = 4;
-update request set moderator_id = 4, status = 'approved', revision_date = CURRENT_DATE WHERE id = 5;
-
 insert into vote (users_id, content_id, value) values (20, 4, 1);
 insert into vote (users_id, content_id, value) values (7, 2, 1);
 insert into vote (users_id, content_id, value) values (7, 3, 1);
@@ -1309,6 +1305,11 @@ insert into vote (users_id, content_id, value) values (14, 2, 1);
 insert into vote (users_id, content_id, value) values (16, 3, -1);
 insert into vote (users_id, content_id, value) values (4, 5, 1);
 insert into vote (users_id, content_id, value) values (3, 6, 1);
+
+update request set moderator_id = 5, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 1;
+update request set moderator_id = 3, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 3;
+update request set moderator_id = 3, status = 'approved', revision_date = '2017-03-20 18:29:21' WHERE id = 4;
+update request set moderator_id = 4, status = 'approved', revision_date = CURRENT_DATE WHERE id = 5;
 
 
 insert into faq(question, answer) values ('How does Xekkit deal with inappropriate comments?','You can request for a User to be banned and later our moderators will analyse said request and decide wether that behaviour is inappropriate');

@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
-use App\Models\Request_db;
+use App\Models\Request;
 use App\Models\PartnerRequest;
 use App\Models\ReportUser;
 use App\Models\News;
 use App\Models\Content;
 use App\Models\Follow;
-
+use App\Models\UnbanAppeal;
 
 class UserController extends Controller
 {
@@ -23,25 +23,25 @@ class UserController extends Controller
      * Shows the user for a given username.
      *
      * @param  string  $username
-     * @return Response
+     * @return view
      */
     public function show($username)
     {
-        $user = User::where('username','=',$username)->first();   
+        $this->authorize('viewAny', User::class);
 
-        $posts = News::whereIn('content_id', function($query) use ($user) {
-            $query->select('id')
-                ->from('content')
-                ->where('author_id', $user->id);
-        })->get();
+        $user = User::getUser($username);
 
-        $recentPosts = $posts->sortByDesc('content.date');      
+        if($user == null){
+            return view('errors.404');
+        }
+
+        $posts = $user->news();
+
+        $recentPosts = $posts->sortByDesc('content.date');
         $topPosts = $posts->sortByDesc('content.nr_votes');
         $trendingPosts = $posts->sortByDesc('trending_score');
 
         $following = $user->following;
-
-        //dd($following);
 
         return view('pages.user', [
             'user' => $user,
@@ -52,49 +52,117 @@ class UserController extends Controller
         ]);
     }
 
-
-    //----------------------------------------
     /**
-     * Edit a user.
+     * Shows the edit page.
      *
-     * @return User The user edited.
+     * @param  string  $username
+     * @return view
      */
-    public function edit(Request $request)
+    public function showEditPage($username)
     {
-
-        $this->authorize('create', $user);
-
-        $user->name = $request->input('name');
-        $user->user_id = Auth::user()->id;
-        $user->save();
-
-        return $user;
+        $user = User::getUser($username);
+        $this->authorize('update', $user);
+        return view('pages.edit_user');
     }
 
-    public function delete(Request $request, $id)
+    /**
+     * Updates user password.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function updatePassword(Request $request)
     {
-        $user = User::find($id);
+        $validator = Validator::make($request->all(), [
+            'oldPassword' => 'required|string',
+            'newPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
+            'confirmNewPassword' => 'required|same:newPassword'
+        ]);
 
-        $this->authorize('delete', $user);
-        $user->delete();
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
 
-        return $user;
+        if(! Hash::check($request->oldPassword, Auth::user()->password)) {
+            return back()->withErrors([
+                'oldPassword' => ['The provided password does not match our records.']
+            ]);
+        }
+
+        Auth::user()->password = bcrypt($request->newPassword);
+        Auth::user()->save();
+
+        return view('pages.edit_user');
+    }
+
+    /**
+     * Updates user information.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function updateUser(Request $request)
+    {
+        $this->authorize('update', Auth::user());
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:16|unique:users,username,'.(string)Auth::id(),
+            'email' => 'required|string|email|max:255|unique:users,email,'.(string)Auth::id(),
+            'birthdate' => 'required|date|before:-13 years',
+            'gender' => 'required|string',
+            'description' => 'string'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        Auth::user()->username = $request->username;
+        Auth::user()->email = $request->email;
+        Auth::user()->birthdate = $request->birthdate;
+        Auth::user()->gender = $request->gender;
+        Auth::user()->description = $request->description;
+        Auth::user()->save();
+        return view('pages.edit_user');
+    }
+
+    /**
+     * Updates user as deleted.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function deleteUser(Request $request)
+    {
+        $this->authorize('delete', Auth::user());
+
+        if(! Hash::check($request->password, Auth::user()->password)) {
+            return back()->withErrors([
+                'password' => ['The provided password does not match our records.']
+            ]);
+        }
+
+        Auth::user()->is_deleted = true;
+        Auth::user()->save();
+
+        Auth::logout();
+        return redirect('/');
     }
 
     public function report(Request $request, $id)
     {
-      
+
         $validator = $request->validate([
             'body' => 'required|string',
         ]);
 
         $user = User::findOrFail($id);
-        
+
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request_db;
-           
+            $db_request = new Request;
+
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
 
@@ -115,33 +183,41 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function partner_request(Request $request, $username)
+    /**
+     * Create partner request.
+     *
+     * @param  Request  $request
+     * @return view
+     */
+    public function partnerRequest(Request $request)
     {
-        
-        $user = User::where('username','=',$username)->first();   
-        User::findOrFail($user->id);
-        
+        $validator = Validator::make($request->all(), [
+            'reason' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
         DB::transaction(function () use ($request) {
             // create request
-            $db_request = new Request_db;
-           
-            $db_request->reason = $request->input('body');
-            $db_request->from_id = Auth::user()->id;
+            $db_request = new Request;
+
+            $db_request->reason = $request->reason;
+            $db_request->from_id = Auth::id();
 
             $db_request->save();
 
             $request_id = $db_request->id;
 
-            //create report
+            //create partner request
             $partner_request = new PartnerRequest();
             $partner_request->request_id=$request_id;
 
             $partner_request->save();
-
-            return $request_id;
         });
 
-        return redirect()->back();
+        return view('pages.edit_user');
     }
 
     public function stop_partnership(Request $request, $username)
@@ -151,14 +227,15 @@ class UserController extends Controller
                 'password' => ['The provided password does not match our records.']
             ]);
         }
-        
-        $user = User::where('username','=',$username)->first();   
+
+        $user = User::where('username','=',$username)->first();
         User::findOrFail($user->id);
         $user->is_partner=false;
         $user->save();
         return redirect("/user/".$username);
     }
-    public function toggleFollow(Request $request){
+
+    public function follow(Request $request){
 
         $validator = Validator::make($request->all(), [
             'users_id' => 'required|integer',
@@ -167,37 +244,74 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator);
-        }   
-        
-        $users_id = $request->users_id;
-        $follower_id = $request->follower_id;
+        }
 
-        $followed = User::findOrFail($users_id);
-        $follower = Auth::user();
+        $user = User::findOrFail($request->follower_id);
 
-        //$follow = Follow::findOrFail($users_id, $follower_id);
-
-        $following = DB::table('follow')
-            ->where('users_id', $users_id)
-            ->where('follower_id', $follower_id)
-            ->first();
-
-        if($following != "") $follow = false;
-        else $follow = true;
-        
-        if($follow === true) $followed->followedBy()->attach([$follower_id]);
-        else $followed->followedBy()->detach([$follower_id]);
+        $user->following()->attach($request->users_id);
 
         $response = [
             'status' => true,
-            'message' => "Follow/Unfollow OK",
-            'users_id' => $users_id,
-            'follower_id' => $follower_id,
-            'follow' => $follow
-
+            'message' => "Follow OK",
+            'users_id' => $request->users_id
         ];
 
         return response()->json($response);
     }
+
+    public function unfollow(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'users_id' => 'required|integer',
+            'follower_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator);
+        }
+
+        $user = User::findOrFail($request->follower_id);
+
+        $user->following()->detach($request->users_id);
+
+        $response = [
+            'status' => true,
+            'message' => "Unfollow OK",
+            'users_id' => $request->users_id
+        ];
+
+        return response()->json($response);
+    }
+
+    public function unban_appeal(Request $request, $username)
+    {
+
+        $user = User::where('username','=',$username)->first();
+
+        User::findOrFail($user->id);
+
+        DB::transaction(function () use ($request, $user) {
+            // create request
+            $db_request = new Request;
+
+            $db_request->reason = $request->input('body');
+            $db_request->from_id = Auth::user()->id;
+
+            $db_request->save();
+
+            $request_id = $db_request->id;
+
+            //create report
+            $unban_appeal = new UnbanAppeal();
+            $unban_appeal->request_id=$request_id;
+            $unban_appeal->ban_id=$user->currentBan();
+            $unban_appeal->save();
+
+            return $unban_appeal;
+        });
+
+        return redirect()->back();
+    }
+
 
 }

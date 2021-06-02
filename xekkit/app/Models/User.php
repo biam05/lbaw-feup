@@ -31,8 +31,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 
-        'email', 
+        'username',
+        'email',
         'password',
         'birthdate',
         'gender',
@@ -87,36 +87,22 @@ class User extends Authenticatable
      * The requests I have made.
      */
     public function requests() {
-        return $this->hasMany(Request_db::class, 'users_id');
+        return $this->hasMany(Request::class, 'from_id');
     }
 
     /**
      * The requests I have made.
      */
-    public static function pendingPartnerRequests() {
-
-        $user=User::findOrFail(Auth::id());
-        /*$requests=$user->hasMany(Request_db::class, 'from_id'); */
-        DB::enableQueryLog();
-        $requests = DB::table('request')->select('id', 'status')->where('from_id',$user->id)->get();
-       
-      
-        foreach ($requests as $r)
-        {
-            $request=Request_db::findOrFail($r->id);
-            
-            if(!empty($request->partnerRequest()))
-            {
+    public function hasPendingPartnerRequests() {
+        foreach ($this->requests as $request){
+            if(!empty($request->partnerRequest())){
                 if($request->status==null)
                 {
-    
                     return true;
                 }
             }
         }
-        
         return false;
-         
     }
 
     /**
@@ -124,6 +110,17 @@ class User extends Authenticatable
      */
     public function contents() {
         return $this->hasMany(Content::class, 'author_id');
+    }
+
+    /**
+     * The news I have posted.
+     */
+    public function news() {
+        return News::whereIn('content_id', function($query) {
+            $query->select('id')
+                ->from('content')
+                ->where('author_id', $this->id);
+        })->get();
     }
 
     /**
@@ -146,18 +143,35 @@ class User extends Authenticatable
     public function voteNotifications() {
         return $this->hasMany(VoteNotification::class, 'author_id');
     }
-    
-    public static function followOrUnfollow(User $user){
-        $following = DB::table('follow')
-            ->where('users_id', $user->id)
-            ->where('follower_id', Auth::user()->id)
-            ->first();
 
-        if($following != "") $follow = false;
-        else $follow = true;
-
-        return $follow;
+    public function isFollowing(User $user){
+        $following = $this->following;
+        return $following->contains($user);
     }
 
+    /**
+     * Find user by username.
+     *
+     * @param string $username
+     */
+    public static function getUser($username) {
+        return User::where('username','=',$username)->first();
+    }
 
+    /**
+     * Checks if ban is over.
+     */
+    public function checkBan() {
+        $bans = $this->bans()->where(function ($query) {
+            $now = DB::raw('NOW()');
+            $query->whereNull('end_date')
+                  ->orWhere('end_date','>',$now);
+        })->get();
+
+        if($bans == null)
+        {
+            $user->is_banned=false;
+            $user->save();
+        }
+    }
 }

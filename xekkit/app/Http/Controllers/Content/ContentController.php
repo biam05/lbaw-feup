@@ -16,7 +16,7 @@ use App\Models\User;
 use App\Models\News;
 use App\Models\Content;
 use App\Models\Tag;
-use App\Models\Request_db;
+use App\Models\Request;
 use App\Models\ReportContent;
 
 use Illuminate\Support\Facades\Session;
@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ContentController extends Controller
 {
     public function toggleVote(Request $request)
-    {        
+    {
         $validator = Validator::make($request->all(), [
             'content_id' => 'required|integer',
             'upvote' => 'required|boolean'
@@ -34,7 +34,7 @@ class ContentController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator);
-        }        
+        }
 
         $content_id = $request->content_id;
         $upvote = $request->upvote;
@@ -53,17 +53,17 @@ class ContentController extends Controller
 
         $value = $user->is_partner ? 10 : 1;
         $value = $upvote ? $value : -$value;
-        
+
         $voted = Content::getVoteFromContent($content);
-        if($voted == "downvote"){   
+        if($voted == "downvote"){
             if($upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
         }
         else if($voted == "upvote"){
             if(!$upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
-        }    
+        }
 
         $user->voteOn()->toggle([$content_id => ['value' => $value]]);
-        
+
         $content = Content::findOrFail($content_id);
 
         $response = [
@@ -77,18 +77,18 @@ class ContentController extends Controller
 
     public function report(Request $request, $id)
     {
-      
+
         $validator = $request->validate([
             'body' => 'required|string',
         ]);
 
         $comment = Comment::findOrFail($id);
-        
+
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request_db;
-           
+            $db_request = new Request;
+
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
 
