@@ -12,23 +12,23 @@ use App\Models\Faq;
 class RequestController extends Controller
 {
     public function approve(Request $request, $id){
-        $request = Requests::findOrFail($id);
-        //$this->authorize('udpate', $request);
-        $request->status = Requests::STATUS_APPROVE;
-        $request->revision_date = date('Y-m-d H:i:s');
-        $request->moderator_id = Auth::user()->id;
-        $request->save();
+        $requests = Requests::findOrFail($id);
+        $this->authorize('update', $requests);
+        $requests->status = Requests::STATUS_APPROVE;
+        $requests->revision_date = date('Y-m-d H:i:s');
+        $requests->moderator_id = Auth::user()->id;
+        $requests->save();
 
         return redirect('/notifications/')->with('success', 'The request was accepted successfully.');
     }
 
     public function reject(Request $request, $id){
-        $request = Requests::findOrFail($id);
-        //$this->authorize('udpate', $request);
-        $request->status = Requests::STATUS_REJECT;
-        $request->revision_date = date('Y-m-d H:i:s');
-        $request->moderator_id = Auth::user()->id;
-        $request->save();
+        $requests = Requests::findOrFail($id);
+        $this->authorize('update', $requests);
+        $requests->status = Requests::STATUS_REJECT;
+        $requests->revision_date = date('Y-m-d H:i:s');
+        $requests->moderator_id = Auth::user()->id;
+        $requests->save();
 
         return redirect('/notifications/')->with('success', 'The request was rejected successfully.');
     }
