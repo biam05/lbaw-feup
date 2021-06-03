@@ -179,7 +179,7 @@ CREATE TABLE report_users (
 
 CREATE TABLE report_content (
     request_id INTEGER NOT NULL,
-    to_content_id INTEGER NOT NULL,
+    to_content_id INTEGER,
     PRIMARY KEY(request_id),
     CONSTRAINT fk_request_id
         FOREIGN KEY(request_id)
@@ -231,11 +231,12 @@ CREATE TABLE vote (
 
 CREATE TABLE follow_notification (
     id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
-    follower_id INTEGER,
-    users_id INTEGER,
+    follower_id INTEGER NOT NULL,
+    users_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     PRIMARY KEY(id),
+    UNIQUE(follower_id, users_id),
     CONSTRAINT fk_follower_id
         FOREIGN KEY(follower_id)
 	        REFERENCES users (id)
@@ -247,12 +248,14 @@ CREATE TABLE follow_notification (
 );
 
 CREATE TABLE vote_notification (
-    voter_id INTEGER,
-    content_id INTEGER,
-    author_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    voter_id INTEGER NOT NULL,
+    content_id INTEGER NOT NULL,
+    author_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(voter_id, content_id, author_id),
+    PRIMARY KEY(id),
+    UNIQUE(voter_id, content_id, author_id),
     CONSTRAINT fk_voter_id
         FOREIGN KEY(voter_id)
 	        REFERENCES users (id)
@@ -268,11 +271,13 @@ CREATE TABLE vote_notification (
 );
 
 CREATE TABLE comment_notification (
-    users_id INTEGER,
-    comment_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    users_id INTEGER NOT NULL,
+    comment_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(users_id, comment_id),
+    PRIMARY KEY(id),
+    UNIQUE(users_id, comment_id),
     CONSTRAINT fk_users_id
         FOREIGN KEY(users_id)
 	        REFERENCES users (id)
@@ -441,17 +446,17 @@ CREATE OR REPLACE FUNCTION deal_with_request() RETURNS TRIGGER AS
     BEGIN
         IF new.status='approved' THEN
             -- PARTNER REQUEST
-            IF EXISTS (SELECT * FROM partner_request, content WHERE new.id=request_id AND content.id=to_content_id) THEN
+            IF EXISTS (SELECT * FROM partner_request WHERE new.id=request_id) THEN
             UPDATE users SET is_partner=true where new.from_id=users.id;
             -- REPORT CONTENT REQUEST
             ELSIF EXISTS (SELECT * FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id) THEN
-                DELETE FROM content WHERE content.id=to_content_id;
+                DELETE FROM content WHERE content.id IN (SELECT to_content_id FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id);
                 -- TRANSACTION TO DELETE COMMENT/NEWs
             -- UNBAN APPEAL REQUEST
             ELSIF EXISTS (SELECT * FROM unban_appeal, users WHERE new.id=request_id AND users.id=new.from_id) THEN
                 UPDATE users SET is_banned=false WHERE new.from_id=users.id;
-                IF EXISTS (SELECT * FROM ban WHERE ban.id=ban_id) THEN
-                UPDATE ban SET end_date=NOW() WHERE ban.id=new.ban_id;
+                IF EXISTS (SELECT * FROM ban WHERE ban.id IN (SELECT ban_id FROM unban_appeal WHERE new.id=request_id)) THEN
+                UPDATE ban SET end_date=NOW() WHERE ban.id IN (SELECT ban_id FROM unban_appeal WHERE new.id=request_id);
                 END IF;
             END IF;
             new.revision_date=NOW();
@@ -599,7 +604,7 @@ DROP TRIGGER IF EXISTS create_vote_notification ON vote;
 CREATE OR REPLACE FUNCTION create_vote_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO vote_notification
+        INSERT INTO vote_notification(voter_id, content_id, author_id, is_new, creation_date)
             SELECT new.users_id, c.id, c.author_id, true, now()
             FROM content c
             WHERE new.content_id = c.id;
@@ -622,7 +627,7 @@ CREATE OR REPLACE FUNCTION delete_vote_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         DELETE FROM vote_notification
-            WHERE vote_notification.voter_id=old.users_id 
+            WHERE vote_notification.voter_id=old.users_id
             and old.content_id = vote_notification.content_id;
         RETURN old;
     END
@@ -643,7 +648,7 @@ CREATE OR REPLACE FUNCTION delete_follow_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         DELETE FROM follow_notification
-            WHERE follow_notification.users_id=old.users_id 
+            WHERE follow_notification.users_id=old.users_id
             and old.follower_id = follow_notification.follower_id;
         RETURN old;
     END
@@ -655,8 +660,6 @@ CREATE TRIGGER delete_follow_notification
     FOR EACH ROW
     EXECUTE PROCEDURE delete_follow_notification();
 
-
-
 --Trigger 13 - Create Comment Notification
 DROP FUNCTION IF EXISTS create_comment_notification() CASCADE;
 DROP TRIGGER IF EXISTS create_comment_notification ON comment;
@@ -664,13 +667,15 @@ DROP TRIGGER IF EXISTS create_comment_notification ON comment;
 CREATE OR REPLACE FUNCTION create_comment_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO comment_notification
-            SELECT news.author_id, NEW.content_id, true, now()
-            FROM content news
-            WHERE NEW.news_id = news.id;
+        IF (SELECT author_id FROM content WHERE NEW.news_id = id) <> (SELECT author_id FROM content WHERE NEW.content_id = id) THEN
+            INSERT INTO comment_notification(users_id, comment_id, is_new, creation_date)
+                SELECT news.author_id, NEW.content_id, true, now()
+                FROM content news
+                WHERE NEW.news_id = news.id;
+        END IF;
 
-        IF NEW.reply_to_id IS NOT NULL THEN
-            INSERT INTO comment_notification
+        IF NEW.reply_to_id IS NOT NULL AND (SELECT author_id FROM content WHERE NEW.content_id = id) <> (SELECT author_id FROM content WHERE NEW.reply_to_id = id) THEN
+            INSERT INTO comment_notification(users_id, comment_id, is_new, creation_date)
             VALUES (
                 (SELECT author_id FROM content WHERE content.id = new.reply_to_id),
                 NEW.content_id,
@@ -876,7 +881,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'guilherme',
     'guilherme@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Guilerme.',
+    'Sou o Guilherme.',
     'guilherme.jpg',
     '02/20/1922',
     'm',
@@ -1206,11 +1211,11 @@ insert into follow (follower_id, users_id) values (11, 1);
 insert into follow (follower_id, users_id) values (19, 20);
 insert into follow (follower_id, users_id) values (19, 5);
 
-insert into ban (users_id, moderator_id, end_date, reason) values (4, 6, '8/13/2022', 'Racist comment');
 insert into ban (users_id, moderator_id, end_date, reason) values (12, 3, '12/10/2022', 'Plays fortnite');
 insert into ban (users_id, moderator_id, end_date, reason) values (11, 2, '5/9/2022', 'Hate speech');
 insert into ban (users_id, moderator_id, end_date, reason) values (20, 6, '7/1/2022', 'Marketed Ponzi scheme');
 insert into ban (users_id, moderator_id, end_date, reason) values (14, 6, null, 'Used dangerous external link');
+update users set is_banned = true where id in (12, 11, 20, 14);
 
 insert into content(author_id, body, nr_votes) values(5,'New Mexico, which has one of the highest poverty rates in the U.S., is a vaccination pacesetter thanks to decisive political decisions, homegrown technology and cooperation. #economy #politics',0);
 insert into content(author_id, body, nr_votes) values(12,
@@ -1274,20 +1279,22 @@ insert into comment(content_id, news_id,reply_to_id) values (10,4,null);
 insert into comment(content_id, news_id,reply_to_id) values (11,4,null);
 
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(20, 6,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
+(20, NULL,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(12, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
+(11, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(20, 6,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
+(20, NULL,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(17, 3,'This is fake news', '2017-03-17 18:29:21', 'rejected', '2017-03-20 18:29:21');
+(17, NULL,'This is fake news', '2017-03-17 18:29:21', NULL, NULL );
+insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
+(19, NULL,'I want to have the check before my username ;)', '2021-05-17 05:14:46', NULL, NULL);
 
 
 insert into partner_request(request_id) values (1);
 insert into unban_appeal(request_id, ban_id) values(2,2);
 insert into report_users(request_id, to_users_id) values (3,12);
 insert into report_content(request_id, to_content_id) values (4,3);
-
+insert into partner_request(request_id) values (5);
 
 insert into vote (users_id, content_id, value) values (20, 4, 1);
 insert into vote (users_id, content_id, value) values (7, 2, 1);
@@ -1303,6 +1310,11 @@ insert into vote (users_id, content_id, value) values (14, 2, 1);
 insert into vote (users_id, content_id, value) values (16, 3, -1);
 insert into vote (users_id, content_id, value) values (4, 5, 1);
 insert into vote (users_id, content_id, value) values (3, 6, 1);
+
+update request set moderator_id = 5, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 1;
+update request set moderator_id = 3, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 3;
+update request set moderator_id = 3, status = 'approved', revision_date = '2017-03-20 18:29:21' WHERE id = 4;
+update request set moderator_id = 4, status = 'approved', revision_date = CURRENT_DATE WHERE id = 5;
 
 
 insert into faq(question, answer) values ('How does Xekkit deal with inappropriate comments?','You can request for a User to be banned and later our moderators will analyse said request and decide wether that behaviour is inappropriate');

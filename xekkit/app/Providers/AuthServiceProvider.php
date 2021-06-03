@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\PartnerRequest' => 'App\Policies\PartnerRequestPolicy',
         'App\Models\ReportContent' => 'App\Policies\ReportContentPolicy',
         'App\Models\ReportUser' => 'App\Policies\ReportUserPolicy',
-        'App\Models\Request_db' => 'App\Policies\Request_dbPolicy',
+        'App\Models\Requests' => 'App\Policies\RequestsPolicy',
         'App\Models\UnbanAppeal' => 'App\Policies\UnbanAppealPolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
         'App\Models\VoteNotification' => 'App\Policies\VoteNotificationPolicy',

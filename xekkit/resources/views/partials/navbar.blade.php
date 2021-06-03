@@ -21,7 +21,15 @@
         <div class="mobile ms-auto pe-2">
             <a href="javascript:void(0)"><i onclick="openSearchBar()" class="text-white clickable fas fa-search me-3"></i></a>
             @auth
-            <a href="/notifications/"><i class="bell-notification fas fa-bell"></i></a>
+            <a href="/notifications/" class="align-self-center text-decoration-none position-relative">
+                <i data-count="2" class="bell-notification fas fa-bell">
+                    @if(($number = Auth::user()->getNumNotificationsAsString()) !== '0')
+                        <span class="position-absolute top-0 start-100 translate-middle badge little-badge rounded-pill bg-danger">
+                            {{$number}}
+                        </span>
+                    @endif
+                </i>
+            </a>
             @endauth
         </div>
 
@@ -42,18 +50,26 @@
                 <!-- Desktop right side of nav bar -->
                 <div class="desktop ms-auto d-inline-flex">
                     
-                        <a href="/notifications/" class="align-self-center"><i class="bell-notification fas fa-bell"></i></a>
+                    <a href="/notifications/" class="align-self-center text-decoration-none position-relative">
+                        <i data-count="2" class="bell-notification fas fa-bell">
+                            @if(($number = Auth::user()->getNumNotificationsAsString()) !== '0')
+                                <span class="position-absolute top-0 start-100 translate-middle badge little-badge rounded-pill bg-danger">
+                                    {{$number}}
+                                </span>
+                            @endif
+                        </i>
+                    </a>
+                        
+                    <div class="nav-item navbar-nav dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hello x/{{Auth::user()->username}}!
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{url('/user/' . Auth::user()->username)}}">My Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                        </ul>
                             
-                        <div class="nav-item navbar-nav dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello x/{{Auth::user()->username}}!
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{url('/user/' . Auth::user()->username)}}">My Profile</a></li>
-                                <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
-                            </ul>
-                                
-                        </div>
+                    </div>
                     
                 </div>
 

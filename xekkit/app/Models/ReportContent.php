@@ -48,7 +48,7 @@ class ReportContent extends Model
      * The request related to this report.
      */
     public function request() {
-        return $this->belongsTo(Request_db::class, 'request_id');
+        return $this->belongsTo(Requests::class, 'request_id');
     }
 
     /**
@@ -61,7 +61,7 @@ class ReportContent extends Model
             return $this->belongsTo(Comment::class, 'to_content_id', 'content_id');
         }
           //  return $this->belongsTo(Comment::class, 'to_content_id', 'content_id');
-        
+
         return $this->belongsTo(News::class, 'to_content_id', 'content_id');
     }
 }

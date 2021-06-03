@@ -5,8 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Request_db extends Model
+class Requests extends Model
 {
+    const STATUS_APPROVE = "approved";
+    const STATUS_REJECT = "rejected";
+
     use HasFactory;
 
     /**
@@ -63,5 +66,5 @@ class Request_db extends Model
      */
     public function user() {
         return $this->belongsTo(User::class, 'from_id');
-    }    
+    }
 }

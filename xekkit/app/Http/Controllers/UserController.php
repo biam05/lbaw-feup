@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
-use App\Models\Request_db;
+use App\Models\Requests;
 use App\Models\PartnerRequest;
 use App\Models\ReportUser;
 use App\Models\News;
@@ -29,7 +30,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $user = User::getUser($username);   
+        $user = User::getUser($username);
 
         if($user == null){
             return view('errors.404');
@@ -37,7 +38,7 @@ class UserController extends Controller
 
         $posts = $user->news();
 
-        $recentPosts = $posts->sortByDesc('content.date');      
+        $recentPosts = $posts->sortByDesc('content.date');
         $topPosts = $posts->sortByDesc('content.nr_votes');
         $trendingPosts = $posts->sortByDesc('trending_score');
 
@@ -78,7 +79,7 @@ class UserController extends Controller
             'newPassword' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
             'confirmNewPassword' => 'required|same:newPassword'
         ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
@@ -151,7 +152,7 @@ class UserController extends Controller
 
     public function report(Request $request, $id)
     {
-      
+
         $validator = $request->validate([
             'body' => 'required|string',
         ]);
@@ -168,8 +169,8 @@ class UserController extends Controller
 
         DB::transaction(function () use ($request, $id) {
             // create request
-            $db_request = new Request_db;
-           
+            $db_request = new Requests;
+
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
 
@@ -202,19 +203,19 @@ class UserController extends Controller
      * @return view
      */
     public function partnerRequest(Request $request)
-    {      
+    {
         $validator = Validator::make($request->all(), [
             'reason' => 'required|string'
         ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
 
         DB::transaction(function () use ($request) {
             // create request
-            $db_request = new Request_db;
-           
+            $db_request = new Requests;
+
             $db_request->reason = $request->reason;
             $db_request->from_id = Auth::id();
 
@@ -239,8 +240,8 @@ class UserController extends Controller
                 'password' => ['The provided password does not match our records.']
             ]);
         }
-        
-        $user = User::where('username','=',$username)->first();   
+
+        $user = User::where('username','=',$username)->first();
         User::findOrFail($user->id);
         $user->is_partner=false;
         $user->save();
@@ -250,17 +251,14 @@ class UserController extends Controller
     public function follow(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'users_id' => 'required|integer',
-            'follower_id' => 'required|integer'
+            'users_id' => 'required|integer'
         ]);
-        
+
         if ($validator->fails()) {
-            return response()->json($validator);
-        }   
-        
-        $user = User::findOrFail($request->follower_id);
-        
-        $user->following()->attach($request->users_id);
+            return response()->json($validator, 400);
+        }
+
+        Auth::user()->following()->attach($request->users_id);
 
         $response = [
             'status' => true,
@@ -274,17 +272,14 @@ class UserController extends Controller
     public function unfollow(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'users_id' => 'required|integer',
-            'follower_id' => 'required|integer'
+            'users_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
-        }   
+            return response()->json($validator, 400);
+        }
 
-        $user = User::findOrFail($request->follower_id);
-        
-        $user->following()->detach($request->users_id);
+        Auth::user()->following()->detach($request->users_id);
 
         $response = [
             'status' => true,
@@ -297,15 +292,15 @@ class UserController extends Controller
 
     public function unban_appeal(Request $request, $username)
     {
-        
-        $user = User::where('username','=',$username)->first();  
-        
+
+        $user = User::where('username','=',$username)->first();
+
         User::findOrFail($user->id);
-        
+
         DB::transaction(function () use ($request, $user) {
             // create request
-            $db_request = new Request_db;
-           
+            $db_request = new Requests;
+
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
 
@@ -316,14 +311,54 @@ class UserController extends Controller
             //create report
             $unban_appeal = new UnbanAppeal();
             $unban_appeal->request_id=$request_id;
-            $unban_appeal->ban_id=$user->currentBan();
+            $unban_appeal->ban_id = $user->currentBan()->id;
             $unban_appeal->save();
 
             return $unban_appeal;
         });
 
-        return redirect()->back();
+        return redirect('/ban')->with('success', 'Your unban appeal was registered.');
     }
 
+    function ban_start(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'reason' => 'required|string',
+            'end_date' => 'date|after_or_equal:now|required_without:end_date_forever',
+            'end_date_forever' => 'required_without:end_date',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $user = User::findOrFail($id);
+        $ban_date = $request->input('end_date_forever') ? null : $request->input('end_date');
+        $existing_ban = $user->currentBan();
+        if(empty($existing_ban)){
+            DB::transaction(function () use ($request, $user, $ban_date) {
+                $ban = new Ban();
+                $ban->users_id = $user->id;
+                $ban->moderator_id = Auth::user()->id;
+                $ban->end_date = $ban_date;
+                $ban->reason = $request->input('reason');
+                $ban->save();
+
+                $user->is_banned = true;
+                $user->save();
+                return $ban;
+            });
+            return redirect('/user/' . $user->username)->with('success', 'Your ban was registered.');
+        } else {
+            if ($ban_date == null || strtotime($ban_date) > strtotime($existing_ban->end_date)) {
+                $existing_ban->moderator_id = Auth::user()->id;
+                $existing_ban->reason = $request->input('reason');
+                $existing_ban->end_date = $ban_date;
+                $existing_ban->save();
+                return redirect('/user/' . $user->username)->with('success', 'Your ban updated the last one.');
+            } else {
+                return redirect('/user/' . $user->username)->with('success', 'Already exist a longer ban to this user.');
+            }
+        }
+    }
 
 }

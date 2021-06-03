@@ -1,6 +1,6 @@
 @if($request->status)
     <p class="card-text">
-        This request has been 
+        This request has been
         @if($request->status === 'approved')
             <b class="text-success">{{$request->status}}</b>
         @else
@@ -10,6 +10,16 @@
         <a href="/user/{{$request->moderator->username}}" class="link-light">{{$request->moderator->username}}</a>.
     </p>
 @else
-    <a href="#" class="btn btn-primary me-1">Accept</a>
-    <a href="#" class="btn btn-danger">Reject</a>
+    <div class="d-flex">
+        <form method="post" action="/request/{{ $request->id }}/accept/">
+            {{csrf_field()}}
+            @method('patch')
+            <button href="#" class="btn btn-primary me-1">Accept</button>
+        </form>
+        <form method="post" action="/request/{{ $request->id }}/reject/">
+            {{csrf_field()}}
+            @method('patch')
+            <button href="#" class="btn btn-danger">Reject</button>
+        </form>
+    </div>
 @endif

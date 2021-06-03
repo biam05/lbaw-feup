@@ -31,8 +31,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 
-        'email', 
+        'username',
+        'email',
         'password',
         'birthdate',
         'gender',
@@ -87,7 +87,7 @@ class User extends Authenticatable
      * The requests I have made.
      */
     public function requests() {
-        return $this->hasMany(Request_db::class, 'from_id');
+        return $this->hasMany(Requests::class, 'from_id');
     }
 
     /**
@@ -143,7 +143,7 @@ class User extends Authenticatable
     public function voteNotifications() {
         return $this->hasMany(VoteNotification::class, 'author_id');
     }
-    
+
     public function isFollowing(User $user){
         $following = $this->following;
         return $following->contains($user);
@@ -167,11 +167,42 @@ class User extends Authenticatable
             $query->whereNull('end_date')
                   ->orWhere('end_date','>',$now);
         })->get();
-        
+
         if($bans == null)
         {
-            $user->is_banned=false;
-            $user->save();
+            $this->is_banned=false;
+            $this->save();
         }
+
+    }
+
+    /**
+     * Get current ban process.
+     */
+    public function currentBan() {
+        $ban = $this->bans()->where(function ($query) {
+            $now = DB::raw('NOW()');
+            $query->whereNull('end_date')
+                ->orWhere('end_date','>',$now);
+        })->first();
+        return $ban;
+    }
+
+    /**
+     * Get number of notifications as string
+     * 
+     * @return string
+     */
+    public function getNumNotificationsAsString() {
+        $count = 0;
+        $count += $this->commentNotifications->where('is_new', true)->count();
+        $count += $this->followNotifications->where('is_new', true)->count();
+        $count += $this->voteNotifications->where('is_new', true)->count();
+        
+        if($count < 100){
+            return strval($count);
+        }
+        return "99+";
+
     }
 }

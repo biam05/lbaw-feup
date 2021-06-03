@@ -4,6 +4,7 @@ use App\Http\Controllers\Content\CommentController;
 use App\Http\Controllers\Content\NewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Content\ContentController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FAQController;
@@ -89,24 +90,30 @@ Route::middleware(['deleted'])->group(function () {
 
             //notifications
             Route::get('/notifications/', [NotificationsController::class, 'show']);
-            Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
             Route::delete('/notifications/', [NotificationsController::class, 'delete']);
 
             // faq
             Route::post('/faq/', [FAQController::class, 'create']);
-            Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);     
-            Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+']);  
+            Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);
+            Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+']);
 
             // report
             Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
             Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
-            
+            Route::post('/ban/{id}/report/', [UserController::class, 'ban_start']);
+
             // profile
             Route::get('/user/{username}/edit', [UserController::class, 'showEditPage']);
             Route::post('/update_password', [UserController::class, 'updatePassword']);
             Route::post('/partner_request', [UserController::class, 'partnerRequest']);
             Route::post('/update_profile', [UserController::class, 'updateUser']);
             Route::post('/delete_user', [UserController::class, 'deleteUser']);
+            Route::post('/follow', [UserController::class, 'follow']);
+            Route::post('/unfollow', [UserController::class, 'unfollow']);
+
+            // request
+            Route::patch('/request/{id}/accept/', [RequestController::class, 'approve']);
+            Route::patch('/request/{id}/reject/', [RequestController::class, 'reject']);
 
         });
     });

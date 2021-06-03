@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\FollowNotification;
 use App\Models\CommentNotification;
@@ -24,16 +24,20 @@ class NotificationsController extends Controller
      * @return view
      */
     public function show(Request $request)
-    {              
+    {
         $notifications = array();
         $mod_notifications = array();
 
         $user = Auth::user();
 
+        $user->followNotifications()->update(array('is_new' => false));
+        $user->commentNotifications()->update(array('is_new' => false));
+        $user->voteNotifications()->update(array('is_new' => false));
+
         $follow_notifications = $user->followNotifications;
         $comment_notifications = $user->commentNotifications;
         $vote_notifications = $user->voteNotifications;
-            
+
         $notifications = $follow_notifications
             ->toBase()->merge($comment_notifications)
             ->toBase()->merge($vote_notifications)
@@ -65,8 +69,8 @@ class NotificationsController extends Controller
                     return intval($a->request->creation_date < $b->request->creation_date);
                 });
         }
-        
-        
+
+
         return view('pages.notifications', [
             'notifications' => $notifications,
             'mod_notifications' => $mod_notifications
@@ -81,9 +85,26 @@ class NotificationsController extends Controller
      */
     public function delete(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'notification' => 'required',
+            'type' => 'required|string'
+        ]);
 
-        // TODO: delete notification from database
+        if ($validator->fails()) {
+            return response()->json($validator, 400);
+        }
 
+        switch($request->type){
+            case "comment":
+                CommentNotification::find($request->notification['id'])->delete();
+                break;
+            case "follow":
+                FollowNotification::find($request->notification['id'])->delete();
+                break;
+            case "vote":
+                VoteNotification::find($request->notification['id'])->delete();
+                break;
+        }
         
         $response = [
             'success' => true,
