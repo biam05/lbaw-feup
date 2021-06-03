@@ -839,7 +839,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     'admin@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
     'Sou o Admin/Moderador.',
-    'beatriz.png',
+    'admin.png',
     '02/20/1992',
     'f',
     '500000',
@@ -1221,7 +1221,7 @@ insert into content(author_id, body, nr_votes) values(12,
 'President Joe Biden said Tuesday that he plans to deliver “a lot” on police reform but would not elaborate further ahead of a meeting that afternoon with Vice President Kamala Harris and key members of the Congressional Black Caucus in the Oval Office.
 Biden, speaking days after police killed Daunte Wright, a 20-year-old Black man, in a Minneapolis suburb, said he would inform reporters of his plans to reform police at a later date.
 The White House billed Tuesday afternoon’s meeting with members of the CBC as an opportunity to create a path forward on voting rights, racial equity and infrastructure legislation. The meeting comes a few days after Susan Rice, director of the Domestic Policy Council, announced that the Biden administration was pausing the creation of a national police oversight commission. #politics',5);
-insert into content(author_id, body, nr_votes) values(15,'MANILA (Reuters) - The Philippines filed fresh diplomatic protests to China on Wednesday after accusing its giant neighbour of undertaking illegal fishing and massing more than 240 boats within the Southeast Asian countrys territorial waters.
+insert into content(author_id, body, nr_votes, is_edited) values(15,'MANILA (Reuters) - The Philippines filed fresh diplomatic protests to China on Wednesday after accusing its giant neighbour of undertaking illegal fishing and massing more than 240 boats within the Southeast Asian countrys territorial waters.
 
 The Philippine Department of Foreign Affairs said that two protests had been lodged, days after Manila summoned Chinese Ambassador Huang Xilian to press for the withdrawal of its vessels on the disputed Whitsun Reef in the South China Sea and other Philippine maritime zones.
 
@@ -1233,7 +1233,7 @@ A Philippine government taskforce said the vessels, which are about 60 metres (1
 
 "The continuous swarming of Chinese vessels poses a threat to the safety of navigation, safety of life at sea, and impedes the exclusive right of Filipinos to benefit from the marine wealth in the EEZ," the task force said in a statement late on Monday.
 
-China embassy in Manila and the foreign ministry in Beijing did not immediately respond to requests for comment. #politics',0);
+China embassy in Manila and the foreign ministry in Beijing did not immediately respond to requests for comment. #politics',0, TRUE);
 insert into content(author_id, body, nr_votes) values(5,'Life is difficult in North Korea but there is no famine and some cross-border shipments may resume soon, Russia ambassador in Pyongyang said, a week after North Korean leader Kim Jong Un declared the country was facing a "worst-ever situation."
 
 Kim last week urged ruling party officials to wage another “Arduous March” of work and sacrifice, linking the current economic crises to a period in the 1990s of famine and disaster.
@@ -1242,6 +1242,7 @@ Russia ambassador, one of the few foreign envoys in the country, said that while
 
 "Thank god, it is a long shot from the Arduous March, and I hope it would never come to that," Ambassador Alexander Matsegora told Russias TASS news agency according to a transcript published on Wednesday.
 #politics',0);
+insert into content(author_id, body, nr_votes, is_edited) values(4,'Manufacturers fought to get implants back on the market. Regulators gave in. Now thousands of patients are paying the price. #economy #health',0, TRUE);
 
 insert into content(author_id, body, nr_votes) values(19, 'Man, North Korea is such a prison',0);
 insert into content(author_id, body, nr_votes) values(20, 'ikr',0);
@@ -1249,7 +1250,9 @@ insert into content(author_id, body, nr_votes) values(15, 'My president <3',0);
 insert into content(author_id, body, nr_votes) values(12, 'China being China',0);
 insert into content(author_id, body, nr_votes) values(4, 'Awesome!',0);
 insert into content(author_id, body, nr_votes) values(6, 'Great',2);
-insert into content(author_id, body, nr_votes) values(8, 'I disagree',0);
+insert into content(author_id, body, nr_votes, is_edited) values(8, 'I disagree',0, TRUE);
+insert into content(author_id, body, nr_votes, is_edited) values(11, 'Always!',0, TRUE);
+insert into content(author_id, body, nr_votes) values(1, ':)',0);
 
 insert into tag (name) values('economy');
 insert into tag (name) values('politics');
@@ -1257,25 +1260,32 @@ insert into tag (name) values('sports');
 insert into tag (name) values('covid');
 insert into tag (name) values('celebreties');
 insert into tag (name) values('music');
+insert into tag (name) values('health');
 
 insert into news(content_id,title, image, trending_score, nr_comments) values (1,'How New Mexico Became the State With the Highest Rate of Full Vaccinations','1.gif',0,0);
 insert into news(content_id,title, image, trending_score, nr_comments) values (2,'Biden promises to deliver on police reform during meeting with Congressional Black Caucus','2.jpg',0,0);
 insert into news(content_id,title, image, trending_score, nr_comments) values (3,'Philippines files new diplomatic protests over Chinese boats in disputed waters','3.jpeg',0,0);
 insert into news(content_id,title, image, trending_score, nr_comments) values (4,'Russian ambassador says no famine in North Korea, trade may resume soon',null,0,0);
 
+insert into news(content_id,title, image, trending_score, nr_comments) values (5,'Breast Implant Injuries Kept Hidden As New Health Threats Surface','4.jpg',0,0);
+
+insert into news_tag(news_id, tag_id) values (1,1);
 insert into news_tag(news_id, tag_id) values (1,2);
 insert into news_tag(news_id, tag_id) values (2,2);
 insert into news_tag(news_id, tag_id) values (3,2);
 insert into news_tag(news_id, tag_id) values (4,2);
-insert into news_tag(news_id, tag_id) values (1,1);
+insert into news_tag(news_id, tag_id) values (5,1);
+insert into news_tag(news_id, tag_id) values (5,7);
 
-insert into comment(content_id, news_id,reply_to_id) values (5,4,null);
-insert into comment(content_id, news_id,reply_to_id) values (6,4,5);
-insert into comment(content_id, news_id,reply_to_id) values (7,2,null);
-insert into comment(content_id, news_id,reply_to_id) values (8,3,null);
-insert into comment(content_id, news_id,reply_to_id) values (9,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (6,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (7,4,6);
+insert into comment(content_id, news_id,reply_to_id) values (8,2,null);
+insert into comment(content_id, news_id,reply_to_id) values (9,3,null);
 insert into comment(content_id, news_id,reply_to_id) values (10,4,null);
 insert into comment(content_id, news_id,reply_to_id) values (11,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (12,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (13,3,9);
+insert into comment(content_id, news_id,reply_to_id) values (14,3,13);
 
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (20, NULL,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', NULL, NULL);
@@ -1304,11 +1314,15 @@ insert into vote (users_id, content_id, value) values (7, 6, 1);
 insert into vote (users_id, content_id, value) values (7, 7, 1);
 insert into vote (users_id, content_id, value) values (19, 2, -1);
 insert into vote (users_id, content_id, value) values (15, 5, 1);
-insert into vote (users_id, content_id, value) values (8, 3, 1);
+insert into vote (users_id, content_id, value) values (8, 3, -1);
 insert into vote (users_id, content_id, value) values (14, 2, 1);
 insert into vote (users_id, content_id, value) values (16, 3, -1);
-insert into vote (users_id, content_id, value) values (4, 5, 1);
+insert into vote (users_id, content_id, value) values (4, 3, -1);
 insert into vote (users_id, content_id, value) values (3, 6, 1);
+insert into vote (users_id, content_id, value) values (19, 5, -1);
+insert into vote (users_id, content_id, value) values (8, 5, 1);
+insert into vote (users_id, content_id, value) values (14, 5, 1);
+insert into vote (users_id, content_id, value) values (16, 5, 1);
 
 update request set moderator_id = 5, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 1;
 update request set moderator_id = 3, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 3;
@@ -1317,3 +1331,5 @@ update request set moderator_id = 4, status = 'approved', revision_date = CURREN
 
 
 insert into faq(question, answer) values ('How does Xekkit deal with inappropriate comments?','You can request for a User to be banned and later our moderators will analyse said request and decide wether that behaviour is inappropriate');
+
+insert into faq(question, answer) values ('How to become a partner?','You must have at least 100,000 of reputation and than you can apply on your edit profile page.');

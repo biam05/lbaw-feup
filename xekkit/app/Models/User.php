@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
+    const BECOME_PARTNER = 100000;
+
     use Notifiable;
 
     /**
@@ -191,7 +193,7 @@ class User extends Authenticatable
 
     /**
      * Get number of notifications as string
-     * 
+     *
      * @return string
      */
     public function getNumNotificationsAsString() {
@@ -199,7 +201,7 @@ class User extends Authenticatable
         $count += $this->commentNotifications->where('is_new', true)->count();
         $count += $this->followNotifications->where('is_new', true)->count();
         $count += $this->voteNotifications->where('is_new', true)->count();
-        
+
         if($count < 100){
             return strval($count);
         }

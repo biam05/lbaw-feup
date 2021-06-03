@@ -1,4 +1,4 @@
-<div class="accordion-item">
+<div class="accordion-item my-2">
     <h2 class="accordion-header" id="heading{{$topic->id}}">
         <button class="accordion-button collapsed text-white bg-light-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{$topic->id}}" aria-expanded="true" aria-controls="flush-collapse{{$topic->id}}">
             {{$topic->question}}
@@ -16,12 +16,12 @@
                             {{csrf_field()}}
                             <button type="submit" class="btn btn-outline-danger btn-sm mt-2">Remove</button>
                         </form>
-                        
-                    </div> 
-                @endif   
+
+                    </div>
+                @endif
             @endauth
         </div>
     </div>
 </div>
 
-@include('partials.modals.edit_faq', ['topic' => $topic]) 
+@include('partials.modals.edit_faq', ['topic' => $topic])

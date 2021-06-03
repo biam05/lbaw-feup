@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         $user = User::getUser($username);
         $this->authorize('update', $user);
-        return view('pages.edit_user');
+        return view('pages.edit_user', ['minReputation' => User::BECOME_PARTNER]);
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
         Auth::user()->password = bcrypt($request->newPassword);
         Auth::user()->save();
 
-        return view('pages.edit_user');
+        return view('pages.edit_user', ['minReputation' => User::BECOME_PARTNER]);
     }
 
     /**
@@ -124,7 +124,7 @@ class UserController extends Controller
         Auth::user()->gender = $request->gender;
         Auth::user()->description = $request->description;
         Auth::user()->save();
-        return view('pages.edit_user');
+        return view('pages.edit_user', ['minReputation' => User::BECOME_PARTNER]);
     }
 
     /**
@@ -212,6 +212,12 @@ class UserController extends Controller
             return back()->withErrors($validator);
         }
 
+        if(Auth::user()->reputation < User::BECOME_PARTNER){
+            return back()->withErrors([
+                'partner' => ['You do not have enought reputation to apply for partner.']
+            ]);
+        }
+
         DB::transaction(function () use ($request) {
             // create request
             $db_request = new Requests;
@@ -230,7 +236,7 @@ class UserController extends Controller
             $partner_request->save();
         });
 
-        return view('pages.edit_user');
+        return view('pages.edit_user', ['minReputation' => User::BECOME_PARTNER]);
     }
 
     public function stop_partnership(Request $request, $username)

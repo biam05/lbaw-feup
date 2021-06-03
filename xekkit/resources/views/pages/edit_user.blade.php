@@ -40,9 +40,9 @@
                 <a href="edit_profile.php" class="col align-self-end btn btn-primary">Change Photo</a>
             </div>
         </div>
-        
-    
-    
+
+
+
         <form method="POST" action="/update_profile" class="p-3 g-3 needs-validation" novalidate>
             {{ csrf_field() }}
             <div class="form-floating mb-3">
@@ -67,9 +67,9 @@
                 <div class="col-5 form-floating mb-3">
                     <button type="button" class="btn btn-primary w-100 h-100" data-bs-toggle="modal" data-bs-target="#updatePassword">Change password</button>
                 </div>
-                
+
             </div>
-            
+
             <div class="form-floating mb-3">
                 <input type="date" class="form-control" id="inputBirthDate" name="birthdate" placeholder="Birth Date" value="{{Auth::user()->birthdate}}" required>
                 <label for="inputBirthDate" class="form-label">Birth Date</label>
@@ -107,7 +107,7 @@
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-secondary w-100" disabled data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner (Pending) <i class="fas fa-check"></i></button>
                 </div>
-            @else
+            @elseif(Auth::user()->reputation >= $minReputation)
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#askForPartner">Ask for Partner <i class="fas fa-check"></i></button>
                 </div>
