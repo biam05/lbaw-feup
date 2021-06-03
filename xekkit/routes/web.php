@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BannedPageController;
 use App\Http\Controllers\DeletedController;
+use App\Http\Controllers\Auth\GoogleController;
 
 use Laravel\Socialite\Facades\Socialite;
 
@@ -37,8 +38,11 @@ Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register/', [RegisterController::class, 'register']);
 
-Route::get('auth/google', 'Auth\GoogleController@redirectToGoogle');
-Route::get('auth/google/callback', 'Auth\GoogleController@handleGoogleCallback');
+//Google Authentication
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('/registerGoogle/', [GoogleController::class, 'showRegistrationForm']);
+Route::post('/registerGoogle/', [GoogleController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
 

@@ -41,6 +41,7 @@ CREATE TABLE users(
     is_deleted BOOLEAN NOT NULL DEFAULT false,
     remember_token TEXT,
     api_token TEXT UNIQUE,
+    google_id TEXT UNIQUE,
     PRIMARY KEY(id)
 );
 

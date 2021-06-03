@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Profile | x/' . Auth::user()->username )
+@section('title', 'Xekkit | Edit Profile | x/' . Auth::user()->username )
 
 @section('content')
 

@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login')
+@section('title', 'Xekkit | Login')
 
 @section('content')  
 <div class="container pt-5">
@@ -18,6 +18,7 @@
                         name="username" 
                         placeholder="Username" 
                         value="{{ old('username') }}"
+                        required
                     >
                     <label for="username">Username</label>
                 </div>
@@ -29,6 +30,7 @@
                             id="password" 
                             name="password" 
                             placeholder="Password"
+                            required
                         >
                         <label for="password" class="form-label">Password</label>
                         <div class="invalid-feedback">
@@ -50,12 +52,10 @@
                 <a href="" data-bs-toggle="modal" data-bs-target="#forgotPassword" >Lost my password</a>
                 <div class="col-auto text-center pt-2">
                     <button type="submit" class="btn btn-lg btn-primary">Login</button>
-                    
+                    <a href="{{ url('auth/google') }}" class="btn btn-lg btn-secondary btn-block">Login With Google</a>
                 </div>
             </form>
-            <a href="{{ url('auth/google') }}" class="btn btn-lg btn-success btn-block">
-                <strong>Login With Google</strong>
-            </a> 
+             
         </div>
         
     </div>

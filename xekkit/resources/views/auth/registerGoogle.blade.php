@@ -1,13 +1,14 @@
 @extends('layouts.auth')
 
-@section('title', 'Xekkit | Register')
+@section('title', 'Xekkit | Register Google Account')
 
 @section('content')  
 <div class="container pt-3">
     <div class="row align-items-center">           
         @include('partials.auth.login_title')
-        <form method="post" action="{{ route('register') }}" class="col-lg-5 p-3 g-2 border bg-light" novalidate >
+        <form method="post" action="/register_google" class="col-lg-5 p-3 g-2 border bg-light" novalidate >
             {{ csrf_field() }}
+            <input type="hidden" name="google_id" value="{{old('google_id') ? old('google_id') : $user->id}}">
             <p class="text-center fs-1">Register</p>
             <div class="form-floating mb-3">
                 <input 
@@ -31,7 +32,7 @@
                     id="email" 
                     name="email" 
                     placeholder="Email" 
-                    value="{{ old('email')}}" 
+                    value="{{ old('email') ? old('email') : $user->email }}" 
                     required
                 >
                 <label for="email" class="form-label">Email *</label>
@@ -96,7 +97,7 @@
                     id="gender" 
                     name="gender" 
                     aria-label="Gender *" 
-                    value="{{old('gender')}}" 
+                    value="{{old('gender') ? old('gender') : $user->gender}}" 
                     required
                 >
                     <option selected></option>
@@ -110,6 +111,8 @@
                 </div>
             </div>
             <a href="{{ route('login') }}">Already have an account?</a>
+            <br>
+            <a href="{{ route('register') }}">Register without Google Account?</a>
             <div class="col-autom text-center pt-2">
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>   
