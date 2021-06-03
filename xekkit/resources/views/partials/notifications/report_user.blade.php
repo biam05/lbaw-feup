@@ -8,7 +8,7 @@
         </div>
         <p class="card-text fw-light">{{$request->request->reason}}</p>
 
-        @include('partials.notifications.request_approval', ['request' => $request->request])
+        @include('partials.notifications.request_approval', ['request' => $request->request, 'type' => $request->type, 'user' => $request->user])
 
     </div>
 </div>

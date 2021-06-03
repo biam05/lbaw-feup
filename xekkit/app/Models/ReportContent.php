@@ -56,11 +56,8 @@ class ReportContent extends Model
      */
     public function content() {
         if($this->belongsTo(Comment::class, 'to_content_id', 'content_id')->get()->count()>0){
-
-            dump($this->belongsTo(Comment::class, 'to_content_id', 'content_id')->get());
             return $this->belongsTo(Comment::class, 'to_content_id', 'content_id');
         }
-          //  return $this->belongsTo(Comment::class, 'to_content_id', 'content_id');
 
         return $this->belongsTo(News::class, 'to_content_id', 'content_id');
     }
