@@ -1206,11 +1206,11 @@ insert into follow (follower_id, users_id) values (11, 1);
 insert into follow (follower_id, users_id) values (19, 20);
 insert into follow (follower_id, users_id) values (19, 5);
 
-insert into ban (users_id, moderator_id, end_date, reason) values (4, 6, '8/13/2022', 'Racist comment');
 insert into ban (users_id, moderator_id, end_date, reason) values (12, 3, '12/10/2022', 'Plays fortnite');
 insert into ban (users_id, moderator_id, end_date, reason) values (11, 2, '5/9/2022', 'Hate speech');
 insert into ban (users_id, moderator_id, end_date, reason) values (20, 6, '7/1/2022', 'Marketed Ponzi scheme');
 insert into ban (users_id, moderator_id, end_date, reason) values (14, 6, null, 'Used dangerous external link');
+update users set is_banned = true where id in (12, 11, 20, 14);
 
 insert into content(author_id, body, nr_votes) values(5,'New Mexico, which has one of the highest poverty rates in the U.S., is a vaccination pacesetter thanks to decisive political decisions, homegrown technology and cooperation. #economy #politics',0);
 insert into content(author_id, body, nr_votes) values(12,
@@ -1276,7 +1276,7 @@ insert into comment(content_id, news_id,reply_to_id) values (11,4,null);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (20, NULL,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(12, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
+(11, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
 (20, NULL,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES

@@ -326,22 +326,33 @@ class UserController extends Controller
         }
 
         $user = User::findOrFail($id);
-        DB::transaction(function () use ($request, $user) {
-            $ban = new Ban();
-            $ban->users_id = $user->id;
-            $ban->moderator_id = Auth::user()->id;
-            $ban->end_date = $request->input('end_date_forever') ? null : $request->input('end_date');
-            $ban->reason = $request->input('reason');
-            $ban->save();
+        $ban_date = $request->input('end_date_forever') ? null : $request->input('end_date');
+        $existing_ban = $user->currentBan();
+        if(empty($existing_ban)){
+            DB::transaction(function () use ($request, $user, $ban_date) {
+                $ban = new Ban();
+                $ban->users_id = $user->id;
+                $ban->moderator_id = Auth::user()->id;
+                $ban->end_date = $ban_date;
+                $ban->reason = $request->input('reason');
+                $ban->save();
 
-            $user->is_banned = true;
-            $user->save();
-
-
-            return $ban;
-        });
-
-        return redirect('/user/' . $user->username)->with('success', 'Your ban was registered.');
+                $user->is_banned = true;
+                $user->save();
+                return $ban;
+            });
+            return redirect('/user/' . $user->username)->with('success', 'Your ban was registered.');
+        } else {
+            if ($ban_date == null || strtotime($ban_date) > strtotime($existing_ban->end_date)) {
+                $existing_ban->moderator_id = Auth::user()->id;
+                $existing_ban->reason = $request->input('reason');
+                $existing_ban->end_date = $ban_date;
+                $existing_ban->save();
+                return redirect('/user/' . $user->username)->with('success', 'Your ban updated the last one.');
+            } else {
+                return redirect('/user/' . $user->username)->with('success', 'Already exist a longer ban to this user.');
+            }
+        }
     }
 
 }

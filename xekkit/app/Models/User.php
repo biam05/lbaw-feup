@@ -173,6 +173,7 @@ class User extends Authenticatable
             $this->is_banned=false;
             $this->save();
         }
+
     }
 
     /**
@@ -185,6 +186,5 @@ class User extends Authenticatable
                 ->orWhere('end_date','>',$now);
         })->first();
         return $ban;
-
     }
 }
