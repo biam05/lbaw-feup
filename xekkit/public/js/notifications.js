@@ -5,13 +5,13 @@ function deleteNotification(notification, type){
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/api/deleteNotification");
+    xhttp.open("DELETE", "/notifications");
 
     let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);   
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-    xhttp.send(JSON.stringify(notification));  
+    xhttp.send(JSON.stringify(params));  
 
     xhttp.onload = function() {
         let response = JSON.parse(this.responseText);

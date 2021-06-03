@@ -157,8 +157,15 @@ class UserController extends Controller
             'body' => 'required|string',
         ]);
 
-        $user = User::findOrFail($id);
+        $response = [
+            'status' => false,
+            'message' => "Report ERROR"
+        ];
 
+        $user = Auth::user();
+
+        if($user == null) // not logged in
+            return response()->json($response);
 
         DB::transaction(function () use ($request, $id) {
             // create request
@@ -181,7 +188,12 @@ class UserController extends Controller
             return $request_id;
         });
 
-        return redirect()->back();
+        $response = [
+            'status' => true,
+            'message' => ""
+        ];
+
+        return response()->json($response);
     }
 
     /**
@@ -239,17 +251,14 @@ class UserController extends Controller
     public function follow(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'users_id' => 'required|integer',
-            'follower_id' => 'required|integer'
+            'users_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
+            return response()->json($validator, 400);
         }
 
-        $user = User::findOrFail($request->follower_id);
-
-        $user->following()->attach($request->users_id);
+        Auth::user()->following()->attach($request->users_id);
 
         $response = [
             'status' => true,
@@ -263,17 +272,14 @@ class UserController extends Controller
     public function unfollow(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'users_id' => 'required|integer',
-            'follower_id' => 'required|integer'
+            'users_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
+            return response()->json($validator, 400);
         }
 
-        $user = User::findOrFail($request->follower_id);
-
-        $user->following()->detach($request->users_id);
+        Auth::user()->following()->detach($request->users_id);
 
         $response = [
             'status' => true,

@@ -57,5 +57,6 @@ function vote(content_id, vote, type, device, comment){
     }
     else{
         console.log("error voting");
+        console.log(response);
     }
 }

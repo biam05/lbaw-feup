@@ -33,7 +33,7 @@ class ContentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
+            return response()->json($validator, 400);
         }
 
         $content_id = $request->content_id;
@@ -75,39 +75,7 @@ class ContentController extends Controller
         return response()->json($response);
     }
 
-    public function report(Request $request, $id)
-    {
 
-        $validator = $request->validate([
-            'body' => 'required|string',
-        ]);
-
-        $comment = Comment::findOrFail($id);
-
-
-        DB::transaction(function () use ($request, $id) {
-            // create request
-            $db_request = new Requests;
-
-            $db_request->reason = $request->input('body');
-            $db_request->from_id = Auth::user()->id;
-
-            $db_request->save();
-
-            $request_id = $db_request->id;
-
-            //create report
-            $report = new ReportContent();
-            $report->request_id=$request_id;
-            $report->to_content_id=$id;
-
-            $report->save();
-
-            return $request_id;
-        });
-
-        return redirect()->back();
-    }
 
 
 }

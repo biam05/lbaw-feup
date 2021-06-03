@@ -90,7 +90,6 @@ Route::middleware(['deleted'])->group(function () {
 
             //notifications
             Route::get('/notifications/', [NotificationsController::class, 'show']);
-            Route::patch('/notifications/', [NotificationsController::class, 'markAsSeen']);
             Route::delete('/notifications/', [NotificationsController::class, 'delete']);
 
             // faq
@@ -109,6 +108,8 @@ Route::middleware(['deleted'])->group(function () {
             Route::post('/partner_request', [UserController::class, 'partnerRequest']);
             Route::post('/update_profile', [UserController::class, 'updateUser']);
             Route::post('/delete_user', [UserController::class, 'deleteUser']);
+            Route::post('/follow', [UserController::class, 'follow']);
+            Route::post('/unfollow', [UserController::class, 'unfollow']);
 
             // request
             Route::patch('/request/{id}/accept/', [RequestController::class, 'approve']);

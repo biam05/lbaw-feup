@@ -231,11 +231,12 @@ CREATE TABLE vote (
 
 CREATE TABLE follow_notification (
     id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
-    follower_id INTEGER,
-    users_id INTEGER,
+    follower_id INTEGER NOT NULL,
+    users_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     PRIMARY KEY(id),
+    UNIQUE(follower_id, users_id),
     CONSTRAINT fk_follower_id
         FOREIGN KEY(follower_id)
 	        REFERENCES users (id)
@@ -247,12 +248,14 @@ CREATE TABLE follow_notification (
 );
 
 CREATE TABLE vote_notification (
-    voter_id INTEGER,
-    content_id INTEGER,
-    author_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    voter_id INTEGER NOT NULL,
+    content_id INTEGER NOT NULL,
+    author_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(voter_id, content_id, author_id),
+    PRIMARY KEY(id),
+    UNIQUE(voter_id, content_id, author_id),
     CONSTRAINT fk_voter_id
         FOREIGN KEY(voter_id)
 	        REFERENCES users (id)
@@ -268,11 +271,13 @@ CREATE TABLE vote_notification (
 );
 
 CREATE TABLE comment_notification (
-    users_id INTEGER,
-    comment_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    users_id INTEGER NOT NULL,
+    comment_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(users_id, comment_id),
+    PRIMARY KEY(id),
+    UNIQUE(users_id, comment_id),
     CONSTRAINT fk_users_id
         FOREIGN KEY(users_id)
 	        REFERENCES users (id)
@@ -599,7 +604,7 @@ DROP TRIGGER IF EXISTS create_vote_notification ON vote;
 CREATE OR REPLACE FUNCTION create_vote_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO vote_notification
+        INSERT INTO vote_notification(voter_id, content_id, author_id, is_new, creation_date)
             SELECT new.users_id, c.id, c.author_id, true, now()
             FROM content c
             WHERE new.content_id = c.id;
@@ -655,8 +660,6 @@ CREATE TRIGGER delete_follow_notification
     FOR EACH ROW
     EXECUTE PROCEDURE delete_follow_notification();
 
-
-
 --Trigger 13 - Create Comment Notification
 DROP FUNCTION IF EXISTS create_comment_notification() CASCADE;
 DROP TRIGGER IF EXISTS create_comment_notification ON comment;
@@ -664,13 +667,15 @@ DROP TRIGGER IF EXISTS create_comment_notification ON comment;
 CREATE OR REPLACE FUNCTION create_comment_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO comment_notification
-            SELECT news.author_id, NEW.content_id, true, now()
-            FROM content news
-            WHERE NEW.news_id = news.id;
+        IF (SELECT author_id FROM content WHERE NEW.news_id = id) <> (SELECT author_id FROM content WHERE NEW.content_id = id) THEN
+            INSERT INTO comment_notification(users_id, comment_id, is_new, creation_date)
+                SELECT news.author_id, NEW.content_id, true, now()
+                FROM content news
+                WHERE NEW.news_id = news.id;
+        END IF;
 
-        IF NEW.reply_to_id IS NOT NULL THEN
-            INSERT INTO comment_notification
+        IF NEW.reply_to_id IS NOT NULL AND (SELECT author_id FROM content WHERE NEW.content_id = id) <> (SELECT author_id FROM content WHERE NEW.reply_to_id = id) THEN
+            INSERT INTO comment_notification(users_id, comment_id, is_new, creation_date)
             VALUES (
                 (SELECT author_id FROM content WHERE content.id = new.reply_to_id),
                 NEW.content_id,
