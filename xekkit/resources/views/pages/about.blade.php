@@ -24,8 +24,8 @@
                 <p class="lead text-light">The majority of our website structure and concept (including the name, obviously)
                     is based on the famous website <a class="text-decoration-none text-primary" href="https://www.reddit.com/">©reddit</a></p>
             </div>
-                <div class="col-md-3 order-md-1">
-                <img src="{{ asset('img/reddit.jpg') }}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="..." width = 400>
+            <div class="col-md-3 order-md-1">
+                <img src="{{ asset('img/reddit.jpg') }}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="Reddit" width = 400>
             </div>
         </div>
     </div>

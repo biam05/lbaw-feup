@@ -1,6 +1,6 @@
 <div style="cursor: pointer" onclick="location.href='/news/{{$news->content_id}}'" class="card text-white bg-dark position-relative custom_card">
     @if(isset($news->image))
-        <img class="card-img" src={{ asset('storage/img/news/' . $news->image) }} alt="Card image cap">
+        <img class="card-img" src={{ asset('storage/img/news/' . $news->image) }} alt="Trending Image">
     @else
         <div class="custom_card bg-light-dark card-img"></div>
     @endif
