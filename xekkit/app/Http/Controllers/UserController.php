@@ -293,7 +293,7 @@ class UserController extends Controller
 
         DB::transaction(function () use ($request, $user) {
             // create request
-            $db_request = new Request;
+            $db_request = new Requests;
 
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
@@ -305,13 +305,13 @@ class UserController extends Controller
             //create report
             $unban_appeal = new UnbanAppeal();
             $unban_appeal->request_id=$request_id;
-            $unban_appeal->ban_id=$user->currentBan();
+            $unban_appeal->ban_id = $user->currentBan()->id;
             $unban_appeal->save();
 
             return $unban_appeal;
         });
 
-        return redirect()->back();
+        return redirect('/ban')->with('success', 'Your unban appeal was registered.');
     }
 
     function ban_start(Request $request, $id){
@@ -341,10 +341,7 @@ class UserController extends Controller
             return $ban;
         });
 
-
-
-
-        return redirect()->back();
+        return redirect('/user/' . $user->username)->with('success', 'Your ban was registered.');
     }
 
 }
