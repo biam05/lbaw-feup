@@ -188,4 +188,22 @@ class User extends Authenticatable
         })->first();
         return $ban;
     }
+
+    /**
+     * Get number of notifications as string
+     * 
+     * @return string
+     */
+    public function getNumNotificationsAsString() {
+        $count = 0;
+        $count += $this->commentNotifications->where('is_new', true)->count();
+        $count += $this->followNotifications->where('is_new', true)->count();
+        $count += $this->voteNotifications->where('is_new', true)->count();
+        
+        if($count < 100){
+            return strval($count);
+        }
+        return "99+";
+
+    }
 }

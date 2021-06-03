@@ -10,6 +10,7 @@ use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\News;
 use Illuminate\Support\Facades\Hash;
@@ -60,6 +61,21 @@ class CommentController extends Controller
         return redirect('/news/' . $news->content_id)->with('success', 'The comment was successfully created.');
     }
 
+    public function edit(Request $request, $id){
+        $comment = Comment::findOrFail($id);
+        $this->authorize('update', $comment);
+
+        $validator = $request->validate([
+            'body' => 'required|string',
+        ]);
+
+        $comment->content->body = $request->input('body');
+        $comment->content->is_edited = true;
+        $comment->content->save();
+
+        return redirect('/news/' . $comment->news_id)->with('success', 'Your comment was updated.');
+    }
+
     public function delete(Request $request, $id)
     {
         $validator = $request->validate([
@@ -106,9 +122,13 @@ class CommentController extends Controller
     public function report(Request $request, $id)
     {
 
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator);
+        }
 
         $comment = Comment::findOrFail($id);
 
@@ -134,7 +154,12 @@ class CommentController extends Controller
             return $request_id;
         });
 
-        return redirect()->back();
+        $response = [
+            'status' => true,
+            'message' => ""
+        ];
+
+        return response()->json($response);
     }
 
 }

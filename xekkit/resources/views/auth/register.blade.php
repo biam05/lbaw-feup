@@ -96,13 +96,12 @@
                     id="gender" 
                     name="gender" 
                     aria-label="Gender *" 
-                    value="{{old('gender')}}" 
                     required
                 >
-                    <option selected></option>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                    <option value="n">Rather Not Say</option>
+                    <option value="" {{old('gender') === "" ? 'selected' : ''}}></option>
+                    <option value="m" {{old('gender') === "m" ? 'selected' : ''}}>Male</option>
+                    <option value="f" {{old('gender') === "f" ? 'selected' : ''}}>Female</option>
+                    <option value="n" {{old('gender') === "n" ? 'selected' : ''}}>Rather Not Say</option>
                 </select>
                 <label for="gender">Gender *</label>
                 <div class="invalid-feedback">

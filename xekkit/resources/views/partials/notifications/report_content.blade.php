@@ -8,11 +8,18 @@
                 <a href="/news/{{($request->content->type === "post") ? $request->content->content_id : $request->content->news_id}}" class="link-light">{{$request->content->type}}</a>
                 made by
                 <a href="/user/{{$request->content->content->author->username}}" class="link-light">{{$request->content->content->author->username}}</a>:
+            @else
+                content that already has been deleted.
             @endif
         </div>
         <p class="card-text fw-light">{{$request->request->reason}}</p>
-
-        @include('partials.notifications.request_approval', ['request' => $request->request])
-
+        @if(!empty($request->content))
+            @include('partials.notifications.request_approval', [
+                'request' => $request->request,
+                'type' => $request->type,
+                'content' => $request->content,
+                'user' => $request->content->content->author
+            ])
+        @endif
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
   
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Socialite;
 use Auth;
 use Exception;
@@ -12,9 +13,7 @@ use App\Models\User;
 class GoogleController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Redirect to Google's login.
      */
     public function redirectToGoogle()
     {
@@ -22,9 +21,9 @@ class GoogleController extends Controller
     }
       
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Login and redirect to home page or redirect to register page.
+     * 
+     * @param Request $request
      */
     public function handleGoogleCallback(Request $request)
     {
@@ -38,30 +37,56 @@ class GoogleController extends Controller
             } else {
                 // register google account
                 $request->session()->flash('user', $user);
-                return redirect('/registerGoogle');
-                //return view('auth.registerGoogle', ['user' => $user]);
-                // $newUser = User::create([
-                //     'username' => $user->name,
-                //     'email' => $user->email,
-                //     'google_id'=> $user->id,
-                //     'password' => encrypt('123456dummy'),                
-                //     'birthdate' => $user->birthdate,
-                //     'gender' => $user->gender
-                // ]);
-    
-                // Auth::login($newUser);
-     
-                // return redirect('/');
+                return redirect('/register_google');
             }
         } catch (Exception $e) {
             return redirect('login')->withErrors(['Google Account' => $e->getMessage()]);
         }
     }
 
+    /**
+     * Show registration with Google account form.
+     * 
+     * @param Request $request
+     * @return view
+     */
     public function showRegistrationForm(Request $request)
     {
-        dd( $request->session()->get('user'));
         $request->session()->reflash();
         return view('auth.registerGoogle', ['user' => $request->session()->get('user')]);
+    }
+
+    /**
+     * Login and redirect to home page or redirect to register page.
+     * 
+     * @param Request $request
+     */
+    public function register(Request $request)
+    {
+        $request->session()->reflash();
+        
+        Validator::make($request->all(), [
+            'username' => 'required|string|max:16|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|confirmed',
+            'birthDate' => 'required|date|before:-13 years',
+            'gender' => 'required|string',
+            'google_id' => 'required|string',
+        ])->validate();
+
+
+        $newUser = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'google_id'=> $request->google_id,
+            'password' => bcrypt($request->password),                
+            'birthdate' => $request->birthDate,
+            'gender' => $request->gender
+        ]);
+
+        Auth::login($newUser);
+
+        return redirect('/');
+            
     }
 }
