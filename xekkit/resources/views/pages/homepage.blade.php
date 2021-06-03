@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Xekkit')
+@section('title', 'Xekkit | Home')
 
 
 @section('content')

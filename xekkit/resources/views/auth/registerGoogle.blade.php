@@ -1,14 +1,15 @@
 @extends('layouts.auth')
 
-@section('title', 'Xekkit | Register')
+@section('title', 'Xekkit | Register Google Account')
 
 @section('content')  
 <div class="container pt-3">
     <div class="row align-items-center">           
         @include('partials.auth.login_title')
-        <form method="post" action="{{ route('register') }}" class="col-lg-5 p-3 g-2 border bg-light" novalidate >
+        <form method="post" action="/register_google" class="col-lg-5 p-3 g-2 border bg-light" novalidate >
             {{ csrf_field() }}
-            <p class="text-center fs-1">Register</p>
+            <input type="hidden" id='google_id' name="google_id" value="{{$user->id}}">
+            <p class="text-center fs-1">Register with Google Account</p>
             <div class="form-floating mb-3">
                 <input 
                     type="text" 
@@ -16,7 +17,7 @@
                     id="username" 
                     name="username" 
                     placeholder="Username" 
-                    value="{{ old('username')}}" 
+                    value="{{ old('username') }}" 
                     required
                 >
                 <label for="username">Username *</label>
@@ -31,7 +32,8 @@
                     id="email" 
                     name="email" 
                     placeholder="Email" 
-                    value="{{ old('email')}}" 
+                    value="{{ $user->email }}" 
+                    readonly
                     required
                 >
                 <label for="email" class="form-label">Email *</label>
@@ -82,7 +84,7 @@
                     id="birthDate" 
                     name="birthDate" 
                     placeholder="Birth Date" 
-                    value="{{old('birthDate')}}" 
+                    value="{{ old('birthDate') }}" 
                     required
                 >
                 <label for="birthDate" class="form-label">Birth Date *</label>
@@ -98,10 +100,10 @@
                     aria-label="Gender *" 
                     required
                 >
-                    <option value="" {{old('gender') === "" ? 'selected' : ''}}></option>
-                    <option value="m" {{old('gender') === "m" ? 'selected' : ''}}>Male</option>
-                    <option value="f" {{old('gender') === "f" ? 'selected' : ''}}>Female</option>
-                    <option value="n" {{old('gender') === "n" ? 'selected' : ''}}>Rather Not Say</option>
+                    <option value="" {{ old('gender') === "" ? 'selected' : '' }}></option>
+                    <option value="m" {{ old('gender') === "m" ? 'selected' : '' }}>Male</option>
+                    <option value="f" {{ old('gender') === "f" ? 'selected' : '' }}>Female</option>
+                    <option value="n" {{ old('gender') === "n" ? 'selected' : '' }}>Rather Not Say</option>
                 </select>
                 <label for="gender">Gender *</label>
                 <div class="invalid-feedback">
@@ -109,6 +111,8 @@
                 </div>
             </div>
             <a href="{{ route('login') }}">Already have an account?</a>
+            <br>
+            <a href="{{ route('register') }}">Register without Google Account?</a>
             <div class="col-autom text-center pt-2">
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>   

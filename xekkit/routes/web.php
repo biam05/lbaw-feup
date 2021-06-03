@@ -15,6 +15,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BannedPageController;
 use App\Http\Controllers\DeletedController;
+use App\Http\Controllers\Auth\GoogleController;
+
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +37,12 @@ Route::post('/login/', [LoginController::class, 'login']);
 Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register/', [RegisterController::class, 'register']);
+
+//Google Authentication
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::get('/register_google/', [GoogleController::class, 'showRegistrationForm']);
+Route::post('/register_google/', [GoogleController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
 
@@ -75,6 +84,9 @@ Route::middleware(['deleted'])->group(function () {
         });
 
         Route::middleware(['notbanned'])->group(function () {
+
+            // content
+            Route::post('/vote', [ContentController::class, 'toggleVote']);
 
             // news
             Route::post('/news/create/', [NewsController::class, 'create']);
