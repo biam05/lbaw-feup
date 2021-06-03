@@ -6,7 +6,7 @@ function vote(content_id, vote, type, device, comment){
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/api/vote", false);
+    xhttp.open("POST", "/vote", false);
 
     let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);   

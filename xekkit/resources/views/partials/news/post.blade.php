@@ -6,7 +6,7 @@
                 <h5>{{$news->title}}</h5>
             </a>
 
-            
+
             @if (Auth::user() && $news->content->author_id === Auth::user()->id)
                 <div class="col-auto">
                     <button type="button" class="card-report clickable-big text-primary pe-2 preventer" data-bs-toggle="modal" data-bs-target="#editPost_{{$news->content_id}}">
@@ -17,7 +17,7 @@
                     </button>
                 </div>
                 <?php $type="news" ?>
-                
+
                 @include('partials.modals.delete_post', ['news' => $news])
                 @include('partials.modals.edit_post', ['news' => $news])
 
@@ -53,7 +53,12 @@
             @endisset
         </a>
 
-            <p class="card-text mt-3 text-white">{!! nl2br(e($news->content->body)) !!}</p>
+            <p class="card-text mt-3 text-white">
+                {!! nl2br(e($news->content->body)) !!}
+                @if($news->content->is_edited)
+                    <small class="text-muted">(edited)</small>
+                @endif
+            </p>
     </div>
     <footer class="card-footer text-muted">
         <div class="row">
@@ -64,7 +69,7 @@
         <div class="row align-items-center">
 
             @include('partials.news.vote',['news'=>$news, 'type'=>$type, 'device'=>$device])
-            
+
             <button class="col-auto clickable text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>
                 &nbsp;{{$news->nr_comments}}

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Xekkit | Deleted')
+@section('title', 'Xekkit | Deleted Account')
 
 @section('content')
 

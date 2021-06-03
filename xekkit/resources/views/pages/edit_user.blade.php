@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Profile | x/' . Auth::user()->username )
+@section('title', 'Xekkit | Edit Profile | x/' . Auth::user()->username )
 
 @section('content')
 
@@ -61,7 +61,7 @@
             </div>
             <div class="row g-2">
                 <div class="col-7 form-floating mb-3">
-                    <input type="password" value="***********" disabled class="form-control" id="inputPassword" placeholder="Password" disabled>
+                    <input type="password" value="***********" class="form-control" id="inputPassword" placeholder="Password" disabled>
                     <label for="inputPassword" class="form-label">Password</label>
                 </div>
                 <div class="col-5 form-floating mb-3">
@@ -89,7 +89,7 @@
             </div>
 
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px">{{Auth::user()->description}}</textarea>
+                <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px">{{old('description', Auth::user()->description)}}</textarea>
                 <label for="description">Description (optional)</label>
             </div>
 

@@ -21,10 +21,3 @@ use App\Http\Controllers\NotificationsController;
 */
 
 Route::middleware('auth:api')->get('/user', [LoginController::class, 'getUser']);
-
-Route::get('load-posts-search', [SearchController::class, 'loadPostsSearch']);
-
-Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
-
-
-Route::post('/vote', [ContentController::class, 'toggleVote']);

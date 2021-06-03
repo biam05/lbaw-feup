@@ -157,8 +157,15 @@ class UserController extends Controller
             'body' => 'required|string',
         ]);
 
-        $user = User::findOrFail($id);
+        $response = [
+            'status' => false,
+            'message' => "Report ERROR"
+        ];
 
+        $user = Auth::user();
+
+        if($user == null) // not logged in
+            return response()->json($response);
 
         DB::transaction(function () use ($request, $id) {
             // create request
@@ -181,7 +188,12 @@ class UserController extends Controller
             return $request_id;
         });
 
-        return redirect()->back();
+        $response = [
+            'status' => true,
+            'message' => ""
+        ];
+
+        return response()->json($response);
     }
 
     /**
@@ -230,10 +242,9 @@ class UserController extends Controller
         }
 
         $user = User::where('username','=',$username)->first();
-        User::findOrFail($user->id);
         $user->is_partner=false;
         $user->save();
-        return redirect("/user/".$username);
+        return redirect("/user/".$username)->with('success', 'Your partnership has been canceled.');;
     }
 
     public function follow(Request $request){

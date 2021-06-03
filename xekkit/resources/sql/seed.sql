@@ -41,6 +41,7 @@ CREATE TABLE users(
     is_deleted BOOLEAN NOT NULL DEFAULT false,
     remember_token TEXT,
     api_token TEXT UNIQUE,
+    google_id TEXT UNIQUE,
     PRIMARY KEY(id)
 );
 
@@ -81,6 +82,7 @@ CREATE TABLE content (
     id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     author_id INTEGER NOT NULL,
     body TEXT NOT NULL,
+    is_edited BOOLEAN DEFAULT FALSE,
     date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     nr_votes INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
@@ -448,10 +450,7 @@ CREATE OR REPLACE FUNCTION deal_with_request() RETURNS TRIGGER AS
             -- PARTNER REQUEST
             IF EXISTS (SELECT * FROM partner_request WHERE new.id=request_id) THEN
             UPDATE users SET is_partner=true where new.from_id=users.id;
-            -- REPORT CONTENT REQUEST
-            ELSIF EXISTS (SELECT * FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id) THEN
-                DELETE FROM content WHERE content.id IN (SELECT to_content_id FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id);
-                -- TRANSACTION TO DELETE COMMENT/NEWs
+
             -- UNBAN APPEAL REQUEST
             ELSIF EXISTS (SELECT * FROM unban_appeal, users WHERE new.id=request_id AND users.id=new.from_id) THEN
                 UPDATE users SET is_banned=false WHERE new.from_id=users.id;
