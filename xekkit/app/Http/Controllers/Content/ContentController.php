@@ -33,7 +33,7 @@ class ContentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
+            return response()->json($validator, 400);
         }
 
         $content_id = $request->content_id;

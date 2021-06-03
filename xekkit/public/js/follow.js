@@ -1,11 +1,10 @@
-function follow(users_id, follower_id){
+function follow(users_id){
     var params = {
-        "users_id": parseInt(users_id),
-        "follower_id": parseInt(follower_id)
+        "users_id": parseInt(users_id)
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/api/follow");
+    xhttp.open("POST", "/follow");
 
     let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);   
@@ -18,19 +17,18 @@ function follow(users_id, follower_id){
         if (response.status === true){
             let el = document.getElementById('follow_button');          
             el.innerText = "Unfollow";
-            el.setAttribute('onClick', 'unfollow('+users_id+','+follower_id+')');
+            el.setAttribute('onClick', 'unfollow('+users_id+')');
         }
     }
 }
 
-function unfollow(users_id, follower_id){
+function unfollow(users_id){
     var params = {
-        "users_id":parseInt(users_id),
-        "follower_id": parseInt(follower_id)
+        "users_id":parseInt(users_id)
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/api/unfollow");
+    xhttp.open("POST", "/unfollow");
 
     let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);   
@@ -43,7 +41,7 @@ function unfollow(users_id, follower_id){
         if (response.status === true){
             let el = document.getElementById('follow_button');          
             el.innerText = "Follow";
-            el.setAttribute('onClick', 'follow('+users_id+','+follower_id+')');
+            el.setAttribute('onClick', 'follow('+users_id+')');
         }
     }
 }
