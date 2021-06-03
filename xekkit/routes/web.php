@@ -85,6 +85,9 @@ Route::middleware(['deleted'])->group(function () {
 
         Route::middleware(['notbanned'])->group(function () {
 
+            // content
+            Route::post('/vote', [ContentController::class, 'toggleVote']);
+
             // news
             Route::post('/news/create/', [NewsController::class, 'create']);
             Route::patch('/news/{id}/', [NewsController::class, 'edit'])->where(['id'=>'[0-9]+']);

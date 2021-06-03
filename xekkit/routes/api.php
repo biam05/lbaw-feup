@@ -21,7 +21,3 @@ use App\Http\Controllers\NotificationsController;
 */
 
 Route::middleware('auth:api')->get('/user', [LoginController::class, 'getUser']);
-
-
-
-Route::post('/vote', [ContentController::class, 'toggleVote']);
