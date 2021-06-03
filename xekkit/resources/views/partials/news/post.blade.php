@@ -29,8 +29,8 @@
                 </div>
                 @include('partials.modals.delete_post', ['news' => $news])
             @elseif(Auth::user() && $news->content->author_id != Auth::user()->id)
-                @include('partials.modals.report', ['report_to_id' => $news->content_id, 'type'=>"news", 'tab'=>$type, 'device'=>$device])
-                <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportContent_{{$news->content_id}}_{{$type}}_{{$device}}">
+                @include('partials.modals.report', ['report_to_id' => $news->content_id, 'type'=>"news", 'tab'=>$type])
+                <button type="button" id="toastbtn" class="col-auto card-report clickable-big text-white preventer" data-bs-toggle="modal" data-bs-target="#reportContent_{{$news->content_id}}_{{$type}}">
                     <i class="fas fa-exclamation-triangle"></i></button>
             @endif
         </div>
@@ -68,7 +68,7 @@
         </div>
         <div class="row align-items-center">
 
-            @include('partials.news.vote',['news'=>$news, 'type'=>$type, 'device'=>$device])
+            @include('partials.news.vote',['news'=>$news, 'type'=>$type])
 
             <button class="col-auto clickable text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>

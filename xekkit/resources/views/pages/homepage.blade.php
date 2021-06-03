@@ -18,8 +18,7 @@
 
 
 <main class="container-xl">
-    @include('partials.homepage.feed_pc')
-    @include('partials.homepage.feed_mobile')
+    @include('partials.homepage.feed')
 </main>
 
 @endsection

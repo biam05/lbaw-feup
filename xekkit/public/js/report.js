@@ -1,4 +1,4 @@
-function report(type,tab,device, report_to_id){
+function report(type,tab, report_to_id){
 
 
 
@@ -9,7 +9,7 @@ function report(type,tab,device, report_to_id){
 
     else
     {    
-        var body = document.querySelector('#reportContent_'+report_to_id+'_'+tab+'_'+device+' textarea').value
+        var body = document.querySelector('#reportContent_'+report_to_id+'_'+tab+' textarea').value
     }
 
 

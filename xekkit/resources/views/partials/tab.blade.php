@@ -1,16 +1,10 @@
-@if($pc == True)
-    @php ($device = "-pc")
-@else 
-    @php ($device = "")
-@endif
-
 <li class="nav-item " role="presentation">        
     @if ($active == True)
         <button 
             class="nav-link active text-white clickable" 
-            id="pills-{{$type}}-tab{{$device}}" 
+            id="pills-{{$type}}-tab" 
             data-bs-toggle="pill" 
-            data-bs-target="#pills-{{$type}}{{$device}}" 
+            data-bs-target="#pills-{{$type}}" 
             type="button" 
             role="tab" 
             aria-controls="pills-{{$type}}" 
@@ -24,9 +18,9 @@
     @else
         <button 
             class="nav-link text-white clickable" 
-            id="pills-{{$type}}-tab{{$device}}" 
+            id="pills-{{$type}}-tab" 
             data-bs-toggle="pill" 
-            data-bs-target="#pills-{{$type}}{{$device}}" 
+            data-bs-target="#pills-{{$type}}" 
             type="button" 
             role="tab" 
             aria-controls="pills-{{$type}}" 
