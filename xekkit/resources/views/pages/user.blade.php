@@ -14,7 +14,8 @@
                 x/{{$user->username}}
             </h4>
             @if (Auth::check() && Auth::user()->is_moderator)
-                <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#reportModal">
+                @include('partials.modals.ban', ['user_id' => $user->id ])
+                <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#banUser_{{ $user->id  }}">
                     <i class="fas fa-ban"></i>
                 </button>
             @elseif(Auth::check() && Auth::user()->username != $user->username)
@@ -47,7 +48,7 @@
                         @else
                             <button id="follow_button" onclick='follow({{$user->id}}, {{Auth::user()->id}})' class="col-auto align-self-end btn btn-primary">Follow</button>
                         @endif
-                        
+
                     @endif
                 @endauth
             </div>

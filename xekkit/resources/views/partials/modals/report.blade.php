@@ -13,7 +13,7 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/{{ $type  }}/{{ $report_to_id }}/report/" enctype="multipart/form-data">
+                    <form method="post" action="/{{ $type }}/{{ $report_to_id }}/report/" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="mb-3">
                             <label for="Report-modal-description" class="form-label">Reason to Report</label>
