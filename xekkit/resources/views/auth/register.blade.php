@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i class="fa fa-eye clickable" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show Password"></i>
                 </div>
             </div>
             <div class="row g-2">
@@ -72,7 +72,7 @@
                     <label for="password_confirmation" class="form-label">Confirm Password *</label>
                 </div>
                 <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i class="fa fa-eye clickable" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show Password"></i>
                 </div>
             </div>
             <div class="form-floating mb-3">

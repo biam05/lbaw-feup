@@ -11,6 +11,5 @@
     </div>
     <div class="d-flex justify-content-center">
         <button type="submit" class="btn btn-primary">Add to FAQ</button>
-    </div>
-    
+    </div>    
 </form>

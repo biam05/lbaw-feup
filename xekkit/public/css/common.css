@@ -39,17 +39,20 @@ input {
     transition: 0.2s;
 }
 
-.clickable:hover {
+.clickable:hover,
+.clickable:focus {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
 
-.clickable-big:hover {
+.clickable-big:hover,
+.clickable-big:focus {
     -webkit-transform: scale(1.3);
     transform: scale(1.3);
 }
 
-.clickable-small:hover {
+.clickable-small:hover,
+.clickable-small:focus {
     -webkit-transform: scale(1.01);
     transform: scale(1.01);
 
