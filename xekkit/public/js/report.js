@@ -29,13 +29,13 @@ function report(type,tab,device, report_to_id){
 
     let response = JSON.parse(xhttp.responseText);
 
-    console.log(response)
+    
     let status = response.status;
     let votes = response.message;
     if(status === true){
 
     }
     else{
-        console.log("error reporting");
+        
     }
 }

@@ -5,7 +5,7 @@ window.onload = function () {
     if (fileInput !== undefined && fileInput !== null) {
         fileInput.forEach(handler) 
      } 
-     console.log(fileDisplayArea)
+
 }
 
 function handler(value, index)
