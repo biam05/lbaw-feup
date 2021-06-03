@@ -61,6 +61,21 @@ class CommentController extends Controller
         return redirect('/news/' . $news->content_id)->with('success', 'The comment was successfully created.');
     }
 
+    public function edit(Request $request, $id){
+        $comment = Comment::findOrFail($id);
+        $this->authorize('update', $comment);
+
+        $validator = $request->validate([
+            'body' => 'required|string',
+        ]);
+
+        $comment->content->body = $request->input('body');
+        $comment->content->is_edited = true;
+        $comment->content->save();
+
+        return redirect('/news/' . $comment->news_id)->with('success', 'Your comment was updated.');
+    }
+
     public function delete(Request $request, $id)
     {
         $validator = $request->validate([
@@ -106,14 +121,14 @@ class CommentController extends Controller
 
     public function report(Request $request, $id)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator);
-        }  
+        }
 
         $comment = Comment::findOrFail($id);
 

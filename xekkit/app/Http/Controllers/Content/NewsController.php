@@ -101,6 +101,7 @@ class NewsController extends Controller
             'image' => 'image|mimes: jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
+        $news->content->is_edited = true;
         $news->content->body = $request->input('body');
         $news->title = $request->input('title');
 

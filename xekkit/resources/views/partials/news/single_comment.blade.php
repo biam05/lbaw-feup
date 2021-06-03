@@ -21,8 +21,14 @@
                         <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
                     </button>
                     @include('partials.modals.delete_comment', ['comment' => $comment])
+                    @if(Auth::user()->id === $comment->content->author_id)
+                        <button class="clickable-big text-muted ps-2" data-bs-toggle="modal" data-bs-target="#editComment_{{$comment->content_id}}">
+                            <i class="fas fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
+                        </button>
+                        @include('partials.modals.edit_comment', ['comment' => $comment])
+                    @endif
                 @else
-                @include('partials.modals.report', ['report_to_id' => $comment->content_id, 'type'=>"comment", 'tab'=>'', 'device'=>''])
+                    @include('partials.modals.report', ['report_to_id' => $comment->content_id, 'type'=>"comment", 'tab'=>'', 'device'=>''])
                     <button class="clickable-big text-muted ps-2 text-white" data-bs-toggle="modal" data-bs-target="#reportContent_{{$comment->content_id}}__">
                         <i class="fas fa-exclamation-triangle " data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
                     </button>
@@ -30,7 +36,12 @@
             </p>
         </div>
         <div class="row ms-4">
-            <p class="text-white m-0 pb-1">{{ $comment->content->body }}</p>
+            <p class="text-white m-0 pb-1">
+                {{ $comment->content->body }}
+                @if($comment->content->is_edited)
+                    <small class="text-muted">(edited)</small>
+                @endif
+            </p>
             <div class="row align-items-center text-muted">
                 <div class="col-auto d-flex flex-row pe-1 align-items-center">
                     <button onclick='vote("{{ $comment->content->id }}", true, "", "", "")' class="clickable-big ">

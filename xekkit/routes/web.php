@@ -85,7 +85,7 @@ Route::middleware(['deleted'])->group(function () {
             // comments
             Route::post('/comment/{id}/report/', [CommentController::class, 'report'])->where(['id'=>'[0-9]+']);
             Route::post('/comment/create/', [CommentController::class, 'create']);
-            Route::patch('/comment/', [CommentController::class, 'edit']);
+            Route::patch('/comment/{id}', [CommentController::class, 'edit'])->where(['id'=>'[0-9]+']);
             Route::delete('/comment/{id}', [CommentController::class, 'delete'])->where(['id'=>'[0-9]+']);
 
             //notifications
