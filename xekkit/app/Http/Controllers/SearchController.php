@@ -14,29 +14,72 @@ class SearchController extends Controller
 {
     public function show(Request $request)
     {        
+        $validator = Validator::make($request->all(), [
+            'pagination' => 'integer|min:0',
+            'sortBy' => 'integer|min:1|max:4',
+            'search' => 'required|string',
+        ]);
+
+        
         $search = $request->query('search');
 
         $reservedSymbols = ['\''];
         $search = str_replace($reservedSymbols, '\\\'', $search);
 
+  
+        $pagination = $request->query('pagination') ?? 15;
+        $sortby = $request->query('sortBy') ?? 3;
+
+        $users = User::whereRaw('search @@ websearch_to_tsquery(\'simple\', ?)', [$search]);
+
+        $news = News::whereRaw('search @@ websearch_to_tsquery(\'english\', ?)', [$search]);
+
+        switch($sortby){
+            case 1: // relevance
+                $news->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+            case 2: // top
+                $news->orderByDesc(
+                    Content::select('nr_votes')
+                        ->whereColumn('id', 'news.content_id')
+                        ->orderBy('nr_votes')    
+                );
+                $users->orderByDesc('reputation', 'desc');
+                break;
+            case 3: // new
+                $news->orderByDesc(
+                    Content::select('date')
+                        ->whereColumn('id', 'news.content_id')
+                        ->orderBy('date')    
+                );
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+
+            case 4: // trending
+                $news->orderBy('trending_score', 'desc');
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+
+            default:
+                $news->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+        };
         
-        $news = News::whereRaw('search @@ websearch_to_tsquery(\'english\', ?)', [$search])
-            ->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search])
-            ->paginate(15);
+
 
         foreach($news as $new){
             $new->content = $new->content;
             //$new->content->author = $new->content->author;
         }
         
-        $users = User::whereRaw('search @@ websearch_to_tsquery(\'simple\', ?)', [$search])
-            ->orderByRaw('ts_rank(search, websearch_to_tsquery(\'simple\', ?)) DESC', [$search])
-            ->paginate(15);
-      
-        return view('pages.search', ['news' => $news, 'users' => $users, 'query' => $search]);
+        
+     
+        return view('pages.search', ['news' => $news->get(), 'users' => $users->get(), 'query' => $search]);
     }
 
-    public function loadPostsSearch(Request $request)
+    /* public function loadFilterSearch(Request $request)
     {      
         $validator = Validator::make($request->all(), [
             'pagination' => 'integer|min:0',
@@ -56,12 +99,14 @@ class SearchController extends Controller
         $search = str_replace($reservedSymbols, '\\\'', $request->search);
         
         $news = News::whereRaw('search @@ websearch_to_tsquery(\'english\', ?)', [$search]);
+        $users = User::whereRaw('search @@ websearch_to_tsquery(\'english\', ?)', [$search]);
 
 
 
         switch($sortby){
             case 1: // relevance
                 $news->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
                 break;
             case 2: // top
                 $news->orderByDesc(
@@ -69,6 +114,7 @@ class SearchController extends Controller
                         ->whereColumn('id', 'news.content_id')
                         ->orderBy('nr_votes')    
                 );
+                $users->orderByDesc('reputation', 'desc');
                 break;
             case 3: // new
                 $news->orderByDesc(
@@ -76,24 +122,27 @@ class SearchController extends Controller
                         ->whereColumn('id', 'news.content_id')
                         ->orderBy('date')    
                 );
-
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
                 break;
             case 4: // trending
                 $news->orderBy('trending_score', 'desc');
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
                 break;
         };
             
             
+        dd($users);
 
         $news = $news->paginate($pagination);
         foreach($news as $new){
             $new->content = $new->content;
         }
         
-        return response()->json($news);
-    }
+        return view('pages.search', ['news' => $news, 'users' => $users, 'query' => $search]);
 
-    public function loadUsersSearch(Request $request)
+    } */
+
+    /* public function loadUsersSearch(Request $request)
     {        
 
         $validator = $request->validate([
@@ -123,5 +172,5 @@ class SearchController extends Controller
         $users = $users->paginate($pagination);
         
         return response()->json($users);
-    }
+    } */
 }
