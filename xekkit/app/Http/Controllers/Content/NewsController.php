@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Content\ContentController;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\News;
 use App\Models\Content;
@@ -161,10 +162,13 @@ class NewsController extends Controller
     public function report(Request $request, $id)
     {
       
-        $validator = $request->validate([
+        $validator =Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json($validator);
+        }  
         $news = News::findOrFail($id);
         
 
@@ -188,8 +192,13 @@ class NewsController extends Controller
 
             return $request_id;
         });
+        $response = [
+            'status' => true,
+            'message' => ""
+        ];
 
-        return redirect()->back();
+
+        return response()->json($response);
     }
 
 }

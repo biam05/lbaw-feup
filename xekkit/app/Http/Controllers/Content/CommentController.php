@@ -10,6 +10,7 @@ use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\News;
 use Illuminate\Support\Facades\Hash;
@@ -106,9 +107,13 @@ class CommentController extends Controller
     public function report(Request $request, $id)
     {
         
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator);
+        }  
 
         $comment = Comment::findOrFail($id);
         
@@ -134,7 +139,12 @@ class CommentController extends Controller
             return $request_id;
         });
 
-        return redirect()->back();
+        $response = [
+            'status' => true,
+            'message' => ""
+        ];
+
+        return response()->json($response);
     }
     
 }
