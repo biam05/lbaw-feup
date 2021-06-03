@@ -49,7 +49,7 @@
 
         <a href="/news/{{$news->content_id}}" class="clickable-small text-decoration-none">
             @isset($news->image)
-                <img src={{ asset('storage/img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}}" draggable="false">
+                <img src={{ asset('storage/img/news/' . $news->image) }} class="card-img-top" alt="{{$news->title}} Image" draggable="false">
             @endisset
         </a>
 
