@@ -71,6 +71,10 @@ input {
     transform-origin: top right;
 }
 
+.little-badge{
+    font-size: 0.4rem;
+}
+
 .spin {    
     -webkit-transition-duration: 1.5s;
     -moz-transition-duration: 1.5s;
