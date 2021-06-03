@@ -37,6 +37,7 @@ class User extends Authenticatable
         'birthdate',
         'gender',
         'is_partner',
+        'google_id'
     ];
 
     /**
