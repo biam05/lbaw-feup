@@ -170,8 +170,21 @@ class User extends Authenticatable
 
         if($bans == null)
         {
-            $user->is_banned=false;
-            $user->save();
+            $this->is_banned=false;
+            $this->save();
         }
+
+    }
+
+    /**
+     * Get current ban process.
+     */
+    public function currentBan() {
+        $ban = $this->bans()->where(function ($query) {
+            $now = DB::raw('NOW()');
+            $query->whereNull('end_date')
+                ->orWhere('end_date','>',$now);
+        })->first();
+        return $ban;
     }
 }

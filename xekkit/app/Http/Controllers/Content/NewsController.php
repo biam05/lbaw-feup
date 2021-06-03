@@ -165,9 +165,6 @@ class NewsController extends Controller
             'body' => 'required|string',
         ]);
 
-        $news = News::findOrFail($id);
-
-
         DB::transaction(function () use ($request, $id) {
             // create request
             $db_request = new Requests;

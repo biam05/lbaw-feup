@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -286,7 +287,7 @@ class UserController extends Controller
 
         DB::transaction(function () use ($request, $user) {
             // create request
-            $db_request = new Request;
+            $db_request = new Requests;
 
             $db_request->reason = $request->input('body');
             $db_request->from_id = Auth::user()->id;
@@ -298,14 +299,54 @@ class UserController extends Controller
             //create report
             $unban_appeal = new UnbanAppeal();
             $unban_appeal->request_id=$request_id;
-            $unban_appeal->ban_id=$user->currentBan();
+            $unban_appeal->ban_id = $user->currentBan()->id;
             $unban_appeal->save();
 
             return $unban_appeal;
         });
 
-        return redirect()->back();
+        return redirect('/ban')->with('success', 'Your unban appeal was registered.');
     }
 
+    function ban_start(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'reason' => 'required|string',
+            'end_date' => 'date|after_or_equal:now|required_without:end_date_forever',
+            'end_date_forever' => 'required_without:end_date',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $user = User::findOrFail($id);
+        $ban_date = $request->input('end_date_forever') ? null : $request->input('end_date');
+        $existing_ban = $user->currentBan();
+        if(empty($existing_ban)){
+            DB::transaction(function () use ($request, $user, $ban_date) {
+                $ban = new Ban();
+                $ban->users_id = $user->id;
+                $ban->moderator_id = Auth::user()->id;
+                $ban->end_date = $ban_date;
+                $ban->reason = $request->input('reason');
+                $ban->save();
+
+                $user->is_banned = true;
+                $user->save();
+                return $ban;
+            });
+            return redirect('/user/' . $user->username)->with('success', 'Your ban was registered.');
+        } else {
+            if ($ban_date == null || strtotime($ban_date) > strtotime($existing_ban->end_date)) {
+                $existing_ban->moderator_id = Auth::user()->id;
+                $existing_ban->reason = $request->input('reason');
+                $existing_ban->end_date = $ban_date;
+                $existing_ban->save();
+                return redirect('/user/' . $user->username)->with('success', 'Your ban updated the last one.');
+            } else {
+                return redirect('/user/' . $user->username)->with('success', 'Already exist a longer ban to this user.');
+            }
+        }
+    }
 
 }

@@ -100,6 +100,7 @@ Route::middleware(['deleted'])->group(function () {
             // report
             Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
             Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
+            Route::post('/ban/{id}/report/', [UserController::class, 'ban_start']);
 
             // profile
             Route::get('/user/{username}/edit', [UserController::class, 'showEditPage']);

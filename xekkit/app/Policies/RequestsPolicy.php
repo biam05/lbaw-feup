@@ -29,7 +29,7 @@ class RequestsPolicy
      * @param  \App\Models\Requests  $request
      * @return mixed
      */
-    public function view(User $user, Request $request)
+    public function view(User $user, Requests $request)
     {
         //
     }
@@ -52,7 +52,7 @@ class RequestsPolicy
      * @param  \App\Models\Requests  $request
      * @return mixed
      */
-    public function update(User $user, Request $request)
+    public function update(User $user, Requests $request)
     {
         return $user->is_moderator && !($user->is_deleted || $user->is_banned);
     }
@@ -64,7 +64,7 @@ class RequestsPolicy
      * @param  \App\Models\Requests  $request
      * @return mixed
      */
-    public function delete(User $user, Request $request)
+    public function delete(User $user, Requests $request)
     {
         //
     }
@@ -76,7 +76,7 @@ class RequestsPolicy
      * @param  \App\Models\Requests  $request
      * @return mixed
      */
-    public function restore(User $user, Request $request)
+    public function restore(User $user, Requests $request)
     {
         //
     }
@@ -88,7 +88,7 @@ class RequestsPolicy
      * @param  \App\Models\Requests  $request
      * @return mixed
      */
-    public function forceDelete(User $user, Request $request)
+    public function forceDelete(User $user, Requests $request)
     {
         //
     }
