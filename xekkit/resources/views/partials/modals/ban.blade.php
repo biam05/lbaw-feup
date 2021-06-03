@@ -8,16 +8,16 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/ban/{{ $user_id }}/report/" enctype="multipart/form-data">
+                <form method="post" action="/user/{{ $user_id }}/ban/" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="mb-2">
                         <label for="Report-modal-description" class="form-label">Reason to Ban</label>
-                        <textarea name="reason" id="Report-modal-description" class="input form-control" role="textbox" rows="4"></textarea>
+                        <textarea name="reason" id="Report-modal-description" class="input form-control" role="textbox" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="Report-modal-date" class="form-label">Ban Until</label>
-                        <input name="end_date" id="Report-modal-date" class="input form-control" type="date"/>
-                        <input name="end_date_forever" id="Report-modal-date-forever" class="input" type="checkbox"/> Forever
+                        <input name="end_date" id="Report-modal-date" class="input form-control" disabled type="date"/>
+                        <input name="end_date_forever" id="Report-modal-date-forever" class="input" type="checkbox" checked/> Forever
                     </div>
 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

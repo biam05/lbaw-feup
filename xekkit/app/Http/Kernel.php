@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'ban' => \App\Http\Middleware\BannedMiddleware::class,
         'notbanned' => \App\Http\Middleware\NotBannedMiddleware::class,
         'deleted' => \App\Http\Middleware\DeletedMiddleware::class,
+        'moderator' => \App\Http\Middleware\ModeratorMiddleware::class,
     ];
 }
