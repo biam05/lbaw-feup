@@ -3,14 +3,14 @@
         <div class="card-title">
             <p>
                 <i class="fas fa-check"></i>
-                <a href="/user/{{$request->user->username}}" class="link-light">{{$request->user->username}}</a> 
+                <a href="/user/{{$request->request->user->username}}" class="link-light">{{$request->request->user->username}}</a>
                 wants to become a
                 <b class="text-secondary">partner</b>:
             </p>
         </div>
-        <p class="card-text fw-light">{{$request->reason}}</p>
-  
-        @include('partials.notifications.request_approval', ['request' => $request])
-  
+        <p class="card-text fw-light">{{$request->request->reason}}</p>
+
+        @include('partials.notifications.request_approval', ['request' => $request->request])
+
     </div>
-</div> 
+</div>
