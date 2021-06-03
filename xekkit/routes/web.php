@@ -106,13 +106,13 @@ Route::middleware(['deleted'])->group(function () {
 
             // faq
             Route::post('/faq/', [FAQController::class, 'create']);
-            Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+']);
-            Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+']);
+            Route::patch('/faq/{id}/', [FAQController::class, 'edit'])->where(['id'=>'[0-9]+'])->middleware(['moderator']);
+            Route::delete('/faq/{id}/', [FAQController::class, 'delete'])->where(['id'=>'[0-9]+'])->middleware(['moderator']);
 
             // report
             Route::post('/user/{id}/report/', [UserController::class, 'report'])->where(['id'=>'[0-9]+']);
             Route::post('/user/{username}/stop_partnership/', [UserController::class, 'stop_partnership']);
-            Route::post('/ban/{id}/report/', [UserController::class, 'ban_start']);
+            Route::post('/user/{id}/ban/', [UserController::class, 'ban'])->middleware(['moderator']);
 
             // profile
             Route::get('/user/{username}/edit', [UserController::class, 'showEditPage']);

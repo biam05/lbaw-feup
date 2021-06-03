@@ -106,17 +106,13 @@ class UserController extends Controller
     {
         $this->authorize('update', Auth::user());
 
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'username' => 'required|string|max:16|unique:users,username,'.(string)Auth::id(),
             'email' => 'required|string|email|max:255|unique:users,email,'.(string)Auth::id(),
             'birthdate' => 'required|date|before:-13 years',
             'gender' => 'required|string',
             'description' => 'string'
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator);
-        }
+        ])->validate();
 
         Auth::user()->username = $request->username;
         Auth::user()->email = $request->email;
@@ -319,16 +315,12 @@ class UserController extends Controller
         return redirect('/ban')->with('success', 'Your unban appeal was registered.');
     }
 
-    function ban_start(Request $request, $id){
-        $validator = Validator::make($request->all(), [
+    function ban(Request $request, $id){
+        Validator::make($request->all(), [
             'reason' => 'required|string',
             'end_date' => 'date|after_or_equal:now|required_without:end_date_forever',
             'end_date_forever' => 'required_without:end_date',
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator);
-        }
+        ])->validate();
 
         $user = User::findOrFail($id);
         $ban_date = $request->input('end_date_forever') ? null : $request->input('end_date');

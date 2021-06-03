@@ -46,14 +46,30 @@
         <form method="POST" action="/update_profile" class="p-3 g-3 needs-validation" novalidate>
             {{ csrf_field() }}
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Username" value="{{Auth::user()->username}}" required>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="inputUsername" 
+                    name="username" 
+                    placeholder="Username" 
+                    value="{{old('username', Auth::user()->username)}}" 
+                    required
+                >
                 <label for="inputUsername">Username</label>
                 <div class="invalid-feedback">
                     Username already in use.
                 </div>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" value="{{Auth::user()->email}}" required>
+                <input 
+                    type="email" 
+                    class="form-control" 
+                    id="inputEmail" 
+                    name="email" 
+                    placeholder="Email" 
+                    value="{{old('email', Auth::user()->email)}}" 
+                    required
+                >
                 <label for="inputEmail" class="form-label">Email</label>
                 <div class="invalid-feedback">
                     Email already in use or invalid format.
@@ -71,16 +87,24 @@
             </div>
             
             <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="inputBirthDate" name="birthdate" placeholder="Birth Date" value="{{Auth::user()->birthdate}}" required>
+                <input 
+                    type="date" 
+                    class="form-control" 
+                    id="inputBirthDate" 
+                    name="birthdate" 
+                    placeholder="Birth Date" 
+                    value="{{old('birthdate', Auth::user()->birthdate)}}" 
+                    required
+                >
                 <label for="inputBirthDate" class="form-label">Birth Date</label>
             </div>
 
             <div class="form-floating mb-3">
                 <select class="form-select bg-white" id="gender" name="gender" aria-label="Gender" required>
                     <option></option>
-                    <option @if(Auth::user()->gender === 'm') selected @endif value="m">Male</option>
-                    <option @if(Auth::user()->gender === 'f') selected @endif value="f">Female</option>
-                    <option @if(Auth::user()->gender === 'n') selected @endif value="n">Rather Not Say</option>
+                    <option @if(old('gender', Auth::user()->gender) === 'm') selected @endif value="m">Male</option>
+                    <option @if(old('gender', Auth::user()->gender) === 'f') selected @endif value="f">Female</option>
+                    <option @if(old('gender', Auth::user()->gender) === 'n') selected @endif value="n">Rather Not Say</option>
                 </select>
                 <label for="gender">Gender<label>
                 <div class="invalid-feedback">
