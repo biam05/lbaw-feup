@@ -1,8 +1,16 @@
-let users = document.querySelector("#search-users-tab")
-let sort = document.querySelectorAll("option")
-let news =document.querySelector("#search-news-tab")
-let partner= document.querySelector("#only-partner");
+let select = document.getElementById("sort-select");
+let allNews = document.getElementById("posts-result");
 
+select.addEventListener("change",function(){
+
+    window.location.replace("/search?sortBy="+ select.value +"&search=" + js_query)
+})
+
+
+let sort = document.querySelectorAll("option")
+let users = document.querySelector("#search-users-tab")
+let news =document.querySelector("#search-news-tab")
+//let partner= document.querySelector("#only-partner");
 users.addEventListener('click',function()
 {
     for(let i=0;i<sort.length;i++)
@@ -20,7 +28,7 @@ users.addEventListener('click',function()
             sort[i].selected=true;
         }
     }
-    partner.innerHTML="Only Partners";
+    //partner.innerHTML="Only Partners";
 });
 
 news.addEventListener('click',function()
@@ -38,5 +46,5 @@ news.addEventListener('click',function()
             sort[i].selected=true;
         }
     }
-    partner.innerHTML="Only Partner Posts"
+    //partner.innerHTML="Only Partner Posts"
 });

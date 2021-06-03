@@ -157,8 +157,15 @@ class UserController extends Controller
             'body' => 'required|string',
         ]);
 
-        $user = User::findOrFail($id);
+        $response = [
+            'status' => false,
+            'message' => "Report ERROR"
+        ];
 
+        $user = Auth::user();
+
+        if($user == null) // not logged in
+            return response()->json($response);
 
         DB::transaction(function () use ($request, $id) {
             // create request
@@ -181,7 +188,12 @@ class UserController extends Controller
             return $request_id;
         });
 
-        return redirect()->back();
+        $response = [
+            'status' => true,
+            'message' => ""
+        ];
+
+        return response()->json($response);
     }
 
     /**
