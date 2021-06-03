@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -313,5 +314,37 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    function ban_start(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'reason' => 'required|string',
+            'end_date' => 'date|after_or_equal:now|required_without:end_date_forever',
+            'end_date_forever' => 'required_without:end_date',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $user = User::findOrFail($id);
+        DB::transaction(function () use ($request, $user) {
+            $ban = new Ban();
+            $ban->users_id = $user->id;
+            $ban->moderator_id = Auth::user()->id;
+            $ban->end_date = $request->input('end_date_forever') ? null : $request->input('end_date');
+            $ban->reason = $request->input('reason');
+            $ban->save();
+
+            $user->is_banned = true;
+            $user->save();
+
+
+            return $ban;
+        });
+
+
+
+
+        return redirect()->back();
+    }
 
 }
