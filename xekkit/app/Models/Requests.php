@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Requests extends Model
 {
+    const STATUS_APPROVE = "approved";
+    const STATUS_REJECT = "rejected";
+
     use HasFactory;
 
     /**

@@ -450,8 +450,8 @@ CREATE OR REPLACE FUNCTION deal_with_request() RETURNS TRIGGER AS
             -- UNBAN APPEAL REQUEST
             ELSIF EXISTS (SELECT * FROM unban_appeal, users WHERE new.id=request_id AND users.id=new.from_id) THEN
                 UPDATE users SET is_banned=false WHERE new.from_id=users.id;
-                IF EXISTS (SELECT * FROM ban WHERE ban.id=ban_id) THEN
-                UPDATE ban SET end_date=NOW() WHERE ban.id=new.ban_id;
+                IF EXISTS (SELECT * FROM ban WHERE ban.id IN (SELECT ban_id FROM unban_appeal WHERE new.id=request_id)) THEN
+                UPDATE ban SET end_date=NOW() WHERE ban.id IN (SELECT ban_id FROM unban_appeal WHERE new.id=request_id);
                 END IF;
             END IF;
             new.revision_date=NOW();
