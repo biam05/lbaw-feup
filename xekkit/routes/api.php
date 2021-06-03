@@ -28,6 +28,3 @@ Route::get('load-users-search', [SearchController::class, 'loadUsersSearch']);
 
 
 Route::post('/vote', [ContentController::class, 'toggleVote']);
-Route::post('/follow', [UserController::class, 'follow']);
-Route::post('/unfollow', [UserController::class, 'unfollow']);
-Route::post('/deleteNotification', [NotificationsController::class, 'delete']);
