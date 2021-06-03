@@ -242,10 +242,9 @@ class UserController extends Controller
         }
 
         $user = User::where('username','=',$username)->first();
-        User::findOrFail($user->id);
         $user->is_partner=false;
         $user->save();
-        return redirect("/user/".$username);
+        return redirect("/user/".$username)->with('success', 'Your partnership has been canceled.');;
     }
 
     public function follow(Request $request){
