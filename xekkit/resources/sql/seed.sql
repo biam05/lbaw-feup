@@ -575,6 +575,83 @@ CREATE TRIGGER decrease_ts_and_votes
     EXECUTE PROCEDURE decrease_ts_and_votes();
 
 
+
+--Update reputação do owner
+DROP FUNCTION IF EXISTS update_reputation() CASCADE;
+DROP TRIGGER IF EXISTS update_reputation ON vote;
+
+CREATE OR REPLACE FUNCTION update_reputation() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        UPDATE users
+        SET reputation = reputation + (new.value-old.value)
+        from content
+        WHERE new.content_id=content.id AND content.author_id=users.id;
+        RETURN new;
+    END
+
+    $BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_reputation
+    AFTER UPDATE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_reputation();
+
+
+
+--Diminuir reputação do owner
+DROP FUNCTION IF EXISTS decrease_reputation() CASCADE;
+DROP TRIGGER IF EXISTS decrease_reputation ON vote;
+
+CREATE OR REPLACE FUNCTION decrease_reputation() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        UPDATE users
+        SET reputation = reputation - old.value
+        from content
+        WHERE old.content_id=content.id AND content.author_id=users.id;
+        RETURN old;
+    END
+
+    $BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER decrease_reputation
+    before DELETE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE decrease_reputation();
+
+
+
+--Aumentar reputação do owner
+DROP FUNCTION IF EXISTS increase_reputation() CASCADE;
+DROP TRIGGER IF EXISTS increase_reputation ON vote;
+
+CREATE OR REPLACE FUNCTION increase_reputation() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        UPDATE users
+        SET reputation = reputation + new.value
+        from content
+        WHERE new.content_id=content.id AND content.author_id=users.id;
+        RETURN new;
+    END
+
+    $BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER increase_reputation
+    AFTER INSERT ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE increase_reputation();
+
+
+
+
 --Trigger 11 -A trigger is needed to create a new follow notification when an user starts following another.
 DROP FUNCTION IF EXISTS create_follow_notification() CASCADE;
 DROP TRIGGER IF EXISTS create_follow_notification ON follow;
