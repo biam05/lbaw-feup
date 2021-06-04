@@ -149,19 +149,14 @@ class UserController extends Controller
     public function report(Request $request, $id)
     {
 
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
 
-        $response = [
-            'status' => false,
-            'message' => "Report ERROR"
-        ];
+        if($validator->fails()){
+            return response()->json($request, 400);
+        }
 
-        $user = Auth::user();
-
-        if($user == null) // not logged in
-            return response()->json($response);
 
         DB::transaction(function () use ($request, $id) {
             // create request

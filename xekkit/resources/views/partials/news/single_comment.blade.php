@@ -71,11 +71,11 @@
             <input name="news_id" type="hidden" value="{{$comment->news->content_id}}">
             <input name="reply_to_id" type="hidden" value="{{$comment->content_id}}">
 
-            <label for="postComment" class="form-label text-white">Leave a reply:</label>
+            <label for="postComment_{{$comment->content_id}}" class="form-label text-white">Leave a reply:</label>
 
             <div class="row">
                 <div class="col-10">
-                    <textarea name="body" class="form-control" id="postComment" rows="1" required>{{ old('postComment')}}</textarea>
+                    <textarea name="body" class="form-control" id="postComment_{{$comment->content_id}}" rows="1" required>{{ old('postComment')}}</textarea>
                 </div>
                 <div class="col-2">
                     <button type="submit" class="col-auto btn btn-primary ms-auto">Send</button>
