@@ -1334,6 +1334,9 @@ insert into content(author_id, body, nr_votes, is_edited) values(8, 'I disagree'
 insert into content(author_id, body, nr_votes, is_edited) values(11, 'Always!',0, TRUE);
 insert into content(author_id, body, nr_votes) values(1, ':)',0);
 
+insert into content(author_id, body, nr_votes) values(2,'By virtue of losing Game 6 of their Western Conference First Round series against the Phoenix Suns, the defending champion Los Angeles Lakers have lost the series, 4 games to 2. This means that they have officially been eliminated from Championship Contention.',0);
+
+
 insert into tag (name) values('economy');
 insert into tag (name) values('politics');
 insert into tag (name) values('sports');
@@ -1349,7 +1352,7 @@ insert into news(content_id,title, image, trending_score, nr_comments) values (4
 
 insert into news(content_id,title, image, trending_score, nr_comments) values (5,'Breast Implant Injuries Kept Hidden As New Health Threats Surface','4.jpg',0,0);
 
-insert into news(content_id,title, image, trending_score, nr_comments) values (6,'How New Mexico Became the State With the Highest Rate of Full Vaccinations','1.gif',0,0);
+insert into news(content_id,title, image, trending_score, nr_comments) values (15,'THE LOS ANGELES LAKERS HAVE BEEN ELIMINATED FROM CHAMPIONSHIP CONTENTION',null,0,0);
 
 insert into news_tag(news_id, tag_id) values (1,1);
 insert into news_tag(news_id, tag_id) values (1,2);
