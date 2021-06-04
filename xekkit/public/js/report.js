@@ -1,9 +1,9 @@
-function report(type, tab, device, report_to_id){
+function report(type, tab, report_to_id){
     if(type=="user"){
         var body = document.querySelector('#reportUser_'+report_to_id+' textarea').value
     }
     else{    
-        var body = document.querySelector('#reportContent_'+report_to_id+'_'+tab+'_'+device+' textarea').value
+        var body = document.querySelector('#reportContent_'+report_to_id+'_'+tab+' textarea').value
     }
 
 
@@ -21,8 +21,8 @@ function report(type, tab, device, report_to_id){
     xhttp.send(JSON.stringify(params));  
 
     xhttp.onload = function(){
-        let toast = document.getElementById('toast_'+report_to_id+'_'+tab+'_'+device);
-        let message = document.getElementById('toast_'+report_to_id+'_'+tab+'_'+device+'_message');
+        let toast = document.getElementById('toast_'+report_to_id+'_'+tab);
+        let message = document.getElementById('toast_'+report_to_id+'_'+tab+'_message');
         toast = new bootstrap.Toast(toast);
         switch(xhttp.status){
             case 200:

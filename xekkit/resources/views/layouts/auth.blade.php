@@ -21,11 +21,6 @@
         <script defer src="https://kit.fontawesome.com/0f8556fd7f.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href={{asset('css/colors/primary.css')}}> 
         <link rel="stylesheet" href={{asset('css/colors/secondary.css')}}>
-        <link rel="stylesheet" href={{asset('css/colors/success.css')}}>
-        <link rel="stylesheet" href={{asset('css/colors/danger.css')}}>
-        <link rel="stylesheet" href={{asset('css/colors/warning.css')}}>
-        <link rel="stylesheet" href={{asset('css/colors/info.css')}}>
-        <link rel="stylesheet" href={{asset('css/colors/light.css')}}>
         <link rel="stylesheet" href={{asset('css/colors/dark.css')}}>
         <link rel="stylesheet" href={{asset('css/colors/light-dark.css')}}>
         <link rel="stylesheet" href={{asset('css/about_us.css')}}>

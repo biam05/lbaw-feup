@@ -18,7 +18,7 @@
 
             <div id="posts-result">
                 @foreach($news as $post)
-                    @include('partials.news.post', ['news'=>$post,'type'=>"", 'device'=>""])
+                    @include('partials.news.post', ['news'=>$post,'type'=>""])
                 @endforeach
             </div>
         @endif

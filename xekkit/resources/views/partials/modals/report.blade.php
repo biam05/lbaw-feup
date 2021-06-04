@@ -1,6 +1,6 @@
 <div class="modal fade text-white"
     @if ($type == 'news' || $type == 'comment')
-        id="reportContent_{{ $report_to_id }}_{{ $tab ?? '' }}_{{ $device ?? '' }}" 
+        id="reportContent_{{ $report_to_id }}_{{ $tab ?? '' }}" 
     @elseif ($type == 'user')
         id="reportUser_{{ $report_to_id }}" 
     @endif
@@ -25,13 +25,13 @@
                 <form enctype="multipart/form-data" target="dummyframe">
                     {{ csrf_field() }}
                     <div class="mb-3">
-                        <label for="Report-{{ $report_to_id }}_{{ $tab ?? '' }}_{{ $device ?? '' }}-modal-description" class="form-label">Reason to Report</label>
-                        <textarea name="body" id="Report-{{ $report_to_id }}_{{ $tab ?? '' }}_{{ $device ?? '' }}-modal-description" class="input form-control" role="textbox" rows="4"></textarea>
+                        <label for="Report-{{ $report_to_id }}_{{ $tab ?? '' }}-modal-description" class="form-label">Reason to Report</label>
+                        <textarea name="body" id="Report-{{ $report_to_id }}_{{ $tab ?? '' }}-modal-description" class="input form-control" role="textbox" rows="4"></textarea>
                     </div>
 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="report('{{ $type }}','{{ $tab ?? '' }}','{{ $device ?? '' }}', {{ $report_to_id }})">Submit</button>
+                        onclick="report('{{ $type }}','{{ $tab ?? '' }}', {{ $report_to_id }})">Submit</button>
                 </form>
             </div>
         </div>
@@ -39,14 +39,15 @@
 </div>
 
 
+
 <div class="position-fixed bottom-0 end-0 p-3 myToast">
-    <div id="toast_{{ $report_to_id }}_{{ $tab ?? '' }}_{{ $device ?? '' }}" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="toast_{{ $report_to_id }}_{{ $tab ?? '' }}" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto"><i class="fas fa-exclamation-triangle"></i> Report</strong>
             <small>now</small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div id="toast_{{ $report_to_id }}_{{ $tab ?? '' }}_{{ $device ?? '' }}_message" class="toast-body">
+        <div id="toast_{{ $report_to_id }}_{{ $tab ?? '' }}_message" class="toast-body">
         </div>
     </div>
 </div>
