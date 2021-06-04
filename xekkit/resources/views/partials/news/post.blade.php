@@ -55,12 +55,12 @@
             @endisset
         </a>
 
-            <p class="card-text mt-3 text-white">
-                {!! nl2br(e($news->content->body)) !!}
-                @if($news->content->is_edited)
-                    <small class="text-muted">(edited)</small>
-                @endif
-            </p>
+        <p class="card-text mt-3 text-white">
+            {!! nl2br(e($news->content->body)) !!}
+            @if($news->content->is_edited)
+                <small class="text-muted">(edited)</small>
+            @endif
+        </p>
     </div>
     <footer class="card-footer text-muted">
         <div class="row">

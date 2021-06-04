@@ -42,6 +42,8 @@ CREATE TABLE users(
     remember_token TEXT,
     api_token TEXT UNIQUE,
     google_id TEXT UNIQUE,
+    recover_pw_id TEXT UNIQUE,
+    last_recover_pw_time DATE,
     PRIMARY KEY(id)
 );
 
