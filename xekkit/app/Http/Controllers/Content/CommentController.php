@@ -94,40 +94,19 @@ class CommentController extends Controller
             ]);
         }
 
-        /*if (!$request->hasHeader('id')) {
-            return back()->withErrors([
-                'parameter' => ['Error while processing your request.']
-            ]);
-        }*/
-
-
         $comment->content->delete();
 
         return redirect('/news/' . $news_id)->with('success', 'The comment was successfully deleted.');
     }
 
-/*     public function loadComments()
-    {
-        $validator = $request->validate([
-            'pagination' => 'number|min:0',
-            'offset' => 'number|min:0',
-            'content_id' => 'number|min:0'
-        ]);
-
-        $pagination = $request->query('pagination') ?? 0;
-        $offset = $request->query('offset') ?? 0;
-        $content_id = $request->query('content_id');
-    } */
-
     public function report(Request $request, $id)
     {
-
         $validator = Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
+            return response()->json($request, 400);
         }
 
         $comment = Comment::findOrFail($id);
@@ -154,12 +133,7 @@ class CommentController extends Controller
             return $request_id;
         });
 
-        $response = [
-            'status' => true,
-            'message' => ""
-        ];
-
-        return response()->json($response);
+        return response()->json($request);
     }
 
 }

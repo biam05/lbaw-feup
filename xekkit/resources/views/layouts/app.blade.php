@@ -40,27 +40,27 @@
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
-    <script type="text/javascript" src={{ asset('js/toast.js') }} defer>
-    </script>
 </head>
 <body class="w-100">
 @include('partials.navbar')
 <main>
 
     @if ($errors->any())
-        <div class="container-xl alert alert-danger">
+        <div class="container-xl alert alert-danger alert-dismissible fade show" role="alert">
             <h4> Something went wrong: </h4>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     @if (Session::has('success'))
-        <div class="container-xl alert alert-success">
+        <div class="container-xl alert alert-success alert-dismissible fade show" role="alert">
             <h5> {{ Session::get('success') }} </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 

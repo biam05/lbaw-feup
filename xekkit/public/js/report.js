@@ -1,17 +1,10 @@
-function report(type,tab,device, report_to_id){
-
-
-
-    if(type=="user")
-    {
+function report(type, tab, device, report_to_id){
+    if(type=="user"){
         var body = document.querySelector('#reportUser_'+report_to_id+' textarea').value
     }
-
-    else
-    {    
+    else{    
         var body = document.querySelector('#reportContent_'+report_to_id+'_'+tab+'_'+device+' textarea').value
     }
-
 
 
     var params = {
@@ -19,7 +12,7 @@ function report(type,tab,device, report_to_id){
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/"+type+"/"+report_to_id+"/report/", false);
+    xhttp.open("POST", "/"+type+"/"+report_to_id+"/report/");
 
     let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     xhttp.setRequestHeader('X-CSRF-TOKEN', csrf);   
@@ -27,15 +20,19 @@ function report(type,tab,device, report_to_id){
 
     xhttp.send(JSON.stringify(params));  
 
-    let response = JSON.parse(xhttp.responseText);
-
-    
-    let status = response.status;
-    let votes = response.message;
-    if(status === true){
-
-    }
-    else{
-        
+    xhttp.onload = function(){
+        let toast = document.getElementById('toast_'+report_to_id+'_'+tab+'_'+device);
+        let message = document.getElementById('toast_'+report_to_id+'_'+tab+'_'+device+'_message');
+        toast = new bootstrap.Toast(toast);
+        switch(xhttp.status){
+            case 200:
+                message.innerHTML = "<p class='text-dark'>Report received successfully.</p>";
+                toast.show();
+                break;
+            case 400:
+                message.innerHTML = "<p class='text-danger'>Invalid reason, please try again!</p>";
+                toast.show();
+                break;
+        }
     }
 }
