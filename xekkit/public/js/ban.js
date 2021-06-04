@@ -1,6 +1,6 @@
-const ban_forever = document.getElementById('Report-modal-date-forever');
-const ban_date = document.getElementById('Report-modal-date');
-ban_forever.addEventListener( 'change', function() {
-    ban_date.disabled = !!this.checked;
+function toggleEndDate(object, id){
+    const ban_date = document.getElementById('Report-'+id+'-modal-date');
+    
+    ban_date.disabled = !!object.checked;
     ban_date.value = "";
-});
+}

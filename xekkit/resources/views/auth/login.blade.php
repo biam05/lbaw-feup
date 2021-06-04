@@ -48,8 +48,6 @@
                 </div>
     
                 <a href="{{ route('register') }}">You don't have an account?</a>
-                <br>
-                <a href="" data-bs-toggle="modal" data-bs-target="#forgotPassword" >Lost my password</a>
                 <div class="col-auto text-center pt-2">
                     <button type="submit" class="btn btn-lg btn-primary">Login</button>
                     <a href="{{ url('auth/google') }}" class="btn btn-lg btn-secondary btn-block">Login With Google</a>
@@ -62,5 +60,4 @@
 </div>
 
 <script src={{ asset('js/validate_form.js') }} defer></script>       
-@include('partials.auth.forgot_password_modal')
 @endsection

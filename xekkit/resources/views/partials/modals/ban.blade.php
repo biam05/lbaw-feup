@@ -1,4 +1,4 @@
-<div class="modal fade text-white" id="banUser_{{ $user_id }}" tabindex="-1"
+<div class="modal fade text-white" id="banUser_{{ $request_id }}" tabindex="-1"
      aria-labelledby="Report-modal-label" aria-hidden="true">
     <div class="modal-dialog text-white">
         <div class="modal-content bg-light-dark text-white">
@@ -8,16 +8,29 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/user/{{ $user_id }}/ban/" enctype="multipart/form-data">
+                <form method="post" action="/user/{{ $user_id }}/ban/">
                     {{ csrf_field() }}
                     <div class="mb-2">
-                        <label for="Report-modal-description" class="form-label">Reason to Ban</label>
-                        <textarea name="reason" id="Report-modal-description" class="input form-control" role="textbox" rows="3"></textarea>
+                        <label for="Report-{{ $request_id }}-modal-description" class="form-label">Reason to Ban</label>
+                        <textarea 
+                            name="reason" 
+                            id="Report-{{ $request_id }}-modal-description" 
+                            class="input form-control" 
+                            role="textbox" 
+                            rows="3"
+                        ></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="Report-modal-date" class="form-label">Ban Until</label>
-                        <input name="end_date" id="Report-modal-date" class="input form-control" disabled type="date"/>
-                        <input name="end_date_forever" id="Report-modal-date-forever" class="input" type="checkbox" checked/> Forever
+                        <label for="Report-{{ $request_id }}-modal-date" class="form-label">Ban Until</label>
+                        <input name="end_date" id="Report-{{ $request_id }}-modal-date" class="input form-control" disabled type="date"/>
+                        <input 
+                            name="end_date_forever" 
+                            id="Report-{{ $request_id }}-modal-date-forever" 
+                            class="input" 
+                            type="checkbox"
+                            onclick="toggleEndDate(this, {{$request_id}})" 
+                            checked
+                        /> Forever
                     </div>
 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

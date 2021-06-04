@@ -163,13 +163,14 @@ class NewsController extends Controller
     public function report(Request $request, $id)
     {
 
-        $validator =Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'body' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator);
+            return response()->json($request, 400);
         }
+
         $news = News::findOrFail($id);
 
 
