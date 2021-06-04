@@ -634,7 +634,7 @@ CREATE OR REPLACE FUNCTION increase_reputation() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         UPDATE users
-        SET reputation = reputation + new.value
+        SET reputation = reputation + new.value --and last_day_of_vote=CURRENT_DATE
         from content
         WHERE new.content_id=content.id AND content.author_id=users.id;
         RETURN new;
