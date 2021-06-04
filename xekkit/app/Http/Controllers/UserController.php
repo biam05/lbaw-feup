@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Ban;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
+use App\Mail\MailtrapExample;
+
 
 use App\Models\User;
 use App\Models\Requests;
@@ -353,4 +358,24 @@ class UserController extends Controller
         }
     }
 
+    public function forgot_password (Request $request)
+    {
+
+        $request->validate(['email' => 'required|email']);
+
+        $user = User::where('email', '=', $request->input('email'))->first();
+        if(!empty($user)){
+
+
+            $password = Str::random(40);
+            $user->password = Hash::make($password);
+            $user->save();
+            Mail::to($request->input('email'))->send(new MailtrapExample($password, $user->username));
+        
+        
+        } else {
+            // user do not exist
+        }
+        return redirect()->back()->with('success','If a user exists with this email, an email was sent with your new password');
+    }
 }

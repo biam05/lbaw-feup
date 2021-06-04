@@ -49,7 +49,7 @@ class FAQController extends Controller
 
         $topic->save();
 
-        return redirect('/faq/')->with('success', 'The question was successfully updated.');;
+        return redirect('/faq/')->with('success', 'The question was successfully updated.');
     }
 
     public function delete(Request $request, $id){

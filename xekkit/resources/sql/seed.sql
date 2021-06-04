@@ -45,6 +45,17 @@ CREATE TABLE users(
     PRIMARY KEY(id)
 );
 
+/* CREATE TABLE reset_password(
+    users_id INTEGER NOT NULL,
+    token TEXT UNIQUE,
+    expire DATE,
+    PRIMARY KEY(users_id, token),
+    CONSTRAINT fk_users_id
+        FOREIGN KEY(users_id)
+            REFERENCES users (id)
+            ON DELETE CASCADE
+);
+ */
 CREATE TABLE follow(
     follower_id INTEGER NOT NULL,
     users_id INTEGER NOT NULL,

@@ -16,8 +16,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BannedPageController;
 use App\Http\Controllers\DeletedController;
 use App\Http\Controllers\Auth\GoogleController;
-
 use Laravel\Socialite\Facades\Socialite;
+use App\Mail\MailtrapExample;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,8 @@ use Laravel\Socialite\Facades\Socialite;
 // Authentication
 Route::get('/login/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login/', [LoginController::class, 'login']);
+Route::post('/forgot-password/', [UserController::class, 'forgot_password'])->name('forgot-password');
+
 Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register/', [RegisterController::class, 'register']);
@@ -43,6 +46,7 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::get('/register_google/', [GoogleController::class, 'showRegistrationForm']);
 Route::post('/register_google/', [GoogleController::class, 'register']);
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -138,4 +142,11 @@ Route::get('/clear-all-cache', function() {
     Artisan::call('view:clear');
     Artisan::call('config:clear');
     echo "Cleared all caches successfully.";
+});
+
+Route::get('/send-mail/{mail}', function (Request $request) {
+   
+    Mail::to($request->mail)->send(new MailtrapExample());
+    return 'A message has been sent to Mailtrap!';
+
 });
