@@ -42,6 +42,8 @@ CREATE TABLE users(
     remember_token TEXT,
     api_token TEXT UNIQUE,
     google_id TEXT UNIQUE,
+    recover_pw_id TEXT UNIQUE,
+    last_recover_pw_time TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY(id)
 );
 
@@ -634,7 +636,7 @@ CREATE OR REPLACE FUNCTION increase_reputation() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         UPDATE users
-        SET reputation = reputation + new.value
+        SET reputation = reputation + new.value --and last_day_of_vote=CURRENT_DATE
         from content
         WHERE new.content_id=content.id AND content.author_id=users.id;
         RETURN new;

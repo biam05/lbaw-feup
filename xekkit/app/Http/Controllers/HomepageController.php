@@ -14,25 +14,21 @@ use App\Http\Controllers\Content\ContentController;
 
 class HomepageController extends Controller
 {
-  
+    /**
+     * Show Homepage
+     *
+     * @param Request $request
+     * @return view
+     */
     public function show(Request $request)
     {      
-
         $feedPosts = array(); 
         
         if(Auth::check()){
-            $feedPosts = News::whereIn('content_id', function ($query) {
-                $query->select('id')
-                    ->from('content')
-                    ->whereIn('author_id', function ($query) {
-                        $query->select('users_id')
-                            ->from('follow')
-                            ->where('follower_id', Auth::id());
-                    });
-            })->get();
+            $feedPosts = News::getFeedPosts();
         }        
 
-        $posts = News::all();
+        $posts = News::getNews();
         foreach($posts as $post){
             $post->content = $post->content;
         }

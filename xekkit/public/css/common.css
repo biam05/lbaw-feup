@@ -33,6 +33,10 @@ input {
     object-fit: scale-down;
 }
 
+.recover-password {
+    margin-top: 15em;
+}
+
 
 .clickable, .clickable-big, .clickable-small {
     -webkit-transition: 0.2s;

@@ -15,6 +15,7 @@ function vote(content_id, vote, type){
     xhttp.send(JSON.stringify(params));  
 
     xhttp.onload = function() {
+    
         let response = JSON.parse(xhttp.responseText);
         let status = response.status;
         let votes = response.message;
@@ -35,21 +36,26 @@ function vote(content_id, vote, type){
                     arrow_up.classList.remove("text-primary");
                     arrow_up.classList.add("text-white");
                 }
-                else if (response.vote === false){
-                    if(arrow_down.classList.contains("text-white")){
-                        arrow_down.classList.remove("text-white");
-                        arrow_down.classList.add("text-danger");
-                    }                
-                    else if(arrow_down.classList.contains("text-danger")){
-                        arrow_down.classList.remove("text-danger");
-                        arrow_down.classList.add("text-white");
-                    }
-                    if(arrow_up.classList.contains("text-primary")){
-                        arrow_up.classList.remove("text-primary");
-                        arrow_up.classList.add("text-white");
-                    }
+                if(arrow_down.classList.contains("text-danger")){
+                    arrow_down.classList.remove("text-danger");
+                    arrow_down.classList.add("text-white");
                 }
             }
+            else if (response.vote === false){
+                if(arrow_down.classList.contains("text-white")){
+                    arrow_down.classList.remove("text-white");
+                    arrow_down.classList.add("text-danger");
+                }                
+                else if(arrow_down.classList.contains("text-danger")){
+                    arrow_down.classList.remove("text-danger");
+                    arrow_down.classList.add("text-white");
+                }
+                if(arrow_up.classList.contains("text-primary")){
+                    arrow_up.classList.remove("text-primary");
+                    arrow_up.classList.add("text-white");
+                }
+            }
+            
             else{
                 console.log("error voting");
                 console.log(response);

@@ -53,10 +53,10 @@ class LoginController extends Controller
         return 'username';
     }
 
+    /**
+     * Gets current user
+     */
     public function getUser(Request $request){
         return $request->user();
     }
-
-    
-
 }

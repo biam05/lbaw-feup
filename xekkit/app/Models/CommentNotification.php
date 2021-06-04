@@ -45,17 +45,4 @@ class CommentNotification extends Model
     {
         return $this->belongsTo(User::class, 'users_id');
     }
-
-    // /**
-    //  * Deletes the comment notification.
-    //  * 
-    //  * @param int $users_id
-    //  * @param int $comment_id
-    //  * @return bool
-    //  */
-    // public static function delete($users_id, $comment_id)
-    // {
-    //     $notification = CommentNotification::where('users_id', $users_id)->where('comment_id', $comment_id)->first();
-    //     return $notification.delete();
-    // }
 }

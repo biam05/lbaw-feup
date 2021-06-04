@@ -19,6 +19,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentController extends Controller
 {
+    /**
+     * Create comment.
+     *
+     * @param Request  $request
+     * @return view
+     */
     public function create(Request $request)
     {
         $validator = $request->validate([
@@ -61,6 +67,13 @@ class CommentController extends Controller
         return redirect('/news/' . $news->content_id)->with('success', 'The comment was successfully created.');
     }
 
+    /**
+     * Edit comment.
+     *
+     * @param Request  $request
+     * @param int $id
+     * @return view
+     */
     public function edit(Request $request, $id){
         $comment = Comment::findOrFail($id);
         $this->authorize('update', $comment);
@@ -76,6 +89,13 @@ class CommentController extends Controller
         return redirect('/news/' . $comment->news_id)->with('success', 'Your comment was updated.');
     }
 
+    /**
+     * Delete comment.
+     *
+     * @param Request  $request
+     * @param int $id
+     * @return view
+     */
     public function delete(Request $request, $id)
     {
         $validator = $request->validate([
@@ -99,6 +119,13 @@ class CommentController extends Controller
         return redirect('/news/' . $news_id)->with('success', 'The comment was successfully deleted.');
     }
 
+    /**
+     * Report comment.
+     *
+     * @param Request  $request
+     * @param int $id
+     * @return view
+     */
     public function report(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -135,5 +162,4 @@ class CommentController extends Controller
 
         return response()->json($request);
     }
-
 }

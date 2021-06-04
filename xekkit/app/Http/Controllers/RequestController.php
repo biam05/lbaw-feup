@@ -11,6 +11,9 @@ use App\Models\Faq;
 
 class RequestController extends Controller
 {
+    /**
+    * Approve Request
+    */
     public function approve(Request $request, $id){
         $requests = Requests::findOrFail($id);
         $this->authorize('update', $requests);
@@ -22,6 +25,9 @@ class RequestController extends Controller
         return redirect('/notifications/')->with('success', 'The request was accepted successfully.');
     }
 
+    /**
+    * Reject Request
+    */
     public function reject(Request $request, $id){
         $requests = Requests::findOrFail($id);
         $this->authorize('update', $requests);

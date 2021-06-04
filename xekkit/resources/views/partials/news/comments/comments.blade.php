@@ -12,5 +12,5 @@
 </form>
 
 <div class="container-xl p-3 bg-light-dark">
-    @each('partials.news.single_comment', $news->getParentComments, "comment", "partials.news.no_comments")
+    @each('partials.news.comments.single_comment', $news->getParentComments, "comment", "partials.news.comments.no_comments")
 </div>

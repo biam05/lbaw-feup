@@ -1,4 +1,4 @@
-<div class="modal fade text-white" id="banUser_{{ $request_id }}" tabindex="-1"
+<div class="modal fade text-white" id="banUser_{{ $user_id }}" tabindex="-1"
      aria-labelledby="Report-modal-label" aria-hidden="true">
     <div class="modal-dialog text-white">
         <div class="modal-content bg-light-dark text-white">
@@ -11,24 +11,24 @@
                 <form method="post" action="/user/{{ $user_id }}/ban/">
                     {{ csrf_field() }}
                     <div class="mb-2">
-                        <label for="Report-{{ $request_id }}-modal-description" class="form-label">Reason to Ban</label>
+                        <label for="Report-{{ $user_id }}-modal-description" class="form-label">Reason to Ban</label>
                         <textarea 
                             name="reason" 
-                            id="Report-{{ $request_id }}-modal-description" 
+                            id="Report-{{ $user_id }}-modal-description" 
                             class="input form-control" 
                             role="textbox" 
                             rows="3"
                         ></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="Report-{{ $request_id }}-modal-date" class="form-label">Ban Until</label>
-                        <input name="end_date" id="Report-{{ $request_id }}-modal-date" class="input form-control" disabled type="date"/>
+                        <label for="Report-{{ $user_id }}-modal-date" class="form-label">Ban Until</label>
+                        <input name="end_date" id="Report-{{ $user_id }}-modal-date" class="input form-control" disabled type="date"/>
                         <input 
                             name="end_date_forever" 
-                            id="Report-{{ $request_id }}-modal-date-forever" 
+                            id="Report-{{ $user_id }}-modal-date-forever" 
                             class="input" 
                             type="checkbox"
-                            onclick="toggleEndDate(this, {{$request_id}})" 
+                            onclick="toggleEndDate(this, {{$user_id}})" 
                             checked
                         /> Forever
                     </div>

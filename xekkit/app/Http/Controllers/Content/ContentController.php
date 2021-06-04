@@ -25,6 +25,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContentController extends Controller
 {
+    /**
+     * Toggle vote from user on content.
+     *
+     * @param Request  $request
+     * @return view
+     */
     public function toggleVote(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -39,6 +45,7 @@ class ContentController extends Controller
         $content_id = $request->content_id;
         $upvote = $request->upvote;
 
+        // get content voted on
         $content = Content::findOrFail($content_id);
 
         $response = [
@@ -48,13 +55,12 @@ class ContentController extends Controller
 
         $user = Auth::user();
 
-        if($user == null) // not logged in
-            return response()->json($response);
-
+        // get vote value
         $value = $user->is_partner ? 10 : 1;
         $value = $upvote ? $value : -$value;
 
-        $voted = Content::getVoteFromContent($content);
+        // downvoted/upvoted before? if so, change the value of the votes twice
+        $voted = $content->getVoteFromContent();
         if($voted == "downvote"){
             if($upvote) $user->voteOn()->toggle([$content_id => ['value' => $value]]);
         }
@@ -64,6 +70,7 @@ class ContentController extends Controller
 
         $user->voteOn()->toggle([$content_id => ['value' => $value]]);
 
+        // update content
         $content = Content::findOrFail($content_id);
 
         $response = [
@@ -74,8 +81,4 @@ class ContentController extends Controller
 
         return response()->json($response);
     }
-
-
-
-
 }

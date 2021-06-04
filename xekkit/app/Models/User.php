@@ -147,6 +147,11 @@ class User extends Authenticatable
         return $this->hasMany(VoteNotification::class, 'author_id');
     }
 
+    /**
+     * Verify if I'm following an user
+     *
+     * @param User $user
+     */
     public function isFollowing(User $user){
         $following = $this->following;
         return $following->contains($user);
@@ -207,5 +212,36 @@ class User extends Authenticatable
         }
         return "99+";
 
+    }
+
+    /**
+     * Search news
+     *
+     * @param string $query
+     * @param string $sortby
+     * @return string
+     */
+     public static function search($search, $sortby)
+     {
+        $users = User::whereRaw('search @@ websearch_to_tsquery(\'simple\', ?)', [$search]);
+        switch($sortby){
+            case 1: // relevance
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+            case 2: // top
+                $users->orderByDesc('reputation', 'desc');
+                break;
+            case 3: // new
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+
+            case 4: // trending
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+            default:
+                $users->orderByRaw('ts_rank(search, websearch_to_tsquery(\'english\', ?)) DESC', [$search]);
+                break;
+        };
+        return $users->get();
     }
 }

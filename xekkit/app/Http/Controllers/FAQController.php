@@ -10,6 +10,12 @@ use App\Models\Faq;
 
 class FAQController extends Controller
 {
+    /**
+     * Show FAQ page.
+     *
+     * @param Request $request
+     * @return view
+     */
     public function show(Request $request)
     {      
         $topics = Faq::all();
@@ -18,6 +24,9 @@ class FAQController extends Controller
         ]);
     }
 
+    /**
+     * Create FAQ Topic
+     */
     public function create(Request $request){
         $this->authorize('create', Faq::class);
 
@@ -34,6 +43,9 @@ class FAQController extends Controller
         return redirect('/faq/');
     }
 
+    /**
+     * Edit FAQ Topic
+     */
     public function edit(Request $request, $id){
         
         $topic = Faq::findOrFail($id);
@@ -49,9 +61,12 @@ class FAQController extends Controller
 
         $topic->save();
 
-        return redirect('/faq/')->with('success', 'The question was successfully updated.');;
+        return redirect('/faq/')->with('success', 'The question was successfully updated.');
     }
 
+    /**
+     * Delete FAQ Topic
+     */
     public function delete(Request $request, $id){
         $topic = Faq::findOrFail($id);
         $this->authorize('delete', $topic);

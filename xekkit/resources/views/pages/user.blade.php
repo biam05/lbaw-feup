@@ -9,19 +9,19 @@
             <div class="row justify-content-start">
                 <h4 class="col-auto text-light">
                     @if($user->is_partner)
-                        <i id="user-partner" class="fas fa-check"></i>
+                        <i id="user-partner" class="fas fa-check" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Partner"></i>
                     @endif
                     x/{{$user->username}}
                 </h4>
-                @if (Auth::check() && Auth::user()->is_moderator)
+                @if (Auth::check() && Auth::user()->is_moderator && Auth::user()->username != $user->username)
                     @include('partials.modals.ban', ['user_id' => $user->id ])
                     <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#banUser_{{ $user->id  }}">
-                        <i class="fas fa-ban"></i>
+                        <i class="fas fa-ban" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ban User"></i>
                     </button>
                 @elseif(Auth::check() && Auth::user()->username != $user->username)
                     @include('partials.modals.report', ['report_to_id' => $user->id, 'type'=>"user"])
                     <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#reportUser_{{$user->id}}">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Report User"></i>
                     </button>
                 @endif
             </div>

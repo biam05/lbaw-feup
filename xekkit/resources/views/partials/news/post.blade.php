@@ -73,8 +73,9 @@
             @include('partials.news.vote',['news'=>$news, 'type'=>$type])
 
             <button class="col-auto clickable text-white">
+                <a href="/news/{{$news->content_id}}" class="text-decoration-none text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>
-                &nbsp;{{$news->nr_comments}}
+                &nbsp;{{$news->nr_comments}}</a>
             </button>
         </div>
     </footer>
