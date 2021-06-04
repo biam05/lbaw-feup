@@ -8,6 +8,8 @@ IMAGE_NAME=lbaw2114                # Replace with your group's image name
 
 # Ensure that dependencies are available
 composer install
+php artisan cache:clear
+php artisan route:clear
 php artisan clear-compiled
 php artisan optimize
 
