@@ -41,6 +41,9 @@ class NewsController extends Controller
         return view('pages.news', ['news' => $news]);
     }
 
+    /**
+    * Create News Post
+    */
     public function create(Request $request)
     {
         $this->authorize('create', News::class);
@@ -90,6 +93,9 @@ class NewsController extends Controller
         return redirect('/news/' . $id);
     }
 
+    /**
+    * Edit News Post
+    */
     public function edit(Request $request, $id)
     {
         $news = News::findOrFail($id);
@@ -134,6 +140,9 @@ class NewsController extends Controller
         return redirect('/news/' . $id)->with('success', 'Your post was successfully updated.');
     }
 
+    /**
+    * Dlete News Post
+    */
     public function delete(Request $request, $id)
     {
         $validator = $request->validate([

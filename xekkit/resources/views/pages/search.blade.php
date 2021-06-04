@@ -13,4 +13,5 @@
     @include('partials.search.search_content')
 </main>
 
+<script defer src={{asset('js/filter_search.js')}}></script>
 @endsection

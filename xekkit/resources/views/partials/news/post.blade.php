@@ -55,12 +55,12 @@
             @endisset
         </a>
 
-        <p class="card-text mt-3 text-white">
-            {!! nl2br(e($news->content->body)) !!}
-            @if($news->content->is_edited)
-                <small class="text-muted">(edited)</small>
-            @endif
-        </p>
+            <p class="card-text mt-3 text-white">
+                {!! nl2br(e($news->content->body)) !!}
+                @if($news->content->is_edited)
+                    <small class="text-muted">(edited)</small>
+                @endif
+            </p>
     </div>
     <footer class="card-footer text-muted">
         <div class="row">
@@ -73,8 +73,9 @@
             @include('partials.news.vote',['news'=>$news, 'type'=>$type])
 
             <button class="col-auto clickable text-white">
+                <a href="/news/{{$news->content_id}}" class="text-decoration-none text-white">
                 <i class="fas fa-comment text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Comments"></i>
-                &nbsp;{{$news->nr_comments}}
+                &nbsp;{{$news->nr_comments}}</a>
             </button>
         </div>
     </footer>

@@ -5,35 +5,7 @@
     @endfor
     <div class="col">
         <div class="d-flex">
-            @if(!empty($comment->content->author->photo))
-                <img src={{ asset('storage/img/users/' . $comment->content->author->photo) }} class="rounded-circle" alt="{{ $comment->content->author->username }}" width="30px" height="30px">
-            @else
-                <img src={{ asset('img/user.png') }} class="rounded-circle" alt="{{$comment->content->author->username}}" width="30px" height="30px">
-            @endif
-            <p class="text-white text-muted px-2 m-0"><small>
-                    <a class="col-auto text-muted pe-2" href="../user/{{ $comment->content->author->username  }}">
-                        @if($comment->content->author->is_partner)
-                            <i class="fas fa-check"></i>
-                        @endif
-                        x/{{ $comment->content->author->username }}</a>{{ $comment->content->formatDate() }}</small>
-                @if (Auth::user() && (Auth::user()->is_moderator || Auth::user()->id === $comment->content->author_id))
-                    <button class="clickable-big text-muted ps-2" data-bs-toggle="modal" data-bs-target="#deletePostModal_{{$comment->content_id}}">
-                        <i class="fas fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"></i>
-                    </button>
-                    @include('partials.modals.delete_comment', ['comment' => $comment])
-                    @if(Auth::user()->id === $comment->content->author_id)
-                        <button class="clickable-big text-muted ps-2" data-bs-toggle="modal" data-bs-target="#editComment_{{$comment->content_id}}">
-                            <i class="fas fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"></i>
-                        </button>
-                        @include('partials.modals.edit_comment', ['comment' => $comment])
-                    @endif
-                @else
-                    @include('partials.modals.report', ['report_to_id' => $comment->content_id, 'type'=>"comment", 'tab'=>''])
-                    <button class="clickable-big text-muted ps-2 text-white" data-bs-toggle="modal" data-bs-target="#reportContent_{{$comment->content_id}}__">
-                        <i class="fas fa-exclamation-triangle " data-bs-toggle="tooltip" data-bs-placement="top" title="Report"></i>
-                    </button>
-                @endif
-            </p>
+            @include('partials.news.comments.comment_header', ['comment' => $comment])
         </div>
         <div class="row ms-4">
             <p class="text-white m-0 pb-1">
@@ -45,7 +17,7 @@
             <div class="row align-items-center text-muted">
                 <div class="col-auto d-flex flex-row pe-1 align-items-center">
                     <button onclick='vote("{{ $comment->content->id }}", true, "")' class="clickable-big ">
-                        @if (Content::getVoteFromContent($comment->content) === "upvote")
+                        @if ($comment->content->getVoteFromContent() === "upvote")
                             <i id="arrow_up_{{$comment->content_id}}_" class="fas fa-angle-up text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
                         @else
                             <i id="arrow_up_{{$comment->content_id}}_" class="fas fa-angle-up text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Upvote"></i>
@@ -54,7 +26,7 @@
                     <span class="col-auto ps-0 text-white mx-1" id="n-votes_{{$comment->content_id}}_">{{$comment->content->nr_votes}}</span>
                     <button onclick='vote("{{ $comment->content->id }}", false, "")' class="clickable-big">
 
-                        @if (Content::getVoteFromContent($comment->content) === "downvote")
+                        @if ($comment->content->getVoteFromContent() === "downvote")
                             <i id="arrow_down_{{$comment->content_id}}_" class="fas fa-angle-down text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
                         @else
                             <i id="arrow_down_{{$comment->content_id}}_" class="fas fa-angle-down text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Downvote"></i>
@@ -84,4 +56,4 @@
         </form>
     </div>
 </div>
-@each('partials.news.single_comment', $comment->replies, "comment")
+@each('partials.news.comments.single_comment', $comment->replies, "comment")

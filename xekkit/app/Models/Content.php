@@ -57,10 +57,13 @@ class Content extends Model
         return $this->belongsToMany(User::class, 'vote', 'content_id', 'users_id')->withPivot('value');
     }
 
-    public static function getVoteFromContent(Content $content){
+    /**
+     * Get information about the current vote from the user on a post (didn't vote, upvoted or downvoted)
+     */
+    public function getVoteFromContent(){
         $vote = "";
         if(Auth::check()){
-            $voter = $content->voters()
+            $voter = $this->voters()
                 ->where('users_id', Auth::id())
                 ->first();
             if($voter != null){ //voted on the post
@@ -71,6 +74,9 @@ class Content extends Model
         return $vote;
     }
 
+    /**
+     * Get a user friendly display of a date
+     */
     public function formatDate($full = false){
         $now = new DateTime;
         $ago = new DateTime($this->date);

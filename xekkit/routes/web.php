@@ -35,7 +35,9 @@ use Illuminate\Support\Facades\Mail;
 // Authentication
 Route::get('/login/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login/', [LoginController::class, 'login']);
-Route::post('/forgot-password/', [UserController::class, 'forgot_password'])->name('forgot-password');
+Route::post('/forgot-password/', [UserController::class, 'forgotPassword'])->name('forgot-password');
+Route::get('/recover/{id}', [UserController::class, 'viewRecoverPassword']);
+Route::post('/recover_password', [UserController::class, 'recoverPassword']);
 
 Route::get('/logout/', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register/', [RegisterController::class, 'showRegistrationForm'])->name('register');

@@ -22,6 +22,7 @@ use App\Models\News;
 use App\Models\Content;
 use App\Models\Follow;
 use App\Models\UnbanAppeal;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -37,7 +38,7 @@ class UserController extends Controller
 
         $user = User::getUser($username);
 
-        if($user == null){
+        if($user == null || $user->is_banned || $user->is_deleted){
             return view('errors.404');
         }
 
@@ -151,6 +152,9 @@ class UserController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Report this User
+     */
     public function report(Request $request, $id)
     {
 
@@ -232,9 +236,12 @@ class UserController extends Controller
             $partner_request->save();
         });
 
-        return view('pages.edit_user', ['minReputation' => User::BECOME_PARTNER]);
+        return view('pages.edit_user', ['minReputation' => User::BECOME_PARTNER])-> with('success', 'Your partner request was submited.');
     }
 
+    /**
+     * Stop Partnership from User
+     */
     public function stop_partnership(Request $request, $username)
     {
         if(! Hash::check($request->password, $request->user()->password)) {
@@ -246,9 +253,12 @@ class UserController extends Controller
         $user = User::where('username','=',$username)->first();
         $user->is_partner=false;
         $user->save();
-        return redirect("/user/".$username)->with('success', 'Your partnership has been canceled.');;
+        return redirect("/user/".$username)->with('success', 'Your partnership has been canceled.');
     }
 
+    /**
+     * Start Following a User
+     */
     public function follow(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -270,6 +280,9 @@ class UserController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * Stop Following a User
+     */
     public function unfollow(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -291,6 +304,9 @@ class UserController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * Updates unban appeal from this User
+     */
     public function unban_appeal(Request $request, $username)
     {
 
@@ -321,6 +337,9 @@ class UserController extends Controller
         return redirect('/ban')->with('success', 'Your unban appeal was registered.');
     }
 
+    /**
+     * Ban this User
+     */
     function ban(Request $request, $id){
         Validator::make($request->all(), [
             'reason' => 'required|string',
@@ -358,24 +377,60 @@ class UserController extends Controller
         }
     }
 
-    public function forgot_password (Request $request)
+    /**
+     * Send Email to User when he forgets his Password
+     */
+    public function forgotPassword(Request $request)
     {
 
         $request->validate(['email' => 'required|email']);
 
-        $user = User::where('email', '=', $request->input('email'))->first();
+        $user = User::where('email', $request->input('email'))->first();
         if(!empty($user)){
-
-
-            $password = Str::random(40);
-            $user->password = Hash::make($password);
+            $user->recover_pw_id = $user->username . Str::random(40);
+            $user->last_recover_pw_time = date('Y-m-d H:i:s');
             $user->save();
-            Mail::to($request->input('email'))->send(new MailtrapExample($password, $user->username));
-        
+
+            $link = env('APP_URL', 'http://localhost:8000') . "/recover/" . $user->recover_pw_id;
+            Mail::to($request->input('email'))->send(new MailtrapExample($user->username, $link));
         
         } else {
-            // user do not exist
+            return back()->withErrors([
+                'forgot_password' => "User not found!"
+            ]);
         }
-        return redirect()->back()->with('success','If a user exists with this email, an email was sent with your new password');
+        return back()->with('success','An email was sent with your new password');
+    }
+
+    /**
+     * View Recover Password for this User
+     */
+    public function viewRecoverPassword(Request $request, $id)
+    {
+        $user = User::where('recover_pw_id', $id)->first();
+        if(!empty($user)){
+            if(strtotime($user->last_recover_pw_time) > strtotime('-30 minutes')){
+                return view('auth.recover_password', ['user' => $user]);
+            }
+        }
+        abort(404);
+    }
+
+    /**
+     * Recover Password for this User
+     */
+    public function recoverPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|confirmed',
+            'user_id' => 'required'
+        ]);
+
+        $user = User::find($request->user_id);
+        $user->password = bcrypt($request->password);
+        $user->recover_pw_id = '';
+        $user->save();
+        Auth::login($user);
+        return redirect('/')->with('success', 'Password changed successfully');
     }
 }

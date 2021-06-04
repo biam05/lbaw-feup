@@ -17,13 +17,13 @@ class MailtrapExample extends Mailable
      * @return void
      */
 
-    private $password = "";
     private $name = "";
+    private $link = "";
 
-    public function __construct($p, $n)
+    public function __construct($n, $l)
     {
-        $this->password = $p;
         $this->name = $n;
+        $this->link = $l;
     }
 
     /**
@@ -39,8 +39,7 @@ class MailtrapExample extends Mailable
             ->markdown('mails.exmpl')
             ->with([
                 'name' => $this->name,
-                'password' => $this->password,
-                'link' => 'http://lbaw2114.lbaw-prod.fe.up.pt/login'
+                'link' => $this->link
             ]);
     }
 }

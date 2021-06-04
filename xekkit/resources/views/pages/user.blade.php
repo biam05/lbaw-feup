@@ -13,7 +13,7 @@
                     @endif
                     x/{{$user->username}}
                 </h4>
-                @if (Auth::check() && Auth::user()->is_moderator)
+                @if (Auth::check() && Auth::user()->is_moderator && Auth::user()->username != $user->username)
                     @include('partials.modals.ban', ['user_id' => $user->id ])
                     <button type="button" class="col-auto clickable-big text-warning" data-bs-toggle="modal" data-bs-target="#banUser_{{ $user->id  }}">
                         <i class="fas fa-ban" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ban User"></i>

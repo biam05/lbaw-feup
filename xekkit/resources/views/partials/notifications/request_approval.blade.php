@@ -12,9 +12,14 @@
 @else
     <div class="d-flex">
         @if(in_array($type, ['report_user', 'report_content' ]) /* Ban */)
-            <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#banUser_{{$request->id}}">
+            <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#banUser_{{$user->id}}">
                 Ban User
             </button>
+            <form method="post" action="/request/{{ $request->id }}/reject/">
+                {{csrf_field()}}
+                @method('patch')
+                <button href="#" class="btn btn-primary me-2">Reject</button>
+            </form>  
             @include('partials.modals.ban', ['request_id' => $request->id, 'user_id' => $user->id ])
         @endif
         @if(in_array($type, ['report_content']) /* Remove Content */)

@@ -61,6 +61,6 @@
     </div>
 </div>
 
-<script src={{ asset('js/validate_form.js') }} defer></script>       
-@include('partials.auth.forgot_password_modal')
+<script src={{ asset('js/validate_form.js') }} defer></script>  
+@include('partials.modals.forgot_password')
 @endsection

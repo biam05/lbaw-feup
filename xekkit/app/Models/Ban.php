@@ -49,6 +49,9 @@ class Ban extends Model
         return $this->hasOne(UnbanAppeal::class, 'ban_id');
     }
 
+    /**
+     * Print dates used in the banned notification
+     */
     public function printDates(){
 
         if($this->end_date){

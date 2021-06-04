@@ -43,21 +43,10 @@ CREATE TABLE users(
     api_token TEXT UNIQUE,
     google_id TEXT UNIQUE,
     recover_pw_id TEXT UNIQUE,
-    last_recover_pw_time DATE,
+    last_recover_pw_time TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY(id)
 );
 
-/* CREATE TABLE reset_password(
-    users_id INTEGER NOT NULL,
-    token TEXT UNIQUE,
-    expire DATE,
-    PRIMARY KEY(users_id, token),
-    CONSTRAINT fk_users_id
-        FOREIGN KEY(users_id)
-            REFERENCES users (id)
-            ON DELETE CASCADE
-);
- */
 CREATE TABLE follow(
     follower_id INTEGER NOT NULL,
     users_id INTEGER NOT NULL,
