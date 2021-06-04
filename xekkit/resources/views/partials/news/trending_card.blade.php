@@ -2,7 +2,7 @@
     @if(isset($news->image))
         <img class="card-img" src={{ asset('storage/img/news/' . $news->image) }} alt="Trending Image">
     @else
-        <div class="custom_card bg-light-dark card-img"></div>
+        <img class="card-img" src={{ asset('img/xekkit.png') }} alt="Trending Image">
     @endif
     <div class="card-img-overlay d-flex flex-column justify-content-end p-1">
         <h5 class="card-title px-1">{{$news->title}}</h5>

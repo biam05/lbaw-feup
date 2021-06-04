@@ -1243,6 +1243,7 @@ insert into users (username, email, password, description, photo, birthdate, gen
     null,
     '06/05/1954',
     'f',
+
     '2387',
     false,
     false,
@@ -1347,6 +1348,8 @@ insert into news(content_id,title, image, trending_score, nr_comments) values (3
 insert into news(content_id,title, image, trending_score, nr_comments) values (4,'Russian ambassador says no famine in North Korea, trade may resume soon',null,0,0);
 
 insert into news(content_id,title, image, trending_score, nr_comments) values (5,'Breast Implant Injuries Kept Hidden As New Health Threats Surface','4.jpg',0,0);
+
+insert into news(content_id,title, image, trending_score, nr_comments) values (6,'How New Mexico Became the State With the Highest Rate of Full Vaccinations','1.gif',0,0);
 
 insert into news_tag(news_id, tag_id) values (1,1);
 insert into news_tag(news_id, tag_id) values (1,2);
