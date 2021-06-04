@@ -1,4 +1,4 @@
-function vote(content_id, vote, type, device, comment){
+function vote(content_id, vote, type){
 
     var params = {
         "content_id":parseInt(content_id),
@@ -20,12 +20,12 @@ function vote(content_id, vote, type, device, comment){
     let votes = response.message;
     if(status === true){
      
-        let el = document.getElementById('n-votes_'+content_id+"_"+type+"_"+device);
+        let el = document.getElementById('n-votes_'+content_id+"_"+type);
         
         el.innerText = votes;
 
-        const arrow_up = document.getElementById('arrow_up_'+content_id+"_"+type+"_"+device);
-        const arrow_down = document.getElementById('arrow_down_'+content_id+"_"+type+"_"+device); 
+        const arrow_up = document.getElementById('arrow_up_'+content_id+"_"+type);
+        const arrow_down = document.getElementById('arrow_down_'+content_id+"_"+type); 
         if(response.vote === true){    
             if(arrow_up.classList.contains("text-white")){
                 arrow_up.classList.remove("text-white");

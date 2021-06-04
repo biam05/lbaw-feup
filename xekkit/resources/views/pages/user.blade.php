@@ -61,15 +61,15 @@
 
         <nav>
             <ul class="nav nav-pills mb-3 text-light bg-light-dark" id="pills-tab" role="tablist">
-                @include('partials.tab', ['active' => true, 'type' => 'trending', 'pc' => false, 'name' => "Trending"])
-                @include('partials.tab', ['active' => false, 'type' => 'top', 'pc' => false, 'name' => "Top"])
-                @include('partials.tab', ['active' => false, 'type' => 'new', 'pc' => false, 'name' => "New"])
-                @include('partials.tab', ['active' => false, 'type' => 'following', 'pc' => false, 'name' => "Following"])
+                @include('partials.tab', ['active' => true, 'type' => 'trending', 'name' => "Trending"])
+                @include('partials.tab', ['active' => false, 'type' => 'top', 'name' => "Top"])
+                @include('partials.tab', ['active' => false, 'type' => 'new', 'name' => "New"])
+                @include('partials.tab', ['active' => false, 'type' => 'following', 'name' => "Following"])
             </ul>
             <div class="tab-content" id="pills-tabContent">
-                @include('partials.tab_content', ['active'=>true, 'type'=>'trending', 'pc'=>false, 'explore'=>false, 'posts'=>$trendingPosts])
-                @include('partials.tab_content', ['active'=>false, 'type'=>'top', 'pc'=>false, 'explore'=>false, 'posts'=>$topPosts])
-                @include('partials.tab_content', ['active'=>false, 'type'=>'new', 'pc'=>false, 'explore'=>false, 'posts'=>$recentPosts])
+                @include('partials.tab_content', ['active'=>true, 'type'=>'trending', 'posts'=>$trendingPosts])
+                @include('partials.tab_content', ['active'=>false, 'type'=>'top', 'posts'=>$topPosts])
+                @include('partials.tab_content', ['active'=>false, 'type'=>'new', 'posts'=>$recentPosts])
 
                 <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
                     @if(count($following) === 0)
