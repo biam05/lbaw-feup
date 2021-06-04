@@ -24,10 +24,25 @@ class CommentNotification extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the notification.
+     *
+     * @var string
+     */
+    public $type = "comment";
+
+    /**
      * Get the comment associated with the comment notification.
      */
     public function comment()
     {
         return $this->belongsTo(Comment::class, 'comment_id');
+    }
+
+    /**
+     * Get the user that made the comment.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'users_id');
     }
 }

@@ -11,7 +11,7 @@ if(myToastElement != null){
         });
         toastList.forEach(toast => toast.show()); // This show them
 
-        console.log(toastList); // Testing to see if it works
+        console.log(toastList);
     };
 
 }

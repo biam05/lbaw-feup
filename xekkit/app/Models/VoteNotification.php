@@ -24,11 +24,18 @@ class VoteNotification extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the notification.
+     *
+     * @var string
+     */
+    public $type = "vote";
+
+    /**
      * Get the user that voted on the author's content.
      */
     public function voter()
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class, 'voter_id');
     }
 
     /**
@@ -44,6 +51,14 @@ class VoteNotification extends Model
      */
     public function content()
     {
-        return $this->hasOne(Content::class, 'content_id');
+        return $this->belongsTo(Content::class, 'content_id');
+    }
+
+    /**
+     * Get the vote that generated the notification
+     */
+    public function getVote()
+    {
+        return $this->voter->voteOn->find($this->content->id)->pivot;
     }
 }

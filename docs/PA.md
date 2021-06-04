@@ -4,7 +4,7 @@ This project intends to build a Collaborative news website, where anyone can rea
 
 ## A9: Product
 
-> Brief presentation of the product developed.  
+This project intends to build a Collaborative news website, where anyone can read, publish news and share them with friends, while avoiding the spread of fake news.
 
 ### 1. Installation
 
@@ -52,7 +52,10 @@ Link: http://lbaw2114.lbaw-prod.fe.up.pt
 
 ### 7. Revisions to the Project
 
-> Describe the revisions made to the project since the requirements specification stage.  
+- Deleted a User Story that was not supposed to be in the "User" table (Sign-Out).
+- Added a User Story that was not created in the "User" table (View Specific Post).
+- Added to YAML api/follow
+- Edited YAML: /faq/ patch and delete are now /faq/{id}
 
 ### 8. Implementation Details
 
@@ -82,24 +85,24 @@ Link: http://lbaw2114.lbaw-prod.fe.up.pt
 | US22 | Create News | Mandatory | Guilherme Calassi | 100% |
 | US31 | Edit News | Mandatory | Guilherme Calassi | 100% |
 | US32 | Remove News | Mandatory | Guilherme Calassi | 100% |
-| US33 | Remove comment | Mandatory | Guilherme Calassi | 0% |
-| US23 | Create/Publish Comment | Mandatory | Guilherme Calassi | 0% |
-| US41 | Remove Post from other User | Mandatory | Guilherme Calassi | 0% |
-| US42 | Remove Comment from another User | Mandatory | Guilherme Calassi | 0% |
+| US33 | Remove comment | Mandatory | Guilherme Calassi | 90% |
+| US23 | Create/Publish Comment | Mandatory | Guilherme Calassi | 80% |
+| US41 | Remove Post from other User | Mandatory | Guilherme Calassi | 90% |
+| US42 | Remove Comment from another User | Mandatory | Guilherme Calassi | 90% |
 | US34 | Edit comment | Important | Guilherme Calassi | 0% |
 
 ### M03 - See Users/Content
 | US Identifier | Name| Priority | Team members| State |
 |------ |------|------|------| -----|
 | US07 | View Specific Post | Mandatory | Beatriz Mendes | 100% |
-| US01 | See News Feed | Mandatory | Beatriz Mendes | 30% |
-| US24 | View Own Profile | Mandatory | Beatriz Mendes | 0% |
-| US06 | View Profiles | Mandatory | Beatriz Mendes | 0% |
-| US28 | Vote | Mandatory | Beatriz Mendes | 0% |
-| US26 | Follow/Unfollow Other User | Mandatory | Beatriz Mendes | 0% |
-| US02 | See "Hot" Topics | Important | Beatriz Mendes | 0% |
-| US03 | See "Recent" Topics | Important | Beatriz Mendes | 0% |
-| US21 | Personalized Feed | Important | Beatriz Mendes | 0% |
+| US01 | See News Feed | Mandatory | Beatriz Mendes | 100% |
+| US24 | View Own Profile | Mandatory | Beatriz Mendes | 100% |
+| US06 | View Profiles | Mandatory | Beatriz Mendes | 100% |
+| US28 | Vote | Mandatory | Beatriz Mendes | 100% |
+| US26 | Follow/Unfollow Other User | Mandatory | Beatriz Mendes | 100% |
+| US02 | See "Hot" Topics | Important | Beatriz Mendes | 100% |
+| US03 | See "Recent" Topics | Important | Beatriz Mendes | 100% |
+| US21 | Personalized Feed | Important | Beatriz Mendes | 100% |
 
 ### M04 - Search Users/Content
 | US Identifier | Name| Priority| Team members| State  |
@@ -119,9 +122,9 @@ Link: http://lbaw2114.lbaw-prod.fe.up.pt
 ### M06 - Create Requests
 | US Identifier | Name| Priority| Team members| State  |
 |------ |------|------|------| -----|
-| US08 | Create Report | Mandatory | André Assunção | 0% |
-| US210 | Request Partner label | Important | André Assunção | 0% |
-| US51 | Stop Being a Partner | Important | André Assunção | 0% |
+| US08 | Create Report | Mandatory | André Assunção | 100% |
+| US210 | Request Partner label | Important | André Assunção | 75% |
+| US51 | Stop Being a Partner | Important | André Assunção | 75% |
 | US61 | Unban Appeal | Optional | André Assunção | 0% |
 
 
@@ -137,9 +140,9 @@ Link: http://lbaw2114.lbaw-prod.fe.up.pt
 ### M08 - Static Pages
 | US Identifier | Name| Priority| Team members| State  |
 |------ |------|------|------| -----|
-| US09 | Consult FAQ | Optional | Beatriz Mendes | 0% |
-| US410 |Add FAQ| Optional | Beatriz Mendes | 0% |
-| US011 | See About | Optional | Beatriz Mendes | 0% |
+| US09 | Consult FAQ | Optional | Beatriz Mendes | 100% |
+| US410 |Add FAQ| Optional | Beatriz Mendes | 100% |
+| US011 | See About | Optional | Beatriz Mendes | 100% |
 | US010 | Consult Contacts | Optional | Beatriz Mendes | 0% |
 
 
@@ -188,9 +191,10 @@ Changes made to the first submission:
 1. Item 1
 1. ..
 
-***
-GROUP21gg, DD/MM/2021
-
-* Group member 1 name, email (Editor)
-* Group member 2 name, email
-* ...
+----
+GROUP2114, DD/MM/2021
+ 
+ - Beatriz Mendes, up201806551@fe.up.pt
+ - Guilherme Calassi, up201800157@fe.up.pt
+ - Luís André Assunção, up201806140@fe.up.pt
+ - Ricardo Cardoso, up201604686@fe.up.pt

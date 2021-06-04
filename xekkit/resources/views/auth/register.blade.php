@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Register')
+@section('title', 'Xekkit | Register')
 
 @section('content')  
 <div class="container pt-3">
@@ -41,7 +41,7 @@
             </div>
             
             <div class="row g-2">
-                <div class="form-floating mb-3">
+                <div class="col form-floating mb-3">
                     <input 
                         type="password" 
                         class="form-control @if ($errors->has('password')) is-invalid @endif" 
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i class="fa fa-eye clickable" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show Password"></i>
                 </div>
             </div>
             <div class="row g-2">
@@ -72,7 +72,7 @@
                     <label for="password_confirmation" class="form-label">Confirm Password *</label>
                 </div>
                 <div onclick="toggleEye(this)" class="col-1 text-center pt-3">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <i class="fa fa-eye clickable" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show Password"></i>
                 </div>
             </div>
             <div class="form-floating mb-3">
@@ -92,19 +92,18 @@
             </div>
             <div class="form-floating mb-3">
                 <select 
-                    class="form-select @if ($errors->has('birthDate')) is-invalid @endif" 
+                    class="form-select @if ($errors->has('gender')) is-invalid @endif" 
                     id="gender" 
                     name="gender" 
                     aria-label="Gender *" 
-                    value="{{old('gender')}}" 
                     required
                 >
-                    <option selected></option>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                    <option value="n">Rather Not Say</option>
+                    <option value="" {{old('gender') === "" ? 'selected' : ''}}></option>
+                    <option value="m" {{old('gender') === "m" ? 'selected' : ''}}>Male</option>
+                    <option value="f" {{old('gender') === "f" ? 'selected' : ''}}>Female</option>
+                    <option value="n" {{old('gender') === "n" ? 'selected' : ''}}>Rather Not Say</option>
                 </select>
-                <label for="gender">Gender*</label>
+                <label for="gender">Gender *</label>
                 <div class="invalid-feedback">
                     {{ $errors->first('gender') }}
                 </div>

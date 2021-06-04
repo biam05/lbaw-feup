@@ -67,28 +67,4 @@ class VotePolicy
     {
         //
     }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Vote  $vote
-     * @return mixed
-     */
-    public function restore(User $user, Vote $vote)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Vote  $vote
-     * @return mixed
-     */
-    public function forceDelete(User $user, Vote $vote)
-    {
-        //
-    }
 }

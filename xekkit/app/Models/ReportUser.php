@@ -38,9 +38,23 @@ class ReportUser extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the request.
+     *
+     * @var string
+     */
+    public $type = "report_user";
+
+    /**
      * The request related to this report.
      */
     public function request() {
-        return $this->belongsTo(Request::class, 'request_id');
+        return $this->belongsTo(Requests::class, 'request_id');
+    }
+
+    /**
+     * The user reported.
+     */
+    public function user() {
+        return $this->belongsTo(User::class, 'to_users_id');
     }
 }

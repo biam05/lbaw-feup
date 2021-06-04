@@ -105,6 +105,9 @@ return [
         ],
         'password' => [
             'regex' => 'The :attribute must have at least one lower case, one upper case and one numeric character.'
+        ],
+        'newPassword' => [
+            'regex' => 'The :attribute must have at least one lower case, one upper case and one numeric character.'
         ]
     ],
 

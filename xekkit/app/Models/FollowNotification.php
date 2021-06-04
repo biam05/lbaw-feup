@@ -24,6 +24,13 @@ class FollowNotification extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the notification.
+     *
+     * @var string
+     */
+    public $type = "follow";
+
+    /**
      * Get the follow associated with the follow notification.
      */
     public function follower()

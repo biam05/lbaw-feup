@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS vote CASCADE;
 DROP TABLE IF EXISTS unban_appeal CASCADE;
 DROP TABLE IF EXISTS partner_request CASCADE;
 DROP TABLE IF EXISTS report_content CASCADE;
-DROP TABLE IF EXISTS report_users CASCADE; 
+DROP TABLE IF EXISTS report_users CASCADE;
 DROP TABLE IF EXISTS request CASCADE;
 DROP TABLE IF EXISTS news_tag CASCADE;
 DROP TABLE IF EXISTS news CASCADE;
@@ -32,7 +32,7 @@ CREATE TABLE users(
     photo TEXT,
     birthdate DATE NOT NULL, /* add trigger to check age > 13 */
     gender GENDER_TYPE NOT NULL,
-    reputation INTEGER NOT NULL DEFAULT 0 CHECK (reputation >=0),
+    reputation INTEGER NOT NULL DEFAULT 0,
     last_day_of_vote DATE,
     count_last_day_rep INTEGER DEFAULT 0,
     is_moderator BOOLEAN NOT NULL DEFAULT false,
@@ -41,6 +41,9 @@ CREATE TABLE users(
     is_deleted BOOLEAN NOT NULL DEFAULT false,
     remember_token TEXT,
     api_token TEXT UNIQUE,
+    google_id TEXT UNIQUE,
+    recover_pw_id TEXT UNIQUE,
+    last_recover_pw_time TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY(id)
 );
 
@@ -49,11 +52,11 @@ CREATE TABLE follow(
     users_id INTEGER NOT NULL,
     PRIMARY KEY(follower_id, users_id),
     CONSTRAINT fk_follower_id
-        FOREIGN KEY(follower_id) 
+        FOREIGN KEY(follower_id)
             REFERENCES users (id)
             ON DELETE CASCADE,
     CONSTRAINT fk_users_id
-        FOREIGN KEY(users_id) 
+        FOREIGN KEY(users_id)
             REFERENCES users (id)
             ON DELETE CASCADE
 );
@@ -67,25 +70,26 @@ CREATE TABLE ban(
     reason TEXT NOT NULL,
     PRIMARY KEY(id),
     CONSTRAINT fk_moderator_id
-        FOREIGN KEY(moderator_id) 
+        FOREIGN KEY(moderator_id)
             REFERENCES users (id)
             ON DELETE CASCADE,
      CONSTRAINT fk_users_id
-        FOREIGN KEY(users_id) 
+        FOREIGN KEY(users_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE
-        
+
 );
 
 CREATE TABLE content (
     id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     author_id INTEGER NOT NULL,
     body TEXT NOT NULL,
+    is_edited BOOLEAN DEFAULT FALSE,
     date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
     nr_votes INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
     CONSTRAINT fk_author_id
-        FOREIGN KEY(author_id) 
+        FOREIGN KEY(author_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE
 );
@@ -100,14 +104,14 @@ CREATE TABLE news (
     content_id INTEGER NOT NULL,
     title TEXT NOT NULL,
     image TEXT,
-    trending_score INTEGER NOT NULL DEFAULT 0 CHECK (trending_score >= 0),
+    trending_score INTEGER NOT NULL DEFAULT 0,
     nr_comments INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
-        FOREIGN KEY(content_id) 
+        FOREIGN KEY(content_id)
 	        REFERENCES content (id)
 	        ON DELETE CASCADE
-    
+
 );
 
 CREATE TABLE news_tag (
@@ -115,11 +119,11 @@ CREATE TABLE news_tag (
     tag_id INTEGER,
     PRIMARY KEY(news_id, tag_id),
     CONSTRAINT fk_news_id
-        FOREIGN KEY(news_id) 
+        FOREIGN KEY(news_id)
 	        REFERENCES  news (content_id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_tag_id
-        FOREIGN KEY(tag_id) 
+        FOREIGN KEY(tag_id)
 	        REFERENCES  tag (id)
 	        ON DELETE CASCADE
 );
@@ -128,17 +132,18 @@ CREATE TABLE comment (
     content_id INTEGER NOT NULL,
     news_id INTEGER NOT NULL,
     reply_to_id INTEGER,
+    level INTEGER DEFAULT 0,
     PRIMARY KEY(content_id),
     CONSTRAINT fk_content_id
-        FOREIGN KEY(content_id) 
+        FOREIGN KEY(content_id)
 	        REFERENCES content (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_news_id
-        FOREIGN KEY(news_id) 
+        FOREIGN KEY(news_id)
 	        REFERENCES news (content_id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_reply_to_id
-        FOREIGN KEY(reply_to_id) 
+        FOREIGN KEY(reply_to_id)
 	        REFERENCES comment (content_id)
 	        ON DELETE CASCADE
 );
@@ -153,39 +158,39 @@ CREATE TABLE request (
    revision_date TIMESTAMP WITH TIME ZONE CHECK (revision_date > creation_date),
    PRIMARY KEY(id),
    CONSTRAINT fk_from_id
-        FOREIGN KEY(from_id) 
+        FOREIGN KEY(from_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_moderator_id
-        FOREIGN KEY(moderator_id) 
+        FOREIGN KEY(moderator_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE
-); 
+);
 
 CREATE TABLE report_users (
     request_id INTEGER NOT NULL,
     to_users_id INTEGER NOT NULL,
     PRIMARY KEY(request_id),
     CONSTRAINT fk_request_id
-        FOREIGN KEY(request_id) 
+        FOREIGN KEY(request_id)
 	        REFERENCES request (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_to_users_id
-        FOREIGN KEY(to_users_id) 
+        FOREIGN KEY(to_users_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE
 );
 
 CREATE TABLE report_content (
     request_id INTEGER NOT NULL,
-    to_content_id INTEGER NOT NULL,
+    to_content_id INTEGER,
     PRIMARY KEY(request_id),
     CONSTRAINT fk_request_id
-        FOREIGN KEY(request_id) 
+        FOREIGN KEY(request_id)
 	        REFERENCES request (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_to_content_id
-        FOREIGN KEY(to_content_id) 
+        FOREIGN KEY(to_content_id)
 	        REFERENCES content (id)
 	        ON DELETE SET NULL
 );
@@ -194,7 +199,7 @@ CREATE TABLE partner_request (
     request_id INTEGER NOT NULL,
     PRIMARY KEY(request_id),
     CONSTRAINT fk_request_id
-        FOREIGN KEY(request_id) 
+        FOREIGN KEY(request_id)
 	        REFERENCES request (id)
 	        ON DELETE CASCADE
 );
@@ -204,11 +209,11 @@ CREATE TABLE unban_appeal (
     ban_id INTEGER NOT NULL,
     PRIMARY KEY(request_id),
     CONSTRAINT fk_request_id
-        FOREIGN KEY(request_id) 
+        FOREIGN KEY(request_id)
 	        REFERENCES request (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_ban_id
-        FOREIGN KEY(ban_id) 
+        FOREIGN KEY(ban_id)
 	        REFERENCES ban (id)
 	        ON DELETE CASCADE
 );
@@ -219,64 +224,70 @@ CREATE TABLE vote (
     value INTEGER NOT NULL,
     PRIMARY KEY(users_id, content_id),
     CONSTRAINT fk_users_id
-        FOREIGN KEY(users_id) 
+        FOREIGN KEY(users_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_content_id
-        FOREIGN KEY(content_id) 
+        FOREIGN KEY(content_id)
 	        REFERENCES content (id)
 	        ON DELETE CASCADE
 );
 
 CREATE TABLE follow_notification (
-    follower_id INTEGER,
-    users_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    follower_id INTEGER NOT NULL,
+    users_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(follower_id, users_id),
+    PRIMARY KEY(id),
+    UNIQUE(follower_id, users_id),
     CONSTRAINT fk_follower_id
-        FOREIGN KEY(follower_id) 
+        FOREIGN KEY(follower_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_users_id
-        FOREIGN KEY(users_id) 
+        FOREIGN KEY(users_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE
 );
 
 CREATE TABLE vote_notification (
-    voter_id INTEGER,
-    content_id INTEGER,
-    author_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    voter_id INTEGER NOT NULL,
+    content_id INTEGER NOT NULL,
+    author_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(voter_id, content_id, author_id),
+    PRIMARY KEY(id),
+    UNIQUE(voter_id, content_id, author_id),
     CONSTRAINT fk_voter_id
-        FOREIGN KEY(voter_id) 
+        FOREIGN KEY(voter_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_content_id
-        FOREIGN KEY(content_id) 
+        FOREIGN KEY(content_id)
 	        REFERENCES content (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_author_id
-        FOREIGN KEY(author_id) 
+        FOREIGN KEY(author_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE
 );
 
 CREATE TABLE comment_notification (
-    users_id INTEGER,
-    comment_id INTEGER,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    users_id INTEGER NOT NULL,
+    comment_id INTEGER NOT NULL,
     is_new BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
-    PRIMARY KEY(users_id, comment_id),
+    PRIMARY KEY(id),
+    UNIQUE(users_id, comment_id),
     CONSTRAINT fk_users_id
-        FOREIGN KEY(users_id) 
+        FOREIGN KEY(users_id)
 	        REFERENCES users (id)
 	        ON DELETE CASCADE,
     CONSTRAINT fk_comment_id
-        FOREIGN KEY(comment_id) 
+        FOREIGN KEY(comment_id)
 	        REFERENCES comment (content_id)
 	        ON DELETE CASCADE
 );
@@ -324,7 +335,7 @@ DROP TRIGGER IF EXISTS trigger_is_from_moderator ON request;
 CREATE OR REPLACE FUNCTION action_is_from_moderator() RETURNS TRIGGER AS
     $BODY$
         BEGIN
-            IF NOT (SELECT is_moderator FROM users WHERE users.id = new.moderator_id) THEN 
+            IF NOT (SELECT is_moderator FROM users WHERE users.id = new.moderator_id) THEN
                 RAISE EXCEPTION 'There must be a moderator to update a request status.';
             END IF;
             RETURN NEW;
@@ -368,14 +379,14 @@ CREATE OR REPLACE FUNCTION maximum_rep_day() RETURNS TRIGGER AS
         IF CURRENT_DATE = (SELECT last_day_of_vote FROM users u WHERE new.users_id = u.id) THEN
             IF 5 > (SELECT count_last_day_rep FROM users u WHERE new.users_id = u.id) THEN
                 UPDATE users u
-                SET count_last_day_rep = count_last_day_rep + 1,  
+                SET count_last_day_rep = count_last_day_rep + 1,
                     reputation = reputation + 1
                 WHERE new.users_id = u.id;
             END IF;
-        ELSE 
+        ELSE
             UPDATE users u
             SET last_day_of_vote = CURRENT_DATE,
-                count_last_day_rep = 1, 
+                count_last_day_rep = 1,
                 reputation = reputation + 1
             WHERE new.users_id = u.id;
         END IF;
@@ -428,7 +439,7 @@ LANGUAGE plpgsql;
 CREATE TRIGGER vote_self
     BEFORE INSERT ON vote
     FOR EACH ROW
-    EXECUTE PROCEDURE vote_self(); 
+    EXECUTE PROCEDURE vote_self();
 
 --Trigger 6 - Deal with Request
 DROP FUNCTION IF EXISTS deal_with_request() CASCADE;
@@ -439,20 +450,17 @@ CREATE OR REPLACE FUNCTION deal_with_request() RETURNS TRIGGER AS
     BEGIN
         IF new.status='approved' THEN
             -- PARTNER REQUEST
-            IF EXISTS (SELECT * FROM partner_request, content WHERE new.id=request_id AND content.id=to_content_id) THEN
-            UPDATE users SET is_partner=true where new.from_id=users.id;            
-            -- REPORT CONTENT REQUEST
-            ELSIF EXISTS (SELECT * FROM report_content, content WHERE new.id=request_id AND content.id=to_content_id) THEN
-                DELETE FROM content WHERE content.id=to_content_id;
-                -- TRANSACTION TO DELETE COMMENT/NEWs
+            IF EXISTS (SELECT * FROM partner_request WHERE new.id=request_id) THEN
+            UPDATE users SET is_partner=true where new.from_id=users.id;
+
             -- UNBAN APPEAL REQUEST
             ELSIF EXISTS (SELECT * FROM unban_appeal, users WHERE new.id=request_id AND users.id=new.from_id) THEN
                 UPDATE users SET is_banned=false WHERE new.from_id=users.id;
-                IF EXISTS (SELECT * FROM ban WHERE ban.id=ban_id) THEN
-                UPDATE ban SET end_date=NOW() WHERE ban.id=new.ban_id;
+                IF EXISTS (SELECT * FROM ban WHERE ban.id IN (SELECT ban_id FROM unban_appeal WHERE new.id=request_id)) THEN
+                UPDATE ban SET end_date=NOW() WHERE ban.id IN (SELECT ban_id FROM unban_appeal WHERE new.id=request_id);
                 END IF;
-            END IF;  
-            new.revision_date=NOW();      
+            END IF;
+            new.revision_date=NOW();
         END IF;
         RETURN new;
     END
@@ -473,17 +481,22 @@ CREATE OR REPLACE FUNCTION increase_comments() RETURNS TRIGGER AS
     $BODY$
     BEGIN
         UPDATE news SET nr_comments = news.nr_comments + 1
-        WHERE new.news_id=news.content_id; 
+        WHERE new.news_id=news.content_id;
+
+        IF new.reply_to_id IS NOT NULL THEN
+            UPDATE comment SET level = ((SELECT c2.level FROM comment c2 WHERE c2.content_id = new.reply_to_id) + 1)
+            WHERE comment.content_id = new.content_id;
+        END IF;
         RETURN new;
     END
-    
+
     $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER increase_comments
     AFTER INSERT ON comment
     FOR EACH ROW
-    EXECUTE PROCEDURE increase_comments(); 
+    EXECUTE PROCEDURE increase_comments();
 
 
 --Trigger 8 - Decrease Number of Comments in a News Post
@@ -493,18 +506,18 @@ DROP TRIGGER IF EXISTS decrease_comments ON comment;
 CREATE OR REPLACE FUNCTION decrease_comments() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        UPDATE news SET news.nr_comment = news.nr_comments - 1
-        WHERE old.news_id=news.content_id; 
+        UPDATE news SET nr_comments = nr_comments - 1
+        WHERE old.news_id = content_id;
         RETURN old;
     END
-    
+
     $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER decrease_comments
     AFTER DELETE ON comment
     FOR EACH ROW
-    EXECUTE PROCEDURE decrease_comments(); 
+    EXECUTE PROCEDURE decrease_comments();
 
 --Trigger 9 - Increase Trending Score and Number of Votes with a Vote
 DROP FUNCTION IF EXISTS increase_ts_and_votes() CASCADE;
@@ -513,17 +526,17 @@ DROP TRIGGER IF EXISTS increase_ts_and_votes ON vote;
 CREATE OR REPLACE FUNCTION increase_ts_and_votes() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        UPDATE news 
-        SET trending_score = trending_score + new.value 
+        UPDATE news
+        SET trending_score = trending_score + new.value
         WHERE news.content_id=new.content_id;
-        
-        UPDATE content 
+
+        UPDATE content
         SET nr_votes = nr_votes + new.value
         WHERE content.id=new.content_id;
 
         RETURN new;
     END
-    
+
     $BODY$
 LANGUAGE plpgsql;
 
@@ -531,7 +544,7 @@ LANGUAGE plpgsql;
 CREATE TRIGGER increase_ts_and_votes
     AFTER INSERT ON vote
     FOR EACH ROW
-    EXECUTE PROCEDURE increase_ts_and_votes(); 
+    EXECUTE PROCEDURE increase_ts_and_votes();
 
 
 --Trigger 10 - Decrease Trending Score and Number of Votes with a Vote
@@ -541,18 +554,18 @@ DROP TRIGGER IF EXISTS decrease_ts_and_votes ON vote;
 CREATE OR REPLACE FUNCTION decrease_ts_and_votes() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        UPDATE news 
+        UPDATE news
         SET trending_score = news.trending_score - old.value
         WHERE old.content_id=news.content_id ;
 
-        UPDATE news 
+        UPDATE content
         SET nr_votes = nr_votes - old.value
-        WHERE old.content_id=news.content_id ;
+        WHERE old.content_id = content.id ;
 
         UPDATE users
         SET reputation = reputation - 1
         WHERE new.users_id = users.id;
-    
+
         RETURN old;
     END
     $BODY$
@@ -561,7 +574,84 @@ LANGUAGE plpgsql;
 CREATE TRIGGER decrease_ts_and_votes
     AFTER DELETE ON vote
     FOR EACH ROW
-    EXECUTE PROCEDURE decrease_ts_and_votes(); 
+    EXECUTE PROCEDURE decrease_ts_and_votes();
+
+
+
+--Update reputação do owner
+DROP FUNCTION IF EXISTS update_reputation() CASCADE;
+DROP TRIGGER IF EXISTS update_reputation ON vote;
+
+CREATE OR REPLACE FUNCTION update_reputation() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        UPDATE users
+        SET reputation = reputation + (new.value-old.value)
+        from content
+        WHERE new.content_id=content.id AND content.author_id=users.id;
+        RETURN new;
+    END
+
+    $BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER update_reputation
+    AFTER UPDATE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_reputation();
+
+
+
+--Diminuir reputação do owner
+DROP FUNCTION IF EXISTS decrease_reputation() CASCADE;
+DROP TRIGGER IF EXISTS decrease_reputation ON vote;
+
+CREATE OR REPLACE FUNCTION decrease_reputation() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        UPDATE users
+        SET reputation = reputation - old.value
+        from content
+        WHERE old.content_id=content.id AND content.author_id=users.id;
+        RETURN old;
+    END
+
+    $BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER decrease_reputation
+    before DELETE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE decrease_reputation();
+
+
+
+--Aumentar reputação do owner
+DROP FUNCTION IF EXISTS increase_reputation() CASCADE;
+DROP TRIGGER IF EXISTS increase_reputation ON vote;
+
+CREATE OR REPLACE FUNCTION increase_reputation() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        UPDATE users
+        SET reputation = reputation + new.value --and last_day_of_vote=CURRENT_DATE
+        from content
+        WHERE new.content_id=content.id AND content.author_id=users.id;
+        RETURN new;
+    END
+
+    $BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER increase_reputation
+    AFTER INSERT ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE increase_reputation();
+
+
 
 
 --Trigger 11 -A trigger is needed to create a new follow notification when an user starts following another.
@@ -571,41 +661,82 @@ DROP TRIGGER IF EXISTS create_follow_notification ON follow;
 CREATE OR REPLACE FUNCTION create_follow_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO follow_notification
+        INSERT INTO follow_notification (follower_id, users_id, is_new, creation_date)
         VALUES (new.follower_id, new.users_id, true, now());
 
         RETURN new;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER create_follow_notification
     AFTER INSERT ON follow
     FOR EACH ROW
-    EXECUTE PROCEDURE create_follow_notification(); 
+    EXECUTE PROCEDURE create_follow_notification();
 
 
--- Trigger 12 - Create Follow Notification
+-- Trigger 12 - Create Vote Notification
 DROP FUNCTION IF EXISTS create_vote_notification() CASCADE;
 DROP TRIGGER IF EXISTS create_vote_notification ON vote;
 
 CREATE OR REPLACE FUNCTION create_vote_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO vote_notification
+        INSERT INTO vote_notification(voter_id, content_id, author_id, is_new, creation_date)
             SELECT new.users_id, c.id, c.author_id, true, now()
             FROM content c
             WHERE new.content_id = c.id;
         RETURN new;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER create_vote_notification
     AFTER INSERT ON vote
     FOR EACH ROW
-    EXECUTE PROCEDURE create_vote_notification();    
+    EXECUTE PROCEDURE create_vote_notification();
 
+
+-- Trigger 12 - Delete Vote Notification
+DROP FUNCTION IF EXISTS delete_vote_notification() CASCADE;
+DROP TRIGGER IF EXISTS delete_vote_notification ON vote;
+
+CREATE OR REPLACE FUNCTION delete_vote_notification() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        DELETE FROM vote_notification
+            WHERE vote_notification.voter_id=old.users_id
+            and old.content_id = vote_notification.content_id;
+        RETURN old;
+    END
+    $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_vote_notification
+    AFTER DELETE ON vote
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_vote_notification();
+
+
+-- Trigger  - Delete Follow Notification
+DROP FUNCTION IF EXISTS delete_follow_notification() CASCADE;
+DROP TRIGGER IF EXISTS delete_follow_notification ON follow;
+
+CREATE OR REPLACE FUNCTION delete_follow_notification() RETURNS TRIGGER AS
+    $BODY$
+    BEGIN
+        DELETE FROM follow_notification
+            WHERE follow_notification.users_id=old.users_id
+            and old.follower_id = follow_notification.follower_id;
+        RETURN old;
+    END
+    $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_follow_notification
+    AFTER DELETE ON follow
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_follow_notification();
 
 --Trigger 13 - Create Comment Notification
 DROP FUNCTION IF EXISTS create_comment_notification() CASCADE;
@@ -614,16 +745,24 @@ DROP TRIGGER IF EXISTS create_comment_notification ON comment;
 CREATE OR REPLACE FUNCTION create_comment_notification() RETURNS TRIGGER AS
     $BODY$
     BEGIN
-        INSERT INTO comment_notification
-            SELECT news.author_id, NEW.content_id, true, now()
-            FROM content news
-            WHERE NEW.news_id = news.id;
+        IF (SELECT author_id FROM content WHERE NEW.news_id = id) <> (SELECT author_id FROM content WHERE NEW.content_id = id) THEN
+            INSERT INTO comment_notification(users_id, comment_id, is_new, creation_date)
+                SELECT news.author_id, NEW.content_id, true, now()
+                FROM content news
+                WHERE NEW.news_id = news.id;
+        END IF;
 
-        IF NEW.reply_to_id <> NULL THEN
-            INSERT INTO comment_notification VALUES (NEW.reply_to_id, NEW.content_id, true, now());
+        IF NEW.reply_to_id IS NOT NULL AND (SELECT author_id FROM content WHERE NEW.content_id = id) <> (SELECT author_id FROM content WHERE NEW.reply_to_id = id) THEN
+            INSERT INTO comment_notification(users_id, comment_id, is_new, creation_date)
+            VALUES (
+                (SELECT author_id FROM content WHERE content.id = new.reply_to_id),
+                NEW.content_id,
+                true,
+                now()
+            );
         END IF;
         RETURN new;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
@@ -642,20 +781,20 @@ CREATE OR REPLACE FUNCTION news_search_update() RETURNS TRIGGER AS
     DECLARE news_body TEXT = (SELECT c.body FROM content c WHERE c.id = new.content_id);
     BEGIN
         IF TG_OP = 'INSERT' THEN
-            NEW.search = 
-                setweight(to_tsvector(coalesce(NEW.title, '')), 'B') || 
+            NEW.search =
+                setweight(to_tsvector(coalesce(NEW.title, '')), 'B') ||
                 setweight(to_tsvector(coalesce(news_body, '')), 'C');
         END IF;
         IF TG_OP = 'UPDATE' THEN
             IF NEW.title <> OLD.title THEN
-                NEW.search = 
-                    setweight(to_tsvector(coalesce(NEW.title, '')), 'B') || 
+                NEW.search =
+                    setweight(to_tsvector(coalesce(NEW.title, '')), 'B') ||
                     setweight(to_tsvector(coalesce(news_body, '')), 'C');
             END IF;
         END IF;
-        
+
         RETURN NEW;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
@@ -673,18 +812,18 @@ CREATE OR REPLACE FUNCTION news_body_search_update() RETURNS TRIGGER AS
     $BODY$
     DECLARE news_title TEXT = (SELECT title FROM news WHERE news.content_id = new.id);
     BEGIN
-        IF news_title <> NULL THEN
+        IF news_title IS NOT NULL THEN
             IF NEW.body <> OLD.body THEN
                 UPDATE news
-                SET search = 
-                        setweight(to_tsvector(coalesce(news_title, '')), 'B') || 
+                SET search =
+                        setweight(to_tsvector(coalesce(news_title, '')), 'B') ||
                         setweight(to_tsvector(coalesce(NEW.body, '')), 'C')
                 WHERE news.content_id = new.id;
             END IF;
         END IF;
-        
+
         RETURN NEW;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
@@ -703,27 +842,27 @@ CREATE OR REPLACE FUNCTION users_search_update() RETURNS TRIGGER AS
     $BODY$
     BEGIN
          IF TG_OP = 'INSERT' THEN
-            NEW.search = 
-                setweight(to_tsvector(coalesce(NEW.username, '')), 'A') || 
+            NEW.search =
+                setweight(to_tsvector(coalesce(NEW.username, '')), 'A') ||
                 setweight(to_tsvector(coalesce(NEW.description, '')), 'B');
         END IF;
         IF TG_OP = 'UPDATE' THEN
             IF NEW.username <> OLD.username OR NEW.description <> OLD.description THEN
-                NEW.search = 
-                    setweight(to_tsvector(coalesce(NEW.username, '')), 'A') || 
+                NEW.search =
+                    setweight(to_tsvector(coalesce(NEW.username, '')), 'A') ||
                     setweight(to_tsvector(coalesce(NEW.description, '')), 'B');
             END IF;
         END IF;
-        
+
         RETURN NEW;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER cnews_search_update
     BEFORE INSERT OR UPDATE ON users
     FOR EACH ROW
-    EXECUTE PROCEDURE users_search_update();   
+    EXECUTE PROCEDURE users_search_update();
 
 
 --Trigger 17 - Update TSVECTOR (News)
@@ -739,7 +878,7 @@ CREATE OR REPLACE FUNCTION tags_insert_search_update() RETURNS TRIGGER AS
         WHERE news.content_id = new.news_id;
 
         RETURN NEW;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
@@ -761,7 +900,7 @@ CREATE OR REPLACE FUNCTION tags_delete_search_update() RETURNS TRIGGER AS
         WHERE news.content_id = old.news_id;
 
         RETURN old;
-    END  
+    END
     $BODY$
 LANGUAGE plpgsql;
 
@@ -775,372 +914,373 @@ CREATE TRIGGER tags_delete_search_update
  */
 
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'admin', 
-    'admin@xekkit.com', 
+    'admin',
+    'admin@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Admin/Moderador.', 
-    'beatriz.png', 
-    '02/20/1992', 
-    'f', 
-    '500000', 
-    true, 
-    false, 
-    false, 
+    'Sou o Admin/Moderador.',
+    'admin.png',
+    '02/20/1992',
+    'f',
+    '500000',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'beatriz', 
-    'beatriz@xekkit.com', 
+    'beatriz',
+    'beatriz@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou a Beatriz.', 
-    'beatriz.png', 
-    '02/20/1992', 
-    'f', 
-    '500000', 
-    true, 
-    false, 
-    false, 
+    'Sou a Beatriz.',
+    'beatriz.png',
+    '02/20/1992',
+    'f',
+    '500000',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'andre', 
-    'andre@xekkit.com', 
+    'andre',
+    'andre@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Andre.', 
-    'andre.jpg', 
-    '02/10/2000', 
-    'm', 
-    '500000', 
-    true, 
-    false, 
-    true, 
+    'Sou o Andre.',
+    'andre.jpg',
+    '02/10/2000',
+    'm',
+    '500000',
+    true,
+    false,
+    true,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'guilherme', 
-    'guilherme@xekkit.com', 
+    'guilherme',
+    'guilherme@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Guilerme.', 
-    'guilherme.jpg', 
-    '02/20/1922', 
-    'm', 
-    '500000', 
-    true, 
-    false, 
-    false, 
+    'Sou o Guilherme.',
+    'guilherme.jpg',
+    '02/20/1922',
+    'm',
+    '500000',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'ricardo', 
-    'ricardo@xekkit.com', 
+    'ricardo',
+    'ricardo@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Ricardo.', 
-    'ricardo.jpg', 
-    '02/20/1922', 
-    'f', 
-    '500000', 
-    true, 
-    false, 
-    false, 
+    'Sou o Ricardo.',
+    'ricardo.jpg',
+    '03/21/1998',
+    'm',
+    '500000',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'joao', 
-    'joao@xekkit.com', 
+    'joao',
+    'joao@xekkit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'Sou o Joao.', 
-    null, 
-    '02/20/1995', 
-    'm', 
-    '1000', 
-    false, 
-    false, 
-    false, 
+    'Sou o Joao.',
+    null,
+    '02/20/1995',
+    'm',
+    '1000',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'mpitchers0', 
-    'lpriestner0@tiny.cc', 
+    'mpitchers0',
+    'lpriestner0@tiny.cc',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'morph distributed schemas', 
-    null, 
-    '02/20/1922', 
-    'f', 
-    '01532', 
-    false, 
-    false, 
-    false, 
+    'morph distributed schemas',
+    null,
+    '02/20/1922',
+    'f',
+    '01532',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'gbride1', 
-    'cjenyns1@meetup.com', 
+    'gbride1',
+    'cjenyns1@meetup.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'optimize robust solutions', 
-    null, 
-    '05/06/1947', 
-    'f', 
-    '735', 
-    true, 
-    false, 
-    false, 
+    'optimize robust solutions',
+    null,
+    '05/06/1947',
+    'f',
+    '735',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'sdrowsfield2', 
-    'sgiacovelli2@about.com', 
+    'sdrowsfield2',
+    'sgiacovelli2@about.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'streamline virtual web-readiness', 
-    null, 
-    '04/11/1943', 
-    'f', 
-    '9917', 
-    true, 
-    false, 
-    false, 
+    'streamline virtual web-readiness',
+    null,
+    '04/11/1943',
+    'f',
+    '9917',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'gallinson3', 
-    'bferagh3@eepurl.com', 
+    'gallinson3',
+    'bferagh3@eepurl.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'unleash clicks-and-mortar platforms', 
-    null, 
-    '01/14/1919', 
-    'n', 
-    '64397', 
-    false, 
-    false, 
-    false, 
+    'unleash clicks-and-mortar platforms',
+    null,
+    '01/14/1919',
+    'n',
+    '64397',
+    false,
+    false,
+    false,
     false
     );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'bwilloughway4', 
-    'abilbery4@acquirethisname.com', 
+    'bwilloughway4',
+    'abilbery4@acquirethisname.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'iterate back-end channels', 
-    null, 
-    '06/22/2006', 
-    'm', 
-    '2023', 
-    false, 
-    false, 
-    false, 
+    'iterate back-end channels',
+    null,
+    '06/22/2006',
+    'm',
+    '2023',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'ashemwell5', 
-    'eelles5@unesco.org', 
+    'ashemwell5',
+    'eelles5@unesco.org',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'transition magnetic infrastructures', 
-    null, 
-    '10/08/2002', 
-    'n', 
-    '36', 
-    true, 
-    false, 
-    false, 
+    'transition magnetic infrastructures',
+    null,
+    '10/08/2002',
+    'n',
+    '36',
+    true,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'fscading6', 
-    'nsherrington6@arizona.edu', 
+    'fscading6',
+    'nsherrington6@arizona.edu',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'mesh value-added infrastructures', 
-    null, 
-    '04/19/1917', 
-    'f', 
-    '34', 
-    false, 
-    false, 
-    false, 
+    'mesh value-added infrastructures',
+    null,
+    '04/19/1917',
+    'f',
+    '34',
+    false,
+    false,
+    false,
     true
-); 
+);
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'mmountcastle7', 
-    'ncamier7@uol.com.br', 
+    'mmountcastle7',
+    'ncamier7@uol.com.br',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'engineer collaborative users', 
-    null, 
-    '01/20/1976', 
-    'n', 
-    '89', 
-    false, 
-    true, 
-    false, 
+    'engineer collaborative users',
+    null,
+    '01/20/1976',
+    'n',
+    '89',
+    false,
+    true,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'mplowman8', 
-    'showgego8@psu.edu', 
+    'mplowman8',
+    'showgego8@psu.edu',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'utilize seamless partnerships', 
-    null, 
-    '09/12/1932', 
-    'n', 
-    '335', 
-    false, 
-    false, 
-    false, 
+    'utilize seamless partnerships',
+    null,
+    '09/12/1932',
+    'n',
+    '335',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'lprozescky9', 
-    'akittow9@1688.com', 
+    'lprozescky9',
+    'akittow9@1688.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'brand interactive partnerships', 
-    null, 
-    '08/31/1963', 
-    'm', 
-    '2', 
-    false, 
-    false, 
-    false, 
+    'brand interactive partnerships',
+    null,
+    '08/31/1963',
+    'm',
+    '2',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'abellinia', 
-    'ayoulla@dropbox.com', 
+    'abellinia',
+    'ayoulla@dropbox.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'mesh revolutionary applications', 
-    null, 
-    '08/17/1927', 
-    'm', 
-    '34685', 
-    false, 
-    false, 
-    false, 
+    'mesh revolutionary applications',
+    null,
+    '08/17/1927',
+    'm',
+    '34685',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'cboordb', 
-    'lwanneb@blogtalkradio.com', 
+    'cboordb',
+    'lwanneb@blogtalkradio.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'enable revolutionary systems', 
-    null, 
-    '12/22/1965', 
-    'f', 
-    '24', 
-    false, 
-    true, 
-    false, 
+    'enable revolutionary systems',
+    null,
+    '12/22/1965',
+    'f',
+    '24',
+    false,
+    true,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'ttrembeyc', 
-    'ssamarthc@aol.com', 
+    'ttrembeyc',
+    'ssamarthc@aol.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'engineer clicks-and-mortar relationships', 
-    null, 
-    '12/13/1931', 
-    'f', 
-    '109', 
-    false, 
-    false, 
-    false, 
+    'engineer clicks-and-mortar relationships',
+    null,
+    '12/13/1931',
+    'f',
+    '109',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'sstanfordd', 
-    'nbrendeld@spiegel.de', 
+    'sstanfordd',
+    'nbrendeld@spiegel.de',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'envisioneer sexy users', 
-    null, 
-    '07/01/1906', 
-    'm', 
-    '77', 
-    false, 
-    false, 
-    false, 
+    'envisioneer sexy users',
+    null,
+    '07/01/1906',
+    'm',
+    '77',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'iyoudee', 
-    'adrainse@goo.ne.jp', 
+    'iyoudee',
+    'adrainse@goo.ne.jp',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'reintermediate open-source methodologies', 
-    null, 
-    '09/24/1979', 
-    'm', 
-    '78', 
-    false, 
-    false, 
-    false, 
+    'reintermediate open-source methodologies',
+    null,
+    '09/24/1979',
+    'm',
+    '78',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'jwarfieldf', 
-    'mervinef@behance.net', 
+    'jwarfieldf',
+    'mervinef@behance.net',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'incubate robust channels', 
-    null, 
-    '04/30/1935', 
-    'f', 
-    '29489', 
-    false, 
-    false, 
-    false, 
+    'incubate robust channels',
+    null,
+    '04/30/1935',
+    'f',
+    '29489',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'iodomg', 
-    'bwashbrookg@bloglovin.com', 
+    'iodomg',
+    'bwashbrookg@bloglovin.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'benchmark collaborative content', 
-    null, 
-    '03/16/2000', 
-    'f', 
-    '504', 
-    false, 
-    false, 
-    false, 
+    'benchmark collaborative content',
+    null,
+    '03/16/2000',
+    'f',
+    '504',
+    false,
+    false,
+    false,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'sphonixh', 
-    'sduchesneh@moonfruit.com', 
+    'sphonixh',
+    'sduchesneh@moonfruit.com',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'aggregate revolutionary bandwidth', 
-    null, 
-    '06/05/1954', 
-    'f', 
-    '2387', 
-    false, 
-    false, 
-    true, 
-    false
-); 
-insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'fosbidstoni', 
-    'tdoddemeedei@umn.edu', 
-    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'engage user-centric web-readiness', 
-    null, 
-    '10/08/2005', 
-    'm', 
-    '28422', 
-    false, 
-    false, 
-    false, 
+    'aggregate revolutionary bandwidth',
+    null,
+    '06/05/1954',
+    'f',
+
+    '2387',
+    false,
+    false,
+    true,
     false
 );
 insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
-    'bturrillj', 
-    'jwarlowj@g.co', 
+    'fosbidstoni',
+    'tdoddemeedei@umn.edu',
     '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
-    'enhance frictionless e-business', 
-    null, 
-    '11/11/1924', 
-    'm', 
-    '105001', 
-    false, 
-    false, 
-    true, 
+    'engage user-centric web-readiness',
+    null,
+    '10/08/2005',
+    'm',
+    '28422',
+    false,
+    false,
+    false,
+    false
+);
+insert into users (username, email, password, description, photo, birthdate, gender, reputation, is_moderator, is_banned, is_partner, is_deleted) values (
+    'bturrillj',
+    'jwarlowj@g.co',
+    '$2y$10$2WvKlTWYJVzZk3LQXzHVruhPJWASxIoHPUhCbcDZswzlFHrQ6nHIS', /* password = test1234 */
+    'enhance frictionless e-business',
+    null,
+    '11/11/1924',
+    'm',
+    '105001',
+    false,
+    false,
+    true,
     false
 );
 
 
-insert into follow (follower_id, users_id) values (20, 19); 
+insert into follow (follower_id, users_id) values (20, 19);
 insert into follow (follower_id, users_id) values (18, 14);
 insert into follow (follower_id, users_id) values (10, 19);
 insert into follow (follower_id, users_id) values (4, 2);
@@ -1150,18 +1290,18 @@ insert into follow (follower_id, users_id) values (11, 1);
 insert into follow (follower_id, users_id) values (19, 20);
 insert into follow (follower_id, users_id) values (19, 5);
 
-insert into ban (users_id, moderator_id, end_date, reason) values (4, 6, '8/13/2022', 'Racist comment');
 insert into ban (users_id, moderator_id, end_date, reason) values (12, 3, '12/10/2022', 'Plays fortnite');
-insert into ban (users_id, moderator_id, end_date, reason) values (11, 2, '5/9/2022', 'Hate speech'); 
-insert into ban (users_id, moderator_id, end_date, reason) values (20, 6, '7/1/2022', 'Marketed Ponzi scheme'); 
-insert into ban (users_id, moderator_id, end_date, reason) values (14, 6, null, 'Used dangerous external link'); 
+insert into ban (users_id, moderator_id, end_date, reason) values (11, 2, '5/9/2022', 'Hate speech');
+insert into ban (users_id, moderator_id, end_date, reason) values (20, 6, '7/1/2022', 'Marketed Ponzi scheme');
+insert into ban (users_id, moderator_id, end_date, reason) values (14, 6, null, 'Used dangerous external link');
+update users set is_banned = true where id in (12, 11, 20, 14);
 
 insert into content(author_id, body, nr_votes) values(5,'New Mexico, which has one of the highest poverty rates in the U.S., is a vaccination pacesetter thanks to decisive political decisions, homegrown technology and cooperation. #economy #politics',0);
 insert into content(author_id, body, nr_votes) values(12,
 'President Joe Biden said Tuesday that he plans to deliver “a lot” on police reform but would not elaborate further ahead of a meeting that afternoon with Vice President Kamala Harris and key members of the Congressional Black Caucus in the Oval Office.
 Biden, speaking days after police killed Daunte Wright, a 20-year-old Black man, in a Minneapolis suburb, said he would inform reporters of his plans to reform police at a later date.
-The White House billed Tuesday afternoon’s meeting with members of the CBC as an opportunity to create a path forward on voting rights, racial equity and infrastructure legislation. The meeting comes a few days after Susan Rice, director of the Domestic Policy Council, announced that the Biden administration was pausing the creation of a national police oversight commission. #politics',5); 
-insert into content(author_id, body, nr_votes) values(15,'MANILA (Reuters) - The Philippines filed fresh diplomatic protests to China on Wednesday after accusing its giant neighbour of undertaking illegal fishing and massing more than 240 boats within the Southeast Asian countrys territorial waters.
+The White House billed Tuesday afternoon’s meeting with members of the CBC as an opportunity to create a path forward on voting rights, racial equity and infrastructure legislation. The meeting comes a few days after Susan Rice, director of the Domestic Policy Council, announced that the Biden administration was pausing the creation of a national police oversight commission. #politics',5);
+insert into content(author_id, body, nr_votes, is_edited) values(15,'MANILA (Reuters) - The Philippines filed fresh diplomatic protests to China on Wednesday after accusing its giant neighbour of undertaking illegal fishing and massing more than 240 boats within the Southeast Asian countrys territorial waters.
 
 The Philippine Department of Foreign Affairs said that two protests had been lodged, days after Manila summoned Chinese Ambassador Huang Xilian to press for the withdrawal of its vessels on the disputed Whitsun Reef in the South China Sea and other Philippine maritime zones.
 
@@ -1173,7 +1313,7 @@ A Philippine government taskforce said the vessels, which are about 60 metres (1
 
 "The continuous swarming of Chinese vessels poses a threat to the safety of navigation, safety of life at sea, and impedes the exclusive right of Filipinos to benefit from the marine wealth in the EEZ," the task force said in a statement late on Monday.
 
-China embassy in Manila and the foreign ministry in Beijing did not immediately respond to requests for comment. #politics',0);
+China embassy in Manila and the foreign ministry in Beijing did not immediately respond to requests for comment. #politics',0, TRUE);
 insert into content(author_id, body, nr_votes) values(5,'Life is difficult in North Korea but there is no famine and some cross-border shipments may resume soon, Russia ambassador in Pyongyang said, a week after North Korean leader Kim Jong Un declared the country was facing a "worst-ever situation."
 
 Kim last week urged ruling party officials to wage another “Arduous March” of work and sacrifice, linking the current economic crises to a period in the 1990s of famine and disaster.
@@ -1182,11 +1322,20 @@ Russia ambassador, one of the few foreign envoys in the country, said that while
 
 "Thank god, it is a long shot from the Arduous March, and I hope it would never come to that," Ambassador Alexander Matsegora told Russias TASS news agency according to a transcript published on Wednesday.
 #politics',0);
+insert into content(author_id, body, nr_votes, is_edited) values(4,'Manufacturers fought to get implants back on the market. Regulators gave in. Now thousands of patients are paying the price. #economy #health',0, TRUE);
 
 insert into content(author_id, body, nr_votes) values(19, 'Man, North Korea is such a prison',0);
 insert into content(author_id, body, nr_votes) values(20, 'ikr',0);
 insert into content(author_id, body, nr_votes) values(15, 'My president <3',0);
 insert into content(author_id, body, nr_votes) values(12, 'China being China',0);
+insert into content(author_id, body, nr_votes) values(4, 'Awesome!',0);
+insert into content(author_id, body, nr_votes) values(6, 'Great',2);
+insert into content(author_id, body, nr_votes, is_edited) values(8, 'I disagree',0, TRUE);
+insert into content(author_id, body, nr_votes, is_edited) values(11, 'Always!',0, TRUE);
+insert into content(author_id, body, nr_votes) values(1, ':)',0);
+
+insert into content(author_id, body, nr_votes) values(2,'By virtue of losing Game 6 of their Western Conference First Round series against the Phoenix Suns, the defending champion Los Angeles Lakers have lost the series, 4 games to 2. This means that they have officially been eliminated from Championship Contention.',0);
+
 
 insert into tag (name) values('economy');
 insert into tag (name) values('politics');
@@ -1194,38 +1343,52 @@ insert into tag (name) values('sports');
 insert into tag (name) values('covid');
 insert into tag (name) values('celebreties');
 insert into tag (name) values('music');
+insert into tag (name) values('health');
 
 insert into news(content_id,title, image, trending_score, nr_comments) values (1,'How New Mexico Became the State With the Highest Rate of Full Vaccinations','1.gif',0,0);
 insert into news(content_id,title, image, trending_score, nr_comments) values (2,'Biden promises to deliver on police reform during meeting with Congressional Black Caucus','2.jpg',0,0);
 insert into news(content_id,title, image, trending_score, nr_comments) values (3,'Philippines files new diplomatic protests over Chinese boats in disputed waters','3.jpeg',0,0);
 insert into news(content_id,title, image, trending_score, nr_comments) values (4,'Russian ambassador says no famine in North Korea, trade may resume soon',null,0,0);
 
+insert into news(content_id,title, image, trending_score, nr_comments) values (5,'Breast Implant Injuries Kept Hidden As New Health Threats Surface','4.jpg',0,0);
+
+insert into news(content_id,title, image, trending_score, nr_comments) values (15,'THE LOS ANGELES LAKERS HAVE BEEN ELIMINATED FROM CHAMPIONSHIP CONTENTION',null,0,0);
+
+insert into news_tag(news_id, tag_id) values (1,1);
 insert into news_tag(news_id, tag_id) values (1,2);
 insert into news_tag(news_id, tag_id) values (2,2);
 insert into news_tag(news_id, tag_id) values (3,2);
 insert into news_tag(news_id, tag_id) values (4,2);
-insert into news_tag(news_id, tag_id) values (1,1);
+insert into news_tag(news_id, tag_id) values (5,1);
+insert into news_tag(news_id, tag_id) values (5,7);
 
-insert into comment(content_id, news_id,reply_to_id) values (5,4,null);
-insert into comment(content_id, news_id,reply_to_id) values (6,4,5);
-insert into comment(content_id, news_id,reply_to_id) values (7,2,null);
-insert into comment(content_id, news_id,reply_to_id) values (8,3,null);
+insert into comment(content_id, news_id,reply_to_id) values (6,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (7,4,6);
+insert into comment(content_id, news_id,reply_to_id) values (8,2,null);
+insert into comment(content_id, news_id,reply_to_id) values (9,3,null);
+insert into comment(content_id, news_id,reply_to_id) values (10,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (11,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (12,4,null);
+insert into comment(content_id, news_id,reply_to_id) values (13,3,9);
+insert into comment(content_id, news_id,reply_to_id) values (14,3,13);
 
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(20, 6,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
+(20, NULL,'I am a very influent member of the Xekkit community', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(12, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
+(11, NULL,'Pls unban me, I did nothing wrong', '2019-03-17 18:29:21', NULL , NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(20, 6,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', 'approved', '2018-03-17 18:29:21');
+(20, NULL,'He publicly assumed to play fortnite', '2017-03-17 18:29:21', NULL, NULL);
 insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
-(17, 3,'This is fake news', '2017-03-17 18:29:21', 'rejected', '2017-03-20 18:29:21');
+(17, NULL,'This is fake news', '2017-03-17 18:29:21', NULL, NULL );
+insert into request(from_id,moderator_id,reason,creation_date,status,revision_date) VALUES
+(19, NULL,'I want to have the check before my username ;)', '2021-05-17 05:14:46', NULL, NULL);
 
 
 insert into partner_request(request_id) values (1);
 insert into unban_appeal(request_id, ban_id) values(2,2);
 insert into report_users(request_id, to_users_id) values (3,12);
 insert into report_content(request_id, to_content_id) values (4,3);
-
+insert into partner_request(request_id) values (5);
 
 insert into vote (users_id, content_id, value) values (20, 4, 1);
 insert into vote (users_id, content_id, value) values (7, 2, 1);
@@ -1236,11 +1399,22 @@ insert into vote (users_id, content_id, value) values (7, 6, 1);
 insert into vote (users_id, content_id, value) values (7, 7, 1);
 insert into vote (users_id, content_id, value) values (19, 2, -1);
 insert into vote (users_id, content_id, value) values (15, 5, 1);
-insert into vote (users_id, content_id, value) values (8, 3, 1);
+insert into vote (users_id, content_id, value) values (8, 3, -1);
 insert into vote (users_id, content_id, value) values (14, 2, 1);
 insert into vote (users_id, content_id, value) values (16, 3, -1);
-insert into vote (users_id, content_id, value) values (4, 5, 1);
+insert into vote (users_id, content_id, value) values (4, 3, -1);
 insert into vote (users_id, content_id, value) values (3, 6, 1);
+insert into vote (users_id, content_id, value) values (19, 5, -1);
+insert into vote (users_id, content_id, value) values (8, 5, 1);
+insert into vote (users_id, content_id, value) values (14, 5, 1);
+insert into vote (users_id, content_id, value) values (16, 5, 1);
+
+update request set moderator_id = 5, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 1;
+update request set moderator_id = 3, status = 'approved', revision_date = '2018-03-17 18:29:21' WHERE id = 3;
+update request set moderator_id = 3, status = 'approved', revision_date = '2017-03-20 18:29:21' WHERE id = 4;
+update request set moderator_id = 4, status = 'approved', revision_date = CURRENT_DATE WHERE id = 5;
 
 
 insert into faq(question, answer) values ('How does Xekkit deal with inappropriate comments?','You can request for a User to be banned and later our moderators will analyse said request and decide wether that behaviour is inappropriate');
+
+insert into faq(question, answer) values ('How to become a partner?','You must have at least 100,000 of reputation and than you can apply on your edit profile page.');

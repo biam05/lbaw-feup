@@ -38,9 +38,26 @@ class ReportContent extends Model
     public $timestamps = false;
 
     /**
+     * Indicates the type of the request.
+     *
+     * @var string
+     */
+    public $type = "report_content";
+
+    /**
      * The request related to this report.
      */
     public function request() {
-        return $this->hasOne(Request::class, 'request_id');
+        return $this->belongsTo(Requests::class, 'request_id');
+    }
+
+    /**
+     * The content reported.
+     */
+    public function content() {
+        if($this->belongsTo(Comment::class, 'to_content_id', 'content_id')->get()->count()>0){
+            return $this->belongsTo(Comment::class, 'to_content_id', 'content_id');
+        }
+        return $this->belongsTo(News::class, 'to_content_id', 'content_id');
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'News | ' . $news->title)
+@section('title', 'Xekkit | ' . $news->title)
 
 @section('content')
 
@@ -8,11 +8,11 @@
 <div class="container-xl">
     <div class="row mt-4">
         <div class="col-lg-8">
-            @include('partials.news.post')
-            @include('partials.news.comments')
+            @include('partials.news.post', ['news'=>$news,'type'=>""])
+            @include('partials.news.comments.comments')
         </div>
         <sidebar class="hidden-md-down col-lg-auto">
-            @include('partials.users.user_card', ['user'=> $author])
+            @include('partials.users.user_card', ['user'=> $news->content->author])
         </sidebar>
     </div>
 </div>

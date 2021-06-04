@@ -1,3 +1,6 @@
+       
+
+
 <ul class="nav nav-pills mb-3 text-white bg-light-dark" id="search-tab" role="tablist">
     <li class="nav-item " role="presentation">
         <button class="nav-link active text-white" id="search-news-tab" data-bs-toggle="pill" data-bs-target="#search-news" type="button" role="tab" aria-controls="search-news" aria-selected="true">News</button>
@@ -12,8 +15,11 @@
             <p class="text-white text-center h6 pt-4 pb-3">No results found</p>
         @else
 
+
             <div id="posts-result">
-                @each('partials.news.post', $news, 'news')
+                @foreach($news as $post)
+                    @include('partials.news.post', ['news'=>$post,'type'=>""])
+                @endforeach
             </div>
         @endif
     </div>
@@ -30,4 +36,8 @@
         </div>        
         
     </div>
+
 </section>
+
+<script defer src={{ asset('js/filter_search.js') }} defer></script>
+
