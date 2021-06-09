@@ -155,7 +155,7 @@ CREATE TABLE request (
    reason TEXT NOT NULL,
    creation_date TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
    status STATUS_TYPE,
-   revision_date TIMESTAMP WITH TIME ZONE ,
+   revision_date TIMESTAMP WITH TIME ZONE CHECK (revision_date > creation_date),
    PRIMARY KEY(id),
    CONSTRAINT fk_from_id
         FOREIGN KEY(from_id)
@@ -1418,25 +1418,3 @@ update request set moderator_id = 4, status = 'approved', revision_date = CURREN
 insert into faq(question, answer) values ('How does Xekkit deal with inappropriate comments?','You can request for a User to be banned and later our moderators will analyse said request and decide wether that behaviour is inappropriate');
 
 insert into faq(question, answer) values ('How to become a partner?','You must have at least 100,000 of reputation and than you can apply on your edit profile page.');
-
-DROP FUNCTION IF EXISTS requests_after_ban() CASCADE;
-DROP TRIGGER IF EXISTS requests_after_ban ON content;
-
-CREATE OR REPLACE FUNCTION requests_after_ban() RETURNS TRIGGER AS
-    $BODY$
-    BEGIN
-        UPDATE request
-        SET status = 'approved', moderator_id=new.moderator_id
-        FROM report_users as ru
-        WHERE new.users_id = ru.to_users_id
-        AND ru.request_id = request.id;
-
-        RETURN new;
-    END
-    $BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER requests_after_ban
-    AFTER INSERT ON ban
-    FOR EACH ROW
-    EXECUTE PROCEDURE requests_after_ban();
